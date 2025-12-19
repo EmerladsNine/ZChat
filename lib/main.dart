@@ -36,7 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         leading: Icon(Icons.rocket, color: Colors.teal),
         backgroundColor: Colors.grey[900],
-        title: Text('ZaneChat', style: TextStyle(color: Colors.teal[600])),
+        title: Text('ZaneChat', style: TextStyle(
+            fontWeight: FontWeight.w900,
+            color: Colors.teal[600])),
         actions: [
           IconButton(
             onPressed: () {},
