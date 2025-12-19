@@ -35,10 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.rocket, color: Colors.teal),
-        backgroundColor: Colors.grey[900],
-        title: Text('ZaneChat', style: TextStyle(
-            fontWeight: FontWeight.w900,
-            color: Colors.teal[600])),
+        title: Text('ZaneChat', style: TextStyle(fontWeight: FontWeight.w900)),
         actions: [
           IconButton(
             onPressed: () {},
@@ -54,14 +51,20 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Container(
               height: 50.0,
-              padding: EdgeInsets.fromLTRB(10,0,0,0),
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25.0),
-                color: Colors.teal[900],
+                color: Colors.blueGrey.shade900,
               ),
-              child: Row(
-                spacing: 10,
-                children: [Icon(Icons.search), Text('Ask Zane or Search')],
+              child: TextField(
+                decoration: InputDecoration(
+                  icon: Icon(Icons.search),
+                  hint: Text(
+                    'Ask Zane or Search',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ],
@@ -70,8 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Add a chat',
-        backgroundColor: Colors.teal[900],
-        child: const Icon(Icons.chat_rounded),
+        backgroundColor: Colors.greenAccent.shade400,
+        child: const Icon(Icons.chat_rounded, color: Colors.black87),
       ),
     );
   }
