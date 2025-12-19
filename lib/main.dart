@@ -27,33 +27,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState((){
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      appBar: AppBar(
+          leading: Icon(Icons.rocket,color: Colors.teal,),
+          backgroundColor: Colors.grey[900],
+          title: Text('ZaneChat',style: TextStyle(color: Colors.teal[600]),
+          ),
+          actions: [
+            IconButton(onPressed: (){}, icon: Icon(Icons.camera_alt_outlined)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.menu))
+          ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+          children: [
+            Container(
+              height: 50.0,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.0),
+                  color: Colors.teal[900]
+              ),
+              child: ListTile(
+                leading: IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+                title: Text('Ask Zane or Search')
+              ),
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () {},
+        tooltip: 'Add a chat',
+        backgroundColor: Colors.teal[900],
+        child: const Icon(Icons.chat_rounded),
       ),
     );
   }
