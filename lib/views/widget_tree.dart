@@ -20,56 +20,50 @@ class WidgetTree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: selectedPageNotifier,
-      builder: (context, value, child) {
-        return Scaffold(
-          backgroundColor: Colors.black,
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {},
-              padding: EdgeInsets.all(3),
-              constraints: const BoxConstraints(),
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.grey.shade900),
-              ),
-              icon: Icon(Icons.menu),
-              tooltip: 'Menu',
-            ),
-            backgroundColor: Colors.black,
-            actions: [
-              IconButton(
-                onPressed: () {},
-                padding: EdgeInsets.all(3),
-                constraints: const BoxConstraints(),
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.grey.shade900),
-                ),
-                icon: Icon(Icons.camera_alt_sharp),
-                tooltip: 'Camera',
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.add_circle,
-                  color: Colors.greenAccent.shade400,
-                ),
-                tooltip: 'Add Chat',
-              ),
-            ],
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {},
+          padding: EdgeInsets.all(3),
+          constraints: const BoxConstraints(),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Colors.grey.shade900),
           ),
-          body: pages[value],
-          floatingActionButton: FloatingActionButton(
+          icon: Icon(Icons.menu),
+          tooltip: 'Menu',
+        ),
+        backgroundColor: Colors.black,
+        actions: [
+          IconButton(
             onPressed: () {},
-            tooltip: 'Launch a rocket',
-            backgroundColor: Colors.greenAccent.shade400,
-            child: const Icon(Icons.rocket, color: Colors.black87),
+            padding: EdgeInsets.all(3),
+            constraints: const BoxConstraints(),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Colors.grey.shade900),
+            ),
+            icon: Icon(Icons.camera_alt_sharp),
+            tooltip: 'Camera',
           ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add_circle, color: Colors.greenAccent.shade400),
+            tooltip: 'Add Chat',
+          ),
+        ],
+      ),
+      body: ValueListenableBuilder(valueListenable: selectedPageNotifier, builder: (context, selectedPage, child) {
+        return pages[selectedPage];
+      },),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        tooltip: 'Launch a rocket',
+        backgroundColor: Colors.greenAccent.shade400,
+        child: const Icon(Icons.rocket, color: Colors.black87),
+      ),
 
-          //Footer
-          bottomNavigationBar: NavbarWidget(),
-        );
-      },
+      //Footer
+      bottomNavigationBar: NavbarWidget(),
     );
   }
 }
