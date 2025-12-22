@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/widgets/navbar_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,15 +65,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-
       body: Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
-
-            Text('Chats',
+            Text(
+              'Chats',
               style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
             ),
 
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.search,color: Colors.grey.shade700,),
+                  Icon(Icons.search, color: Colors.grey.shade700),
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
@@ -108,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: WidgetStatePropertyAll(EdgeInsets.all(0)),
                 foregroundColor: WidgetStateProperty.all(Colors.grey.shade700),
                 shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0),),
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
                 ),
               ),
               child: Row(
@@ -116,18 +118,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Icon(Icons.chair, size: 50, color: Colors.white),
                   Expanded(
-                    child: Container(height: 70, padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    child: Container(
+                      height: 70,
+                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                       decoration: BoxDecoration(
-                        border: BoxBorder.fromLTRB(bottom: BorderSide(color: Colors.grey.shade900),),
+                        border: BoxBorder.fromLTRB(
+                          bottom: BorderSide(color: Colors.grey.shade900),
+                        ),
                       ),
-                      child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('World Chat',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18,),
+                                Text(
+                                  'World Chat',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
                                 ),
                                 Text('This will be the last message'),
                               ],
@@ -141,7 +153,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-
           ],
         ),
       ),
@@ -154,20 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       //Footer
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.black,
-        selectedIndex: 3,
-        destinations: [
-          NavigationDestination(icon: Icon(Icons.voice_chat), label: 'Updates'),
-          NavigationDestination(icon: Icon(Icons.call), label: 'Calls'),
-          NavigationDestination(
-            icon: Icon(Icons.people_outline),
-            label: 'Communities',
-          ),
-          NavigationDestination(icon: Icon(Icons.chat), label: 'Chats'),
-          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
-        ],
-      ),
+      bottomNavigationBar: NavbarWidget(),
     );
   }
 }
