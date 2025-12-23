@@ -39,7 +39,6 @@ class WidgetTree extends StatelessWidget {
         onHorizontalDragEnd: fullSwipeController.onDragEnd,
         child: PageView(
           controller: pageController,
-          pageSnapping: false,
           padEnds: false,
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) {
