@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/pages/calls_page.dart';
 import 'package:zchat/views/pages/chats_page.dart';
@@ -17,8 +19,10 @@ List<Widget> pages = [
 ];
 
 class WidgetTree extends StatelessWidget {
-  WidgetTree({super.key});
-  final pageController = PageController(initialPage: 3);
+  const WidgetTree({super.key,required this.pageController,required this.fullSwipeController});
+  final PageController pageController;
+  final FullSwipeController fullSwipeController;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +34,19 @@ class WidgetTree extends StatelessWidget {
                 : AppBar(backgroundColor: Colors.black);
           },)
       ),
-      body: PageView(
-        controller: pageController,
-        physics: PageScrollPhysics(parent: BouncingScrollPhysics()),
-        onPageChanged: (value) {
-          selectedPageNotifier.value = value;
-        },
-        children: pages,
+      body: GestureDetector(
+        onHorizontalDragUpdate: fullSwipeController.onDragUpdate,
+        onHorizontalDragEnd: fullSwipeController.onDragEnd,
+        child: PageView(
+          controller: pageController,
+          pageSnapping: false,
+          padEnds: false,
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: (value) {
+            selectedPageNotifier.value = value;
+          },
+          children: pages,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
