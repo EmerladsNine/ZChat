@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/notifiers.dart';
 
 class NavbarWidget extends StatelessWidget {
-  const NavbarWidget({super.key});
-
+  const NavbarWidget({super.key,required this.pageController});
+  final PageController pageController;
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -13,8 +13,8 @@ class NavbarWidget extends StatelessWidget {
           backgroundColor: Colors.black,
           selectedIndex: selectedPage,
           indicatorColor: Colors.transparent,
-          onDestinationSelected: (val) {
-            selectedPageNotifier.value = val;
+          onDestinationSelected: (val)  {
+             pageController.animateToPage(val, duration: Duration(milliseconds: 10) , curve: Curves.ease);
           },
           destinations: [
             NavigationDestination(
