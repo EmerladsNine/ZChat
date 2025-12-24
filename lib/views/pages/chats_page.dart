@@ -12,14 +12,7 @@ class ChatsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Chats',
-              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
-            ),
-      
-            //Search Bar
             SearchBarWidget(text: 'Ask Zane or Search'),
-
             SizedBox(
               height: 10,
             ),
