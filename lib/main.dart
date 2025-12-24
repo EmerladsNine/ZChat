@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     fullSwipeController = FullSwipeController(
       pageController: pageController,
       minSwipeDistance: 100,
-      minSwipeVelocity: 500,
+      minSwipeVelocity: 1,
       snapAnimationDuration: Duration(milliseconds: 300),
       snapCurve: Curves.ease,
     );
