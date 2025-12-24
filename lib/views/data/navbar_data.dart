@@ -12,7 +12,7 @@ final List<Map<String, dynamic>> navItems = [
   },
   {'selectedIcon': Icons.people,
     'unselectedIcon': Icons.people_outline,
-    'label': 'Communities',
+    'label': 'ZPost',
     'page': CommunitiesPage()
   },
   {'selectedIcon': Icons.star,

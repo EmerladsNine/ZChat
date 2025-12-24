@@ -25,7 +25,8 @@ class NavbarWidget extends StatelessWidget {
           NavigationBar(
             backgroundColor: Colors.black,
             selectedIndex: selectedPage,
-            indicatorColor: Color.fromARGB(90, 0, 220, 123),
+            indicatorColor: Colors.greenAccent.shade400,//Color.fromARGB(90, 0, 220, 123),
+
             labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
                   (states) {
                     if (states.contains(WidgetState.selected)) {

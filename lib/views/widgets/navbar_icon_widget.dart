@@ -16,14 +16,12 @@ class NavbarIconWidget extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return ValueListenableBuilder(
         valueListenable: selectedPageNotifier,
         builder: (context, selectedPage, child) {
           return NavigationDestination(
-            icon: selectedPage == pageNumber
-                ? Icon(selectedIcon, color: Color.fromARGB(225, 214, 252, 210))
-                : Icon(unselectedIcon, color: Colors.grey.shade300),
+            selectedIcon: Icon(selectedIcon,color: Colors.black87,),// color: Color.fromARGB(225, 214, 252, 210)),
+            icon: Icon(unselectedIcon, color: Colors.grey.shade300),
             label: label,
           );
         });

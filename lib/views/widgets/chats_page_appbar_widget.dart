@@ -7,15 +7,27 @@ class ChatsPageAppbarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('ZChat',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: 'SFPro')),
+      title:  Row(
+        children: [
+          Text('Z',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: Colors.greenAccent.shade400, fontFamily: 'SFPro')
+          ),
+          Text('Chat',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: 'SFPro')),
+        ],
+      ),
       backgroundColor: Colors.black,
       actions: [
         IconButton(
           onPressed: () {},
-          padding: EdgeInsets.all(3),
           constraints: const BoxConstraints(),
-          icon: Icon(Icons.camera_alt_sharp, color: Colors.grey.shade300),
+          icon: Container(
+            padding: EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade900,
+                borderRadius: BorderRadius.circular(15.0)
+              ),
+              child: Icon(Icons.camera_enhance_rounded, color: Colors.grey.shade300,size: 18,)),
           tooltip: 'Camera',
         ),
         IconButton(
@@ -25,7 +37,8 @@ class ChatsPageAppbarWidget extends StatelessWidget {
             },
           icon: Icon(
             Icons.settings,
-            color: Colors.grey.shade300,
+            color: Colors.grey.shade400,
+            size: 22,
           ),
           tooltip: 'Settings',
         ),
