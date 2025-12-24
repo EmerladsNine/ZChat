@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/pages/settings_page.dart';
 
 class ChatsPageAppbarWidget extends StatelessWidget {
   const ChatsPageAppbarWidget({super.key});
@@ -22,21 +23,19 @@ class ChatsPageAppbarWidget extends StatelessWidget {
           onPressed: () {},
           padding: EdgeInsets.all(3),
           constraints: const BoxConstraints(),
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(
-              Colors.grey.shade900,
-            ),
-          ),
-          icon: Icon(Icons.camera_alt_sharp),
+          icon: Icon(Icons.camera_alt_sharp, color: Colors.grey.shade300,),
           tooltip: 'Camera',
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () { Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SettingsPage()));
+            },
           icon: Icon(
-            Icons.add_circle,
-            color: Colors.greenAccent.shade400,
+            Icons.settings,
+            color: Colors.grey.shade300,
           ),
-          tooltip: 'Add Chat',
+          tooltip: 'Settings',
         ),
       ],
     );

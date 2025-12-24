@@ -57,7 +57,7 @@ class ChatCardWidget extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        Text('This will be the last message'),
+                        Text('Sorry friendo this is the endo'),
                       ],
                     ),
                   ),

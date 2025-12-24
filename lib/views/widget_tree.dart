@@ -5,17 +5,15 @@ import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/pages/calls_page.dart';
 import 'package:zchat/views/pages/chats_page.dart';
 import 'package:zchat/views/pages/communities_page.dart';
-import 'package:zchat/views/pages/settings_page.dart';
 import 'package:zchat/views/pages/updates_page.dart';
 import 'package:zchat/views/widgets/chats_page_appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widget.dart';
 
 List<Widget> pages = [
+  ChatsPage(),
+  CommunitiesPage(),
   UpdatesPage(),
   CallsPage(),
-  CommunitiesPage(),
-  ChatsPage(),
-  SettingsPage(),
 ];
 
 class WidgetTree extends StatelessWidget {
@@ -29,7 +27,7 @@ class WidgetTree extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: PreferredSize(preferredSize: const Size.fromHeight(kToolbarHeight),
           child: ValueListenableBuilder(valueListenable: selectedPageNotifier, builder: (context, value, child) {
-            return value == 3
+            return value == 0
                 ? ChatsPageAppbarWidget()
                 : AppBar(backgroundColor: Colors.black);
           },)

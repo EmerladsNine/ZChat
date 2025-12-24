@@ -12,40 +12,34 @@ class NavbarWidget extends StatelessWidget {
         return NavigationBar(
           backgroundColor: Colors.black,
           selectedIndex: selectedPage,
-          indicatorColor: Colors.transparent,
+          indicatorColor: Color.fromARGB(90, 0, 220, 123),
           onDestinationSelected: (val)  {
              pageController.animateToPage(val, duration: Duration(milliseconds: 10) , curve: Curves.ease);
           },
           destinations: [
             NavigationDestination(
               icon: selectedPage == 0
-                  ? Icon(Icons.star)
-                  : Icon(Icons.star_border),
-              label: 'Updates',
-            ),
-            NavigationDestination(
-              icon: selectedPage == 1
-                  ? Icon(Icons.call)
-                  : Icon(Icons.call_outlined),
-              label: 'Calls',
-            ),
-            NavigationDestination(
-              icon: selectedPage == 2
-                  ? Icon(Icons.people)
-                  : Icon(Icons.people_outline),
-              label: 'Communities',
-            ),
-            NavigationDestination(
-              icon: selectedPage == 3
-                  ? Icon(Icons.chat)
-                  : Icon(Icons.chat_outlined),
+                  ? Icon(Icons.chat, color: Color.fromARGB(225, 214, 252, 210))
+                  : Icon(Icons.chat_outlined, color: Colors.grey.shade300),
               label: 'Chats',
             ),
             NavigationDestination(
-              icon: selectedPage == 4
-                  ? Icon(Icons.settings)
-                  : Icon(Icons.settings_outlined),
-              label: 'Settings',
+              icon: selectedPage == 1
+                  ? Icon(Icons.people, color: Color.fromARGB(225, 214, 252, 210))
+                  : Icon(Icons.people_outline, color: Colors.grey.shade300),
+              label: 'Communities',
+            ),
+            NavigationDestination(
+              icon: selectedPage == 2
+                  ? Icon(Icons.star, color: Color.fromARGB(225, 214, 252, 210))
+                  : Icon(Icons.star_border, color: Colors.grey.shade300),
+              label: 'Updates',
+            ),
+            NavigationDestination(
+              icon: selectedPage == 3
+                  ? Icon(Icons.call, color: Color.fromARGB(225, 214, 252, 210))
+                  : Icon(Icons.call_outlined, color: Colors.grey.shade300),
+              label: 'Calls',
             ),
           ],
         );

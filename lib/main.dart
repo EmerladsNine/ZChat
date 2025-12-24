@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
+import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/widget_tree.dart';
 
 void main() {
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: 3);
+    pageController = PageController(initialPage: selectedPageNotifier.value);
     fullSwipeController = FullSwipeController(
       pageController: pageController,
       minSwipeDistance: 100,

@@ -5,13 +5,21 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SafeArea(
+        child: Scaffold(
+        backgroundColor: Colors.black,
+            appBar: AppBar(
+              backgroundColor: Colors.black,
+              elevation: 0,
+              title: const Text('Settings',
+                  style: TextStyle(fontWeight: FontWeight.w900)),
+            ),
+    body: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10.0,
         children: [
-          Text('Settings',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 30),),
           //Search Bar
           Container(
             padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -82,6 +90,8 @@ class SettingsPage extends StatelessWidget {
           ),
         ],
       ),
+    )
+        )
     );
   }
 }
