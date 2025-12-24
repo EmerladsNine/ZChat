@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/notifiers.dart';
 
 class FullSwipeController {
   FullSwipeController({
@@ -15,34 +16,55 @@ class FullSwipeController {
   final Curve snapCurve;
 
   double _dragDistance = 0;
+  double _startingPage = 0;
+
+  void onDragStart(DragStartDetails details) {
+    _startingPage = pageController.page ?? 0;
+  }
 
   void onDragUpdate(DragUpdateDetails details) {
-    _dragDistance += details.delta.dx;
-    final newOffset = pageController.position.pixels - details.delta.dx;
+    double delta = details.delta.dx;
+    _dragDistance += delta;
+    final newOffset = pageController.position.pixels - delta;
     final minOffset = pageController.position.minScrollExtent;
     final maxOffset = pageController.position.maxScrollExtent;
 
+    //if you are on the last or first page then stretch
+    if (newOffset > maxOffset || newOffset < minOffset) {
+      stretchFactor.value = (stretchFactor.value + delta.abs() / 1000).clamp(
+        1.0,
+        1.01,
+      );
+      _dragDistance = 0;
+    }
     pageController.position.jumpTo(newOffset.clamp(minOffset, maxOffset));
   }
 
   void onDragEnd(DragEndDetails details) {
+    stretchFactor.value = 1.0;
     final velocity = details.velocity.pixelsPerSecond.dx;
     int currentPage = pageController.page!.round();
-    int targetPage = currentPage;
-    if (_dragDistance.abs() > minSwipeDistance ||
-        velocity.abs() > minSwipeVelocity) {
-      if (_dragDistance < 0 || velocity < 0) {
-        targetPage += 1;
+    double deltaPage = (pageController.page ?? 0) - _startingPage;
+    if (deltaPage.abs() > 0.5 || _dragDistance == 0) return;
+    if (velocity.abs() > minSwipeVelocity) {
+      if (velocity < 0) {
+        pageController.nextPage(
+          duration: snapAnimationDuration,
+          curve: snapCurve,
+        );
       } else {
-        targetPage -= 1;
+        pageController.previousPage(
+          duration: snapAnimationDuration,
+          curve: snapCurve,
+        );
       }
-
-      pageController.animateToPage(targetPage, duration: snapAnimationDuration, curve: snapCurve);
-
       _dragDistance = 0;
-    }
-    else{
-      pageController.animateToPage(currentPage, duration: snapAnimationDuration, curve: snapCurve);
+    } else {
+      pageController.animateToPage(
+        currentPage,
+        duration: snapAnimationDuration,
+        curve: snapCurve,
+      );
     }
   }
 }

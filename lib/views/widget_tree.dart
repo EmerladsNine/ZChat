@@ -35,16 +35,24 @@ class WidgetTree extends StatelessWidget {
           },)
       ),
       body: GestureDetector(
+        onHorizontalDragStart: fullSwipeController.onDragStart,
         onHorizontalDragUpdate: fullSwipeController.onDragUpdate,
         onHorizontalDragEnd: fullSwipeController.onDragEnd,
-        child: PageView(
-          controller: pageController,
-          padEnds: false,
-          physics: const NeverScrollableScrollPhysics(),
-          onPageChanged: (value) {
-            selectedPageNotifier.value = value;
-          },
-          children: pages,
+        child: ValueListenableBuilder(
+          valueListenable: stretchFactor,
+          builder: (context, scale, child) {
+            return Transform.scale(
+              scaleX: scale,
+              child: PageView(
+                controller: pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                onPageChanged: (value) {
+                  selectedPageNotifier.value = value;
+                },
+                children: pages,
+              ),
+            );
+          }
         ),
       ),
       floatingActionButton: FloatingActionButton(
