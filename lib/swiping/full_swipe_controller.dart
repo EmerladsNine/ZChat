@@ -41,16 +41,12 @@ class FullSwipeController {
     pageController.position.jumpTo(_position.clamp(minOffset, maxOffset));
   }
 
-  void onDragCance() {
-
-  }
   void onDragEnd(DragEndDetails details) {
     stretchFactor.value = 1.0;
     final velocity = details.velocity.pixelsPerSecond.dx;
     int currentPage = pageController.page!.round();
     double deltaPage = (pageController.page ?? 0) - _startingPage;
-    if (_dragDistance == 0) return;
-    if (velocity.abs() > minSwipeVelocity && deltaPage.abs() < 0.5) {
+    if (velocity.abs() > minSwipeVelocity && deltaPage.abs() < 0.5 && _dragDistance != 0) {
       if (velocity < 0) {
         pageController.nextPage(
           duration: snapAnimationDuration,
