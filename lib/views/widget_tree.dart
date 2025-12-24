@@ -46,6 +46,7 @@ class WidgetTree extends StatelessWidget {
               child: PageView(
                 controller: pageController,
                 physics: const NeverScrollableScrollPhysics(),
+                pageSnapping: false,
                 onPageChanged: (value) {
                   selectedPageNotifier.value = value;
                 },
