@@ -6,8 +6,7 @@ class ChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,27 +40,38 @@ class ChatsPage extends StatelessWidget {
                 ],
               ),
             ),
-            //World Chat Button
-            ChatCardWidget(cardIcon: Icons.chair_rounded,chatName: "World Chat",),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
-            ChatCardWidget(),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ChatCardWidget(cardIcon: Icons.chair_rounded,chatName: "World Chat",),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                    ChatCardWidget(),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
