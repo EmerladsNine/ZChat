@@ -20,6 +20,7 @@ class SearchBarWidget extends StatelessWidget{
       child: Row(
         children: [
           Icon(Icons.search, color: Colors.grey.shade700),
+          SizedBox(width: 8),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
