@@ -5,10 +5,14 @@ class ChatCardWidget extends StatelessWidget {
     super.key,
     this.chatName = "Chat Name",
     this.cardIcon = Icons.person,
+    this.timeStamp = '12:00 PM',
+    this.message = 'Sorry friendo this is the endo'
   });
 
   final IconData cardIcon;
   final String chatName;
+  final String message;
+  final String timeStamp;
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +61,11 @@ class ChatCardWidget extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        Text('Sorry friendo this is the endo'),
+                        Text(message),
                       ],
                     ),
                   ),
-                  Text('12:00 PM'),
+                  Text(timeStamp),
                 ],
               ),
             ),

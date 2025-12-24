@@ -1,20 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
+import 'package:zchat/views/data/navbar_data.dart';
 import 'package:zchat/views/data/notifiers.dart';
-import 'package:zchat/views/pages/calls_page.dart';
-import 'package:zchat/views/pages/chats_page.dart';
-import 'package:zchat/views/pages/communities_page.dart';
-import 'package:zchat/views/pages/updates_page.dart';
 import 'package:zchat/views/widgets/chats_page_appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widget.dart';
-
-List<Widget> pages = [
-  ChatsPage(),
-  CommunitiesPage(),
-  UpdatesPage(),
-  CallsPage(),
-];
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({super.key,required this.pageController,required this.fullSwipeController});
@@ -48,7 +37,7 @@ class WidgetTree extends StatelessWidget {
                 onPageChanged: (value) {
                   selectedPageNotifier.value = value;
                 },
-                children: pages,
+                children: navItems.map((item) => item['page'] as Widget).toList(),
               ),
             );
           }

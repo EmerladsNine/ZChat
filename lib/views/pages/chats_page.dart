@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/chat_card_widget.dart';
+import 'package:zchat/views/widgets/search_bar_widget.dart';
 
 class ChatsPage extends StatelessWidget {
   const ChatsPage({super.key});
@@ -17,29 +18,8 @@ class ChatsPage extends StatelessWidget {
             ),
       
             //Search Bar
-            Container(
-              padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-              height: 35,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.grey.shade900,
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.search, color: Colors.grey.shade700),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Ask Zane or Search',
-                        hintStyle: TextStyle(color: Colors.grey.shade700),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            SearchBarWidget(text: 'Ask Zane or Search'),
+
             SizedBox(
               height: 10,
             ),

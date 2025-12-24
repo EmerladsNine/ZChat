@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/widgets/search_bar_widget.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -20,30 +21,8 @@ class SettingsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10.0,
         children: [
-          //Search Bar
-          Container(
-            padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-            height: 35,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.grey.shade900,
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.search, color: Colors.grey.shade700),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hintText: 'Search',
-                      hintStyle: TextStyle(color: Colors.grey.shade700),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          SearchBarWidget(),
+
           Container(
             padding: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
