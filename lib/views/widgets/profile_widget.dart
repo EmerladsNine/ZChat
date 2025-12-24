@@ -15,15 +15,13 @@ class ProfileWidget extends StatelessWidget{
     return Container(
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-          color: Colors.white10,
+          color: Color.fromRGBO(23, 23, 23, 1),
           borderRadius: BorderRadius.circular(10.0)
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10.0,
         children: [
-
-          //pfp
           Container(
               width: 50.0,
               height: 50.0,
@@ -37,8 +35,8 @@ class ProfileWidget extends StatelessWidget{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400, color: Colors.white),),
-              Text(description , style: TextStyle(color: Colors.grey.shade500),)
+              Text(name, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400, color: Colors.white, fontFamily: 'SFPro'),),
+              Text(description , style: TextStyle(color: Colors.grey.shade500, fontFamily: 'SFPro'),)
             ],
           )
         ],

@@ -59,6 +59,7 @@ class ChatCardWidget extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
+                              fontFamily: 'SFPro'
                           ),
                         ),
                         Text(message),

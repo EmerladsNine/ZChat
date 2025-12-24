@@ -15,11 +15,17 @@ class MyApp extends StatelessWidget {
       title: 'ZChat',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.black,
+        colorScheme: ColorScheme(
           brightness: Brightness.dark,
-        ),
-      ),
+          primary: Colors.black,
+          onPrimary: Colors.white,
+          secondary: Color(0xFF1E2A33),
+          onSecondary: Colors.white,
+          surface: Color(0xFF141A20),
+          onSurface: Colors.white,
+          error: Color(0xFFCF6679),
+          onError: Colors.white,
+        )),
       home: const MyHomePage(),
     );
   }

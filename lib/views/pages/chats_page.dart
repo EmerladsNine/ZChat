@@ -20,7 +20,8 @@ class ChatsPage extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    ChatCardWidget(cardIcon: Icons.chair_rounded,chatName: "Jawad Zaraket",),
+                    ChatCardWidget(cardIcon: Icons.chair_rounded, chatName: "Jawad Zaraket",),
+                    ChatCardWidget(cardIcon: Icons.balance, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 AM',),
                   ],
                 ),
               ),

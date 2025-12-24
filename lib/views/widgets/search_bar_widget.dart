@@ -15,7 +15,7 @@ class SearchBarWidget extends StatelessWidget{
       height: 35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: Colors.grey.shade900,
+        color: Color.fromRGBO(34, 34, 34, 1),
       ),
       child: Row(
         children: [
@@ -26,7 +26,7 @@ class SearchBarWidget extends StatelessWidget{
               decoration: InputDecoration(
                 isDense: true,
                 hintText: text,
-                hintStyle: TextStyle(color: Colors.grey.shade700),
+                hintStyle: TextStyle(color: Colors.grey.shade700, fontFamily: 'SFPro'),
                 border: InputBorder.none,
               ),
             ),

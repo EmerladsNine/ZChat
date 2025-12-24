@@ -13,31 +13,41 @@ class NavbarWidget extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: selectedPageNotifier,
       builder: (context, selectedPage, child) {
-        return NavigationBar(
-          backgroundColor: Colors.black,
-          selectedIndex: selectedPage,
-          indicatorColor: Color.fromARGB(90, 0, 220, 123),
-          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
-                (states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
-                  }
-                  return TextStyle(color: Colors.white);
-                  },
-          ),
-          onDestinationSelected: (val)  {
-             pageController.animateToPage(val, duration: Duration(milliseconds: 10) , curve: Curves.ease);
-             },
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // line
+            Container(
+              height: 1,
+              color: Color.fromRGBO(16, 21, 25, 1),
+            ),
 
-          destinations: List.generate(navItems.length, (index) {
-            return NavbarIconWidget(
-              selectedIcon: navItems[index]['selectedIcon'],
-              unselectedIcon: navItems[index]['unselectedIcon'],
-              label: navItems[index]['label'],
-              pageNumber: index,
-            );
-          }),
+          NavigationBar(
+            backgroundColor: Colors.black,
+            selectedIndex: selectedPage,
+            indicatorColor: Color.fromARGB(90, 0, 220, 123),
+            labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
+                  (states) {
+                    if (states.contains(WidgetState.selected)) {
+                      return TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'SFPro');
+                    }
+                    return TextStyle(color: Colors.white,fontFamily: 'SFPro');
+                    },
+            ),
+            onDestinationSelected: (val)  {
+               pageController.animateToPage(val, duration: Duration(milliseconds: 10) , curve: Curves.ease);
+               },
 
+            destinations: List.generate(navItems.length, (index) {
+              return NavbarIconWidget(
+                selectedIcon: navItems[index]['selectedIcon'],
+                unselectedIcon: navItems[index]['unselectedIcon'],
+                label: navItems[index]['label'],
+                pageNumber: index,
+              );
+            }),
+          )
+          ]
         );
       },
     );

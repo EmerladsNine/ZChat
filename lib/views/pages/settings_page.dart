@@ -14,8 +14,9 @@ class SettingsPage extends StatelessWidget {
               backgroundColor: Colors.black,
               elevation: 0,
               title: const Text('Settings',
-                  style: TextStyle(fontWeight: FontWeight.w900, color: Colors.white,)),
+                  style: TextStyle(fontWeight: FontWeight.w900, color: Colors.white, fontFamily: 'SFPro')),
             ),
+
     body: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -35,7 +36,6 @@ class SettingsPage extends StatelessWidget {
               ),
             )
           ),
-
         ],
       )
     )
