@@ -31,9 +31,9 @@ class NavbarWidget extends StatelessWidget {
             labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
                   (states) {
                     if (states.contains(WidgetState.selected)) {
-                      return TextStyle(color: primaryColor, fontWeight: FontWeight.bold);
+                      return TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontFamily: 'Inter');
                     }
-                    return TextStyle(color: primaryColor);
+                    return TextStyle(color: primaryColor, fontFamily: 'Inter');
                     },
             ),
             onDestinationSelected: (val)  {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
-import 'package:zchat/views/pages/chat_messages_page.dart';
+
+import '../data/text_styles.dart';
 
 class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({
@@ -10,6 +11,7 @@ class ChatCardWidget extends StatelessWidget {
     this.timeStamp = '12:00 PM',
     this.message = 'Sorry friendo this is the endo'
   });
+
   final IconData cardIcon;
   final String chatName;
   final String message;
@@ -17,21 +19,15 @@ class ChatCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        await Future.delayed(Duration(milliseconds: 300), () {
-          if(!context.mounted) return;
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return ChatMessagesPage();
-              },
-            ),
-          );
-        });
-      },
-      borderRadius: BorderRadius.circular(5.0),
+    return TextButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        padding: WidgetStatePropertyAll(EdgeInsets.all(0)),
+        foregroundColor: WidgetStateProperty.all(Colors.grey.shade700),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        ),
+      ),
       child: Row(
         spacing: 10,
         children: [
@@ -62,20 +58,13 @@ class ChatCardWidget extends StatelessWidget {
                       children: [
                         Text(
                           chatName,
-                          style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
+                          style: chatCardNameTextStyle,
                         ),
-                        Text(
-                          message,
-                          style: TextStyle(color: smallerTextColor),
-                        ),
+                        Text(message, style:chatCardMessageDetailsTextStyle),
                       ],
                     ),
                   ),
-                  Text(timeStamp, style: TextStyle(color: smallerTextColor)),
+                  Text(timeStamp, style: chatCardMessageDetailsTextStyle),
                 ],
               ),
             ),

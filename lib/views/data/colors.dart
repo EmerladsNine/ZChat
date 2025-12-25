@@ -14,3 +14,6 @@ const Color cardsColor = Color.fromRGBO(22, 24, 23, 1);
 const Color settingsTextColor = Color.fromRGBO(209, 211, 210, 1);
 const Color settingsProfileNameTextColor = Color.fromRGBO(237, 239, 238, 1);
 const Color settingsProfileDescriptionTextColor = Color.fromRGBO(158, 158, 158, 1);
+
+const Color selectedPageIconColor = Color.fromRGBO(0, 0, 0, 1);
+const Color iconDefaultColor = Color.fromRGBO(236, 236, 236, 1);

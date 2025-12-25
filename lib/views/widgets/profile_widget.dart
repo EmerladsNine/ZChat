@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
 
+import '../data/text_styles.dart';
+
 class ProfileWidget extends StatelessWidget{
   const ProfileWidget({
     super.key,
@@ -36,8 +38,8 @@ class ProfileWidget extends StatelessWidget{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400, color: settingsProfileNameTextColor),),
-              Text(description , style: TextStyle(color: settingsProfileDescriptionTextColor),)
+              Text(name, style: settingsProfileNameTextStyle),
+              Text(description , style: settingsProfileDescriptionTextStyle)
             ],
           )
         ],

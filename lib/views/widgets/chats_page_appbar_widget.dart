@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/text_styles.dart';
 import 'package:zchat/views/pages/settings_page.dart';
 
@@ -14,7 +15,7 @@ class ChatsPageAppbarWidget extends StatelessWidget {
           Text('Chat', style: appBarPrimaryTextStyle),
         ],
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: backgroundColor,
       actions: [
         IconButton(
           onPressed: () { Navigator.push(
@@ -23,7 +24,7 @@ class ChatsPageAppbarWidget extends StatelessWidget {
             },
           icon: Icon(
             Icons.settings,
-            color: Colors.grey.shade400,
+            color: iconDefaultColor,
             size: 22,
           ),
           tooltip: 'Settings',

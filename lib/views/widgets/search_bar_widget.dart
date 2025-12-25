@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/colors.dart';
+import '../data/text_styles.dart';
 
 class SearchBarWidget extends StatelessWidget{
   const SearchBarWidget({
@@ -31,7 +32,7 @@ class SearchBarWidget extends StatelessWidget{
               decoration: InputDecoration(
                 isDense: true,
                 hintText: text,
-                hintStyle: TextStyle(color: hintColor),
+                hintStyle: hintTextStyle,
                 border: InputBorder.none,
               ),
             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/notifiers.dart';
 
+import '../data/colors.dart';
+
 class NavbarIconWidget extends StatelessWidget{
   const NavbarIconWidget({
     super.key,
@@ -20,8 +22,8 @@ class NavbarIconWidget extends StatelessWidget{
         valueListenable: selectedPageNotifier,
         builder: (context, selectedPage, child) {
           return NavigationDestination(
-            selectedIcon: Icon(selectedIcon,color: Colors.black87,),// color: Color.fromARGB(225, 214, 252, 210)),
-            icon: Icon(unselectedIcon, color: Colors.grey.shade300),
+            selectedIcon: Icon(selectedIcon, color: selectedPageIconColor,),// color: Color.fromARGB(225, 214, 252, 210)),
+            icon: Icon(unselectedIcon, color: iconDefaultColor),
             label: label,
           );
         });
