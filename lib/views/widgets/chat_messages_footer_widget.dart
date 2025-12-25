@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
 
@@ -25,6 +24,7 @@ class ChatMessagesFooterWidget extends StatelessWidget {
 
                 Expanded(
                   child: TextField(
+                    scrollPadding: EdgeInsets.only(bottom: 100),
                     maxLines: null,
                     decoration: InputDecoration(
                       constraints: BoxConstraints(maxHeight: 50),

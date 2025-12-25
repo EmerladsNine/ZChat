@@ -30,7 +30,7 @@ class ChatMessagesPage extends StatelessWidget {
             ],
           ),
         ],
-      ),
+      )
     );
   }
 }
