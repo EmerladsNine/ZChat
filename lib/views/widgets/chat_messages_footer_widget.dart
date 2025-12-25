@@ -10,7 +10,7 @@ class ChatMessagesFooterWidget extends StatelessWidget {
     return Material(
       color: cardsColor,
       child: Padding(
-        padding: const EdgeInsets.only(top: 5,bottom: 30.0),
+        padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: Row(
           children: [
             InkWell(

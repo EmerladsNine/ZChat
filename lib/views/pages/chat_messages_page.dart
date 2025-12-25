@@ -7,32 +7,32 @@ class ChatMessagesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image(
-            image: Image.asset('assets/images/bg4.jpeg').image,
-            fit: BoxFit.cover,
-            color: backgroundColor.withAlpha(220),
-            colorBlendMode: BlendMode.overlay,
-          ),
-          Column(
+    return SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Stack(
+            fit: StackFit.expand,
             children: [
-              Expanded(child: Container()),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom > 30
-                      ? MediaQuery.of(context).viewInsets.bottom - 25
-                      : 0,
-                ),
-                child: ChatMessagesFooterWidget(),
+              Image(
+                image: Image.asset('assets/images/bg4.jpeg').image,
+                fit: BoxFit.cover,
+                color: backgroundColor.withAlpha(220),
+                colorBlendMode: BlendMode.overlay,
+              ),
+              Column(
+                children: [
+                  Expanded(child: Container()),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
+                    child: ChatMessagesFooterWidget(),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        )
     );
   }
 }
