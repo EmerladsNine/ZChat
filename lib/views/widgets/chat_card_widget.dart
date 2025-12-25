@@ -18,15 +18,18 @@ class ChatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ChatMessagesPage();
-            },
-          ),
-        );
+      onTap: () async {
+        await Future.delayed(Duration(milliseconds: 300), () {
+          if(!context.mounted) return;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ChatMessagesPage();
+              },
+            ),
+          );
+        });
       },
       borderRadius: BorderRadius.circular(5.0),
       child: Row(
