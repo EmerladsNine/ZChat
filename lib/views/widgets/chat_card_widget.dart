@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
 
 import '../data/text_styles.dart';
+import '../pages/chat_messages_page.dart';
 
 class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({
@@ -19,15 +20,21 @@ class ChatCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      style: ButtonStyle(
-        padding: WidgetStatePropertyAll(EdgeInsets.all(0)),
-        foregroundColor: WidgetStateProperty.all(Colors.grey.shade700),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-        ),
-      ),
+    return InkWell(
+      onTap: () async {
+        await Future.delayed(Duration(milliseconds: 300), () {
+          if(!context.mounted) return;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ChatMessagesPage();
+              },
+            ),
+          );
+        });
+      },
+      borderRadius: BorderRadius.circular(5.0),
       child: Row(
         spacing: 10,
         children: [
