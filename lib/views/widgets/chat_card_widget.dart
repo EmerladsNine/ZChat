@@ -17,15 +17,9 @@ class ChatCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      style: ButtonStyle(
-        padding: WidgetStatePropertyAll(EdgeInsets.all(0)),
-        foregroundColor: WidgetStateProperty.all(Colors.grey.shade700),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-        ),
-      ),
+    return InkWell(
+      onTap: () {},
+      borderRadius: BorderRadius.circular(5.0),
       child: Row(
         spacing: 10,
         children: [
