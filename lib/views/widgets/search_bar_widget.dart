@@ -25,6 +25,9 @@ class SearchBarWidget extends StatelessWidget{
           SizedBox(width: 8),
           Expanded(
             child: TextField(
+              onTapOutside: (event) {
+                FocusScope.of(context).unfocus();
+              },
               decoration: InputDecoration(
                 isDense: true,
                 hintText: text,
