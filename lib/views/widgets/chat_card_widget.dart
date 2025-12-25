@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/pages/chat_messages_page.dart';
 
 class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({
@@ -9,7 +10,6 @@ class ChatCardWidget extends StatelessWidget {
     this.timeStamp = '12:00 PM',
     this.message = 'Sorry friendo this is the endo'
   });
-
   final IconData cardIcon;
   final String chatName;
   final String message;
@@ -18,7 +18,16 @@ class ChatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ChatMessagesPage();
+            },
+          ),
+        );
+      },
       borderRadius: BorderRadius.circular(5.0),
       child: Row(
         spacing: 10,
@@ -53,10 +62,13 @@ class ChatCardWidget extends StatelessWidget {
                           style: TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.w600,
-                            fontSize: 18
+                            fontSize: 18,
                           ),
                         ),
-                        Text(message, style: TextStyle(color: smallerTextColor),),
+                        Text(
+                          message,
+                          style: TextStyle(color: smallerTextColor),
+                        ),
                       ],
                     ),
                   ),
