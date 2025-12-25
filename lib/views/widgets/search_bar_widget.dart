@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../data/colors.dart';
+
 class SearchBarWidget extends StatelessWidget{
   const SearchBarWidget({
     super.key,
@@ -15,18 +17,18 @@ class SearchBarWidget extends StatelessWidget{
       height: 35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: Color.fromRGBO(34, 34, 34, 1),
+        color: cardsColor,
       ),
       child: Row(
         children: [
-          Icon(Icons.search, color: Colors.grey.shade700),
+          Icon(Icons.search, color: hintColor),
           SizedBox(width: 8),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
                 isDense: true,
                 hintText: text,
-                hintStyle: TextStyle(color: Colors.grey.shade700, fontFamily: 'SFPro'),
+                hintStyle: TextStyle(color: hintColor),
                 border: InputBorder.none,
               ),
             ),

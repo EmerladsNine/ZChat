@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/colors.dart';
 
 class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({
@@ -33,9 +34,9 @@ class ChatCardWidget extends StatelessWidget {
             height: 50.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50.0),
-              color: Colors.white10,
+              color: cardsColor,
             ),
-            child: Icon(cardIcon, size: 30, color: Colors.white),
+            child: Icon(cardIcon, size: 30, color: primaryColor),
           ),
           Expanded(
             child: Container(
@@ -43,7 +44,7 @@ class ChatCardWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 5, 20, 0),
               decoration: BoxDecoration(
                 border: BoxBorder.fromLTRB(
-                  bottom: BorderSide(color: Colors.grey.shade900),
+                  bottom: BorderSide(color: dividerColor),
                 ),
               ),
               child: Row(
@@ -56,17 +57,16 @@ class ChatCardWidget extends StatelessWidget {
                         Text(
                           chatName,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: primaryColor,
                             fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                              fontFamily: 'SFPro'
+                            fontSize: 18
                           ),
                         ),
-                        Text(message),
+                        Text(message, style: TextStyle(color: smallerTextColor),),
                       ],
                     ),
                   ),
-                  Text(timeStamp),
+                  Text(timeStamp, style: TextStyle(color: smallerTextColor)),
                 ],
               ),
             ),

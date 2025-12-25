@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
+import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/widget_tree.dart';
 
@@ -17,8 +18,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
-          primary: Colors.black,
-          onPrimary: Colors.white,
+          primary: backgroundColor,
+          onPrimary: primaryColor,
           secondary: Color(0xFF1E2A33),
           onSecondary: Colors.white,
           surface: Color(0xFF141A20),

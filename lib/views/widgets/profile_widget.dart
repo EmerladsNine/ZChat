@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/colors.dart';
 
 class ProfileWidget extends StatelessWidget{
   const ProfileWidget({
@@ -15,7 +16,7 @@ class ProfileWidget extends StatelessWidget{
     return Container(
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-          color: Color.fromRGBO(23, 23, 23, 1),
+          color: cardsColor,
           borderRadius: BorderRadius.circular(10.0)
       ),
       child: Row(
@@ -35,8 +36,8 @@ class ProfileWidget extends StatelessWidget{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400, color: Colors.white, fontFamily: 'SFPro'),),
-              Text(description , style: TextStyle(color: Colors.grey.shade500, fontFamily: 'SFPro'),)
+              Text(name, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400, color: settingsProfileNameTextColor),),
+              Text(description , style: TextStyle(color: settingsProfileDescriptionTextColor),)
             ],
           )
         ],

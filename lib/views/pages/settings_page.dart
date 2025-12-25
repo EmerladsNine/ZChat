@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
+
+import '../data/text_styles.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -9,12 +12,12 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: backgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.black,
+              backgroundColor: backgroundColor,
               elevation: 0,
               title: const Text('Settings',
-                  style: TextStyle(fontWeight: FontWeight.w900, color: Colors.white, fontFamily: 'SFPro')),
+                  style: appBarPrimaryTextStyle),
             ),
 
     body: Padding(

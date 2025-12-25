@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/pages/calls_page.dart';
 import 'package:zchat/views/pages/chats_page.dart';
-import 'package:zchat/views/pages/communities_page.dart';
+import 'package:zchat/views/pages/zposts_page.dart';
 import 'package:zchat/views/pages/updates_page.dart';
 
 final List<Map<String, dynamic>> navItems = [
@@ -13,7 +13,7 @@ final List<Map<String, dynamic>> navItems = [
   {'selectedIcon': Icons.people,
     'unselectedIcon': Icons.people_outline,
     'label': 'ZPost',
-    'page': CommunitiesPage()
+    'page': ZpostsPage()
   },
   {'selectedIcon': Icons.star,
     'unselectedIcon': Icons.star_border,

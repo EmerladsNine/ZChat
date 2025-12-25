@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
+import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/navbar_data.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/widgets/chats_page_appbar_widget.dart';
@@ -13,12 +14,12 @@ class WidgetTree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: backgroundColor,
       appBar: PreferredSize(preferredSize: const Size.fromHeight(kToolbarHeight),
           child: ValueListenableBuilder(valueListenable: selectedPageNotifier, builder: (context, value, child) {
             return value == 0
                 ? ChatsPageAppbarWidget()
-                : AppBar(backgroundColor: Colors.black);
+                : AppBar(backgroundColor: backgroundColor);
           },)
       ),
       body: GestureDetector(
@@ -46,7 +47,7 @@ class WidgetTree extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Launch a rocket',
-        backgroundColor: Colors.greenAccent.shade400,
+        backgroundColor: secondaryColor,
         child: const Icon(Icons.rocket, color: Colors.black87),
       ),
 

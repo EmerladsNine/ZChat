@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:zchat/views/data/text_styles.dart';
 import 'package:zchat/views/pages/settings_page.dart';
 
 class ChatsPageAppbarWidget extends StatelessWidget {
@@ -9,27 +11,16 @@ class ChatsPageAppbarWidget extends StatelessWidget {
     return AppBar(
       title:  Row(
         children: [
-          Text('Z',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: Colors.greenAccent.shade400, fontFamily: 'SFPro')
-          ),
-          Text('Chat',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: 'SFPro')),
+          Padding(
+            padding: EdgeInsetsGeometry.only(right: 8),
+            child: SvgPicture.asset("assets/icons/nazi.svg", height: 45, width: 45)
+            ,),
+          Text('Z', style: appBarSecondaryTextStyle),
+          Text('Chat', style: appBarPrimaryTextStyle),
         ],
       ),
       backgroundColor: Colors.black,
       actions: [
-        IconButton(
-          onPressed: () {},
-          constraints: const BoxConstraints(),
-          icon: Container(
-            padding: EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade900,
-                borderRadius: BorderRadius.circular(15.0)
-              ),
-              child: Icon(Icons.camera_enhance_rounded, color: Colors.grey.shade300,size: 18,)),
-          tooltip: 'Camera',
-        ),
         IconButton(
           onPressed: () { Navigator.push(
             context,

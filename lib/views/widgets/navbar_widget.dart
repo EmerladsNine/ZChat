@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/notifiers.dart';
 
+import '../data/colors.dart';
 import '../data/navbar_data.dart';
 import 'navbar_icon_widget.dart';
 
@@ -18,21 +19,21 @@ class NavbarWidget extends StatelessWidget {
           children: [
             // line
             Container(
-              height: 1,
-              color: Color.fromRGBO(16, 21, 25, 1),
+              height: 0.5,
+              color: dividerColor,
             ),
 
           NavigationBar(
-            backgroundColor: Colors.black,
+            backgroundColor: backgroundColor,
             selectedIndex: selectedPage,
-            indicatorColor: Colors.greenAccent.shade400,//Color.fromARGB(90, 0, 220, 123),
+            indicatorColor: secondaryColor,
 
             labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
                   (states) {
                     if (states.contains(WidgetState.selected)) {
-                      return TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'SFPro');
+                      return TextStyle(color: primaryColor, fontWeight: FontWeight.bold);
                     }
-                    return TextStyle(color: Colors.white,fontFamily: 'SFPro');
+                    return TextStyle(color: primaryColor);
                     },
             ),
             onDestinationSelected: (val)  {
