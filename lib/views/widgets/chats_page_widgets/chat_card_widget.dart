@@ -55,38 +55,42 @@ class ChatCardWidget extends StatelessWidget {
           Expanded(
             child: Container(
               height: 70,
-              padding: EdgeInsets.fromLTRB(0, 5, 20, 0),
+              padding: EdgeInsets.fromLTRB(0, 5, 12.5, 0),
               decoration: BoxDecoration(
                 border: BoxBorder.fromLTRB(
                   bottom: BorderSide(color: dividerColor),
                 ),
               ),
-              child: Row(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
+                  Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          chatName,
-                          style: chatCardNameTextStyle,
+                        Expanded(
+                          child: Text(
+                            chatName,
+                            style: chatCardNameTextStyle,
+                          ),
                         ),
-                        Text(
-                            message,
-                            overflow: TextOverflow.ellipsis,
-                            style:chatCardMessageDetailsTextStyle
-                        ),
-                      ],
-                    ),
+                        Text(timeStamp, style: chatCardMessageDetailsTextStyle),
+                      ]
                   ),
-                  Text(timeStamp, style: chatCardMessageDetailsTextStyle),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(right: 5),
+                    child: Text(
+                      message,
+                      overflow: TextOverflow.ellipsis,
+                      style:chatCardMessageDetailsTextStyle,
+                    )
+                  )
+                ]
+              )
+            )
+          )
+        ]
+      )
     );
   }
 }
