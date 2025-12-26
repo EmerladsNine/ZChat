@@ -13,7 +13,7 @@ class ChatMessagesPage extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           //BackgroundImageFallBack
-          Expanded(child: Container(
+          Positioned.fill(child: Container(
             color: backgroundColor,
           )),
           Image(
