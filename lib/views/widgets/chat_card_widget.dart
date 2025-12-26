@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/data/notifiers.dart';
 
 import '../data/text_styles.dart';
 import '../pages/chat_messages_page.dart';
@@ -21,7 +22,8 @@ class ChatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
+      onTap: () async{
+        isNavigating.value = true;
         await Future.delayed(Duration(milliseconds: 300), () {
           if(!context.mounted) return;
           Navigator.push(
@@ -33,6 +35,7 @@ class ChatCardWidget extends StatelessWidget {
             ),
           );
         });
+        isNavigating.value = false;
       },
       borderRadius: BorderRadius.circular(5.0),
       child: Row(
