@@ -28,22 +28,9 @@
 //           bool selected = selectedPage == pageNumber;
 //
 //           return InkWell(
-//               onTap: () async {
-//                   int duration = 200;
-//
+//               onTap: () {
 //                   if(isNavigating.value) return;
-//
-//                   isNavigating.value = true;
-//
-//                   if ((selectedPage - pageNumber).abs() > 1) duration = 1;
-//
-//                   await pageController.animateToPage(
-//                   pageNumber,
-//                   duration: Duration(milliseconds: duration),
-//                   curve: Curves.easeInOut,
-//                   );
-//
-//                   isNavigating.value = false;
+//                   pageController.jumpToPage(pageNumber);
 //                 );
 //               },
 //               borderRadius: BorderRadius.circular(12),
@@ -121,22 +108,9 @@ class NavbarIconWidget extends StatelessWidget{
           bool selected = selectedPage == pageNumber;
 
           return InkWell(
-              onTap: () async {
-                int duration = 200;
-
+              onTap: () {
                 if(isNavigating.value) return;
-
-                isNavigating.value = true;
-
-                if ((selectedPage - pageNumber).abs() > 1) duration = 1;
-
-                await pageController.animateToPage(
-                  pageNumber,
-                  duration: Duration(milliseconds: duration),
-                  curve: Curves.easeOut,
-                );
-
-                isNavigating.value = false;
+                pageController.jumpToPage(pageNumber);
               },
               borderRadius: BorderRadius.circular(12),
               child: SizedBox(
