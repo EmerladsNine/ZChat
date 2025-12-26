@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
-import 'package:zchat/views/widgets/profile_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
 
 import '../data/text_styles.dart';

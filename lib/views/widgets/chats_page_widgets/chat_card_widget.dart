@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/notifiers.dart';
 
-import '../data/text_styles.dart';
-import '../pages/chat_messages_page.dart';
+import '../../data/text_styles.dart';
+import '../../pages/chat_messages_page.dart';
 
 class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({

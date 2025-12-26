@@ -3,8 +3,8 @@ import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/navbar_data.dart';
 import 'package:zchat/views/data/notifiers.dart';
-import 'package:zchat/views/widgets/chats_page_appbar_widget.dart';
-import 'package:zchat/views/widgets/navbar_widget.dart';
+import 'package:zchat/views/widgets/chats_page_widgets/chats_page_appbar_widget.dart';
+import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({super.key,required this.pageController,required this.fullSwipeController});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
-import 'package:zchat/views/widgets/chat_messages_footer_widget.dart';
+import 'package:zchat/views/widgets/chats_page_widgets/chat_messages_footer_widget.dart';
 
 class ChatMessagesPage extends StatelessWidget {
   const ChatMessagesPage({super.key});

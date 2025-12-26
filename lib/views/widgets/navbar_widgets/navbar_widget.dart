@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../data/colors.dart';
-import '../data/navbar_data.dart';
-import '../data/notifiers.dart';
+import '../../data/colors.dart';
+import '../../data/navbar_data.dart';
+import '../../data/notifiers.dart';
 import 'navbar_icon_widget.dart';
 
 class NavbarWidget extends StatelessWidget{

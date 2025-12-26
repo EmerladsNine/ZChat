@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
 
-import '../data/text_styles.dart';
+import '../../data/text_styles.dart';
 
 class ProfileWidget extends StatelessWidget{
   const ProfileWidget({

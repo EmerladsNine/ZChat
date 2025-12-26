@@ -81,7 +81,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/notifiers.dart';
 
-import '../data/colors.dart';
+import '../../data/colors.dart';
 
 class NavbarIconWidget extends StatelessWidget{
   const NavbarIconWidget({

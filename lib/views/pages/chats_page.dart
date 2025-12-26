@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/pages/chat_messages_page.dart';
-import 'package:zchat/views/widgets/chat_card_widget.dart';
+import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
 
 class ChatsPage extends StatelessWidget {
