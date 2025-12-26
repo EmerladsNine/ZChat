@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/notifiers.dart';
-import 'package:zchat/views/pages/chat_messages_page.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
 
@@ -24,9 +23,10 @@ class ChatsPage extends StatelessWidget {
                   SingleChildScrollView(
                     child: Column(
                       children: [
-                        ChatCardWidget(cardIcon: Icons.chair_rounded, chatName: "Jawad Zaraket",),
-                        ChatCardWidget(cardIcon: Icons.data_exploration, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 AM',),
-                        ChatCardWidget(cardIcon: Icons.ac_unit, chatName: "Hitler", message: 'KILL THE JUICE', timeStamp: 'NAZI TIME',),
+                        ChatCardWidget(cardIcon: Icons.chair_rounded, chatName: "Jawad Zaraket"),
+                        ChatCardWidget(cardIcon: Icons.flag_rounded, chatName: "Donald Trump", message: 'Wakey wakey, eggs and bakey! Folks, it’s time—time to pray like never before, believe me, the best prayers, tremendous prayers, the likes of which nobody’s ever seen', timeStamp: '5:03 AM'),
+                        ChatCardWidget(cardIcon: Icons.data_exploration, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 AM'),
+                        ChatCardWidget(cardIcon: Icons.flight_class, chatName: "Hitler", message: 'KILL THE JUICE', timeStamp: 'NAZI TIME'),
                       ],
                     ),
                   ),

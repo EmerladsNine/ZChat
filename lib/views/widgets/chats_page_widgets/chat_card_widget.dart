@@ -72,7 +72,11 @@ class ChatCardWidget extends StatelessWidget {
                           chatName,
                           style: chatCardNameTextStyle,
                         ),
-                        Text(message, style:chatCardMessageDetailsTextStyle),
+                        Text(
+                            message,
+                            overflow: TextOverflow.ellipsis,
+                            style:chatCardMessageDetailsTextStyle
+                        ),
                       ],
                     ),
                   ),
