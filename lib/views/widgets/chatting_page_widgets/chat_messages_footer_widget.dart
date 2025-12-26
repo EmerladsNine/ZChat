@@ -27,7 +27,7 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
         child: Material(
           color: cardsColor,
           child: Padding(
-            padding: const EdgeInsets.only(top: 5, bottom: 5),
+            padding: const EdgeInsets.only(top: 3,bottom: 3),
             child: Row(
               children: [
                 EmojiPanelButtonWidget(),

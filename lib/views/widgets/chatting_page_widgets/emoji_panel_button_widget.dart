@@ -11,7 +11,7 @@ class EmojiPanelButtonWidget extends StatelessWidget{
       onTap: () {},
       borderRadius: BorderRadius.circular(15),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: Icon(
           Icons.emoji_emotions_outlined,
           color: primaryColor,

@@ -23,7 +23,7 @@ class SendButtonWidget extends StatelessWidget{
       onTap: () {},
       borderRadius: BorderRadius.circular(15),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+        padding: const EdgeInsets.all(4.0),
         child: !hasVisibleText(text)
             ? Icon(Icons.mic, size: 25, color: primaryColor)
             : Transform.translate(
