@@ -44,6 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
   late final FullSwipeController fullSwipeController;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(AssetImage('assets/images/bg4.jpeg'), context);
+  }
+
+  @override
   void initState() {
     super.initState();
     pageController = PageController(initialPage: selectedPageNotifier.value);
