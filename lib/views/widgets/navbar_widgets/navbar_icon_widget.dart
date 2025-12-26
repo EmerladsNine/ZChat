@@ -29,10 +29,8 @@
 //
 //           return InkWell(
 //               onTap: () {
-//                 pageController.animateToPage(
-//                   pageNumber,
-//                   duration: const Duration(milliseconds: 250),
-//                   curve: Curves.easeOut,
+//                   if(isNavigating.value) return;
+//                   pageController.jumpToPage(pageNumber);
 //                 );
 //               },
 //               borderRadius: BorderRadius.circular(12),
@@ -112,11 +110,7 @@ class NavbarIconWidget extends StatelessWidget{
           return InkWell(
               onTap: () {
                 if(isNavigating.value) return;
-                pageController.animateToPage(
-                  pageNumber,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeOut,
-                );
+                pageController.jumpToPage(pageNumber);
               },
               borderRadius: BorderRadius.circular(12),
               child: SizedBox(
