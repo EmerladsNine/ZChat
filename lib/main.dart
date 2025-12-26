@@ -16,6 +16,11 @@ class MyApp extends StatelessWidget {
       title: 'ZChat',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.blue,
+          selectionHandleColor: Colors.blue,
+          selectionColor: Colors.blue
+        ),
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
           primary: backgroundColor,
