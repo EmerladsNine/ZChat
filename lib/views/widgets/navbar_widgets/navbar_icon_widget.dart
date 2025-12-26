@@ -3,6 +3,8 @@
 //
 // import '../data/colors.dart';
 //
+// const int animationDuration = 500;
+//
 // class NavbarIconWidget extends StatelessWidget{
 //   const NavbarIconWidget({
 //     super.key,
@@ -46,7 +48,7 @@
 //                           clipBehavior: Clip.none,
 //                           children: [
 //                             AnimatedContainer(
-//                               duration: const Duration(milliseconds: 400),
+//                               duration: const Duration(milliseconds: animationDuration),
 //                               width: selected ? 60 : 0,
 //                               height: 30,
 //                               decoration: BoxDecoration(
@@ -68,7 +70,7 @@
 //                       fontWeight: selected ? FontWeight.bold : FontWeight.normal,
 //                       fontFamily: 'Inter',
 //                     ),
-//                     duration: Duration(milliseconds: 400),
+//                     duration: Duration(milliseconds: animationDuration),
 //                     child: Text(label),
 //                   )
 //                 ],
@@ -82,6 +84,8 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/notifiers.dart';
 
 import '../../data/colors.dart';
+
+const int animationDuration = 500;
 
 class NavbarIconWidget extends StatelessWidget{
   const NavbarIconWidget({
@@ -129,7 +133,7 @@ class NavbarIconWidget extends StatelessWidget{
                               clipBehavior: Clip.none,
                               children: [
                                 AnimatedContainer(
-                                  duration: const Duration(milliseconds: 400),
+                                  duration: const Duration(milliseconds: animationDuration),
                                   width: selected ? 60 : 0,
                                   height: 30,
                                   decoration: BoxDecoration(
@@ -137,31 +141,34 @@ class NavbarIconWidget extends StatelessWidget{
                                       borderRadius: BorderRadius.circular(15)
                                   ),
                                 ),
-
-                                Icon(
-                                    selected ? selectedIcon : unselectedIcon,
-                                    color: selected ? selectedPageIconColor: iconDefaultColor),
+                                AnimatedCrossFade(
+                                  firstChild: Icon(selectedIcon, color: selectedPageIconColor),
+                                  secondChild: Icon(unselectedIcon, color: iconDefaultColor),
+                                  crossFadeState: selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                                  duration: Duration(milliseconds: animationDuration)
+                                )
                               ],
                             ),
                           )
                       ),
                       AnimatedSize(
-                        duration: Duration(milliseconds: 400),
+                        duration: Duration(milliseconds: animationDuration),
                         curve: Curves.easeOut,
-                        child: AnimatedOpacity(
-                          opacity: selected ? 1 : 0,
-                          duration: Duration(milliseconds: 400),
-                          child: selected
-                              ? AnimatedDefaultTextStyle(
-                            style: TextStyle(
-                              color: primaryColor,
-                              fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                              fontFamily: 'Inter',
-                            ),
-                            duration: Duration(milliseconds: 400),
-                            child: Text(label),
-                          )
-                              : SizedBox.shrink(), // height = 0 when unselected
+                        child: Align(
+                          heightFactor: selected ? 1 : 0,
+                          child: AnimatedOpacity(
+                              opacity: selected ? 1 : 0,
+                              duration: Duration(milliseconds: animationDuration),
+                              child: AnimatedDefaultTextStyle(
+                                style: TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                                  fontFamily: 'Inter',
+                                ),
+                                duration: Duration(milliseconds: animationDuration),
+                                child: Text(label),
+                              )
+                          ),
                         ),
                       )
                     ],

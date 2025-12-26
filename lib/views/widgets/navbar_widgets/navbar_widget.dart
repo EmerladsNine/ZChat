@@ -17,33 +17,36 @@ class NavbarWidget extends StatelessWidget{
         builder: (context, selectedPage, child) {
           return Padding(
             padding: EdgeInsetsGeometry.only(bottom: 15),
-            child: SafeArea(
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: 0.5,
-                        color: dividerColor,
-                      ),
-                      Padding(
-                        padding: EdgeInsetsGeometry.only(top: 15),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children:
-                            List.generate(navItems.length, (index) {
-                              return NavbarIconWidget(
-                                selectedIcon: navItems[index]['selectedIcon'],
-                                unselectedIcon: navItems[index]['unselectedIcon'],
-                                label: navItems[index]['label'],
-                                pageNumber: index,
-                                pageController: pageController,
-                              );
-                            })
+            child: Container(
+              color: backgroundColor,
+              child: SafeArea(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: 0.5,
+                          color: dividerColor,
+                        ),
+                        Padding(
+                            padding: EdgeInsetsGeometry.only(top: 15),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children:
+                                List.generate(navItems.length, (index) {
+                                  return NavbarIconWidget(
+                                    selectedIcon: navItems[index]['selectedIcon'],
+                                    unselectedIcon: navItems[index]['unselectedIcon'],
+                                    label: navItems[index]['label'],
+                                    pageNumber: index,
+                                    pageController: pageController,
+                                  );
+                                })
+                            )
                         )
-                      )
-                    ]
-                )
-            ),
+                      ]
+                  )
+              )
+            )
           );
         });
   }
