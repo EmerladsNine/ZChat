@@ -11,31 +11,24 @@ class ChatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SearchBarWidget(text: 'Ask Zane or Search'),
-                SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ChatCardWidget(cardIcon: Icons.chair_rounded, chatName: "Jawad Zaraket",),
-                        ChatCardWidget(cardIcon: Icons.data_exploration, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 AM',),
-                        ChatCardWidget(cardIcon: Icons.ac_unit, chatName: "Hitler", message: 'KILL THE JUICE', timeStamp: 'NAZI TIME',),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            SearchBarWidget(text: 'Ask Zane or Search'),
+            SizedBox(
+              height: 10,
             ),
-            ValueListenableBuilder(valueListenable: isNavigating, builder: (context, value, child) {
-                return Positioned.fill(child: value ? AbsorbPointer() : IgnorePointer());
-            },)
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ChatCardWidget(cardIcon: Icons.chair_rounded, chatName: "Jawad Zaraket",),
+                    ChatCardWidget(cardIcon: Icons.data_exploration, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 AM',),
+                    ChatCardWidget(cardIcon: Icons.ac_unit, chatName: "Hitler", message: 'KILL THE JUICE', timeStamp: 'NAZI TIME',),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       );
