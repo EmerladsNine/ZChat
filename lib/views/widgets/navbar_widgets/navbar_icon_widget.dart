@@ -110,13 +110,22 @@ class NavbarIconWidget extends StatelessWidget{
           bool selected = selectedPage == pageNumber;
 
           return InkWell(
-              onTap: () {
+              onTap: () async {
+                int duration = 200;
+
                 if(isNavigating.value) return;
-                pageController.animateToPage(
+
+                isNavigating.value = true;
+
+                if ((selectedPage - pageNumber).abs() > 1) duration = 1;
+
+                await pageController.animateToPage(
                   pageNumber,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeOut,
+                  duration: Duration(milliseconds: duration),
+                  curve: Curves.easeInOut,
                 );
+
+                isNavigating.value = false;
               },
               borderRadius: BorderRadius.circular(12),
               child: SizedBox(
