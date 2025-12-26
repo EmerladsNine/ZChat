@@ -12,6 +12,10 @@ class ChatMessagesPage extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
+          //BackgroundImageFallBack
+          Expanded(child: Container(
+            color: backgroundColor,
+          )),
           Image(
             image: Image.asset('assets/images/bg4.jpeg').image,
             fit: BoxFit.cover,
