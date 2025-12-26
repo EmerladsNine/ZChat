@@ -23,6 +23,8 @@ class ChatCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async{
+        if(isNavigating.value) return;
+
         isNavigating.value = true;
         await Future.delayed(Duration(milliseconds: 300), () {
           if(!context.mounted) return;

@@ -19,14 +19,21 @@ class ChatsPage extends StatelessWidget {
               height: 10,
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ChatCardWidget(cardIcon: Icons.chair_rounded, chatName: "Jawad Zaraket",),
-                    ChatCardWidget(cardIcon: Icons.data_exploration, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 AM',),
-                    ChatCardWidget(cardIcon: Icons.ac_unit, chatName: "Hitler", message: 'KILL THE JUICE', timeStamp: 'NAZI TIME',),
-                  ],
-                ),
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ChatCardWidget(cardIcon: Icons.chair_rounded, chatName: "Jawad Zaraket",),
+                        ChatCardWidget(cardIcon: Icons.data_exploration, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 AM',),
+                        ChatCardWidget(cardIcon: Icons.ac_unit, chatName: "Hitler", message: 'KILL THE JUICE', timeStamp: 'NAZI TIME',),
+                      ],
+                    ),
+                  ),
+                  ValueListenableBuilder(valueListenable: isNavigating, builder: (context, value, child) {
+                    return Positioned.fill(child: value ? AbsorbPointer() : IgnorePointer());
+                  },)
+                ],
               ),
             ),
           ],

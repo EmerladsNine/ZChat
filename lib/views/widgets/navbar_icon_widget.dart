@@ -107,6 +107,7 @@ class NavbarIconWidget extends StatelessWidget{
 
           return InkWell(
               onTap: () {
+                if(isNavigating.value) return;
                 pageController.animateToPage(
                   pageNumber,
                   duration: const Duration(milliseconds: 250),
