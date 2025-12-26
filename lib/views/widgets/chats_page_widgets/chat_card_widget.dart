@@ -57,8 +57,8 @@ class ChatCardWidgetState extends State<ChatCardWidget> {
       },
 
       onTap: () async {
-        //Only Navigate if there is no other navigation running.
-        if (isNavigating.value) return;
+        //Only Navigate if there is no other navigation running and you are the button being animated.
+        if (!_pressed || isNavigating.value) return;
         isNavigating.value = true;
 
         //Keep waiting as long as the animation running , or just stop everything if context is no longer mounted .
