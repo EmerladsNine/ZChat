@@ -3,9 +3,9 @@ import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_text_field_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/send_button_widget.dart';
 
-import '../chatting_page_widgets/add_file_widget.dart';
-import '../chatting_page_widgets/camera_button_widget.dart';
-import '../chatting_page_widgets/emoji_panel_button_widget.dart';
+import 'add_file_widget.dart';
+import 'camera_button_widget.dart';
+import 'emoji_panel_button_widget.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
   const ChatMessagesFooterWidget({super.key});
