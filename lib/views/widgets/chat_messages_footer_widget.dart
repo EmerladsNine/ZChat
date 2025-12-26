@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/Internet/messaging_protocol.dart';
+import 'package:zchat/MessageSystem/Internet/messaging_protocol.dart';
 import 'package:zchat/views/data/colors.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
