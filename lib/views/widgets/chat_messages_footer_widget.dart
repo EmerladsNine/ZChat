@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_protocol.dart';
+import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/views/data/colors.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
@@ -11,8 +12,8 @@ class ChatMessagesFooterWidget extends StatefulWidget {
 }
 
 class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
-  String _text = "";
-
+  TextEditingController controller = TextEditingController();
+  Chat chat = Chat();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,9 +43,10 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
                   child: TextField(
                     onChanged: (value) {
                       setState(() {
-                        _text = value;
+                        controller.text = value;
                       });
                     },
+                    controller: controller,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -61,7 +63,9 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    chat.debugPrintMessages();
+                  },
                   borderRadius: BorderRadius.circular(15),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -83,12 +87,15 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
                 ),
                 InkWell(
                   onTap: () {
-                    SendMessage(_text);
+                    sendMessage(controller.text,chat);
+                    setState(() {
+                      controller.text = "";
+                    });
                   },
                   borderRadius: BorderRadius.circular(15),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                    child: _text == ""
+                    child: controller.text == ""
                         ? Icon(Icons.mic, size: 25, color: primaryColor)
                         : Transform.translate(
                             offset: Offset(0, -3),

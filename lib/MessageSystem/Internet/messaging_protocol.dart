@@ -1,9 +1,14 @@
 import 'dart:io';
 import 'dart:convert';
 
-Future<void> SendMessage(String message) async {
+import 'package:zchat/MessageSystem/chat.dart';
+import 'package:zchat/MessageSystem/message.dart';
+
+Future<void> sendMessage(String message,Chat chat) async {
   final String host = "92.113.26.192";
   final int port = 9999;
+
+  chat.addMessage(Message(text: message));
 
   try {
     final Socket socket = await Socket.connect(host, port);
