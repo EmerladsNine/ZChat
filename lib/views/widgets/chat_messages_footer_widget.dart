@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/Internet/messaging_protocol.dart';
 import 'package:zchat/views/data/colors.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
@@ -10,7 +11,7 @@ class ChatMessagesFooterWidget extends StatefulWidget {
 }
 
 class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
-  String? _text = "";
+  String _text = "";
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +82,9 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    SendMessage(_text);
+                  },
                   borderRadius: BorderRadius.circular(15),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
