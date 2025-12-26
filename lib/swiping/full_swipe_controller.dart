@@ -19,11 +19,13 @@ class FullSwipeController {
   double _position = 0;
   double _startingPage = 0;
   void onDragStart(DragStartDetails details) {
+    if (isNavigating.value) return;
     _startingPage = pageController.page ?? 0;
     _position = pageController.position.pixels;
   }
 
   void onDragUpdate(DragUpdateDetails details) {
+    if (isNavigating.value) return;
     double delta = details.delta.dx;
     _dragDistance += delta;
     _position = pageController.position.pixels - delta;
