@@ -27,7 +27,7 @@ class ChatMessagesPage extends StatelessWidget {
               Expanded(child: Container()),
               Padding(
                 padding: EdgeInsets.only(
-                  bottom:MediaQuery.of(context).viewInsets.bottom
+                  bottom: MediaQuery.of(context).viewInsets.bottom
                 ),
                 child: ChatMessagesFooterWidget(),
               ),
