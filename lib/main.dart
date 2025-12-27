@@ -60,9 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
     pageController = PageController(initialPage: selectedPageNotifier.value);
     fullSwipeController = FullSwipeController(
       pageController: pageController,
-      minSwipeDistance: 100,
+      minSwipeDistance: 10,
       minSwipeVelocity: 1,
-      snapAnimationDuration: Duration(milliseconds: 300),
+      snapAnimationDuration: Duration(milliseconds: 200),
       snapCurve: Curves.ease,
     );
   }
