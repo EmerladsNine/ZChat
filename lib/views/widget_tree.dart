@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/colors.dart';
@@ -26,37 +24,39 @@ class WidgetTree extends StatelessWidget {
                 : AppBar(backgroundColor: backgroundColor);
           },)
       ),
-      body: Listener(
-        onPointerUp: (_) async {
-          if (pendingPage != null || pendingPage != selectedPageNotifier.value ) {
-            touchTimer?.cancel();
-            touchTimer = Timer(fastReTouchThreshold, () {
-              selectedPageNotifier.value = pendingPage!;
-              pendingPage = null;
-            }
-            );
-          }
-        },
-        child: GestureDetector(
+      body: GestureDetector(
           onHorizontalDragStart: fullSwipeController.onDragStart,
           onHorizontalDragUpdate: fullSwipeController.onDragUpdate,
           onHorizontalDragEnd: fullSwipeController.onDragEnd,
-          child: ValueListenableBuilder(
-              valueListenable: stretchFactor,
-              builder: (context, scale, child) {
-                return Transform.scale(
-                  scaleX: scale,
-                  child: PageView(
-                    controller: pageController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    pageSnapping: false,
-                    onPageChanged: (value) => pendingPage = value,
-                    children: navItems.map((item) => item['page'] as Widget).toList(),
-                  ),
-                );
-              }
-          ),
-        ),
+          child: NotificationListener<ScrollNotification>(
+              onNotification: (scrollNotification) {
+                if (scrollNotification is ScrollEndNotification) {
+                  final page = pageController.page ?? 0;
+                  final settledPage = page.round();
+
+                  if ((page - settledPage).abs() < 0.001 && pendingPage != null) {
+                    // Update logical page immediately
+                    selectedPageNotifier.value = pendingPage!;
+                    pendingPage = null;
+                  }
+                }
+                return true;
+              },
+              child: ValueListenableBuilder(
+                  valueListenable: stretchFactor,
+                  builder: (context, scale, child) {
+                    return Transform.scale(
+                      scaleX: scale,
+                      child: PageView(
+                        controller: pageController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        pageSnapping: false,
+                        onPageChanged: (value) => pendingPage = value,
+                        children: navItems.map((item) => item['page'] as Widget).toList(),
+                      ),
+                    );
+                  })
+          )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -66,7 +66,7 @@ class WidgetTree extends StatelessWidget {
       ),
 
       //Footer
-      bottomNavigationBar: NavbarWidget(pageController: pageController),
-    );
+      bottomNavigationBar: NavbarWidget(pageController: pageController)
+      );
   }
 }
