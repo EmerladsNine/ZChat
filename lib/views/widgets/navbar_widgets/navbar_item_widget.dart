@@ -3,7 +3,7 @@ import 'package:zchat/views/data/notifiers.dart';
 
 import '../../data/colors.dart';
 
-const int animationDuration = 500;
+const int animationDuration = 300;
 
 class NavbarItemWidget extends StatelessWidget{
   const NavbarItemWidget({
