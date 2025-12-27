@@ -3,6 +3,7 @@ import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/data/text_styles.dart';
 import 'package:zchat/views/pages/settings_page.dart';
+import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
 class ChatsPageAppbarWidget extends StatelessWidget {
   const ChatsPageAppbarWidget({super.key});
@@ -18,21 +19,24 @@ class ChatsPageAppbarWidget extends StatelessWidget {
       ),
       backgroundColor: backgroundColor,
       actions: [
-        IconButton(
-          onPressed: () {
-            if(isNavigating.value) return;
-            Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SettingsPage()));
-            },
-          icon: Icon(
-            Icons.settings,
-            color: iconDefaultColor,
-            size: 22,
-          ),
-          tooltip: 'Settings',
-        ),
-      ],
+        Padding(
+          padding: EdgeInsetsGeometry.only(right: 15),
+          child: RippleEffectButtonWidget(
+            disableSet: disableChatsPageButtons,
+              appStateNotifier: isNavigating,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SettingsPage()));
+              },
+              child: Icon(
+                  Icons.settings,
+                  color: iconDefaultColor,
+                  size: 22
+              )
+          )
+        )
+      ]
     );
   }
 }

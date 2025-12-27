@@ -6,8 +6,6 @@ import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import '../../data/text_styles.dart';
 import '../../pages/chat_messages_page.dart';
 
-ValueNotifier<bool> disableChatCards = ValueNotifier(false);
-
 class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({
     super.key,
@@ -25,7 +23,7 @@ class ChatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RippleEffectButtonWidget(
-        disableSet: disableChatCards,
+        disableSet: disableChatsPageButtons,
         appStateNotifier: isNavigating,
         onTap: () {
           Navigator.push(
