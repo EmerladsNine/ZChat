@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/colors.dart';
@@ -5,6 +7,8 @@ import 'package:zchat/views/data/navbar_data.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chats_page_appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
+
+import 'data/swipe_data.dart';
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({super.key,required this.pageController,required this.fullSwipeController});
@@ -22,26 +26,36 @@ class WidgetTree extends StatelessWidget {
                 : AppBar(backgroundColor: backgroundColor);
           },)
       ),
-      body: GestureDetector(
-        onHorizontalDragStart: fullSwipeController.onDragStart,
-        onHorizontalDragUpdate: fullSwipeController.onDragUpdate,
-        onHorizontalDragEnd: fullSwipeController.onDragEnd,
-        child: ValueListenableBuilder(
-            valueListenable: stretchFactor,
-            builder: (context, scale, child) {
-              return Transform.scale(
-                scaleX: scale,
-                child: PageView(
-                  controller: pageController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  pageSnapping: false,
-                  onPageChanged: (value) {
-                    selectedPageNotifier.value = value;
-                  },
-                  children: navItems.map((item) => item['page'] as Widget).toList(),
-                ),
-              );
+      body: Listener(
+        onPointerUp: (_) async {
+          if (pendingPage != null || pendingPage != selectedPageNotifier.value ) {
+            touchTimer?.cancel();
+            touchTimer = Timer(fastReTouchThreshold, () {
+              selectedPageNotifier.value = pendingPage!;
+              pendingPage = null;
             }
+            );
+          }
+        },
+        child: GestureDetector(
+          onHorizontalDragStart: fullSwipeController.onDragStart,
+          onHorizontalDragUpdate: fullSwipeController.onDragUpdate,
+          onHorizontalDragEnd: fullSwipeController.onDragEnd,
+          child: ValueListenableBuilder(
+              valueListenable: stretchFactor,
+              builder: (context, scale, child) {
+                return Transform.scale(
+                  scaleX: scale,
+                  child: PageView(
+                    controller: pageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    pageSnapping: false,
+                    onPageChanged: (value) => pendingPage = value,
+                    children: navItems.map((item) => item['page'] as Widget).toList(),
+                  ),
+                );
+              }
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

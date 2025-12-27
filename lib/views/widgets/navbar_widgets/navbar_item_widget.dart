@@ -29,8 +29,10 @@ class NavbarItemWidget extends StatelessWidget{
 
           return InkWell(
               onTap: () {
-                  if(isNavigating.value || selectedPage == pageNumber) return;
+                  if(isNavigating.value || selected) return;
+                  selectedPageNotifier.value = pageNumber;
                   isNavigating.value = true;
+
                   pageController.jumpToPage(pageNumber);
               },
               borderRadius: BorderRadius.circular(12),
