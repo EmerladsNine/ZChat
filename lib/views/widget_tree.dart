@@ -35,7 +35,6 @@ class WidgetTree extends StatelessWidget {
                   final settledPage = page.round();
 
                   if ((page - settledPage).abs() < 0.001 && pendingPage != null) {
-                    // Update logical page immediately
                     selectedPageNotifier.value = pendingPage!;
                     pendingPage = null;
                   }
