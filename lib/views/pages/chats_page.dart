@@ -20,10 +20,15 @@ class ChatsPage extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    ChatCardWidget(cardIcon: Icons.smart_toy_outlined, chatName: "Zane", message: 'Father, are you proud?', timeStamp: '1:35 pm'),
+                    ChatCardWidget(cardIcon: Icons.android, chatName: "Pixel", message: 'Uncle, did you see zane?', timeStamp: '1:07 pm'),
                     ChatCardWidget(cardIcon: Icons.chair_rounded, chatName: "Jawad Zaraket"),
-                    ChatCardWidget(cardIcon: Icons.flag_rounded, chatName: "Donald Trump", message: 'Wakey wakey, eggs and bakey! Folks, it’s time—time to pray like never before, believe me, the best prayers, tremendous prayers, the likes of which nobody’s ever seen', timeStamp: '5:03 AM'),
-                    ChatCardWidget(cardIcon: Icons.data_exploration, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 AM'),
+                    ChatCardWidget(cardIcon: Icons.flag_rounded, chatName: "Donald Trump", message: 'Wakey wakey, eggs and bakey! Folks, it’s time—time to pray like never before, believe me, the best prayers, tremendous prayers, the likes of which nobody’s ever seen', timeStamp: '5:03 am'),
+                    ChatCardWidget(cardIcon: Icons.monetization_on_outlined, chatName: "Elon Musk", message: 'Ahmad I am in debt I need some money', timeStamp: '4:03 am'),
+                    ChatCardWidget(cardIcon: Icons.data_exploration, chatName: "Mark Zuckerberg", message: 'bro Ahmad plz answer', timeStamp: '1:23 am'),
                     ChatCardWidget(cardIcon: Icons.flight_class, chatName: "Hitler", message: 'KILL THE JUICE', timeStamp: 'NAZI TIME'),
+                    ChatCardWidget(cardIcon: Icons.emoji_emotions_outlined, chatName: "Ahmad Awali", message: 'Whatever happens I am always happy', timeStamp: 'Yesterday'),
+                    ChatCardWidget(cardIcon: Icons.shield_moon_rounded, chatName: "Batman", message: 'I wanna be like you. Teach me masteeer', timeStamp: 'Yesterday'),
                   ],
                 ),
               )
