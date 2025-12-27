@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data/colors.dart';
 import '../../data/navbar_data.dart';
 import '../../data/notifiers.dart';
-import 'navbar_icon_widget.dart';
+import 'navbar_item_widget.dart';
 
 class NavbarWidget extends StatelessWidget{
   const NavbarWidget({super.key, required this.pageController});
@@ -33,7 +33,7 @@ class NavbarWidget extends StatelessWidget{
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children:
                                 List.generate(navItems.length, (index) {
-                                  return NavbarIconWidget(
+                                  return NavbarItemWidget(
                                     selectedIcon: navItems[index]['selectedIcon'],
                                     unselectedIcon: navItems[index]['unselectedIcon'],
                                     label: navItems[index]['label'],
