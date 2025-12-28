@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/pages/calls_page.dart';
 import 'package:zchat/views/pages/chats_page.dart';
 import 'package:zchat/views/pages/zposts_page.dart';
-import 'package:zchat/views/pages/updates_page.dart';
+import 'package:zchat/views/pages/zane_page.dart';
 
 final List<Map<String, dynamic>> navItems = [
   {'selectedIcon': Icons.chat,
@@ -17,8 +17,8 @@ final List<Map<String, dynamic>> navItems = [
   },
   {'selectedIcon': Icons.star,
     'unselectedIcon': Icons.star_border,
-    'label': 'Updates',
-    'page':UpdatesPage()
+    'label': 'Zane',
+    'page': ZanePage()
   },
   {'selectedIcon': Icons.call,
     'unselectedIcon': Icons.call_outlined,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class UpdatesPage extends StatelessWidget {
-  const UpdatesPage({super.key});
+class ZanePage extends StatelessWidget {
+  const ZanePage({super.key});
 
   @override
   Widget build(BuildContext context) {
