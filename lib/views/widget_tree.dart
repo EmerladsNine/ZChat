@@ -16,12 +16,12 @@ class WidgetTree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: primaryBackgroundColor,
       appBar: PreferredSize(preferredSize: const Size.fromHeight(kToolbarHeight),
           child: ValueListenableBuilder(valueListenable: selectedPageNotifier, builder: (context, value, child) {
             return value == 0
                 ? ChatsPageAppbarWidget()
-                : AppBar(backgroundColor: backgroundColor);
+                : AppBar(backgroundColor: primaryBackgroundColor);
           },)
       ),
       body: GestureDetector(
@@ -60,7 +60,7 @@ class WidgetTree extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Launch a rocket',
-        backgroundColor: secondaryColor,
+        backgroundColor: brandPrimaryColor,
         child: const Icon(Icons.rocket, color: Colors.black87),
       ),
 

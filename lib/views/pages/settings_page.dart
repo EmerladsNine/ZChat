@@ -12,9 +12,9 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: primaryBackgroundColor,
             appBar: AppBar(
-              backgroundColor: backgroundColor,
+              backgroundColor: primaryBackgroundColor,
               elevation: 0,
               title: const Text('Settings',
                   style: appBarPrimaryTextStyle),

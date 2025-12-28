@@ -17,10 +17,10 @@ class ChatsPageAppbarWidget extends StatelessWidget {
           Text('Chat', style: appBarPrimaryTextStyle),
         ],
       ),
-      backgroundColor: backgroundColor,
+      backgroundColor: primaryBackgroundColor,
       actions: [
         Padding(
-          padding: EdgeInsetsGeometry.only(right: 10),
+          padding: EdgeInsetsGeometry.only(right: 16),
           child: RippleEffectButtonWidget(
             disableSet: disableChatsPageButtons,
               animationDuration: Duration(milliseconds: 30),
@@ -34,7 +34,7 @@ class ChatsPageAppbarWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
                     Icons.settings,
-                    color: iconDefaultColor,
+                    color: primaryColor,
                     size: 25
                 ),
               )

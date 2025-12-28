@@ -7,7 +7,7 @@ class ProfileWidget extends StatelessWidget{
   const ProfileWidget({
     super.key,
     this.name = 'Ahmad Msheik',
-    this.description = 'I hate the juice (not all)'
+    this.description = 'I love mathematics.'
   });
 
   final String name;

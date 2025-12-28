@@ -14,12 +14,12 @@ class ChatMessagesPage extends StatelessWidget {
         children: [
           //BackgroundImageFallBack
           Positioned.fill(child: Container(
-            color: backgroundColor,
+            color: primaryBackgroundColor,
           )),
           Image(
             image: Image.asset('assets/images/bg4.jpeg').image,
             fit: BoxFit.cover,
-            color: backgroundColor.withAlpha(220),
+            color: primaryBackgroundColor.withAlpha(220),
             colorBlendMode: BlendMode.overlay,
           ),
           Column(

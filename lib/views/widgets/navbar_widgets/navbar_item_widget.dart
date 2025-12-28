@@ -52,7 +52,7 @@ class NavbarItemWidget extends StatelessWidget{
                                   width: selected ? 60 : 0,
                                   height: 30,
                                   decoration: BoxDecoration(
-                                      color: selected ? secondaryColor : Colors.transparent,
+                                      color: selected ? brandPrimaryColor : Colors.transparent,
                                       borderRadius: BorderRadius.circular(15)
                                   ),
                                 ),

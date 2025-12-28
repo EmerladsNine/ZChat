@@ -10,7 +10,7 @@ const TextStyle appBarPrimaryTextStyle = TextStyle(
 const TextStyle appBarSecondaryTextStyle = TextStyle(
     fontSize: 27,
     fontWeight: FontWeight.w800,
-    color: secondaryColor,
+    color: brandPrimaryColor,
     fontFamily: 'InterDisplay');
 
 const TextStyle hintTextStyle = TextStyle(
@@ -20,19 +20,25 @@ const TextStyle hintTextStyle = TextStyle(
 const TextStyle settingsProfileNameTextStyle = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w400,
-    color: settingsProfileNameTextColor,
+    color: primaryColor,
     fontFamily: 'Inter');
 
 const TextStyle settingsProfileDescriptionTextStyle =  TextStyle(
-    color: settingsProfileDescriptionTextColor,
+    color: textSecondaryColor,
     fontFamily: 'Inter');
 
 const TextStyle chatCardNameTextStyle =  TextStyle(
     color: primaryColor,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
     fontSize: 18,
     fontFamily: 'Inter');
 
+const TextStyle chatCardUnreadNumTextStyle =  TextStyle(
+    color: primaryColor,
+    fontWeight: FontWeight.w700,
+    fontSize: 11,
+    fontFamily: 'Inter');
+
 const TextStyle chatCardMessageDetailsTextStyle =  TextStyle(
-    color: smallerTextColor,
+    color: textSecondaryColor,
     fontFamily: 'Inter');
