@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/navbar_data.dart';
 import 'package:zchat/views/data/notifiers.dart';
+import 'package:zchat/views/widgets/buttons/glassy_button_widget.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chats_page_appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
 
@@ -57,11 +60,13 @@ class WidgetTree extends StatelessWidget {
                   })
           )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Launch a rocket',
-        backgroundColor: secondaryColor,
-        child: const Icon(Icons.rocket, color: Colors.black87),
+      floatingActionButton: GlassyButtonWidget(
+        icon: Icons.search,
+        iconSize: 25,
+        padding: EdgeInsets.symmetric(horizontal: 50),
+        backgroundColor: Colors.transparent,
+        alpha1: 0,
+        alpha2: 0,
       ),
 
       //Footer
