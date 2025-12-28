@@ -22,7 +22,7 @@ class ChatTextFieldWidget extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: 15, right: 15 ,top: 4),
             isDense: true,
             filled: true,
-            fillColor: dividerColor,
+            fillColor: cardsColor,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(20),

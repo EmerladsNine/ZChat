@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
-import 'package:zchat/views/widgets/search_bar_widget.dart';
 
 class ChatsPage extends StatelessWidget {
   const ChatsPage({super.key});
@@ -12,10 +11,6 @@ class ChatsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SearchBarWidget(text: 'Ask Zane or Search'),
-            SizedBox(
-              height: 10,
-            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(

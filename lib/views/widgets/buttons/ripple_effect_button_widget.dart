@@ -13,10 +13,12 @@ class RippleEffectButtonWidget extends BaseButtonWidget{
     super.appStateNotifier,
     this.animationDuration = const Duration(milliseconds: 200),
     this.cardColor = hintColor,
+    this.borderRadius
   });
 
   final Duration animationDuration;
   final Color cardColor;
+  final BorderRadiusGeometry? borderRadius;
 
   @override
   Widget buildOverlay(BuildContext context, bool pressed, VoidCallback markAnimationAsDone) {

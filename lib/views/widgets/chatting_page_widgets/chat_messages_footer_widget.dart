@@ -21,11 +21,11 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: cardsColor,
+      color: backgroundColor,
       child: SafeArea(
         top: false,
         child: Material(
-          color: cardsColor,
+          color: backgroundColor,
           child: Padding(
             padding: const EdgeInsets.only(top: 5,bottom: 5),
             child: Row(

@@ -25,6 +25,7 @@ class ChatCardWidget extends StatelessWidget {
     return RippleEffectButtonWidget(
         disableSet: disableChatsPageButtons,
         appStateNotifier: isNavigating,
+        borderRadius: BorderRadius.circular(15),
         onTap: () {
           Navigator.push(
               context,

@@ -23,10 +23,6 @@ class NavbarWidget extends StatelessWidget{
                   child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          height: 0.5,
-                          color: dividerColor,
-                        ),
                         Padding(
                             padding: EdgeInsetsGeometry.only(top: 15),
                             child: Row(

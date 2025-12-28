@@ -19,12 +19,14 @@ class ChatsPageAppbarWidget extends StatelessWidget {
       ),
       backgroundColor: backgroundColor,
       actions: [
+        IconButton(onPressed: () {}, icon: Icon(Icons.search_rounded,size: 26,)),
         Padding(
           padding: EdgeInsetsGeometry.only(right: 10),
           child: RippleEffectButtonWidget(
             disableSet: disableChatsPageButtons,
               animationDuration: Duration(milliseconds: 30),
               appStateNotifier: isNavigating,
+              borderRadius: BorderRadius.circular(50),
               onTap: () {
                 Navigator.push(
                     context,

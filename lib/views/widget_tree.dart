@@ -57,11 +57,17 @@ class WidgetTree extends StatelessWidget {
                   })
           )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Launch a rocket',
-        backgroundColor: secondaryColor,
-        child: const Icon(Icons.rocket, color: Colors.black87),
+
+     floatingActionButton: Container(
+        decoration: BoxDecoration(
+          border: Border()
+        ),
+        child: FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'Launch a rocket',
+          backgroundColor: secondaryColor,
+          child: const Icon(Icons.rocket, color: cardsColor),
+        ),
       ),
 
       //Footer
