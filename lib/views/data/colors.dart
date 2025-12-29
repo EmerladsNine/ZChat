@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color primaryBackgroundColor = Color(0xFF0A0A0D);
-const Color cardsColor = Color(0xFF1B1C1F);
+const Color cardsColor = Color(0xFF131313);
 const Color primaryColor = Color(0xFFD0D0D0);
 
 const Color brandPrimaryColor = Color(0xFF00E676);
