@@ -57,3 +57,10 @@ const TextStyle settingsCardsButtonsTextStyle = TextStyle(
   color: primaryColor,
   fontFamily: 'Inter',
 );
+
+const TextStyle ownProfileNameTextStyle = TextStyle(
+  fontSize: 22.0,
+  fontWeight: FontWeight.w700,
+  color: primaryColor,
+  fontFamily: 'Inter',
+);
