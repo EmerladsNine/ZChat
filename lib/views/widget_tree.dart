@@ -9,32 +9,40 @@ import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
 import 'data/swipe_data.dart';
 
 class WidgetTree extends StatelessWidget {
-  const WidgetTree({super.key,required this.pageController,required this.fullSwipeController});
+  const WidgetTree({
+    super.key,
+    required this.pageController,
+    required this.fullSwipeController,
+  });
+
   final PageController pageController;
   final FullSwipeController fullSwipeController;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: primaryBackgroundColor,
-      appBar: PreferredSize(preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: ValueListenableBuilder(valueListenable: selectedPageNotifier, builder: (context, value, child) {
-            return value == 0
+    return ValueListenableBuilder(
+      valueListenable: selectedPageNotifier,
+      builder: (context, selectedPage, child) {
+        return Scaffold(
+          backgroundColor: primaryBackgroundColor,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: selectedPage == 0
                 ? ChatsPageAppbarWidget()
-                : AppBar(backgroundColor: primaryBackgroundColor);
-          },)
-      ),
-      body: GestureDetector(
-          onHorizontalDragStart: fullSwipeController.onDragStart,
-          onHorizontalDragUpdate: fullSwipeController.onDragUpdate,
-          onHorizontalDragEnd: fullSwipeController.onDragEnd,
-          child: NotificationListener<ScrollNotification>(
+                : AppBar(backgroundColor: primaryBackgroundColor),
+          ),
+          body: GestureDetector(
+            onHorizontalDragStart: fullSwipeController.onDragStart,
+            onHorizontalDragUpdate: fullSwipeController.onDragUpdate,
+            onHorizontalDragEnd: fullSwipeController.onDragEnd,
+            child: NotificationListener<ScrollNotification>(
               onNotification: (scrollNotification) {
                 if (scrollNotification is ScrollEndNotification) {
                   final page = pageController.page ?? 0;
                   final settledPage = page.round();
 
-                  if ((page - settledPage).abs() < 0.001 && pendingPage != null) {
+                  if ((page - settledPage).abs() < 0.001 &&
+                      pendingPage != null) {
                     selectedPageNotifier.value = pendingPage!;
                     pendingPage = null;
                   }
@@ -42,30 +50,37 @@ class WidgetTree extends StatelessWidget {
                 return true;
               },
               child: ValueListenableBuilder(
-                  valueListenable: stretchFactor,
-                  builder: (context, scale, child) {
-                    return Transform.scale(
-                      scaleX: scale,
-                      child: PageView(
-                        controller: pageController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        pageSnapping: false,
-                        onPageChanged: (value) => pendingPage = value,
-                        children: navItems.map((item) => item['page'] as Widget).toList(),
-                      ),
-                    );
-                  })
-          )
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Launch a rocket',
-        backgroundColor: brandPrimaryColor,
-        child: const Icon(Icons.rocket, color: Colors.black87),
-      ),
+                valueListenable: stretchFactor,
+                builder: (context, scale, child) {
+                  return Transform.scale(
+                    scaleX: scale,
+                    child: PageView(
+                      controller: pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      pageSnapping: false,
+                      onPageChanged: (value) => pendingPage = value,
+                      children: navItems
+                          .map((item) => item['page'] as Widget)
+                          .toList(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          floatingActionButton: selectedPage == 0
+              ? FloatingActionButton(
+                  onPressed: () {},
+                  tooltip: 'Launch a rocket',
+                  backgroundColor: brandPrimaryColor,
+                  child: const Icon(Icons.rocket, color: Colors.black87),
+                )
+              : null,
 
-      //Footer
-      bottomNavigationBar: NavbarWidget(pageController: pageController)
-      );
+          //Footer
+          bottomNavigationBar: NavbarWidget(pageController: pageController),
+        );
+      },
+    );
   }
 }
