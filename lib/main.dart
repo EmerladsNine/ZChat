@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/widget_tree.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    Provider(
+      create: (_) => MessagingService()..initServer(),
+      dispose: (context, service) {
+        service.dispose();
+      },
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +29,7 @@ class MyApp extends StatelessWidget {
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.blue,
           selectionHandleColor: Colors.transparent,
-          selectionColor: Colors.blue
+          selectionColor: Colors.blue,
         ),
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
@@ -31,7 +41,8 @@ class MyApp extends StatelessWidget {
           onSurface: Colors.white,
           error: Color(0xFFCF6679),
           onError: Colors.white,
-        )),
+        ),
+      ),
       home: const MyHomePage(),
     );
   }
@@ -69,6 +80,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetTree(pageController: pageController,fullSwipeController: fullSwipeController,);
+    return WidgetTree(
+      pageController: pageController,
+      fullSwipeController: fullSwipeController,
+    );
   }
 }
