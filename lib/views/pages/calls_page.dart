@@ -10,7 +10,6 @@ class CallsPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: primaryBackgroundColor,
-        appBar: AppBar(backgroundColor: primaryBackgroundColor, elevation: 0),
         body: Container(),
       ),
     );

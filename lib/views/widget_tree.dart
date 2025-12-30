@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
+import 'package:zchat/views/data/appbar_data.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/navbar_data.dart';
 import 'package:zchat/views/data/notifiers.dart';
-import 'package:zchat/views/widgets/chats_page_widgets/chats_page_appbar_widget.dart';
+import 'package:zchat/views/widgets/appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
 
 import 'data/swipe_data.dart';
+
+final List<String> appBarTitlesWithoutTheZ = ['Posts', 'ane', 'Calls'];
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({
@@ -27,9 +30,10 @@ class WidgetTree extends StatelessWidget {
           backgroundColor: primaryBackgroundColor,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: selectedPage == 0
-                ? ChatsPageAppbarWidget()
-                : AppBar(backgroundColor: primaryBackgroundColor),
+            child: AppBarWidget(
+              title: appBarData[selectedPage].title,
+              actions: [?appBarData[selectedPage].actions],
+            ),
           ),
           body: GestureDetector(
             onHorizontalDragStart: fullSwipeController.onDragStart,
