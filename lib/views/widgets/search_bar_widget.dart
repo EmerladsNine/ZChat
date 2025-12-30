@@ -4,12 +4,13 @@ import '../data/colors.dart';
 import '../data/text_styles.dart';
 
 class SearchBarWidget extends StatelessWidget{
-  const SearchBarWidget({
+  SearchBarWidget({
     super.key,
     this.text = 'Search'
   });
 
   final String text;
+  final focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,9 @@ class SearchBarWidget extends StatelessWidget{
           SizedBox(width: 8),
           Expanded(
             child: TextField(
+              focusNode: focusNode,
               onTapOutside: (event) {
-                FocusScope.of(context).unfocus();
+                focusNode.unfocus();
               },
               decoration: InputDecoration(
                 isDense: true,

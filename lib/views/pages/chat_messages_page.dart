@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
-import 'package:zchat/views/widgets/chat_messages_footer_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 
 class ChatMessagesPage extends StatelessWidget {
   const ChatMessagesPage({super.key});
@@ -12,10 +12,14 @@ class ChatMessagesPage extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
+          //BackgroundImageFallBack
+          Positioned.fill(child: Container(
+            color: primaryBackgroundColor,
+          )),
           Image(
             image: Image.asset('assets/images/bg4.jpeg').image,
             fit: BoxFit.cover,
-            color: backgroundColor.withAlpha(220),
+            color: primaryBackgroundColor.withAlpha(220),
             colorBlendMode: BlendMode.overlay,
           ),
           Column(
@@ -23,7 +27,7 @@ class ChatMessagesPage extends StatelessWidget {
               Expanded(child: Container()),
               Padding(
                 padding: EdgeInsets.only(
-                  bottom:MediaQuery.of(context).viewInsets.bottom
+                  bottom: MediaQuery.of(context).viewInsets.bottom
                 ),
                 child: ChatMessagesFooterWidget(),
               ),

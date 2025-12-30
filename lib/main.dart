@@ -16,9 +16,14 @@ class MyApp extends StatelessWidget {
       title: 'ZChat',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.blue,
+          selectionHandleColor: Colors.transparent,
+          selectionColor: Colors.blue
+        ),
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
-          primary: backgroundColor,
+          primary: primaryBackgroundColor,
           onPrimary: primaryColor,
           secondary: Color(0xFF1E2A33),
           onSecondary: Colors.white,
@@ -44,14 +49,20 @@ class _MyHomePageState extends State<MyHomePage> {
   late final FullSwipeController fullSwipeController;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(AssetImage('assets/images/bg4.jpeg'), context);
+  }
+
+  @override
   void initState() {
     super.initState();
     pageController = PageController(initialPage: selectedPageNotifier.value);
     fullSwipeController = FullSwipeController(
       pageController: pageController,
-      minSwipeDistance: 100,
+      minSwipeDistance: 20,
       minSwipeVelocity: 1,
-      snapAnimationDuration: Duration(milliseconds: 300),
+      snapAnimationDuration: Duration(milliseconds: 200),
       snapCurve: Curves.ease,
     );
   }
