@@ -39,6 +39,10 @@ class SettingsButtonWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Text(data.icon),
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsetsGeometry.only(
@@ -48,13 +52,9 @@ class SettingsButtonWidget extends StatelessWidget {
                     ),
                     child: Text(
                       data.label,
-                      style: settingsProfileNameTextStyle,
+                      style: settingsCardsButtonsTextStyle,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: 12.5),
-                  child: Icon(data.icon, color: iconDefaultColor),
                 ),
               ],
             ),
