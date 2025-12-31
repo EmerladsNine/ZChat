@@ -36,7 +36,8 @@ class MessagingService {
     }
     try {
       socket.write(message);
-      chat.addMessage(Message(text: message));
+      int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
+      chat.addMessage(Message(text: message,timestamp: timestamp));
       print('sent: $message');
     } catch (e) {
       print(e);
