@@ -27,9 +27,9 @@ class SendButtonWidget extends StatelessWidget{
         context.read<Chat>().debugPrintMessages();
       } :
           () {
-        controller.text = "";
         final msgService = context.read<MessagingService>();
         msgService.sendMessage(controller.text, context.read<Chat> ());
+        controller.text = "";
       },
       borderRadius: BorderRadius.circular(15),
       child: Padding(
