@@ -16,7 +16,7 @@ class ChatMessagesFooterWidget extends StatefulWidget {
 }
 
 class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
-  String _text = "";
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +33,12 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
               children: [
                 EmojiPanelButtonWidget(),
                 ChatTextFieldWidget(
-                    onChanged: (value) {
-                      setState(() {
-                        _text = value;
-                      });
-                    }
+                  controller: controller,
+                    onChanged: (value) {setState(() {});}
                 ),
                 AddFileWidget(),
                 CameraButtonWidget(),
-                SendButtonWidget(text: _text)
+                SendButtonWidget(controller: controller,)
               ],
             ),
           ),

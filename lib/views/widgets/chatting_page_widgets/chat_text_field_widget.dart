@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../../data/colors.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
-  const ChatTextFieldWidget({super.key, required this.onChanged});
+  const ChatTextFieldWidget({super.key, required this.onChanged , required this.controller});
 
   final ValueChanged<String> onChanged;
+
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,7 @@ class ChatTextFieldWidget extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 2.0),
         child: TextField(
           onChanged: onChanged,
+          controller: controller,
           keyboardType: TextInputType.multiline,
           minLines: 1,
           maxLines: 4,

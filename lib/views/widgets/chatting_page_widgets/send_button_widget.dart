@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../data/colors.dart';
 
 class SendButtonWidget extends StatelessWidget{
-  const SendButtonWidget({super.key, required this.text});
+  const SendButtonWidget({super.key, required this.controller});
 
-  final String text;
+  final TextEditingController controller;
 
   //TODO Ensure messages contain visible characters at send time, not only when toggling the send button, so this can’t be bypassed via an API.
   bool hasVisibleText(String input) {
@@ -20,11 +20,13 @@ class SendButtonWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        controller.text = "";
+      },
       borderRadius: BorderRadius.circular(15),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
-        child: !hasVisibleText(text)
+        child: !hasVisibleText(controller.text)
             ? Icon(Icons.mic, size: 25, color: primaryColor)
             : Transform.translate(
           offset: Offset(0, -3),
