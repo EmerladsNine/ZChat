@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
-import 'package:zchat/views/widgets/settings_widgets/settings_button_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/settings_navigation_button_widget.dart';
 
 import '../../data/colors.dart';
-import '../../data_classes/settings_button_data.dart';
+import '../../data_classes/settings_navigation_button_data.dart';
 
 class SettingsCardWidget extends StatelessWidget {
   const SettingsCardWidget({
@@ -13,7 +13,7 @@ class SettingsCardWidget extends StatelessWidget {
   });
 
   final String category;
-  final List<SettingsButtonData> buttons;
+  final List<SettingsNavigationButtonData> buttons;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class SettingsCardWidget extends StatelessWidget {
           Container(height: 0.5, color: dividerColor),
 
           ...List.generate(buttons.length, (index) {
-            return SettingsButtonWidget(
+            return SettingsNavigationButtonWidget(
               data: buttons[index],
               drawBorder: index != buttons.length - 1,
             );
