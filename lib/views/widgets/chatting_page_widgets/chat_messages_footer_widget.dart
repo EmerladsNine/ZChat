@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_text_field_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/send_button_widget.dart';
@@ -16,7 +15,7 @@ class ChatMessagesFooterWidget extends StatefulWidget {
 }
 
 class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
-  String _text = "";
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +32,12 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
               children: [
                 EmojiPanelButtonWidget(),
                 ChatTextFieldWidget(
-                    onChanged: (value) {
-                      setState(() {
-                        _text = value;
-                      });
-                    }
+                  controller: controller,
+                    onChanged: (value) {setState(() {});}
                 ),
                 AddFileWidget(),
                 CameraButtonWidget(),
-                SendButtonWidget(text: _text)
+                SendButtonWidget(controller: controller,)
               ],
             ),
           ),
