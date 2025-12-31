@@ -1,9 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble.dart';
 
 class ChatMessagesPage extends StatelessWidget {
   const ChatMessagesPage({super.key});
+
+  final messages = const [
+    "Hello",
+    "Hi Brother",
+    "How are you",
+    "I want to learn programming",
+    "I want to kill you",
+    "Hello",
+    "Hi Brother",
+    "How are you",
+    "I want to learn programming",
+    "I want to kill you",
+    "Hello",
+    "Hi Brother",
+    "How are you",
+    "I want to learn programming",
+    "I want to kill you",
+    "Hello",
+    "Hi Brother",
+    "How are you",
+    "I want to learn programming",
+    "I want to kill you",
+    "Hello",
+    "Hi Brother",
+    "How are you",
+    "I want to learn programming",
+    "I want to kill you",
+    "Hello",
+    "Hi Brother",
+    "How are you",
+    "I want to learn programming",
+    "I want to kill you",
+    "Hello",
+    "Hi Brother",
+    "How are you",
+    "I want to learn programming",
+    "I want to kill you",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +52,7 @@ class ChatMessagesPage extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           //BackgroundImageFallBack
-          Positioned.fill(child: Container(
-            color: primaryBackgroundColor,
-          )),
+          Positioned.fill(child: Container(color: primaryBackgroundColor)),
           Image(
             image: Image.asset('assets/images/bg4.jpeg').image,
             fit: BoxFit.cover,
@@ -24,17 +61,37 @@ class ChatMessagesPage extends StatelessWidget {
           ),
           Column(
             children: [
-              Expanded(child: Container()),
+              Expanded(
+                child: SafeArea(
+                  bottom: false,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final double maxWidth = constraints.maxWidth * 0.7;
+                      return ListView.builder(
+                        reverse: true,
+                        itemCount: messages.length,
+                        itemBuilder: (context, index) {
+                          return MessageBubble(
+                            text: messages[index],
+                            time: '12:00 PM',
+                            maxBubbleWidth: maxWidth,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
                 child: ChatMessagesFooterWidget(),
               ),
             ],
           ),
         ],
-      )
+      ),
     );
   }
 }
