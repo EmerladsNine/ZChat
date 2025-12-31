@@ -23,3 +23,16 @@ final List<SettingsNavigationButtonData> personalInfoPrivacyWidgetsData = [
     icon: '💬',
   ),
 ];
+
+final List<SettingsNavigationButtonData> interactionsWidgetsData = [
+  SettingsNavigationButtonData(
+    label: 'Who Can Add Me to Groups',
+    goToPage: TempPage(),
+    icon: '👥',
+  ),
+  SettingsNavigationButtonData(
+    label: 'Blocked Contacts',
+    goToPage: TempPage(),
+    icon: '🚫',
+  ),
+];

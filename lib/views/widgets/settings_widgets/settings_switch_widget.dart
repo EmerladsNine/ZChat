@@ -29,7 +29,7 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         color: cardsColor,
-        border: BoxBorder.fromLTRB(bottom: BorderSide(color: dividerColor)),
+        border: BoxBorder.all(color: dividerColor, width: 0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -96,6 +96,8 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
               setState(() {
                 isOn = value;
               });
+
+              widget.data.onChanged?.call(value);
             },
           ),
         ],

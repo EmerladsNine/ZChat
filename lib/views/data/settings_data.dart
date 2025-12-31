@@ -51,7 +51,7 @@ final List<SettingsNavigationButtonData> customizationSettingsButtons = [
 
 final List<SettingsNavigationButtonData> miscellaneousSettingsButtons = [
   SettingsNavigationButtonData(
-    label: 'Storage',
+    label: 'Storage and Data',
     goToPage: StorageSettingsPage(),
     icon: '💾',
   ),

@@ -22,53 +22,56 @@ class SettingsBaseButtonWidget extends StatelessWidget {
       disableSet: disableSettingsPageButtons,
       appStateNotifier: isNavigating,
       onTap: data.onTap,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsetsGeometry.symmetric(vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                if (data.icon != null)
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text(data.icon!),
-                  ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsGeometry.only(
-                          left: 8,
-                          bottom: 3,
-                          top: 3,
-                        ),
-                        child: Text(
-                          data.label,
-                          style: settingsCardsButtonsTextStyle,
-                        ),
-                      ),
-
-                      if (data.helpText != null)
+      child: Container(
+        color: cardsColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsetsGeometry.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  if (data.icon != null)
+                    Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: Text(data.icon!),
+                    ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Padding(
-                          padding: EdgeInsetsGeometry.only(left: 12),
+                          padding: EdgeInsetsGeometry.only(
+                            left: 8,
+                            bottom: 3,
+                            top: 3,
+                          ),
                           child: Text(
-                            data.helpText!,
-                            style: hintTextStyle,
-                            maxLines: 3,
+                            data.label,
+                            style: settingsCardsButtonsTextStyle,
                           ),
                         ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
 
-          if (drawBorder) Container(height: 0.5, color: dividerColor),
-        ],
+                        if (data.helpText != null)
+                          Padding(
+                            padding: EdgeInsetsGeometry.only(left: 12),
+                            child: Text(
+                              data.helpText!,
+                              style: hintTextStyle,
+                              maxLines: 3,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            if (drawBorder) Container(height: 0.5, color: dividerColor),
+          ],
+        ),
       ),
     );
   }

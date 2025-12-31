@@ -31,21 +31,22 @@ class SettingsNavigationButtonWidget extends StatelessWidget {
           ),
         );
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsetsGeometry.symmetric(vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                if (data.icon != null)
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text(data.icon!),
-                  ),
-                Expanded(
-                  child: Column(
+      child: Container(
+        color: cardsColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsetsGeometry.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  if (data.icon != null)
+                    Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: Text(data.icon!),
+                    ),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
@@ -71,13 +72,12 @@ class SettingsNavigationButtonWidget extends StatelessWidget {
                         ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-
-          if (drawBorder) Container(height: 0.5, color: dividerColor),
-        ],
+            if (drawBorder) Container(height: 0.5, color: dividerColor),
+          ],
+        ),
       ),
     );
   }
