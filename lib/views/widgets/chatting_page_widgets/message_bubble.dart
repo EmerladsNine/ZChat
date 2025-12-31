@@ -43,7 +43,7 @@ class MessageBubble extends StatelessWidget {
               border: Border.all(color: dividerColor),
             ),
             padding: EdgeInsets.all(5),
-            margin: senderName == null ? EdgeInsets.symmetric(vertical: 5) : EdgeInsets.zero,
+            margin: senderName == null ? EdgeInsets.symmetric(vertical: 7) : EdgeInsets.symmetric(vertical: 2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

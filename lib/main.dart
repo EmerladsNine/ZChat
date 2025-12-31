@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    Provider(
+    Provider<MessagingService>(
+      lazy: false,
       create: (_) => MessagingService()..initServer(),
       dispose: (context, service) {
         service.dispose();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_text_field_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/send_button_widget.dart';
@@ -9,7 +10,6 @@ import 'emoji_panel_button_widget.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
   const ChatMessagesFooterWidget({super.key});
-
   @override
   State<ChatMessagesFooterWidget> createState() =>
       _ChatMessagesFooterWidgetState();

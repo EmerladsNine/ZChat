@@ -1,12 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:zchat/MessageSystem/message.dart';
 
-class Chat{
-  final List<Message> _loadedMessages = [];
-  void addMessage(Message message) => _loadedMessages.add(message);
+class Chat extends ChangeNotifier{
+  final List<Message> _messages = [];
+  List<Message> get messages => List.unmodifiable(_messages);
+
+  void addMessage(Message message) {
+    _messages.insert(0,message);
+    notifyListeners();
+  }
+
   void debugPrintMessages() {
-    for( Message msg in _loadedMessages)
+    for( Message msg in _messages)
     {
-      print('${msg.text}\n');
+      print('${msg.text}');
     }
   }
 }

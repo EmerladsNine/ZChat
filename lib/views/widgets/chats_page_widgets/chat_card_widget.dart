@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
+import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/enums/message_status.dart';
@@ -94,7 +97,12 @@ class ChatCardWidget extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return ChatMessagesPage();
+              Chat chat = Chat();
+              currentChat = chat;
+              return ChangeNotifierProvider(
+                create: (_) => chat,
+                child: ChatMessagesPage()
+              );
             },
           ),
         );

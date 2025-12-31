@@ -23,9 +23,12 @@ class SendButtonWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: !hasVisibleText(text) ? () {
+        context.read<Chat>().debugPrintMessages();
+      } :
+          () {
         final msgService = context.read<MessagingService>();
-        msgService.sendMessage('testt', Chat());
+        msgService.sendMessage(text, context.read<Chat> ());
       },
       borderRadius: BorderRadius.circular(15),
       child: Padding(
