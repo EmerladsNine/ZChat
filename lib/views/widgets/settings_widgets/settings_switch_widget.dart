@@ -25,73 +25,81 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsetsGeometry.symmetric(vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    if (widget.data.icon != null)
-                      Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          widget.data.icon!,
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsGeometry.only(
-                              left: 8,
-                              bottom: 3,
-                              top: 3,
-                            ),
-                            child: Text(
-                              widget.data.label,
-                              style: settingsCardsButtonsTextStyle,
-                            ),
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+        color: cardsColor,
+        border: BoxBorder.fromLTRB(bottom: BorderSide(color: dividerColor)),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsGeometry.symmetric(vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      if (widget.data.icon != null)
+                        Padding(
+                          padding: EdgeInsets.only(left: 8),
+                          child: Text(
+                            widget.data.icon!,
+                            style: TextStyle(fontSize: 24),
                           ),
-
-                          if (widget.data.helpText != null)
+                        ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Padding(
-                              padding: EdgeInsetsGeometry.only(left: 12),
+                              padding: EdgeInsetsGeometry.only(
+                                left: 8,
+                                bottom: 3,
+                                top: 3,
+                              ),
                               child: Text(
-                                widget.data.helpText!,
-                                style: hintTextStyle,
-                                maxLines: 3,
+                                widget.data.label,
+                                style: settingsCardsButtonsTextStyle,
                               ),
                             ),
-                        ],
+
+                            if (widget.data.helpText != null)
+                              Padding(
+                                padding: EdgeInsetsGeometry.only(left: 12),
+                                child: Text(
+                                  widget.data.helpText!,
+                                  style: hintTextStyle,
+                                  maxLines: 3,
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
 
-              if (widget.drawBorder)
-                Container(height: 0.5, color: dividerColor),
-            ],
+                if (widget.drawBorder)
+                  Container(height: 0.5, color: dividerColor),
+              ],
+            ),
           ),
-        ),
 
-        CupertinoSwitch(
-          value: isOn,
-          onChanged: (bool value) {
-            setState(() {
-              isOn = value;
-            });
-          },
-        ),
-      ],
+          CupertinoSwitch(
+            value: isOn,
+            onChanged: (bool value) {
+              setState(() {
+                isOn = value;
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }

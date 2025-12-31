@@ -35,7 +35,6 @@ class SettingsPage extends StatelessWidget {
                     child: Column(
                       children: [
                         ProfileWidget(),
-
                         SettingsCardWidget(
                           category: "Account and Privacy",
                           buttons: accountAndPrivacySettingsButtons,
