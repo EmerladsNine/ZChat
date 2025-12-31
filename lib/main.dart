@@ -52,13 +52,25 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   late final PageController pageController;
   late final FullSwipeController fullSwipeController;
+
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+      if(state == AppLifecycleState.resumed)
+      {
+        print('reconnecting');
+        context.read<MessagingService>().initServer();
+      }
+  }
 
   @override
   void didChangeDependencies() {
@@ -69,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     pageController = PageController(initialPage: selectedPageNotifier.value);
     fullSwipeController = FullSwipeController(
       pageController: pageController,

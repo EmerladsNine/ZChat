@@ -44,6 +44,5 @@ class MessagingService {
   }
 
   void dispose() {
-    socket.close();
   }
 }
