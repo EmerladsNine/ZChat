@@ -69,7 +69,7 @@ class ChatMessagesPage extends StatelessWidget {
                       final double maxWidth = constraints.maxWidth * 0.7;
                       return ListView.builder(
                         reverse: true,
-                        itemCount: 30,
+                        itemCount: messages.length,
                         itemBuilder: (context, index) {
                           return MessageBubble(
                             text: messages[index],
