@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
-import 'package:zchat/views/data_classes/settings_switch_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_switch_data.dart';
 import 'package:zchat/views/widgets/settings_widgets/settings_switch_widget.dart';
 
 import '../../data/colors.dart';
 import '../../data/settings/privacy_widgets_data.dart';
-import '../../widgets/settings_widgets/settings_card_widget.dart';
+import '../../widgets/settings_widgets/settings_navigation_card_widget.dart';
 
 class PrivacySettingsPage extends StatelessWidget {
   const PrivacySettingsPage({super.key});
@@ -28,7 +28,7 @@ class PrivacySettingsPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SettingsCardWidget(
+                SettingsNavigatiomCardWidget(
                   category: 'Personal Info Privacy',
                   buttons: personalInfoPrivacyWidgetsData,
                 ),
@@ -41,7 +41,7 @@ class PrivacySettingsPage extends StatelessWidget {
                   ),
                   drawBorder: false,
                 ),
-                SettingsCardWidget(
+                SettingsNavigatiomCardWidget(
                   category: 'Interactions',
                   buttons: interactionsWidgetsData,
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/widgets/settings_widgets/settings_dialog_options_card_widget.dart';
 import '../../data/colors.dart';
-import '../../widgets/settings_widgets/settings_base_card_widget.dart';
 import '../../data/settings/language_widgets_data.dart';
 import 'package:zchat/views/data/text_styles.dart';
 
@@ -23,7 +23,7 @@ class LanguageSettingsPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SettingsBaseCardWidget(
+                SettingsDialogOptionsCardWidget<String>(
                   category: 'Language Settings',
                   buttons: languageWidgetsData,
                 ),

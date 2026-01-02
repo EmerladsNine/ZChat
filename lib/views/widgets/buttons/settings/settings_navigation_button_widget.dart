@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
 
-import '../../data/notifiers.dart';
-import '../../data/text_styles.dart';
-import '../../data_classes/settings_navigation_button_data.dart';
-import '../buttons/ripple_effect_button_widget.dart';
+import '../../../data/notifiers.dart';
+import '../../../data/text_styles.dart';
+import '../../../data_classes/settings/settings_navigation_button_data.dart';
+import '../ripple_effect_button_widget.dart';
 
 class SettingsNavigationButtonWidget extends StatelessWidget {
   const SettingsNavigationButtonWidget({

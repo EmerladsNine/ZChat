@@ -3,7 +3,7 @@ import 'package:zchat/views/data/text_styles.dart';
 import '../../data/colors.dart';
 import '../../data/settings/notifications_widgets_data.dart';
 import '../../widgets/settings_widgets/settings_base_card_widget.dart';
-import '../../data_classes/settings_switch_data.dart';
+import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
 class NotificationsSettingsPage extends StatelessWidget {

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
-import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
-import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
-
+import 'package:zchat/views/data_classes/settings/settings_dialog_checkbox_button_data.dart';
+import 'package:zchat/views/widgets/buttons/settings/settings_dialog_checkbox_button_widget.dart';
 import '../../data/colors.dart';
 
-class SettingsBaseCardWidget extends StatelessWidget {
-  const SettingsBaseCardWidget({
+class SettingsDialogCheckboxCardWidget<T> extends StatelessWidget {
+  const SettingsDialogCheckboxCardWidget({
     super.key,
     required this.category,
     required this.buttons,
   });
 
   final String category;
-  final List<SettingsBaseButtonData> buttons;
+  final List<SettingsDialogCheckboxButtonData<T>> buttons;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class SettingsBaseCardWidget extends StatelessWidget {
           Container(height: 0.5, color: dividerColor),
 
           ...List.generate(buttons.length, (index) {
-            return SettingsBaseButtonWidget(
+            return SettingsDialogCheckboxButtonWidget<T>(
               data: buttons[index],
               drawBorder: index != buttons.length - 1,
             );

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
+import 'package:zchat/views/enums/auto_download.dart';
+import 'package:zchat/views/widgets/settings_widgets/settings_dialog_checkbox_card_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/settings_navigation_card_widget.dart';
 import '../../data/colors.dart';
 import '../../data/settings/storage_and_data_widgets_data.dart';
-import '../../widgets/settings_widgets/settings_base_card_widget.dart';
-import '../../data_classes/settings_switch_data.dart';
+import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
-class StorageSettingsPage extends StatelessWidget {
-  const StorageSettingsPage({super.key});
+class StorageAndDataSettingsPage extends StatelessWidget {
+  const StorageAndDataSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +29,12 @@ class StorageSettingsPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SettingsBaseCardWidget(
+                SettingsNavigatiomCardWidget(
                   category: 'Storage',
                   buttons: manageStorageWidgetsData,
                 ),
                 // Media Auto-Download Settings
-                SettingsBaseCardWidget(
+                SettingsDialogCheckboxCardWidget<AutoDownload>(
                   category: 'Media Auto-Download',
                   buttons: mediaAutoDownloadWidgetsData,
                 ),

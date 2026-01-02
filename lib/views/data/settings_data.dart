@@ -1,4 +1,4 @@
-import 'package:zchat/views/data_classes/settings_navigation_button_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
 import 'package:zchat/views/pages/settings/account_settings_page.dart';
 
 import '../pages/settings/chats_settings_page.dart';
@@ -7,7 +7,7 @@ import '../pages/settings/language_settings_page.dart';
 import '../pages/settings/lists_settings_page.dart';
 import '../pages/settings/notifications_settings_page.dart';
 import '../pages/settings/privacy_settings_page.dart';
-import '../pages/settings/storage_settings_page.dart';
+import '../pages/settings/storage_and_data_settings_page.dart';
 import '../pages/settings/themes_settings_page.dart';
 import '../pages/settings/zane_memory_settings_page.dart';
 import '../pages/settings/zane_personality_settings_page.dart';
@@ -52,11 +52,11 @@ final List<SettingsNavigationButtonData> customizationSettingsButtons = [
 final List<SettingsNavigationButtonData> miscellaneousSettingsButtons = [
   SettingsNavigationButtonData(
     label: 'Storage and Data',
-    goToPage: StorageSettingsPage(),
+    goToPage: StorageAndDataSettingsPage(),
     icon: '💾',
   ),
   SettingsNavigationButtonData(
-    label: 'App Language',
+    label: 'Language',
     goToPage: LanguageSettingsPage(),
     icon: '🌐',
   ),

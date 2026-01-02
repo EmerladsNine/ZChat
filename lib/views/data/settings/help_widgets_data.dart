@@ -1,4 +1,4 @@
-import '../../data_classes/settings_base_button_data.dart';
+import '../../data_classes/settings/settings_base_button_data.dart';
 
 final List<SettingsBaseButtonData> helpWidgetsData = [
   SettingsBaseButtonData(

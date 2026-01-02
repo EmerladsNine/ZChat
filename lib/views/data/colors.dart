@@ -6,6 +6,7 @@ const Color primaryColor = Color(0xFFD0D0D0);
 
 const Color brandPrimaryColor = Color(0xFF00E676);
 const Color unreadIndicatorColor = Color(0xFF1ED760);
+const Color checkboxSelectedColor = Color(0xFF1ED760);
 const Color readMessageIndicatorColor = Color(0xFF33B5E5);
 const Color defaultTickColor = Colors.grey;
 

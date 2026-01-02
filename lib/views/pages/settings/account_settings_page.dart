@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../data/colors.dart';
 import '../../data/settings/account_widgets_data.dart';
 import '../../data/text_styles.dart';
-import '../../data_classes/settings_switch_data.dart';
-import '../../widgets/settings_widgets/settings_card_widget.dart';
+import '../../data_classes/settings/settings_switch_data.dart';
+import '../../widgets/settings_widgets/settings_navigation_card_widget.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
 class AccountSettingsPage extends StatelessWidget {
@@ -28,7 +28,7 @@ class AccountSettingsPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SettingsCardWidget(
+                SettingsNavigatiomCardWidget(
                   category: 'Manage Account',
                   buttons: accountManagementWidgetsData,
                 ),
@@ -47,7 +47,7 @@ class AccountSettingsPage extends StatelessWidget {
                   ),
                 ),
 
-                SettingsCardWidget(
+                SettingsNavigatiomCardWidget(
                   category: 'Edit Account Details',
                   buttons: editAccountWidgetsData,
                 ),

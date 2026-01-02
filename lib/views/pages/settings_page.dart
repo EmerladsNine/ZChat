@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
-import 'package:zchat/views/data_classes/settings_navigation_button_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
 import 'package:zchat/views/pages/temp.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
-import 'package:zchat/views/widgets/settings_widgets/settings_card_widget.dart';
-import 'package:zchat/views/widgets/settings_widgets/settings_navigation_button_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/settings_navigation_card_widget.dart';
 
-import '../data/notifiers.dart';
 import '../data/settings_data.dart';
 import '../data/text_styles.dart';
-import '../widgets/buttons/ripple_effect_button_widget.dart';
 
 SettingsNavigationButtonData data = SettingsNavigationButtonData(
   label: 'label',
@@ -48,22 +45,22 @@ class SettingsPage extends StatelessWidget {
                     children: [
                       ProfileWidget(),
 
-                      SettingsCardWidget(
+                      SettingsNavigatiomCardWidget(
                         category: "Account and Privacy",
                         buttons: accountAndPrivacySettingsButtons,
                       ),
 
-                      SettingsCardWidget(
+                      SettingsNavigatiomCardWidget(
                         category: "Zane",
                         buttons: zaneSettingsButtons,
                       ),
 
-                      SettingsCardWidget(
+                      SettingsNavigatiomCardWidget(
                         category: "Customization",
                         buttons: customizationSettingsButtons,
                       ),
 
-                      SettingsCardWidget(
+                      SettingsNavigatiomCardWidget(
                         category: "Miscellaneous",
                         buttons: miscellaneousSettingsButtons,
                       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
-import 'package:zchat/views/widgets/settings_widgets/settings_navigation_button_widget.dart';
+import 'package:zchat/views/widgets/buttons/settings/settings_navigation_button_widget.dart';
 
 import '../../data/colors.dart';
-import '../../data_classes/settings_navigation_button_data.dart';
+import '../../data_classes/settings/settings_navigation_button_data.dart';
 
-class SettingsCardWidget extends StatelessWidget {
-  const SettingsCardWidget({
+class SettingsNavigatiomCardWidget extends StatelessWidget {
+  const SettingsNavigatiomCardWidget({
     super.key,
     required this.category,
     required this.buttons,
