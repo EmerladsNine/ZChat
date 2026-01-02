@@ -34,51 +34,19 @@ class ChatCardWidget extends StatelessWidget {
   Widget buildMessageStatusIndicator(BuildContext context) {
     switch (userLastMessageStatus) {
       case MessageStatus.undelivered:
-        return Icon(Icons.done, size: 12, color: defaultTickColor);
+        return Text('›', style: messageStatusIndicatorStyle);
 
       case MessageStatus.delivered:
-        return SizedBox(
-          width: 18,
-          height: 12,
-          child: Stack(
-            children: [
-              Positioned(
-                left: 0,
-                child: Icon(Icons.done, size: 16, color: defaultTickColor),
-              ),
-              Positioned(
-                left: 6,
-                child: Icon(Icons.done, size: 16, color: defaultTickColor),
-              ),
-            ],
+        return Text('››', style: messageStatusIndicatorStyle);
+
+      case MessageStatus.read:
+        return Text(
+          '››',
+          style: messageStatusIndicatorStyle.copyWith(
+            color: readMessageIndicatorColor,
           ),
         );
 
-      case MessageStatus.read:
-        return SizedBox(
-          width: 18,
-          height: 12,
-          child: Stack(
-            children: [
-              Positioned(
-                left: 0,
-                child: Icon(
-                  Icons.done,
-                  size: 16,
-                  color: readMessageIndicatorColor,
-                ),
-              ),
-              Positioned(
-                left: 5,
-                child: Icon(
-                  Icons.done,
-                  size: 16,
-                  color: readMessageIndicatorColor,
-                ),
-              ),
-            ],
-          ),
-        );
       case MessageStatus.notLast:
         return SizedBox(width: 18);
     }

@@ -51,6 +51,12 @@ const TextStyle chatCardMessageDetailsTextStyle = TextStyle(
   fontFamily: 'Inter',
 );
 
+const TextStyle messageStatusIndicatorStyle = TextStyle(
+  color: textSecondaryColor,
+  fontFamily: 'Inter',
+  fontSize: 18,
+);
+
 const TextStyle settingsCardsButtonsTextStyle = TextStyle(
   fontSize: 16.0,
   fontWeight: FontWeight.w600,
