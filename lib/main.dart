@@ -9,8 +9,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(
     Provider<MessagingService>(
-      lazy: false,
-      create: (_) => MessagingService()..initServer(),
+      create: (_) => MessagingService(),
       dispose: (context, service) {
         service.dispose();
       },
@@ -57,20 +56,9 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+class _MyHomePageState extends State<MyHomePage> {
   late final PageController pageController;
   late final FullSwipeController fullSwipeController;
-
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-      if(state == AppLifecycleState.resumed)
-      {
-        print('reconnecting');
-        context.read<MessagingService>().initServer();
-      }
-  }
 
   @override
   void didChangeDependencies() {
@@ -81,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    context.read<MessagingService>().connectServer("Main Call");
     pageController = PageController(initialPage: selectedPageNotifier.value);
     fullSwipeController = FullSwipeController(
       pageController: pageController,
