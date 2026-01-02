@@ -1,56 +1,57 @@
-import '../../data_classes/settings_base_button_data.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:zchat/views/data_classes/settings/dialog_option_data.dart';
+import '../../data_classes/settings/settings_radio_group_dialog_button_data.dart';
 
-final List<SettingsBaseButtonData> personalityWidgetsData = [
-  SettingsBaseButtonData(
-    label: 'Style & Tone',
-    onTap: () {
-      // Navigate to AI style & tone selection page
-    },
-    icon: '🎨',
-  ),
-  SettingsBaseButtonData(
-    label: 'Response Length',
-    onTap: () {
-      // Choose short, medium, long responses
-    },
-    icon: '📏',
-  ),
-  SettingsBaseButtonData(
-    label: 'Preferred Topics',
-    onTap: () {
-      // Select topics AI prioritizes
-    },
-    icon: '📚',
-  ),
-  SettingsBaseButtonData(
-    label: 'Emotion Level',
-    onTap: () {
-      // Choose calm, neutral, expressive
-    },
-    icon: '❤️',
-  ),
-  SettingsBaseButtonData(
-    label: 'Knowledge Depth',
-    onTap: () {
-      // Select AI knowledge level
-    },
-    icon: '🧠',
-  ),
-  SettingsBaseButtonData(
-    label: 'Creativity Level',
-    onTap: () {
-      // Low, medium, high creativity
-    },
-    icon: '✨',
-  ),
-  SettingsBaseButtonData(
-    label: 'Interaction Frequency',
-    onTap: () {
-      // Verbose or minimal responses
-    },
-    icon: '⚡',
-  ),
-];
+// TODO make values parts of the prompt
+
+final List<SettingsRadioGroupDialogButtonData<String>> personalityWidgetsData =
+    [
+      SettingsRadioGroupDialogButtonData<String>(
+        label: 'Style & Tone',
+        icon: '🎨',
+        dialogOptions: [
+          DialogOptionData(value: 'formal', displayText: 'Formal'),
+          DialogOptionData(value: 'balanced', displayText: 'Balanced'),
+          DialogOptionData(value: 'casual', displayText: 'Casual'),
+          DialogOptionData(value: 'friendly', displayText: 'Friendly'),
+          DialogOptionData(value: 'playful', displayText: 'Playful'),
+        ],
+        dialogTitle: 'Style & Tone',
+        valueNotifier: ValueNotifier('balanced'),
+      ),
+      SettingsRadioGroupDialogButtonData<String>(
+        label: 'Emotion Level',
+        icon: '❤️',
+        dialogOptions: [
+          DialogOptionData(value: 'calm', displayText: 'calm'),
+          DialogOptionData(value: 'neutral', displayText: 'neutral'),
+          DialogOptionData(value: 'expressive', displayText: 'expressive'),
+        ],
+        dialogTitle: 'Emotion Level',
+        valueNotifier: ValueNotifier('neutral'),
+      ),
+      SettingsRadioGroupDialogButtonData<String>(
+        label: 'Creativity Level',
+        icon: '✨',
+        dialogOptions: [
+          DialogOptionData(value: 'low', displayText: 'low'),
+          DialogOptionData(value: 'medium', displayText: 'medium'),
+          DialogOptionData(value: 'high', displayText: 'high'),
+        ],
+        dialogTitle: 'Creativity Level',
+        valueNotifier: ValueNotifier('medium'),
+      ),
+      SettingsRadioGroupDialogButtonData<String>(
+        label: 'Interaction Frequency',
+        icon: '⚡',
+        dialogOptions: [
+          DialogOptionData(value: 'minimal', displayText: 'minimal'),
+          DialogOptionData(value: 'verbose', displayText: 'verbose'),
+        ],
+        dialogTitle: 'Interaction Frequency',
+        valueNotifier: ValueNotifier('minimal'),
+      ),
+    ];
 
 final List<Map<String, dynamic>> personalitySwitchesData = [
   {
@@ -72,16 +73,6 @@ final List<Map<String, dynamic>> personalitySwitchesData = [
     'label': 'Be Concise',
     'helpText': 'AI provides shorter and to-the-point answers.',
     'icon': '✂️',
-  },
-  {
-    'label': 'Humor Mode',
-    'helpText': 'AI can add humor when responding.',
-    'icon': '😂',
-  },
-  {
-    'label': 'Friendly',
-    'helpText': 'AI uses warm and friendly language.',
-    'icon': '🤝',
   },
   {
     'label': 'Technical',

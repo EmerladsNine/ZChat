@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:zchat/views/data/colors.dart';
 
 import '../../data/text_styles.dart';
-import '../../data_classes/settings_switch_data.dart';
+import '../../data_classes/settings/settings_switch_data.dart';
 
 class SettingsSwitchWidget extends StatefulWidget {
   const SettingsSwitchWidget({

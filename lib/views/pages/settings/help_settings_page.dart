@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
 import '../../data/colors.dart';
 import '../../data/settings/help_widgets_data.dart';
-import '../../widgets/settings_widgets/settings_base_card_widget.dart';
+import '../../widgets/settings_widgets/cards/settings_on_tap_card_widget.dart';
 
 class HelpSettingsPage extends StatelessWidget {
   const HelpSettingsPage({super.key});
@@ -26,12 +26,12 @@ class HelpSettingsPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // Help Card
-                SettingsBaseCardWidget(
+                SettingsOnTapCardWidget(
                   category: 'Help',
                   buttons: helpWidgetsData,
                 ),
                 // About / Legal Card
-                SettingsBaseCardWidget(
+                SettingsOnTapCardWidget(
                   category: 'About',
                   buttons: aboutWidgetsData,
                 ),

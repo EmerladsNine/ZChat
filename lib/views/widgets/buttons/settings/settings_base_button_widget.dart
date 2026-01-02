@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
 
-import '../../data/colors.dart';
-import '../../data/notifiers.dart';
-import '../../data/text_styles.dart';
-import '../../data_classes/settings_base_button_data.dart';
-import '../buttons/ripple_effect_button_widget.dart';
+import '../../../data/colors.dart';
+import '../../../data/notifiers.dart';
+import '../../../data/text_styles.dart';
+import '../ripple_effect_button_widget.dart';
 
-class SettingsBaseButtonWidget extends StatelessWidget {
+abstract class SettingsBaseButtonWidget extends StatelessWidget {
   const SettingsBaseButtonWidget({
     super.key,
     required this.data,
@@ -16,12 +16,14 @@ class SettingsBaseButtonWidget extends StatelessWidget {
   final SettingsBaseButtonData data;
   final bool drawBorder;
 
+  void onTap(BuildContext context);
+
   @override
   Widget build(BuildContext context) {
     return RippleEffectButtonWidget(
       disableSet: disableSettingsPageButtons,
       appStateNotifier: isNavigating,
-      onTap: data.onTap,
+      onTap: () => onTap(context),
       child: Container(
         color: cardsColor,
         child: Column(

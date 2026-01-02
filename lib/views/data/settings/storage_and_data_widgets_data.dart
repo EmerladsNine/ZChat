@@ -1,28 +1,50 @@
-import '../../data_classes/settings_base_button_data.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:zchat/views/data_classes/settings/dialog_option_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_checkbox_list_dialog_button_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
+import 'package:zchat/views/enums/auto_download.dart';
+import 'package:zchat/views/pages/temp.dart';
 
-final List<SettingsBaseButtonData> mediaAutoDownloadWidgetsData = [
-  SettingsBaseButtonData(
+final List<SettingsCheckboxListDialogButtonData<AutoDownload>>
+mediaAutoDownloadWidgetsData = [
+  SettingsCheckboxListDialogButtonData<AutoDownload>(
     label: 'When Using Mobile Data',
-    onTap: () {
-      // Navigate to mobile data media download options
-    },
     icon: '📱',
+    dialogOptions: [
+      DialogOptionData(value: AutoDownload.audio, displayText: 'Audio'),
+      DialogOptionData(value: AutoDownload.images, displayText: 'Images'),
+      DialogOptionData(value: AutoDownload.videos, displayText: 'Videos'),
+      DialogOptionData(value: AutoDownload.documents, displayText: 'Documents'),
+    ],
+    dialogTitle: 'Auto-Download on Mobile Data',
+    valueNotifier: ValueNotifier([]),
+    noneChosenValue: AutoDownload.none,
   ),
-  SettingsBaseButtonData(
+
+  SettingsCheckboxListDialogButtonData<AutoDownload>(
     label: 'When Using Wi-Fi',
-    onTap: () {
-      // Navigate to Wi-Fi media download options
-    },
     icon: '📶',
+    dialogOptions: [
+      DialogOptionData(value: AutoDownload.audio, displayText: 'Audio'),
+      DialogOptionData(value: AutoDownload.images, displayText: 'Images'),
+      DialogOptionData(value: AutoDownload.videos, displayText: 'Videos'),
+      DialogOptionData(value: AutoDownload.documents, displayText: 'Documents'),
+    ],
+    dialogTitle: 'Auto-Download on Wi-Fi',
+    valueNotifier: ValueNotifier([
+      AutoDownload.audio,
+      AutoDownload.documents,
+      AutoDownload.images,
+      AutoDownload.videos,
+    ]),
+    noneChosenValue: AutoDownload.none,
   ),
 ];
 
-final List<SettingsBaseButtonData> manageStorageWidgetsData = [
-  SettingsBaseButtonData(
+final List<SettingsNavigationButtonData> manageStorageWidgetsData = [
+  SettingsNavigationButtonData(
     label: 'Manage Storage',
-    onTap: () {
-      // Navigate to storage management page
-    },
+    goToPage: TempPage(),
     icon: '🗂️',
   ),
 ];

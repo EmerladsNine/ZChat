@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data/colors.dart';
 import '../../data/settings/zane_memory_widgets_data.dart';
 import '../../data/text_styles.dart';
-import '../../data_classes/settings_switch_data.dart';
+import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
 class ZaneToolsSettingsPage extends StatelessWidget {

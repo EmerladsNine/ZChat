@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/colors.dart';
-import 'package:zchat/views/data_classes/settings_navigation_button_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
 import 'package:zchat/views/pages/temp.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
-import 'package:zchat/views/widgets/settings_widgets/settings_card_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/cards/settings_navigation_card_widget.dart';
+
 import '../data/settings_data.dart';
 import '../data/text_styles.dart';
 
@@ -44,22 +45,22 @@ class SettingsPage extends StatelessWidget {
                     children: [
                       ProfileWidget(),
 
-                      SettingsCardWidget(
+                      SettingsNavigationCardWidget(
                         category: "Account and Privacy",
                         buttons: accountAndPrivacySettingsButtons,
                       ),
 
-                      SettingsCardWidget(
+                      SettingsNavigationCardWidget(
                         category: "Zane",
                         buttons: zaneSettingsButtons,
                       ),
 
-                      SettingsCardWidget(
+                      SettingsNavigationCardWidget(
                         category: "Customization",
                         buttons: customizationSettingsButtons,
                       ),
 
-                      SettingsCardWidget(
+                      SettingsNavigationCardWidget(
                         category: "Miscellaneous",
                         buttons: miscellaneousSettingsButtons,
                       ),

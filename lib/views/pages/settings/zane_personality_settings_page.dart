@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/widgets/settings_widgets/cards/settings_radio_group_dialog_card_widget.dart';
 
 import '../../data/colors.dart';
 import '../../data/settings/zane_personality_widgets_data.dart';
 import '../../data/text_styles.dart';
-import '../../data_classes/settings_switch_data.dart';
-import '../../widgets/settings_widgets/settings_base_card_widget.dart';
+import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
 class ZanePersonalitySettingsPage extends StatelessWidget {
@@ -26,7 +26,7 @@ class ZanePersonalitySettingsPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SettingsBaseCardWidget(
+                SettingsRadioGroupDialogCardWidget<String>(
                   category: 'Personality',
                   buttons: personalityWidgetsData,
                 ),
