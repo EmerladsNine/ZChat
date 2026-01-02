@@ -5,7 +5,7 @@ import 'package:zchat/views/widgets/settings_widgets/settings_switch_widget.dart
 
 import '../../data/colors.dart';
 import '../../data/settings/privacy_widgets_data.dart';
-import '../../widgets/settings_widgets/settings_navigation_card_widget.dart';
+import '../../widgets/settings_widgets/cards/settings_navigation_card_widget.dart';
 
 class PrivacySettingsPage extends StatelessWidget {
   const PrivacySettingsPage({super.key});
@@ -28,7 +28,7 @@ class PrivacySettingsPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SettingsNavigatiomCardWidget(
+                SettingsNavigationCardWidget(
                   category: 'Personal Info Privacy',
                   buttons: personalInfoPrivacyWidgetsData,
                 ),
@@ -41,7 +41,7 @@ class PrivacySettingsPage extends StatelessWidget {
                   ),
                   drawBorder: false,
                 ),
-                SettingsNavigatiomCardWidget(
+                SettingsNavigationCardWidget(
                   category: 'Interactions',
                   buttons: interactionsWidgetsData,
                 ),

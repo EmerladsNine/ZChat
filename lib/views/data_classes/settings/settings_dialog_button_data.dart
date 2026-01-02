@@ -1,15 +1,16 @@
-import 'package:flutter/cupertino.dart';
-import 'package:zchat/views/data_classes/settings/settings_base_dialog_button_data.dart';
+import 'package:flutter/material.dart';
+import 'settings_base_button_data.dart';
 
-class SettingsDialogButtonData extends SettingsBaseDialogButtonData {
+class SettingsDialogButtonData extends SettingsBaseButtonData {
   final VoidCallback onChange;
   final String? dialogHelpText;
+  final String dialogTitle;
 
   SettingsDialogButtonData({
     required super.label,
     super.icon,
     super.helpText,
-    required super.dialogTitle,
+    required this.dialogTitle,
     required this.onChange,
     this.dialogHelpText,
   });

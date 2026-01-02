@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zchat/views/data_classes/settings/dialog_option_data.dart';
-import 'package:zchat/views/data_classes/settings/settings_dialog_checkbox_button_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_checkbox_list_dialog_button_data.dart';
 import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
 import 'package:zchat/views/enums/auto_download.dart';
 import 'package:zchat/views/pages/temp.dart';
 
-final List<SettingsDialogCheckboxButtonData<AutoDownload>>
+final List<SettingsCheckboxListDialogButtonData<AutoDownload>>
 mediaAutoDownloadWidgetsData = [
-  SettingsDialogCheckboxButtonData<AutoDownload>(
+  SettingsCheckboxListDialogButtonData<AutoDownload>(
     label: 'When Using Mobile Data',
     icon: '📱',
     dialogOptions: [
@@ -21,7 +21,7 @@ mediaAutoDownloadWidgetsData = [
     noneChosenValue: AutoDownload.none,
   ),
 
-  SettingsDialogCheckboxButtonData<AutoDownload>(
+  SettingsCheckboxListDialogButtonData<AutoDownload>(
     label: 'When Using Wi-Fi',
     icon: '📶',
     dialogOptions: [

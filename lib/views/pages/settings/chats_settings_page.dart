@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
 import 'package:zchat/views/data_classes/settings/settings_switch_data.dart';
-import 'package:zchat/views/widgets/settings_widgets/settings_dialog_card_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/cards/settings_dialog_card_widget.dart';
 import 'package:zchat/views/widgets/settings_widgets/settings_switch_widget.dart';
 
 import '../../data/colors.dart';

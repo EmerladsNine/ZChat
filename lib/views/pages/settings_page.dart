@@ -4,7 +4,7 @@ import 'package:zchat/views/data_classes/settings/settings_navigation_button_dat
 import 'package:zchat/views/pages/temp.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
-import 'package:zchat/views/widgets/settings_widgets/settings_navigation_card_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/cards/settings_navigation_card_widget.dart';
 
 import '../data/settings_data.dart';
 import '../data/text_styles.dart';
@@ -45,22 +45,22 @@ class SettingsPage extends StatelessWidget {
                     children: [
                       ProfileWidget(),
 
-                      SettingsNavigatiomCardWidget(
+                      SettingsNavigationCardWidget(
                         category: "Account and Privacy",
                         buttons: accountAndPrivacySettingsButtons,
                       ),
 
-                      SettingsNavigatiomCardWidget(
+                      SettingsNavigationCardWidget(
                         category: "Zane",
                         buttons: zaneSettingsButtons,
                       ),
 
-                      SettingsNavigatiomCardWidget(
+                      SettingsNavigationCardWidget(
                         category: "Customization",
                         buttons: customizationSettingsButtons,
                       ),
 
-                      SettingsNavigatiomCardWidget(
+                      SettingsNavigationCardWidget(
                         category: "Miscellaneous",
                         buttons: miscellaneousSettingsButtons,
                       ),

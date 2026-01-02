@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/text_styles.dart';
-import 'package:zchat/views/widgets/buttons/settings/settings_navigation_button_widget.dart';
+import '../../../data/colors.dart';
+import '../../../data/text_styles.dart';
 
-import '../../data/colors.dart';
-import '../../data_classes/settings/settings_navigation_button_data.dart';
-
-class SettingsNavigatiomCardWidget extends StatelessWidget {
-  const SettingsNavigatiomCardWidget({
-    super.key,
-    required this.category,
-    required this.buttons,
-  });
+abstract class SettingsBaseCardWidget extends StatelessWidget {
+  const SettingsBaseCardWidget({super.key, required this.category});
 
   final String category;
-  final List<SettingsNavigationButtonData> buttons;
+
+  List<Widget> buildButtons(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +28,7 @@ class SettingsNavigatiomCardWidget extends StatelessWidget {
 
           Container(height: 0.5, color: dividerColor),
 
-          ...List.generate(buttons.length, (index) {
-            return SettingsNavigationButtonWidget(
-              data: buttons[index],
-              drawBorder: index != buttons.length - 1,
-            );
-          }),
+          ...buildButtons(context),
         ],
       ),
     );

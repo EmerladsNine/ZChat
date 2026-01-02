@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
 
-class SettingsNavigationButtonData {
-  final String label;
+class SettingsNavigationButtonData extends SettingsBaseButtonData {
   final Widget goToPage;
-  final String? icon;
-  final String? helpText;
 
   SettingsNavigationButtonData({
-    required this.label,
+    required super.label,
     required this.goToPage,
-    this.icon,
-    this.helpText,
+    super.icon,
+    super.helpText,
   });
 }

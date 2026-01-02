@@ -1,14 +1,14 @@
-import '../../data_classes/settings/settings_base_button_data.dart';
+import '../../data_classes/settings/settings_on_tap_button_data.dart';
 
-final List<SettingsBaseButtonData> helpWidgetsData = [
-  SettingsBaseButtonData(
+final List<SettingsOnTapButtonData> helpWidgetsData = [
+  SettingsOnTapButtonData(
     label: 'Help Centre',
     onTap: () {
       // Navigate to Help Centre page
     },
     icon: '❓',
   ),
-  SettingsBaseButtonData(
+  SettingsOnTapButtonData(
     label: 'Send Feedback',
     onTap: () {
       // Navigate to Feedback page
@@ -17,15 +17,15 @@ final List<SettingsBaseButtonData> helpWidgetsData = [
   ),
 ];
 
-final List<SettingsBaseButtonData> aboutWidgetsData = [
-  SettingsBaseButtonData(
+final List<SettingsOnTapButtonData> aboutWidgetsData = [
+  SettingsOnTapButtonData(
     label: 'Terms and Privacy Policy',
     onTap: () {
       // Navigate to Terms & Privacy page
     },
     icon: '📜',
   ),
-  SettingsBaseButtonData(
+  SettingsOnTapButtonData(
     label: 'App Info',
     onTap: () {
       // Navigate to App Info page

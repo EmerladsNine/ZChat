@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/widgets/settings_widgets/settings_dialog_options_card_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/cards/settings_radio_group_dialog_card_widget.dart';
 
 import '../../data/colors.dart';
 import '../../data/settings/zane_personality_widgets_data.dart';
@@ -26,7 +26,7 @@ class ZanePersonalitySettingsPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SettingsDialogOptionsCardWidget<String>(
+                SettingsRadioGroupDialogCardWidget<String>(
                   category: 'Personality',
                   buttons: personalityWidgetsData,
                 ),

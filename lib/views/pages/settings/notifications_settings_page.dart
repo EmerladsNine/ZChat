@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
 import '../../data/colors.dart';
 import '../../data/settings/notifications_widgets_data.dart';
-import '../../widgets/settings_widgets/settings_base_card_widget.dart';
+import '../../widgets/settings_widgets/cards/settings_on_tap_card_widget.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
@@ -28,17 +28,17 @@ class NotificationsSettingsPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // Contact Messages
-                SettingsBaseCardWidget(
+                SettingsOnTapCardWidget(
                   category: 'Contact Messages',
                   buttons: contactMessagesWidgetsData,
                 ),
                 // Groups
-                SettingsBaseCardWidget(
+                SettingsOnTapCardWidget(
                   category: 'Groups',
                   buttons: groupsWidgetsData,
                 ),
                 // Calls
-                SettingsBaseCardWidget(
+                SettingsOnTapCardWidget(
                   category: 'Calls',
                   buttons: callsWidgetsData,
                 ),

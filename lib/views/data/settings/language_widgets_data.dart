@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zchat/views/data_classes/settings/dialog_option_data.dart';
-import 'package:zchat/views/data_classes/settings/settings_dialog_options_button_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_radio_group_dialog_button_data.dart';
 
-final List<SettingsDialogOptionsButtonData<String>> languageWidgetsData = [
-  SettingsDialogOptionsButtonData<String>(
+final List<SettingsRadioGroupDialogButtonData<String>> languageWidgetsData = [
+  SettingsRadioGroupDialogButtonData<String>(
     label: 'App Language',
     icon: '🌐',
     dialogOptions: [
@@ -14,7 +14,7 @@ final List<SettingsDialogOptionsButtonData<String>> languageWidgetsData = [
     valueNotifier: ValueNotifier<String>('en'),
   ),
 
-  SettingsDialogOptionsButtonData<String>(
+  SettingsRadioGroupDialogButtonData<String>(
     label: 'Zane Language',
     icon: '🗣️',
     dialogOptions: [
