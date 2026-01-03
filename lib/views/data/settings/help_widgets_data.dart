@@ -1,35 +1,36 @@
+import 'package:url_launcher/url_launcher.dart';
+import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
+import 'package:zchat/views/pages/temp.dart';
+
 import '../../data_classes/settings/settings_on_tap_button_data.dart';
 
-final List<SettingsOnTapButtonData> helpWidgetsData = [
-  SettingsOnTapButtonData(
+final List<SettingsBaseButtonData> helpWidgetsData = [
+  SettingsNavigationButtonData(
     label: 'Help Centre',
-    onTap: () {
-      // Navigate to Help Centre page
-    },
+    goToPage: TempPage(),
     icon: '❓',
   ),
-  SettingsOnTapButtonData(
+  SettingsNavigationButtonData(
     label: 'Send Feedback',
-    onTap: () {
-      // Navigate to Feedback page
-    },
+    goToPage: TempPage(),
     icon: '✉️',
   ),
 ];
 
-final List<SettingsOnTapButtonData> aboutWidgetsData = [
+final List<SettingsBaseButtonData> aboutWidgetsData = [
   SettingsOnTapButtonData(
     label: 'Terms and Privacy Policy',
-    onTap: () {
-      // Navigate to Terms & Privacy page
+    onTap: () async {
+      final Uri uri = Uri.parse('https://example.com/terms-and-privacy');
+
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     },
     icon: '📜',
   ),
-  SettingsOnTapButtonData(
+  SettingsNavigationButtonData(
     label: 'App Info',
-    onTap: () {
-      // Navigate to App Info page
-    },
+    goToPage: TempPage(),
     icon: 'ℹ️',
   ),
 ];

@@ -4,7 +4,7 @@ import '../../data/colors.dart';
 import '../../data/settings/zane_tools_widgets_data.dart';
 import '../../data/text_styles.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
-import '../../widgets/settings_widgets/cards/settings_navigation_card_widget.dart';
+import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
 class ZaneMemorySettingsPage extends StatelessWidget {
@@ -26,7 +26,7 @@ class ZaneMemorySettingsPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SettingsNavigationCardWidget(
+                SettingsCardWidget(
                   category: 'Memory',
                   buttons: memoryWidgetsData,
                 ),
