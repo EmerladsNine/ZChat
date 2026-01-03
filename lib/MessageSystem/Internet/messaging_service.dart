@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+import 'package:zchat/MessageSystem/Internet/message_type.dart';
 import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/MessageSystem/message.dart';
-
-
 
 Chat? currentChat; // Todo : remove this when it becomes useless
 
@@ -14,41 +14,43 @@ class MessagingService {
   Timer? pingTimeout;
   bool waitingForPong = false;
 
-  void handlePong()
-  {
-    print("recieved a pong");
+  void handlePong() {
+    if (kDebugMode) {
+      print("recieved a pong");
+    }
     waitingForPong = false;
     pingTimeout?.cancel();
   }
 
-  void handleMessage(List<int> data)
-  {
+  void handleMessage(List<int> data) {
     final String response = utf8.decode(data.sublist(1));
     currentChat?.addMessage(Message(text: response, senderName: "Max"));
-    print('Server: $response');
-  }
-
-  void onData(List<int> data) {
-    switch(data[0]) {
-      case 0x1:
-        handlePong();
-        break;
-      case 0x2:
-        handleMessage(data);
-        break;
-      default:
+    if (kDebugMode) {
+      print('Server: $response');
     }
   }
 
-  void sendPing()
-  {
-      if(waitingForPong) return;
-      socket.add([0x0]);
-      waitingForPong = true;
-      pingTimeout = Timer(Duration(seconds: 5), () {
+  void onData(List<int> data) {
+    int head = data[0];
+    if (head == MessageType.ping.id) {
+      //Todo : handle ping
+    } else if (head == MessageType.pong.id) {
+      handlePong();
+    } else if (head == MessageType.normalMessage.id) {
+      handleMessage(data);
+    }
+  }
+
+  void sendPing() {
+    if (waitingForPong) return;
+    socket.add([MessageType.ping.id]);
+    waitingForPong = true;
+    pingTimeout = Timer(Duration(seconds: 5), () {
+      if (kDebugMode) {
         print("PONG timeout , reconnecting...");
-        reconnectServer("pingTimeout");
-      });
+      }
+      reconnectServer("pingTimeout");
+    });
   }
 
   Future<void> connectServer(String caller) async {
@@ -56,17 +58,26 @@ class MessagingService {
     final int port = 9999;
     try {
       socket = await Socket.connect(host, port);
-      print('$caller Connected to $host:$port');
-      socket.listen(onData,onDone: () => reconnectServer("onDone socket.listen"), onError: (_){reconnectServer("onError socket.listen");});
+      if (kDebugMode) {
+        print('$caller Connected to $host:$port');
+      }
+      socket.listen(
+        onData,
+        onDone: () => reconnectServer("onDone socket.listen"),
+        onError: (_) {
+          reconnectServer("onError socket.listen");
+        },
+      );
     } catch (e) {
-      print("inside initServer : $e");
+      if (kDebugMode) {
+        print("inside initServer : $e");
+      }
     }
   }
 
-
   bool isReconnecting = false;
   Future<void> reconnectServer(String caller) async {
-    if(isReconnecting) return;
+    if (isReconnecting) return;
     isReconnecting = true;
     socket.close();
     socket.destroy();
@@ -79,13 +90,16 @@ class MessagingService {
     try {
       socket.add([0x2, ...utf8.encode(message)]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
-      chat.addMessage(Message(text: message,timestamp: timestamp));
-      print('sent: $message');
+      chat.addMessage(Message(text: message, timestamp: timestamp));
+      if (kDebugMode) {
+        print('sent: $message');
+      }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
-  void dispose() {
-  }
+  void dispose() {}
 }
