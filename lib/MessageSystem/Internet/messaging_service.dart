@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:zchat/MessageSystem/Internet/message_type.dart';
 import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/MessageSystem/message.dart';
+import 'package:zchat/utils/print_on_debug.dart';
 
 Chat? currentChat; // Todo : remove this when it becomes useless
 
@@ -14,26 +14,27 @@ class MessagingService {
   Timer? pingTimeout;
   bool waitingForPong = false;
 
+  void handlePing() {
+    printOnDebug("received a PING");
+    socket.add([MessageType.pong.id]);
+  }
+
   void handlePong() {
-    if (kDebugMode) {
-      print("recieved a pong");
-    }
+    printOnDebug("received a PONG");
     waitingForPong = false;
-    pingTimeout?.cancel();
   }
 
   void handleMessage(List<int> data) {
     final String response = utf8.decode(data.sublist(1));
     currentChat?.addMessage(Message(text: response, senderName: "Max"));
-    if (kDebugMode) {
-      print('Server: $response');
-    }
+    printOnDebug('Server: $response');
   }
 
   void onData(List<int> data) {
     int head = data[0];
+    pingTimeout?.cancel();
     if (head == MessageType.ping.id) {
-      //Todo : handle ping
+      handlePing();
     } else if (head == MessageType.pong.id) {
       handlePong();
     } else if (head == MessageType.normalMessage.id) {
@@ -46,10 +47,8 @@ class MessagingService {
     socket.add([MessageType.ping.id]);
     waitingForPong = true;
     pingTimeout = Timer(Duration(seconds: 5), () {
-      if (kDebugMode) {
-        print("PONG timeout , reconnecting...");
-      }
-      reconnectServer("pingTimeout");
+      printOnDebug("PING timeout , reconnecting...");
+      reconnectServer("PING Timeout");
     });
   }
 
@@ -58,9 +57,7 @@ class MessagingService {
     final int port = 9999;
     try {
       socket = await Socket.connect(host, port);
-      if (kDebugMode) {
-        print('$caller Connected to $host:$port');
-      }
+      printOnDebug('$caller Connected to $host:$port');
       socket.listen(
         onData,
         onDone: () => reconnectServer("onDone socket.listen"),
@@ -69,9 +66,7 @@ class MessagingService {
         },
       );
     } catch (e) {
-      if (kDebugMode) {
-        print("inside initServer : $e");
-      }
+      printOnDebug(e);
     }
   }
 
@@ -91,15 +86,14 @@ class MessagingService {
       socket.add([0x2, ...utf8.encode(message)]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
       chat.addMessage(Message(text: message, timestamp: timestamp));
-      if (kDebugMode) {
-        print('sent: $message');
-      }
+      printOnDebug('sent: $message');
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      printOnDebug(e);
     }
   }
 
-  void dispose() {}
+  void dispose() {
+    socket.close();
+    socket.destroy();
+  }
 }
