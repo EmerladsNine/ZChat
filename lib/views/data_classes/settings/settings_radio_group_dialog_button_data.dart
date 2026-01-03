@@ -4,7 +4,7 @@ import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart
 
 class SettingsRadioGroupDialogButtonData<T> extends SettingsBaseButtonData {
   final String dialogTitle;
-  final List<DialogOptionData> dialogOptions;
+  final List<DialogOptionData<T>> dialogOptions;
   final ValueNotifier<T> valueNotifier;
   final VoidCallback? onChange;
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/widgets/settings_widgets/cards/settings_radio_group_dialog_card_widget.dart';
 import '../../data/colors.dart';
 import '../../data/settings/language_widgets_data.dart';
 import 'package:zchat/views/data/text_styles.dart';
+
+import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 
 class LanguageSettingsPage extends StatelessWidget {
   const LanguageSettingsPage({super.key});
@@ -23,7 +24,7 @@ class LanguageSettingsPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SettingsRadioGroupDialogCardWidget<String>(
+                SettingsCardWidget(
                   category: 'Language Settings',
                   buttons: languageWidgetsData,
                 ),

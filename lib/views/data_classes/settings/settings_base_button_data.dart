@@ -1,4 +1,4 @@
-class SettingsBaseButtonData {
+abstract class SettingsBaseButtonData {
   final String label;
   final String? icon;
   final String? helpText;
