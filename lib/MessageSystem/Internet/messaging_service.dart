@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:zchat/MessageSystem/Internet/listener_service.dart';
 import 'package:zchat/MessageSystem/Internet/message_type.dart';
 import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/MessageSystem/message.dart';
@@ -14,52 +15,63 @@ class MessagingService {
   Timer? pingTimeout;
   bool waitingForPong = false;
 
-  void handlePing() {
-    printOnDebug("received a PING");
-    socket.add([MessageType.pong.id]);
+  late ListenerService listener;
+
+  MessagingService() {
+    listener = ListenerService(this);
   }
 
-  void handlePong() {
-    printOnDebug("received a PONG");
-    waitingForPong = false;
-  }
-
-  void handleMessage(List<int> data) {
-    final String response = utf8.decode(data.sublist(1));
-    currentChat?.addMessage(Message(text: response, senderName: "Max"));
-    printOnDebug('Server: $response');
-  }
-
-  void onData(List<int> data) {
-    int head = data[0];
-    pingTimeout?.cancel();
-    if (head == MessageType.ping.id) {
-      handlePing();
-    } else if (head == MessageType.pong.id) {
-      handlePong();
-    } else if (head == MessageType.normalMessage.id) {
-      handleMessage(data);
+  List<int> intToBigEndian(int num, int bytes) {
+    List<int> list = [];
+    for (int i = bytes - 1; i != -1; i--) {
+      list.add(num >> (i * 8) & 0xff);
     }
+    return list;
+  }
+
+  void sendProtocolUnit(MessageType type, List<int> data) {
+    socket.add([type.id]);
+    if (!type.hasBody) return;
+    // Todo : fail on data size larger than 65535
+    // Todo : encrypt the data
+    List<int> encryptedData = data;
+    socket.add(intToBigEndian(encryptedData.length, 2));
+    socket.add(encryptedData);
   }
 
   void sendPing() {
     if (waitingForPong) return;
-    socket.add([MessageType.ping.id]);
+    sendProtocolUnit(MessageType.ping, []);
     waitingForPong = true;
     pingTimeout = Timer(Duration(seconds: 5), () {
       printOnDebug("PING timeout , reconnecting...");
+      waitingForPong = false;
       reconnectServer("PING Timeout");
     });
   }
 
+  Future<void> sendMessage(String message, Chat chat) async {
+    currentChat ??= chat;
+    try {
+      sendProtocolUnit(MessageType.normalMessage, [
+        ...utf8.encode(message),
+      ]);
+      int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
+      chat.addMessage(Message(text: message, timestamp: timestamp));
+      printOnDebug('sent: $message');
+    } catch (e) {
+      printOnDebug(e);
+    }
+  }
+
   Future<void> connectServer(String caller) async {
-    final String host = "92.113.26.192";
+    final String host = "127.0.0.1"; //"92.113.26.192";
     final int port = 9999;
     try {
       socket = await Socket.connect(host, port);
       printOnDebug('$caller Connected to $host:$port');
       socket.listen(
-        onData,
+        listener.onData,
         onDone: () => reconnectServer("onDone socket.listen"),
         onError: (_) {
           reconnectServer("onError socket.listen");
@@ -78,18 +90,6 @@ class MessagingService {
     socket.destroy();
     await connectServer(caller);
     isReconnecting = false;
-  }
-
-  Future<void> sendMessage(String message, Chat chat) async {
-    currentChat ??= chat;
-    try {
-      socket.add([0x2, ...utf8.encode(message)]);
-      int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
-      chat.addMessage(Message(text: message, timestamp: timestamp));
-      printOnDebug('sent: $message');
-    } catch (e) {
-      printOnDebug(e);
-    }
   }
 
   void dispose() {
