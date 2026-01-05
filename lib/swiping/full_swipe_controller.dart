@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/notifiers.dart';
+import 'package:zchat/views/data/app_constants.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 
+/// Controller for handling full-screen swipe gestures for page navigation.
 class FullSwipeController {
   FullSwipeController({
     required this.pageController,
@@ -9,6 +11,7 @@ class FullSwipeController {
     required this.snapAnimationDuration,
     required this.snapCurve,
   });
+
   final PageController pageController;
   final double minSwipeDistance;
   final double minSwipeVelocity;
@@ -18,14 +21,17 @@ class FullSwipeController {
   double _dragDistance = 0;
   double _position = 0;
   double _startingPage = 0;
+
+  /// Called when a drag gesture starts.
   void onDragStart(DragStartDetails details) {
-    if (isNavigating.value) return;
+    if (AppNotifiers.isNavigating.value) return;
     _startingPage = pageController.page ?? 0;
     _position = pageController.position.pixels;
   }
 
+  /// Called when a drag gesture updates.
   void onDragUpdate(DragUpdateDetails details) {
-    if (isNavigating.value) return;
+    if (AppNotifiers.isNavigating.value) return;
     double delta = details.delta.dx;
     _dragDistance += delta;
     _position = pageController.position.pixels - delta;
@@ -34,21 +40,28 @@ class FullSwipeController {
 
     //if you are on the last or first page then stretch
     if (_position > maxOffset || _position < minOffset) {
-      stretchFactor.value = (stretchFactor.value + delta.abs() / 1000).clamp(
-        1.0,
-        1.01,
-      );
+      AppNotifiers.stretchFactor.value =
+          (AppNotifiers.stretchFactor.value +
+                  delta.abs() / AppConstants.swipeStretchFactorDivisor)
+              .clamp(
+                AppConstants.minStretchFactor,
+                AppConstants.maxStretchFactor,
+              );
       _dragDistance = 0;
     }
     pageController.position.jumpTo(_position.clamp(minOffset, maxOffset));
   }
 
+  /// Called when a drag gesture ends.
   void onDragEnd(DragEndDetails details) {
-    stretchFactor.value = 1.0;
+    AppNotifiers.stretchFactor.value = 1.0;
     final velocity = details.velocity.pixelsPerSecond.dx;
     int currentPage = pageController.page!.round();
     double deltaPage = (pageController.page ?? 0) - _startingPage;
-    if ((velocity.abs() > minSwipeVelocity || _dragDistance.abs() > minSwipeDistance) && deltaPage.abs() < 0.5 && _dragDistance != 0) {
+    if ((velocity.abs() > minSwipeVelocity ||
+            _dragDistance.abs() > minSwipeDistance) &&
+        deltaPage.abs() < AppConstants.pageSnapThreshold &&
+        _dragDistance != 0) {
       if (velocity < 0 || _dragDistance < 0) {
         pageController.nextPage(
           duration: snapAnimationDuration,

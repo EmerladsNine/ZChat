@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/text_styles.dart';
+import 'package:zchat/views/data/app_text_styles.dart';
 import 'package:zchat/views/data_classes/settings/settings_switch_data.dart';
 import 'package:zchat/views/widgets/settings_widgets/settings_switch_widget.dart';
 
 import '../../data/settings/privacy_widgets_data.dart';
-import '../../data/themes.dart';
+import '../../data/app_themes.dart';
 import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 
+/// Page for managing privacy settings.
 class PrivacySettingsPage extends StatelessWidget {
   const PrivacySettingsPage({super.key});
 
@@ -14,16 +15,16 @@ class PrivacySettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: darkThemeColors.primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: darkThemeColors.primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Privacy', style: appBarPrimaryTextStyle),
+          title: Text('Privacy', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: EdgeInsets.symmetric(horizontal: 10),
           padding: EdgeInsetsGeometry.all(8),
-          color: darkThemeColors.primaryBackgroundColor,
+          color: AppThemes.darkThemeColors.primaryBackgroundColor,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

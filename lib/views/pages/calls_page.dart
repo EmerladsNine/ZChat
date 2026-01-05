@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../data/themes.dart';
+import '../data/app_themes.dart';
 
+/// Page displaying call history and call-related actions.
 class CallsPage extends StatelessWidget {
   const CallsPage({super.key});
 
@@ -9,7 +10,7 @@ class CallsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: darkThemeColors.primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         body: Container(),
       ),
     );

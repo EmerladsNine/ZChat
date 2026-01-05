@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/themes.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/data_classes/message_reply_data.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -30,7 +30,7 @@ class MessageBubble extends StatelessWidget {
         if (senderName != null)
           Container(
             decoration: BoxDecoration(
-              color: darkThemeColors.cardsColor,
+              color: AppThemes.darkThemeColors.cardsColor,
               borderRadius: BorderRadius.circular(30),
             ),
             width: 40,
@@ -41,9 +41,9 @@ class MessageBubble extends StatelessWidget {
           child: Container(
             constraints: BoxConstraints(minWidth: 50, maxWidth: maxBubbleWidth),
             decoration: BoxDecoration(
-              color: darkThemeColors.cardsColor,
+              color: AppThemes.darkThemeColors.cardsColor,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: darkThemeColors.dividerColor),
+              border: Border.all(color: AppThemes.darkThemeColors.dividerColor),
             ),
             padding: EdgeInsets.all(5),
             margin: senderName == null
@@ -58,14 +58,14 @@ class MessageBubble extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 15,
-                      color: darkThemeColors.brandPrimaryColor,
+                      color: AppThemes.darkThemeColors.brandPrimaryColor,
                     ),
                   ),
                 if (replyData != null)
                   Container(
                     padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      color: darkThemeColors.dividerColor,
+                      color: AppThemes.darkThemeColors.dividerColor,
                       borderRadius: BorderRadius.circular(5),
                       border: BoxBorder.fromLTRB(
                         left: BorderSide(color: Colors.white, width: 3),
@@ -82,7 +82,9 @@ class MessageBubble extends StatelessWidget {
                             ),
                             Text(
                               replyData!.replyText,
-                              style: TextStyle(color: darkThemeColors.hintColor),
+                              style: TextStyle(
+                                color: AppThemes.darkThemeColors.hintColor,
+                              ),
                             ),
                           ],
                         ),
@@ -95,7 +97,10 @@ class MessageBubble extends StatelessWidget {
                   children: [
                     Text(
                       '12:00 PM',
-                      style: TextStyle(color: darkThemeColors.primaryColor, fontSize: 10),
+                      style: TextStyle(
+                        color: AppThemes.darkThemeColors.primaryColor,
+                        fontSize: 10,
+                      ),
                     ),
                   ],
                 ),

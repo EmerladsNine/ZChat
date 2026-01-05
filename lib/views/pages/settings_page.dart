@@ -3,9 +3,9 @@ import 'package:zchat/views/widgets/settings_widgets/cards/settings_card_widget.
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
 
-import '../data/settings_data.dart';
-import '../data/text_styles.dart';
-import '../data/themes.dart';
+import '../data/settings_page_data.dart';
+import '../data/app_text_styles.dart';
+import '../data/app_themes.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -14,11 +14,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: darkThemeColors.primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: darkThemeColors.primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Settings', style: appBarPrimaryTextStyle),
+          title: Text('Settings', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
 
         body: Container(

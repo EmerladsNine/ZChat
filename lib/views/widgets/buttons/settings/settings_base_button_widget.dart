@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/themes.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
 
-import '../../../data/notifiers.dart';
-import '../../../data/text_styles.dart';
+import '../../../data/app_notifiers.dart';
+import '../../../data/app_text_styles.dart';
 import '../ripple_effect_button_widget.dart';
 
 abstract class SettingsBaseButtonWidget extends StatelessWidget {
@@ -21,11 +21,11 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RippleEffectButtonWidget(
-      disableSet: disableSettingsPageButtons,
-      appStateNotifier: isNavigating,
+      disableSet: AppNotifiers.disableSettingsPageButtons,
+      appStateNotifier: AppNotifiers.isNavigating,
       onTap: () => onTap(context),
       child: Container(
-        color: darkThemeColors.cardsColor,
+        color: AppThemes.darkThemeColors.cardsColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -51,7 +51,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
                           ),
                           child: Text(
                             data.label,
-                            style: settingsCardsButtonsTextStyle,
+                            style: AppTextStyles.settingsCardsButtonsTextStyle,
                           ),
                         ),
 
@@ -60,7 +60,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
                             padding: EdgeInsetsGeometry.only(left: 12),
                             child: Text(
                               data.helpText!,
-                              style: hintTextStyle,
+                              style: AppTextStyles.hintTextStyle,
                               maxLines: 3,
                             ),
                           ),
@@ -71,7 +71,11 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
               ),
             ),
 
-            if (drawBorder) Container(height: 0.5, color: darkThemeColors.dividerColor),
+            if (drawBorder)
+              Container(
+                height: 0.5,
+                color: AppThemes.darkThemeColors.dividerColor,
+              ),
           ],
         ),
       ),

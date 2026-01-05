@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Data class holding the color scheme for the application theme.
 class ThemeColorScheme {
   final Color primaryBackgroundColor;
 
@@ -35,6 +36,7 @@ class ThemeColorScheme {
     required this.dividerColor,
   });
 
+  /// Creates a copy of this color scheme with the given fields replaced with the new values.
   ThemeColorScheme copyWith({
     Color? primaryBackgroundColor,
     Color? cardsColor,

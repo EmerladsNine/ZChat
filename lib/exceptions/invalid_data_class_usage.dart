@@ -1,3 +1,4 @@
+/// Exception thrown when a data class is used in an invalid context.
 class InvalidDataClassUsage implements Exception {
   final String message;
 

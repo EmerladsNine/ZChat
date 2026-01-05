@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+/// Data class defining the configuration for a settings switch.
 class SettingsSwitchData {
   final String label;
   final String? helpText;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../data/settings/zane_tools_widgets_data.dart';
-import '../../data/text_styles.dart';
-import '../../data/themes.dart';
+import '../../data/app_text_styles.dart';
+import '../../data/app_themes.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
@@ -14,11 +14,11 @@ class ZaneMemorySettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: darkThemeColors.primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: darkThemeColors.primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Memory', style: appBarPrimaryTextStyle),
+          title: Text('Memory', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),

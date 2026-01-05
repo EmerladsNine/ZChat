@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/notifiers.dart';
-import 'package:zchat/views/data/themes.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
-import '../../data/text_styles.dart';
+import '../../data/app_text_styles.dart';
 import '../../pages/chat_messages_page.dart';
 
 class ChatCardWidget extends StatelessWidget {
@@ -34,16 +34,16 @@ class ChatCardWidget extends StatelessWidget {
   Widget buildMessageStatusIndicator(BuildContext context) {
     switch (userLastMessageStatus) {
       case MessageStatus.undelivered:
-        return Text('›', style: messageStatusIndicatorStyle);
+        return Text('›', style: AppTextStyles.messageStatusIndicatorStyle);
 
       case MessageStatus.delivered:
-        return Text('››', style: messageStatusIndicatorStyle);
+        return Text('››', style: AppTextStyles.messageStatusIndicatorStyle);
 
       case MessageStatus.read:
         return Text(
           '››',
-          style: messageStatusIndicatorStyle.copyWith(
-            color: darkThemeColors.readMessageIndicatorColor,
+          style: AppTextStyles.messageStatusIndicatorStyle.copyWith(
+            color: AppThemes.darkThemeColors.readMessageIndicatorColor,
           ),
         );
 
@@ -55,8 +55,8 @@ class ChatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RippleEffectButtonWidget(
-      disableSet: disableChatsPageButtons,
-      appStateNotifier: isNavigating,
+      disableSet: AppNotifiers.disableChatsPageButtons,
+      appStateNotifier: AppNotifiers.isNavigating,
       onTap: () {
         Navigator.push(
           context,
@@ -75,9 +75,13 @@ class ChatCardWidget extends StatelessWidget {
             height: 50.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50.0),
-              color: darkThemeColors.cardsColor,
+              color: AppThemes.darkThemeColors.cardsColor,
             ),
-            child: Icon(cardIcon, size: 30, color: darkThemeColors.primaryColor),
+            child: Icon(
+              cardIcon,
+              size: 30,
+              color: AppThemes.darkThemeColors.primaryColor,
+            ),
           ),
           Expanded(
             child: Container(
@@ -85,7 +89,9 @@ class ChatCardWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 8, 12.5, 0),
               decoration: BoxDecoration(
                 border: BoxBorder.fromLTRB(
-                  bottom: BorderSide(color: darkThemeColors.dividerColor),
+                  bottom: BorderSide(
+                    color: AppThemes.darkThemeColors.dividerColor,
+                  ),
                 ),
               ),
               child: Column(
@@ -96,9 +102,15 @@ class ChatCardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: Text(chatName, style: chatCardNameTextStyle),
+                        child: Text(
+                          chatName,
+                          style: AppTextStyles.chatCardNameTextStyle,
+                        ),
                       ),
-                      Text(timeStamp, style: chatCardMessageDetailsTextStyle),
+                      Text(
+                        timeStamp,
+                        style: AppTextStyles.chatCardMessageDetailsTextStyle,
+                      ),
                     ],
                   ),
                   Row(
@@ -107,7 +119,7 @@ class ChatCardWidget extends StatelessWidget {
                         child: Text(
                           message,
                           overflow: TextOverflow.ellipsis,
-                          style: chatCardMessageDetailsTextStyle,
+                          style: AppTextStyles.chatCardMessageDetailsTextStyle,
                         ),
                       ),
 
@@ -123,8 +135,11 @@ class ChatCardWidget extends StatelessWidget {
                               child: Badge.count(
                                 count: unreadMessagesNumber,
                                 maxCount: 99,
-                                backgroundColor: darkThemeColors.unreadIndicatorColor,
-                                textStyle: chatCardUnreadNumTextStyle,
+                                backgroundColor: AppThemes
+                                    .darkThemeColors
+                                    .unreadIndicatorColor,
+                                textStyle:
+                                    AppTextStyles.chatCardUnreadNumTextStyle,
                                 smallSize: 12,
                                 largeSize: 14,
                                 padding: const EdgeInsets.all(5),

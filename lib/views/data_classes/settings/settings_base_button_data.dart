@@ -1,3 +1,4 @@
+/// Abstract base class for settings button data.
 abstract class SettingsBaseButtonData {
   final String label;
   final String? icon;

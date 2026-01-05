@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zchat/views/data/themes.dart';
+import 'package:zchat/views/data/app_themes.dart';
 
-import '../../data/text_styles.dart';
+import '../../data/app_text_styles.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
 
 class SettingsSwitchWidget extends StatefulWidget {
@@ -28,8 +28,11 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: darkThemeColors.cardsColor,
-        border: BoxBorder.all(color: darkThemeColors.dividerColor, width: 0.5),
+        color: AppThemes.darkThemeColors.cardsColor,
+        border: BoxBorder.all(
+          color: AppThemes.darkThemeColors.dividerColor,
+          width: 0.5,
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -64,7 +67,8 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                               ),
                               child: Text(
                                 widget.data.label,
-                                style: settingsCardsButtonsTextStyle,
+                                style:
+                                    AppTextStyles.settingsCardsButtonsTextStyle,
                               ),
                             ),
 
@@ -73,7 +77,7 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                                 padding: EdgeInsetsGeometry.only(left: 12),
                                 child: Text(
                                   widget.data.helpText!,
-                                  style: hintTextStyle,
+                                  style: AppTextStyles.hintTextStyle,
                                   maxLines: 3,
                                 ),
                               ),
@@ -85,7 +89,10 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                 ),
 
                 if (widget.drawBorder)
-                  Container(height: 0.5, color: darkThemeColors.dividerColor),
+                  Container(
+                    height: 0.5,
+                    color: AppThemes.darkThemeColors.dividerColor,
+                  ),
               ],
             ),
           ),

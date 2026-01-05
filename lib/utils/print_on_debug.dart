@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-void printOnDebug(Object? object)
-{
-  if(kDebugMode){
+/// Prints an object to the console only when in debug mode.
+void printOnDebug(Object? object) {
+  if (kDebugMode) {
     print("\n ${StackTrace.current}");
     print(object);
   }

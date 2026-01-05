@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'settings_base_button_data.dart';
 
+/// Data class for a settings button that triggers a simple dialog.
 class SettingsDialogButtonData extends SettingsBaseButtonData {
   final VoidCallback onChange;
   final String? dialogHelpText;

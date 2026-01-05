@@ -12,6 +12,7 @@ import '../../buttons/settings/settings_dialog_button_widget.dart';
 import '../../buttons/settings/settings_navigation_button_widget.dart';
 import '../../buttons/settings/settings_radio_group_dialog_button_widget.dart';
 
+/// A widget that displays a settings card containing a list of buttons.
 class SettingsCardWidget extends SettingsBaseCardWidget {
   const SettingsCardWidget({
     super.key,

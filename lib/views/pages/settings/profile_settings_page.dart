@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/text_styles.dart';
+import 'package:zchat/views/data/app_text_styles.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_info_card_widget.dart';
 
-import '../../data/themes.dart';
+import '../../data/app_themes.dart';
 
+/// Page for viewing and editing profile information.
 class ProfileSettingsPage extends StatelessWidget {
   const ProfileSettingsPage({super.key});
 
@@ -11,11 +12,11 @@ class ProfileSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: darkThemeColors.primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: darkThemeColors.primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Profile', style: appBarPrimaryTextStyle),
+          title: Text('Profile', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
         body: Column(
           children: [
@@ -27,13 +28,17 @@ class ProfileSettingsPage extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: Colors.white10,
               ),
-              child: Icon(Icons.person, color: darkThemeColors.iconDefaultColor, size: 80),
+              child: Icon(
+                Icons.person,
+                color: AppThemes.darkThemeColors.iconDefaultColor,
+                size: 80,
+              ),
             ),
             Padding(
               padding: EdgeInsetsGeometry.only(top: 10),
               child: Text(
                 'Ahmad Msheik',
-                style: ownProfileNameTextStyle,
+                style: AppTextStyles.ownProfileNameTextStyle,
                 textAlign: TextAlign.center,
               ),
             ),

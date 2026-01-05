@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/themes.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
-import '../../data/notifiers.dart';
-import '../../data/text_styles.dart';
+import '../../data/app_notifiers.dart';
+import '../../data/app_text_styles.dart';
 
 class ProfileInfoCardWidget extends StatelessWidget {
   const ProfileInfoCardWidget({
@@ -39,7 +39,10 @@ class ProfileInfoCardWidget extends StatelessWidget {
                         bottom: 3,
                         top: 3,
                       ),
-                      child: Text(label, style: settingsCardsButtonsTextStyle),
+                      child: Text(
+                        label,
+                        style: AppTextStyles.settingsCardsButtonsTextStyle,
+                      ),
                     ),
                   ),
                 ],
@@ -53,10 +56,13 @@ class ProfileInfoCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       text,
-                      style: settingsProfileDescriptionTextStyle,
+                      style: AppTextStyles.settingsProfileDescriptionTextStyle,
                       maxLines: 3,
                     ),
-                    Container(height: 0.5, color: darkThemeColors.dividerColor),
+                    Container(
+                      height: 0.5,
+                      color: AppThemes.darkThemeColors.dividerColor,
+                    ),
                   ],
                 ),
               ),
@@ -69,12 +75,15 @@ class ProfileInfoCardWidget extends StatelessWidget {
                 width: 45,
                 height: 25,
                 child: RippleEffectButtonWidget(
-                  disableSet: disableSettingsPageButtons,
-                  appStateNotifier: isNavigating,
+                  disableSet: AppNotifiers.disableSettingsPageButtons,
+                  appStateNotifier: AppNotifiers.isNavigating,
                   onTap: () {},
                   child: Padding(
                     padding: EdgeInsetsGeometry.only(right: 10, left: 10),
-                    child: Icon(Icons.edit, color: darkThemeColors.iconDefaultColor),
+                    child: Icon(
+                      Icons.edit,
+                      color: AppThemes.darkThemeColors.iconDefaultColor,
+                    ),
                   ),
                 ),
               )

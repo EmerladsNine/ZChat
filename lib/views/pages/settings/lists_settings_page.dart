@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../data/themes.dart';
+import '../../data/app_themes.dart';
 
+/// Page for managing lists settings.
 class ListsSettingsPage extends StatelessWidget {
   const ListsSettingsPage({super.key});
 
@@ -9,9 +10,9 @@ class ListsSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: darkThemeColors.primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: darkThemeColors.primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
         ),
         body: Container(),

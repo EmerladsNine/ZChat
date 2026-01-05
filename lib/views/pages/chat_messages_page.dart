@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble.dart';
 
-import '../data/themes.dart';
+import '../data/app_themes.dart';
 
+/// Page displaying a conversation with messages.
 class ChatMessagesPage extends StatelessWidget {
   const ChatMessagesPage({super.key});
 
@@ -54,12 +55,16 @@ class ChatMessagesPage extends StatelessWidget {
         children: [
           //BackgroundImageFallBack
           Positioned.fill(
-            child: Container(color: darkThemeColors.primaryBackgroundColor),
+            child: Container(
+              color: AppThemes.darkThemeColors.primaryBackgroundColor,
+            ),
           ),
           Image(
             image: Image.asset('assets/images/bg4.jpeg').image,
             fit: BoxFit.cover,
-            color: darkThemeColors.primaryBackgroundColor.withAlpha(220),
+            color: AppThemes.darkThemeColors.primaryBackgroundColor.withAlpha(
+              220,
+            ),
             colorBlendMode: BlendMode.overlay,
           ),
           Column(
