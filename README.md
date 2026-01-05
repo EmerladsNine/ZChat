@@ -160,6 +160,6 @@ MIT License — do whatever you want, just don’t pretend you wrote it 😉
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=rect&height=120&color=0:0A0A0D,100:00E676&section=footer&text=Crafted%20with%20%F0%9F%92%9A%20%26%20Flutter&fontColor=0A0A0D" />
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=0:0A0A0D,100:00E676&height=150&section=footer)
 
 </div>
