@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/settings_widgets/cards/settings_card_widget.dart';
 
-import '../../data/colors.dart';
 import '../../data/settings/account_widgets_data.dart';
 import '../../data/text_styles.dart';
+import '../../data/themes.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
@@ -14,16 +14,16 @@ class AccountSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: darkThemeColors.primaryBackgroundColor,
           elevation: 0,
           title: Text('Account', style: appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: EdgeInsets.symmetric(horizontal: 10),
           padding: EdgeInsetsGeometry.all(8),
-          color: primaryBackgroundColor,
+          color: darkThemeColors.primaryBackgroundColor,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

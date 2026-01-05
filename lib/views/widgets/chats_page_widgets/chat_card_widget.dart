@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/notifiers.dart';
+import 'package:zchat/views/data/themes.dart';
 import 'package:zchat/views/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
@@ -43,7 +43,7 @@ class ChatCardWidget extends StatelessWidget {
         return Text(
           '››',
           style: messageStatusIndicatorStyle.copyWith(
-            color: readMessageIndicatorColor,
+            color: darkThemeColors.readMessageIndicatorColor,
           ),
         );
 
@@ -75,9 +75,9 @@ class ChatCardWidget extends StatelessWidget {
             height: 50.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50.0),
-              color: cardsColor,
+              color: darkThemeColors.cardsColor,
             ),
-            child: Icon(cardIcon, size: 30, color: primaryColor),
+            child: Icon(cardIcon, size: 30, color: darkThemeColors.primaryColor),
           ),
           Expanded(
             child: Container(
@@ -85,7 +85,7 @@ class ChatCardWidget extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 8, 12.5, 0),
               decoration: BoxDecoration(
                 border: BoxBorder.fromLTRB(
-                  bottom: BorderSide(color: dividerColor),
+                  bottom: BorderSide(color: darkThemeColors.dividerColor),
                 ),
               ),
               child: Column(
@@ -123,7 +123,7 @@ class ChatCardWidget extends StatelessWidget {
                               child: Badge.count(
                                 count: unreadMessagesNumber,
                                 maxCount: 99,
-                                backgroundColor: unreadIndicatorColor,
+                                backgroundColor: darkThemeColors.unreadIndicatorColor,
                                 textStyle: chatCardUnreadNumTextStyle,
                                 smallSize: 12,
                                 largeSize: 14,

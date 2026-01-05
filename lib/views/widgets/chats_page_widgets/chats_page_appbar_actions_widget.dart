@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/notifiers.dart';
+import 'package:zchat/views/data/themes.dart';
 import 'package:zchat/views/pages/settings_page.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
@@ -23,7 +23,7 @@ class ChatsPageAppbarActionsWidget extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: Icon(Icons.settings, color: primaryColor, size: 25),
+          child: Icon(Icons.settings, color: darkThemeColors.primaryColor, size: 25),
         ),
       ),
     );

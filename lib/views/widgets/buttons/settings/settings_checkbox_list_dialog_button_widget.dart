@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/themes.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
-import '../../../data/colors.dart';
 import '../../../data/text_styles.dart';
 import '../../../data_classes/settings/settings_checkbox_list_dialog_button_data.dart';
 
@@ -33,7 +33,7 @@ class SettingsCheckboxListDialogButtonWidget<T>
 
                 return ValueListenableBuilder<List<T>>(
                   valueListenable: dialogNotifier,
-                  builder: (_, selectedValues, __) {
+                  builder: (_, selectedValues, _) {
                     final isSelected = selectedValues.contains(option.value);
 
                     return CheckboxListTile(
@@ -42,7 +42,7 @@ class SettingsCheckboxListDialogButtonWidget<T>
                         option.displayText,
                         style: settingsCardsButtonsTextStyle,
                       ),
-                      activeColor: checkboxSelectedColor,
+                      activeColor: darkThemeColors.checkboxSelectedColor,
                       onChanged: (bool? checked) {
                         if (checked == null) return;
 

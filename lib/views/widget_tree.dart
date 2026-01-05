@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/appbar_data.dart';
-import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/navbar_data.dart';
 import 'package:zchat/views/data/notifiers.dart';
 import 'package:zchat/views/widgets/appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
+import 'data/themes.dart';
 
-import 'data/swipe_data.dart';
-
-final List<String> appBarTitlesWithoutTheZ = ['Posts', 'ane', 'Calls'];
+int? pendingPage;
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({
@@ -27,7 +25,7 @@ class WidgetTree extends StatelessWidget {
       valueListenable: selectedPageNotifier,
       builder: (context, selectedPage, child) {
         return Scaffold(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: darkThemeColors.primaryBackgroundColor,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: AppBarWidget(
@@ -76,7 +74,7 @@ class WidgetTree extends StatelessWidget {
               ? FloatingActionButton(
                   onPressed: () {},
                   tooltip: 'Launch a rocket',
-                  backgroundColor: brandPrimaryColor,
+                  backgroundColor: darkThemeColors.brandPrimaryColor,
                   child: const Icon(Icons.rocket, color: Colors.black87),
                 )
               : null,

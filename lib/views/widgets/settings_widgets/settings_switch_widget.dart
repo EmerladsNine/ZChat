@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/data/themes.dart';
 
 import '../../data/text_styles.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
@@ -28,8 +28,8 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: cardsColor,
-        border: BoxBorder.all(color: dividerColor, width: 0.5),
+        color: darkThemeColors.cardsColor,
+        border: BoxBorder.all(color: darkThemeColors.dividerColor, width: 0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -85,7 +85,7 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                 ),
 
                 if (widget.drawBorder)
-                  Container(height: 0.5, color: dividerColor),
+                  Container(height: 0.5, color: darkThemeColors.dividerColor),
               ],
             ),
           ),

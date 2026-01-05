@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/colors.dart';
+import '../data/themes.dart';
 
 class CallsPage extends StatelessWidget {
   const CallsPage({super.key});
@@ -9,7 +9,7 @@ class CallsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: darkThemeColors.primaryBackgroundColor,
         body: Container(),
       ),
     );

@@ -1,72 +1,72 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import 'themes.dart';
 
-const TextStyle appBarPrimaryTextStyle = TextStyle(
+final TextStyle appBarPrimaryTextStyle = TextStyle(
   fontSize: 27,
   fontWeight: FontWeight.w800,
-  color: primaryColor,
+  color: darkThemeColors.primaryColor,
   fontFamily: 'InterDisplay',
 );
 
-const TextStyle appBarSecondaryTextStyle = TextStyle(
+final TextStyle appBarSecondaryTextStyle = TextStyle(
   fontSize: 27,
   fontWeight: FontWeight.w800,
-  color: brandPrimaryColor,
+  color: darkThemeColors.brandPrimaryColor,
   fontFamily: 'InterDisplay',
 );
 
-const TextStyle hintTextStyle = TextStyle(
-  color: hintColor,
+final TextStyle hintTextStyle = TextStyle(
+  color: darkThemeColors.hintColor,
   fontFamily: 'Inter',
 );
 
-const TextStyle settingsProfileNameTextStyle = TextStyle(
+final TextStyle settingsProfileNameTextStyle = TextStyle(
   fontSize: 18.0,
   fontWeight: FontWeight.w400,
-  color: primaryColor,
+  color: darkThemeColors.primaryColor,
   fontFamily: 'Inter',
 );
 
-const TextStyle settingsProfileDescriptionTextStyle = TextStyle(
-  color: textSecondaryColor,
+final TextStyle settingsProfileDescriptionTextStyle = TextStyle(
+  color: darkThemeColors.textSecondaryColor,
   fontFamily: 'Inter',
 );
 
-const TextStyle chatCardNameTextStyle = TextStyle(
-  color: primaryColor,
+final TextStyle chatCardNameTextStyle = TextStyle(
+  color: darkThemeColors.primaryColor,
   fontWeight: FontWeight.w700,
   fontSize: 18,
   fontFamily: 'Inter',
 );
 
-const TextStyle chatCardUnreadNumTextStyle = TextStyle(
-  color: primaryColor,
+final TextStyle chatCardUnreadNumTextStyle = TextStyle(
+  color: darkThemeColors.primaryColor,
   fontWeight: FontWeight.w700,
   fontSize: 11,
   fontFamily: 'Inter',
 );
 
-const TextStyle chatCardMessageDetailsTextStyle = TextStyle(
-  color: textSecondaryColor,
+final TextStyle chatCardMessageDetailsTextStyle = TextStyle(
+  color: darkThemeColors.textSecondaryColor,
   fontFamily: 'Inter',
 );
 
-const TextStyle messageStatusIndicatorStyle = TextStyle(
-  color: textSecondaryColor,
+final TextStyle messageStatusIndicatorStyle = TextStyle(
+  color: darkThemeColors.textSecondaryColor,
   fontFamily: 'Inter',
   fontSize: 18,
 );
 
-const TextStyle settingsCardsButtonsTextStyle = TextStyle(
+final TextStyle settingsCardsButtonsTextStyle = TextStyle(
   fontSize: 16.0,
   fontWeight: FontWeight.w600,
-  color: primaryColor,
+  color: darkThemeColors.primaryColor,
   fontFamily: 'Inter',
 );
 
-const TextStyle ownProfileNameTextStyle = TextStyle(
+final TextStyle ownProfileNameTextStyle = TextStyle(
   fontSize: 22.0,
   fontWeight: FontWeight.w700,
-  color: primaryColor,
+  color: darkThemeColors.primaryColor,
   fontFamily: 'Inter',
 );

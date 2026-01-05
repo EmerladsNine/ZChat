@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../data/colors.dart';
+import 'package:zchat/views/data/themes.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
   const ChatTextFieldWidget({super.key, required this.onChanged , required this.controller});
@@ -25,7 +24,7 @@ class ChatTextFieldWidget extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: 15, right: 15 ,top: 4),
             isDense: true,
             filled: true,
-            fillColor: dividerColor,
+            fillColor: darkThemeColors.dividerColor,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(20),

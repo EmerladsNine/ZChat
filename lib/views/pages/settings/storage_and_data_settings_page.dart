@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
 import 'package:zchat/views/widgets/settings_widgets/cards/settings_checkbox_list_dialog_card_widget.dart';
-import '../../data/colors.dart';
 import '../../data/settings/storage_and_data_widgets_data.dart';
+import '../../data/themes.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
@@ -14,16 +14,16 @@ class StorageAndDataSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: darkThemeColors.primaryBackgroundColor,
           elevation: 0,
           title: Text('Storage & Data', style: appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
           padding: const EdgeInsets.all(8),
-          color: primaryBackgroundColor,
+          color: darkThemeColors.primaryBackgroundColor,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

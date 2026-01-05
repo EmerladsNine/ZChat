@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../data/colors.dart';
+import 'package:zchat/views/data/themes.dart';
 
 class EmojiPanelButtonWidget extends StatelessWidget{
   const EmojiPanelButtonWidget({super.key});
@@ -14,7 +13,7 @@ class EmojiPanelButtonWidget extends StatelessWidget{
         padding: const EdgeInsets.all(4.0),
         child: Icon(
           Icons.emoji_emotions_outlined,
-          color: primaryColor,
+          color: darkThemeColors.primaryColor,
           size: 25,
         ),
       ),

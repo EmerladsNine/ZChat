@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/themes.dart';
 import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
 
-import '../../../data/colors.dart';
 import '../../../data/notifiers.dart';
 import '../../../data/text_styles.dart';
 import '../ripple_effect_button_widget.dart';
@@ -25,7 +25,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
       appStateNotifier: isNavigating,
       onTap: () => onTap(context),
       child: Container(
-        color: cardsColor,
+        color: darkThemeColors.cardsColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -71,7 +71,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
               ),
             ),
 
-            if (drawBorder) Container(height: 0.5, color: dividerColor),
+            if (drawBorder) Container(height: 0.5, color: darkThemeColors.dividerColor),
           ],
         ),
       ),

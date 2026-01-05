@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../data/colors.dart';
+import 'package:zchat/views/data/themes.dart';
 
 class CameraButtonWidget extends StatelessWidget{
   const CameraButtonWidget({super.key});
@@ -14,7 +13,7 @@ class CameraButtonWidget extends StatelessWidget{
         padding: const EdgeInsets.all(4.0),
         child: Icon(
           Icons.camera_alt_outlined,
-          color: primaryColor,
+          color: darkThemeColors.primaryColor,
           size: 25,
         ),
       ),

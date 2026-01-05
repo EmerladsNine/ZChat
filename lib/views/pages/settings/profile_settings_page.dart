@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/text_styles.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_info_card_widget.dart';
 
-import '../../data/colors.dart';
+import '../../data/themes.dart';
 
 class ProfileSettingsPage extends StatelessWidget {
   const ProfileSettingsPage({super.key});
@@ -11,9 +11,9 @@ class ProfileSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: darkThemeColors.primaryBackgroundColor,
           elevation: 0,
           title: Text('Profile', style: appBarPrimaryTextStyle),
         ),
@@ -27,7 +27,7 @@ class ProfileSettingsPage extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: Colors.white10,
               ),
-              child: Icon(Icons.person, color: iconDefaultColor, size: 80),
+              child: Icon(Icons.person, color: darkThemeColors.iconDefaultColor, size: 80),
             ),
             Padding(
               padding: EdgeInsetsGeometry.only(top: 10),

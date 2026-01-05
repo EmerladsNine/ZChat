@@ -3,8 +3,8 @@ import 'package:zchat/views/data/text_styles.dart';
 import 'package:zchat/views/data_classes/settings/settings_switch_data.dart';
 import 'package:zchat/views/widgets/settings_widgets/settings_switch_widget.dart';
 
-import '../../data/colors.dart';
 import '../../data/settings/chats_widgets_data.dart';
+import '../../data/themes.dart';
 import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 
 class ChatsSettingsPage extends StatelessWidget {
@@ -14,16 +14,16 @@ class ChatsSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: darkThemeColors.primaryBackgroundColor,
           elevation: 0,
           title: Text('Chats', style: appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: EdgeInsets.symmetric(horizontal: 10),
           padding: EdgeInsets.all(8),
-          color: primaryBackgroundColor,
+          color: darkThemeColors.primaryBackgroundColor,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

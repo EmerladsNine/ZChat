@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/data/themes.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
 import '../../data/notifiers.dart';
@@ -56,7 +56,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
                       style: settingsProfileDescriptionTextStyle,
                       maxLines: 3,
                     ),
-                    Container(height: 0.5, color: dividerColor),
+                    Container(height: 0.5, color: darkThemeColors.dividerColor),
                   ],
                 ),
               ),
@@ -74,7 +74,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
                   onTap: () {},
                   child: Padding(
                     padding: EdgeInsetsGeometry.only(right: 10, left: 10),
-                    child: Icon(Icons.edit, color: iconDefaultColor),
+                    child: Icon(Icons.edit, color: darkThemeColors.iconDefaultColor),
                   ),
                 ),
               )

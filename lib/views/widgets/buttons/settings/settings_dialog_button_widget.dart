@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/data/themes.dart';
 import 'package:zchat/views/data_classes/settings/settings_dialog_button_data.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
 
@@ -29,7 +29,7 @@ class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
               if (castedData.dialogHelpText != null)
                 Text(
                   castedData.dialogHelpText!,
-                  style: hintTextStyle.copyWith(color: primaryColor),
+                  style: hintTextStyle.copyWith(color: darkThemeColors.primaryColor),
                 ),
             ],
           ),

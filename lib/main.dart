@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
-import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/notifiers.dart';
+import 'package:zchat/views/data/themes.dart';
 import 'package:zchat/views/widget_tree.dart';
 
 void main() {
@@ -10,6 +10,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,19 +20,20 @@ class MyApp extends StatelessWidget {
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.blue,
           selectionHandleColor: Colors.transparent,
-          selectionColor: Colors.blue
+          selectionColor: Colors.blue,
         ),
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
-          primary: primaryBackgroundColor,
-          onPrimary: primaryColor,
+          primary: darkThemeColors.primaryBackgroundColor,
+          onPrimary: darkThemeColors.primaryColor,
           secondary: Color(0xFF1E2A33),
           onSecondary: Colors.white,
           surface: Color(0xFF141A20),
           onSurface: Colors.white,
           error: Color(0xFFCF6679),
           onError: Colors.white,
-        )),
+        ),
+      ),
       home: const MyHomePage(),
     );
   }
@@ -69,6 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetTree(pageController: pageController,fullSwipeController: fullSwipeController,);
+    return WidgetTree(
+      pageController: pageController,
+      fullSwipeController: fullSwipeController,
+    );
   }
 }

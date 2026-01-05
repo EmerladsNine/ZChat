@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/data/themes.dart';
 import 'package:zchat/views/pages/settings/profile_settings_page.dart';
 
 import '../../data/notifiers.dart';
@@ -34,7 +34,7 @@ class ProfileWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: cardsColor,
+          color: darkThemeColors.cardsColor,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Row(

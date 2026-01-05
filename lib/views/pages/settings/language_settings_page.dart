@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../data/colors.dart';
 import '../../data/settings/language_widgets_data.dart';
 import 'package:zchat/views/data/text_styles.dart';
 
+import '../../data/themes.dart';
 import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 
 class LanguageSettingsPage extends StatelessWidget {
@@ -12,9 +12,9 @@ class LanguageSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: darkThemeColors.primaryBackgroundColor,
           elevation: 0,
           title: Text('Language', style: appBarPrimaryTextStyle),
         ),

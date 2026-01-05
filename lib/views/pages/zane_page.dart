@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/colors.dart';
+import '../data/themes.dart';
 
 class ZanePage extends StatelessWidget {
   const ZanePage({super.key});
@@ -9,8 +9,11 @@ class ZanePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
-        appBar: AppBar(backgroundColor: primaryBackgroundColor, elevation: 0),
+        backgroundColor: darkThemeColors.primaryBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: darkThemeColors.primaryBackgroundColor,
+          elevation: 0,
+        ),
         body: Container(),
       ),
     );

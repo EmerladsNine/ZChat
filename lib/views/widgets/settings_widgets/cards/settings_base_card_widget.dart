@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../data/colors.dart';
+import 'package:zchat/views/data/themes.dart';
 import '../../../data/text_styles.dart';
 
 abstract class SettingsBaseCardWidget extends StatelessWidget {
@@ -14,8 +14,8 @@ abstract class SettingsBaseCardWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: cardsColor,
-        border: BoxBorder.all(color: dividerColor, width: 0.5),
+        color: darkThemeColors.cardsColor,
+        border: BoxBorder.all(color: darkThemeColors.dividerColor, width: 0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -26,7 +26,7 @@ abstract class SettingsBaseCardWidget extends StatelessWidget {
             child: Text(category, style: chatCardNameTextStyle),
           ),
 
-          Container(height: 0.5, color: dividerColor),
+          Container(height: 0.5, color: darkThemeColors.dividerColor),
 
           ...buildButtons(context),
         ],
