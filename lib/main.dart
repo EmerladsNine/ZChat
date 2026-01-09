@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/widget_tree.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    Provider<MessagingService>(
+      create: (_) => MessagingService(),
+      dispose: (context, service) {
+        service.dispose();
+      },
+      child: MyApp(),
+    ),
+  );
 }
 
 /// The root widget of the application.
@@ -62,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    context.read<MessagingService>().connectServer("Main Call");
     pageController = PageController(
       initialPage: AppNotifiers.selectedPageNotifier.value,
     );

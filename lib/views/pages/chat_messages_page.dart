@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
-import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble.dart';
 
 import '../data/app_themes.dart';
 
@@ -75,14 +76,16 @@ class ChatMessagesPage extends StatelessWidget {
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final double maxWidth = constraints.maxWidth * 0.7;
-                      return ListView.builder(
-                        reverse: true,
-                        itemCount: messages.length,
-                        itemBuilder: (context, index) {
-                          return MessageBubble(
-                            text: messages[index],
-                            time: '12:00 PM',
-                            maxBubbleWidth: maxWidth,
+                      return Consumer<Chat>(
+                        builder: (context, chat, child) {
+                          return ListView.builder(
+                            reverse: true,
+                            itemCount: chat.messages.length,
+                            itemBuilder: (context, index) {
+                              return chat.messages[index].getMessageBubble(
+                                maxWidth,
+                              );
+                            },
                           );
                         },
                       );

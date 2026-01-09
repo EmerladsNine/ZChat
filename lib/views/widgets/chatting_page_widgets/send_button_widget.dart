@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
+import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/views/data/app_themes.dart';
 
 class SendButtonWidget extends StatelessWidget {
@@ -19,7 +22,12 @@ class SendButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: !hasVisibleText(controller.text) ? () {
+        context.read<Chat>().debugPrintMessages();
+      } :
+          () {
+        final msgService = context.read<MessagingService>();
+        msgService.sendMessage(controller.text, context.read<Chat> ());
         controller.text = "";
       },
       borderRadius: BorderRadius.circular(15),

@@ -9,7 +9,6 @@ import 'emoji_panel_button_widget.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
   const ChatMessagesFooterWidget({super.key});
-
   @override
   State<ChatMessagesFooterWidget> createState() =>
       _ChatMessagesFooterWidgetState();

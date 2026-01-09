@@ -96,7 +96,7 @@ class MessageBubble extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '12:00 PM',
+                      time,
                       style: TextStyle(
                         color: AppThemes.darkThemeColors.primaryColor,
                         fontSize: 10,
