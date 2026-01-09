@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
-import 'package:zchat/views/data/colors.dart';
-import 'package:zchat/views/data/notifiers.dart';
+import 'package:zchat/views/data/app_constants.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +19,10 @@ void main() {
   );
 }
 
+/// The root widget of the application.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,13 +36,13 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
-          primary: primaryBackgroundColor,
-          onPrimary: primaryColor,
-          secondary: Color(0xFF1E2A33),
+          primary: AppThemes.darkThemeColors.primaryBackgroundColor,
+          onPrimary: AppThemes.darkThemeColors.primaryColor,
+          secondary: Color(AppConstants.secondaryColorHex),
           onSecondary: Colors.white,
-          surface: Color(0xFF141A20),
+          surface: Color(AppConstants.surfaceColorHex),
           onSurface: Colors.white,
-          error: Color(0xFFCF6679),
+          error: Color(AppConstants.errorColorHex),
           onError: Colors.white,
         ),
       ),
@@ -48,9 +51,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/// The home page of the application, managing page navigation and swipe controls.
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -70,12 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     context.read<MessagingService>().connectServer("Main Call");
-    pageController = PageController(initialPage: selectedPageNotifier.value);
+    pageController = PageController(
+      initialPage: AppNotifiers.selectedPageNotifier.value,
+    );
+
     fullSwipeController = FullSwipeController(
       pageController: pageController,
-      minSwipeDistance: 20,
-      minSwipeVelocity: 1,
-      snapAnimationDuration: Duration(milliseconds: 200),
+      minSwipeDistance: AppConstants.defaultMinSwipeDistance,
+      minSwipeVelocity: AppConstants.defaultMinSwipeVelocity,
+      snapAnimationDuration: Duration(
+        milliseconds: AppConstants.defaultSnapAnimationDurationMs,
+      ),
       snapCurve: Curves.ease,
     );
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/widgets/settings_widgets/cards/settings_radio_group_dialog_card_widget.dart';
 
-import '../../data/colors.dart';
 import '../../data/settings/zane_personality_widgets_data.dart';
-import '../../data/text_styles.dart';
+import '../../data/app_text_styles.dart';
+import '../../data/app_themes.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
+import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
 class ZanePersonalitySettingsPage extends StatelessWidget {
@@ -14,11 +14,14 @@ class ZanePersonalitySettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Personality', style: appBarPrimaryTextStyle),
+          title: Text(
+            'Personality',
+            style: AppTextStyles.appBarPrimaryTextStyle,
+          ),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -26,7 +29,7 @@ class ZanePersonalitySettingsPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SettingsRadioGroupDialogCardWidget<String>(
+                SettingsCardWidget(
                   category: 'Personality',
                   buttons: personalityWidgetsData,
                 ),

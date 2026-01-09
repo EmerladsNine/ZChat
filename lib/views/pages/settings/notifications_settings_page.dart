@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/text_styles.dart';
-import '../../data/colors.dart';
+import 'package:zchat/views/data/app_text_styles.dart';
 import '../../data/settings/notifications_widgets_data.dart';
-import '../../widgets/settings_widgets/cards/settings_on_tap_card_widget.dart';
+import '../../data/app_themes.dart';
+import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
+/// Page for managing notification settings.
 class NotificationsSettingsPage extends StatelessWidget {
   const NotificationsSettingsPage({super.key});
 
@@ -13,32 +14,35 @@ class NotificationsSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Notifications', style: appBarPrimaryTextStyle),
+          title: Text(
+            'Notifications',
+            style: AppTextStyles.appBarPrimaryTextStyle,
+          ),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
           padding: const EdgeInsets.all(8),
-          color: primaryBackgroundColor,
+          color: AppThemes.darkThemeColors.primaryBackgroundColor,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // Contact Messages
-                SettingsOnTapCardWidget(
+                SettingsCardWidget(
                   category: 'Contact Messages',
                   buttons: contactMessagesWidgetsData,
                 ),
                 // Groups
-                SettingsOnTapCardWidget(
+                SettingsCardWidget(
                   category: 'Groups',
                   buttons: groupsWidgetsData,
                 ),
                 // Calls
-                SettingsOnTapCardWidget(
+                SettingsCardWidget(
                   category: 'Calls',
                   buttons: callsWidgetsData,
                 ),

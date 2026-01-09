@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/widgets/settings_widgets/cards/settings_radio_group_dialog_card_widget.dart';
-import '../../data/colors.dart';
 import '../../data/settings/language_widgets_data.dart';
-import 'package:zchat/views/data/text_styles.dart';
+import 'package:zchat/views/data/app_text_styles.dart';
 
+import '../../data/app_themes.dart';
+import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
+
+/// Page for selecting the application's and Zane's language.
 class LanguageSettingsPage extends StatelessWidget {
   const LanguageSettingsPage({super.key});
 
@@ -11,11 +13,11 @@ class LanguageSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Language', style: appBarPrimaryTextStyle),
+          title: Text('Language', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -23,7 +25,7 @@ class LanguageSettingsPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SettingsRadioGroupDialogCardWidget<String>(
+                SettingsCardWidget(
                   category: 'Language Settings',
                   buttons: languageWidgetsData,
                 ),

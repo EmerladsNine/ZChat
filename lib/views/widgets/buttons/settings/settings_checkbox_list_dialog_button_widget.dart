@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
-import '../../../data/colors.dart';
-import '../../../data/text_styles.dart';
+import '../../../data/app_text_styles.dart';
 import '../../../data_classes/settings/settings_checkbox_list_dialog_button_data.dart';
 
 class SettingsCheckboxListDialogButtonWidget<T>
@@ -23,7 +23,10 @@ class SettingsCheckboxListDialogButtonWidget<T>
         );
 
         return AlertDialog(
-          title: Text(dataCasted.dialogTitle, style: appBarPrimaryTextStyle),
+          title: Text(
+            dataCasted.dialogTitle,
+            style: AppTextStyles.appBarPrimaryTextStyle,
+          ),
 
           content: SingleChildScrollView(
             child: Column(
@@ -33,16 +36,17 @@ class SettingsCheckboxListDialogButtonWidget<T>
 
                 return ValueListenableBuilder<List<T>>(
                   valueListenable: dialogNotifier,
-                  builder: (_, selectedValues, __) {
+                  builder: (_, selectedValues, _) {
                     final isSelected = selectedValues.contains(option.value);
 
                     return CheckboxListTile(
                       value: isSelected,
                       title: Text(
                         option.displayText,
-                        style: settingsCardsButtonsTextStyle,
+                        style: AppTextStyles.settingsCardsButtonsTextStyle,
                       ),
-                      activeColor: checkboxSelectedColor,
+                      activeColor:
+                          AppThemes.darkThemeColors.checkboxSelectedColor,
                       onChanged: (bool? checked) {
                         if (checked == null) return;
 
@@ -64,7 +68,10 @@ class SettingsCheckboxListDialogButtonWidget<T>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Cancel', style: settingsCardsButtonsTextStyle),
+              child: Text(
+                'Cancel',
+                style: AppTextStyles.settingsCardsButtonsTextStyle,
+              ),
             ),
 
             TextButton(
@@ -73,7 +80,10 @@ class SettingsCheckboxListDialogButtonWidget<T>
                 dataCasted.onChange?.call();
                 Navigator.pop(context);
               },
-              child: Text('OK', style: settingsCardsButtonsTextStyle),
+              child: Text(
+                'OK',
+                style: AppTextStyles.settingsCardsButtonsTextStyle,
+              ),
             ),
           ],
         );

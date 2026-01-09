@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/chat.dart';
-import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
-import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble.dart';
 
+import '../data/app_themes.dart';
+
+/// Page displaying a conversation with messages.
 class ChatMessagesPage extends StatelessWidget {
   const ChatMessagesPage({super.key});
 
@@ -45,6 +46,7 @@ class ChatMessagesPage extends StatelessWidget {
     "I want to learn programming",
     "I want to kill you",
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +55,17 @@ class ChatMessagesPage extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           //BackgroundImageFallBack
-          Positioned.fill(child: Container(color: primaryBackgroundColor)),
+          Positioned.fill(
+            child: Container(
+              color: AppThemes.darkThemeColors.primaryBackgroundColor,
+            ),
+          ),
           Image(
             image: Image.asset('assets/images/bg4.jpeg').image,
             fit: BoxFit.cover,
-            color: primaryBackgroundColor.withAlpha(220),
+            color: AppThemes.darkThemeColors.primaryBackgroundColor.withAlpha(
+              220,
+            ),
             colorBlendMode: BlendMode.overlay,
           ),
           Column(

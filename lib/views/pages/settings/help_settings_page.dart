@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/text_styles.dart';
-import '../../data/colors.dart';
+import 'package:zchat/views/data/app_text_styles.dart';
 import '../../data/settings/help_widgets_data.dart';
-import '../../widgets/settings_widgets/cards/settings_on_tap_card_widget.dart';
+import '../../data/app_themes.dart';
+import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 
+/// Page displaying help and support information.
 class HelpSettingsPage extends StatelessWidget {
   const HelpSettingsPage({super.key});
 
@@ -11,27 +12,24 @@ class HelpSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Help', style: appBarPrimaryTextStyle),
+          title: Text('Help', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
           padding: const EdgeInsets.all(8),
-          color: primaryBackgroundColor,
+          color: AppThemes.darkThemeColors.primaryBackgroundColor,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // Help Card
-                SettingsOnTapCardWidget(
-                  category: 'Help',
-                  buttons: helpWidgetsData,
-                ),
+                SettingsCardWidget(category: 'Help', buttons: helpWidgetsData),
                 // About / Legal Card
-                SettingsOnTapCardWidget(
+                SettingsCardWidget(
                   category: 'About',
                   buttons: aboutWidgetsData,
                 ),

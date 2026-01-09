@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/pages/settings/profile_settings_page.dart';
 
-import '../../data/notifiers.dart';
-import '../../data/text_styles.dart';
+import '../../data/app_notifiers.dart';
+import '../../data/app_text_styles.dart';
 import '../buttons/ripple_effect_button_widget.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -19,8 +19,8 @@ class ProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RippleEffectButtonWidget(
-      disableSet: disableSettingsPageButtons,
-      appStateNotifier: isNavigating,
+      disableSet: AppNotifiers.disableSettingsPageButtons,
+      appStateNotifier: AppNotifiers.isNavigating,
       onTap: () {
         Navigator.push(
           context,
@@ -34,7 +34,7 @@ class ProfileWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: cardsColor,
+          color: AppThemes.darkThemeColors.cardsColor,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Row(
@@ -54,8 +54,11 @@ class ProfileWidget extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: settingsProfileNameTextStyle),
-                Text(description, style: settingsProfileDescriptionTextStyle),
+                Text(name, style: AppTextStyles.settingsProfileNameTextStyle),
+                Text(
+                  description,
+                  style: AppTextStyles.settingsProfileDescriptionTextStyle,
+                ),
               ],
             ),
           ],

@@ -7,8 +7,8 @@ final List<SettingsRadioGroupDialogButtonData<String>> languageWidgetsData = [
     label: 'App Language',
     icon: '🌐',
     dialogOptions: [
-      DialogOptionData(value: 'en', displayText: 'English'),
-      DialogOptionData(value: 'fr', displayText: 'French'),
+      DialogOptionData<String>(value: 'en', displayText: 'English'),
+      DialogOptionData<String>(value: 'fr', displayText: 'French'),
     ],
     dialogTitle: "App's Language",
     valueNotifier: ValueNotifier<String>('en'),
@@ -18,8 +18,8 @@ final List<SettingsRadioGroupDialogButtonData<String>> languageWidgetsData = [
     label: 'Zane Language',
     icon: '🗣️',
     dialogOptions: [
-      DialogOptionData(value: 'en', displayText: 'English'),
-      DialogOptionData(value: 'fr', displayText: 'French'),
+      DialogOptionData<String>(value: 'en', displayText: 'English'),
+      DialogOptionData<String>(value: 'fr', displayText: 'French'),
     ],
     dialogTitle: "Zane's Language",
     valueNotifier: ValueNotifier<String>('fr'),

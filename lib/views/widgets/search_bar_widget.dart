@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/app_themes.dart';
 
-import '../data/colors.dart';
-import '../data/text_styles.dart';
+import '../data/app_text_styles.dart';
 
-class SearchBarWidget extends StatelessWidget{
-  SearchBarWidget({
-    super.key,
-    this.text = 'Search'
-  });
+class SearchBarWidget extends StatelessWidget {
+  SearchBarWidget({super.key, this.text = 'Search'});
 
   final String text;
   final focusNode = FocusNode();
@@ -19,11 +16,11 @@ class SearchBarWidget extends StatelessWidget{
       height: 35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: cardsColor,
+        color: AppThemes.darkThemeColors.cardsColor,
       ),
       child: Row(
         children: [
-          Icon(Icons.search, color: hintColor),
+          Icon(Icons.search, color: AppThemes.darkThemeColors.hintColor),
           SizedBox(width: 8),
           Expanded(
             child: TextField(
@@ -34,7 +31,7 @@ class SearchBarWidget extends StatelessWidget{
               decoration: InputDecoration(
                 isDense: true,
                 hintText: text,
-                hintStyle: hintTextStyle,
+                hintStyle: AppTextStyles.hintTextStyle,
                 border: InputBorder.none,
               ),
             ),

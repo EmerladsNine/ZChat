@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/MessageSystem/chat.dart';
+import 'package:zchat/views/data/app_themes.dart';
 
-import '../../data/colors.dart';
-
-class SendButtonWidget extends StatelessWidget{
+class SendButtonWidget extends StatelessWidget {
   const SendButtonWidget({super.key, required this.controller});
 
   final TextEditingController controller;
@@ -35,18 +34,22 @@ class SendButtonWidget extends StatelessWidget{
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: !hasVisibleText(controller.text)
-            ? Icon(Icons.mic, size: 25, color: primaryColor)
+            ? Icon(
+                Icons.mic,
+                size: 25,
+                color: AppThemes.darkThemeColors.primaryColor,
+              )
             : Transform.translate(
-          offset: Offset(0, -3),
-          child: Transform.rotate(
-            angle: -0.3,
-            child: Icon(
-              Icons.send_rounded,
-              color: primaryColor,
-              size: 25,
-            ),
-          ),
-        ),
+                offset: Offset(0, -3),
+                child: Transform.rotate(
+                  angle: -0.3,
+                  child: Icon(
+                    Icons.send_rounded,
+                    color: AppThemes.darkThemeColors.primaryColor,
+                    size: 25,
+                  ),
+                ),
+              ),
       ),
     );
   }

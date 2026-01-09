@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/text_styles.dart';
+import 'package:zchat/views/data/app_text_styles.dart';
 import 'package:zchat/views/data_classes/settings/settings_switch_data.dart';
-import 'package:zchat/views/widgets/settings_widgets/cards/settings_dialog_card_widget.dart';
 import 'package:zchat/views/widgets/settings_widgets/settings_switch_widget.dart';
 
-import '../../data/colors.dart';
 import '../../data/settings/chats_widgets_data.dart';
+import '../../data/app_themes.dart';
+import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 
+/// Page for managing chat-related settings.
 class ChatsSettingsPage extends StatelessWidget {
   const ChatsSettingsPage({super.key});
 
@@ -14,21 +15,21 @@ class ChatsSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Chats', style: appBarPrimaryTextStyle),
+          title: Text('Chats', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: EdgeInsets.symmetric(horizontal: 10),
           padding: EdgeInsets.all(8),
-          color: primaryBackgroundColor,
+          color: AppThemes.darkThemeColors.primaryBackgroundColor,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SettingsDialogCardWidget(
+                SettingsCardWidget(
                   category: 'Chat Management',
                   buttons: chatManagementWidgetsData,
                 ),

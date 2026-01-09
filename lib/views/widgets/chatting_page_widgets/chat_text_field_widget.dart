@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-
-import '../../data/colors.dart';
+import 'package:zchat/views/data/app_themes.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
-  const ChatTextFieldWidget({super.key, required this.onChanged , required this.controller});
+  const ChatTextFieldWidget({
+    super.key,
+    required this.onChanged,
+    required this.controller,
+  });
 
   final ValueChanged<String> onChanged;
 
@@ -20,12 +23,17 @@ class ChatTextFieldWidget extends StatelessWidget {
           keyboardType: TextInputType.multiline,
           minLines: 1,
           maxLines: 4,
-          style: TextStyle(fontSize: 20 ,letterSpacing: 0,wordSpacing: 0,height: 1.2 ),
+          style: TextStyle(
+            fontSize: 20,
+            letterSpacing: 0,
+            wordSpacing: 0,
+            height: 1.2,
+          ),
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(left: 15, right: 15 ,top: 4),
+            contentPadding: EdgeInsets.only(left: 15, right: 15, top: 4),
             isDense: true,
             filled: true,
-            fillColor: dividerColor,
+            fillColor: AppThemes.darkThemeColors.dividerColor,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(20),

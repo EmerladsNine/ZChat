@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
-import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
-import 'package:zchat/views/pages/temp.dart';
+import 'package:zchat/views/widgets/settings_widgets/cards/settings_card_widget.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
-import 'package:zchat/views/widgets/settings_widgets/cards/settings_navigation_card_widget.dart';
 
-import '../data/settings_data.dart';
-import '../data/text_styles.dart';
-
-SettingsNavigationButtonData data = SettingsNavigationButtonData(
-  label: 'label',
-  goToPage: TempPage(),
-  icon: 'df',
-  helpText: 'dgfg83653578930',
-);
-bool border = true;
+import '../data/settings_page_data.dart';
+import '../data/app_text_styles.dart';
+import '../data/app_themes.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -24,11 +14,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: const Text('Settings', style: appBarPrimaryTextStyle),
+          title: Text('Settings', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
 
         body: Container(
@@ -45,22 +35,22 @@ class SettingsPage extends StatelessWidget {
                     children: [
                       ProfileWidget(),
 
-                      SettingsNavigationCardWidget(
+                      SettingsCardWidget(
                         category: "Account and Privacy",
                         buttons: accountAndPrivacySettingsButtons,
                       ),
 
-                      SettingsNavigationCardWidget(
+                      SettingsCardWidget(
                         category: "Zane",
                         buttons: zaneSettingsButtons,
                       ),
 
-                      SettingsNavigationCardWidget(
+                      SettingsCardWidget(
                         category: "Customization",
                         buttons: customizationSettingsButtons,
                       ),
 
-                      SettingsNavigationCardWidget(
+                      SettingsCardWidget(
                         category: "Miscellaneous",
                         buttons: miscellaneousSettingsButtons,
                       ),

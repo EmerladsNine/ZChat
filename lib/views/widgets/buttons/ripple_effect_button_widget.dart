@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/widgets/buttons/base_button_widget.dart';
 
 class RippleEffectButtonWidget extends BaseButtonWidget {
@@ -12,8 +12,8 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
     super.disableSet,
     super.appStateNotifier,
     this.animationDuration = const Duration(milliseconds: 200),
-    this.cardColor = hintColor,
-  });
+    Color? cardColor,
+  }) : cardColor = cardColor ?? AppThemes.darkThemeColors.hintColor;
 
   final Duration animationDuration;
   final Color cardColor;

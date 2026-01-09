@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/views/data/appbar_data.dart';
-import 'package:zchat/views/data/colors.dart';
 import 'package:zchat/views/data/navbar_data.dart';
-import 'package:zchat/views/data/notifiers.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
+import 'data/app_themes.dart';
 
-import 'data/swipe_data.dart';
-
-final List<String> appBarTitlesWithoutTheZ = ['Posts', 'ane', 'Calls'];
+int? pendingPage;
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({
@@ -24,10 +22,10 @@ class WidgetTree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: selectedPageNotifier,
+      valueListenable: AppNotifiers.selectedPageNotifier,
       builder: (context, selectedPage, child) {
         return Scaffold(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: AppBarWidget(
@@ -47,14 +45,14 @@ class WidgetTree extends StatelessWidget {
 
                   if ((page - settledPage).abs() < 0.001 &&
                       pendingPage != null) {
-                    selectedPageNotifier.value = pendingPage!;
+                    AppNotifiers.selectedPageNotifier.value = pendingPage!;
                     pendingPage = null;
                   }
                 }
                 return true;
               },
               child: ValueListenableBuilder(
-                valueListenable: stretchFactor,
+                valueListenable: AppNotifiers.stretchFactor,
                 builder: (context, scale, child) {
                   return Transform.scale(
                     scaleX: scale,
@@ -76,7 +74,7 @@ class WidgetTree extends StatelessWidget {
               ? FloatingActionButton(
                   onPressed: () {},
                   tooltip: 'Launch a rocket',
-                  backgroundColor: brandPrimaryColor,
+                  backgroundColor: AppThemes.darkThemeColors.brandPrimaryColor,
                   child: const Icon(Icons.rocket, color: Colors.black87),
                 )
               : null,

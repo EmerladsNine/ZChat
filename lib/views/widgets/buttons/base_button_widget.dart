@@ -8,18 +8,22 @@ abstract class BaseButtonWidget extends StatefulWidget {
     this.onTapDown,
     this.onTapCancel,
     ValueNotifier<bool>? disableSet,
-    ValueNotifier<bool>? appStateNotifier
+    ValueNotifier<bool>? appStateNotifier,
   }) : disableSet = disableSet ?? ValueNotifier(false),
-        appStateNotifier = appStateNotifier ?? ValueNotifier(false);
+       appStateNotifier = appStateNotifier ?? ValueNotifier(false);
 
   final Widget child;
   final GestureTapCallback? onTap;
   final GestureTapDownCallback? onTapDown;
   final GestureTapCancelCallback? onTapCancel;
-  final ValueNotifier<bool>  disableSet;
+  final ValueNotifier<bool> disableSet;
   final ValueNotifier<bool> appStateNotifier;
 
-  Widget buildOverlay(BuildContext context, bool pressed, VoidCallback markAnimationAsDone);
+  Widget buildOverlay(
+    BuildContext context,
+    bool pressed,
+    VoidCallback markAnimationAsDone,
+  );
 
   @override
   State<BaseButtonWidget> createState() {
@@ -27,7 +31,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
   }
 }
 
-class BaseButtonWidgetState extends State<BaseButtonWidget>{
+class BaseButtonWidgetState extends State<BaseButtonWidget> {
   bool _pressed = false;
   bool _animationDone = false;
 
@@ -45,17 +49,21 @@ class BaseButtonWidgetState extends State<BaseButtonWidget>{
 
         //Animate
         _animationDone = false;
-        setState(() {_pressed = true;});
+        setState(() {
+          _pressed = true;
+        });
         widget.onTapDown?.call(details);
       },
 
       onTapCancel: () {
         //Consider canceling navigation if the Cancelled tap is the one that is making navigation.
-        if(!_pressed || widget.appStateNotifier.value ) return;
+        if (!_pressed || widget.appStateNotifier.value) return;
 
         //reset
         widget.disableSet.value = false;
-        setState(() {_pressed = false;});
+        setState(() {
+          _pressed = false;
+        });
 
         widget.onTapCancel?.call();
       },
@@ -85,9 +93,9 @@ class BaseButtonWidgetState extends State<BaseButtonWidget>{
       child: Stack(
         children: [
           widget.child,
-          widget.buildOverlay(context, _pressed, markAnimationAsDone)
-        ]
-      )
+          widget.buildOverlay(context, _pressed, markAnimationAsDone),
+        ],
+      ),
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/colors.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/data_classes/settings/settings_dialog_button_data.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
 
-import '../../../data/text_styles.dart';
+import '../../../data/app_text_styles.dart';
 
 class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
   const SettingsDialogButtonWidget({
@@ -20,7 +20,10 @@ class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
         SettingsDialogButtonData castedData = data as SettingsDialogButtonData;
 
         return AlertDialog(
-          title: Text(castedData.dialogTitle, style: appBarPrimaryTextStyle),
+          title: Text(
+            castedData.dialogTitle,
+            style: AppTextStyles.appBarPrimaryTextStyle,
+          ),
 
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -29,21 +32,29 @@ class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
               if (castedData.dialogHelpText != null)
                 Text(
                   castedData.dialogHelpText!,
-                  style: hintTextStyle.copyWith(color: primaryColor),
+                  style: AppTextStyles.hintTextStyle.copyWith(
+                    color: AppThemes.darkThemeColors.primaryColor,
+                  ),
                 ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Cancel', style: settingsCardsButtonsTextStyle),
+              child: Text(
+                'Cancel',
+                style: AppTextStyles.settingsCardsButtonsTextStyle,
+              ),
             ),
             TextButton(
               onPressed: () {
                 castedData.onChange.call();
                 Navigator.pop(context);
               },
-              child: Text('OK', style: settingsCardsButtonsTextStyle),
+              child: Text(
+                'OK',
+                style: AppTextStyles.settingsCardsButtonsTextStyle,
+              ),
             ),
           ],
         );

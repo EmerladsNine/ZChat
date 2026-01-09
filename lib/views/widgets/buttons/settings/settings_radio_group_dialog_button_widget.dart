@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/data_classes/settings/settings_radio_group_dialog_button_data.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
 
-import '../../../data/colors.dart';
-import '../../../data/text_styles.dart';
+import '../../../data/app_text_styles.dart';
 
 class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
   const SettingsRadioGroupDialogButtonWidget({
@@ -21,7 +21,10 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
         final tempNotifier = ValueNotifier<T>(dataCasted.valueNotifier.value);
 
         return AlertDialog(
-          title: Text(dataCasted.dialogTitle, style: appBarPrimaryTextStyle),
+          title: Text(
+            dataCasted.dialogTitle,
+            style: AppTextStyles.appBarPrimaryTextStyle,
+          ),
 
           content: ValueListenableBuilder(
             valueListenable: tempNotifier,
@@ -38,10 +41,10 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
                   ) {
                     return RadioListTile<T>(
                       value: dataCasted.dialogOptions[index].value,
-                      activeColor: brandPrimaryColor,
+                      activeColor: AppThemes.darkThemeColors.brandPrimaryColor,
                       title: Text(
                         dataCasted.dialogOptions[index].displayText,
-                        style: settingsCardsButtonsTextStyle,
+                        style: AppTextStyles.settingsCardsButtonsTextStyle,
                       ),
                     );
                   }),
@@ -52,7 +55,10 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Cancel', style: settingsCardsButtonsTextStyle),
+              child: Text(
+                'Cancel',
+                style: AppTextStyles.settingsCardsButtonsTextStyle,
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -60,7 +66,10 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
                 dataCasted.onChange?.call();
                 Navigator.pop(context);
               },
-              child: Text('OK', style: settingsCardsButtonsTextStyle),
+              child: Text(
+                'OK',
+                style: AppTextStyles.settingsCardsButtonsTextStyle,
+              ),
             ),
           ],
         );

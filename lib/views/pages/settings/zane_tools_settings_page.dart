@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../data/colors.dart';
 import '../../data/settings/zane_memory_widgets_data.dart';
-import '../../data/text_styles.dart';
+import '../../data/app_text_styles.dart';
+import '../../data/app_themes.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 
@@ -13,11 +13,11 @@ class ZaneToolsSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryBackgroundColor,
+        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: primaryBackgroundColor,
+          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Tools', style: appBarPrimaryTextStyle),
+          title: Text('Tools', style: AppTextStyles.appBarPrimaryTextStyle),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
