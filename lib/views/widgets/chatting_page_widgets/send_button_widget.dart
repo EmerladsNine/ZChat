@@ -23,7 +23,7 @@ class SendButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: !hasVisibleText(controller.text) ? () {
-        context.read<Chat>().debugPrintMessages();
+        //Record a voice
       } :
           () {
         final msgService = context.read<MessagingService>();

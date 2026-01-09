@@ -4,11 +4,8 @@ import 'package:zchat/views/data/app_themes.dart';
 class ChatTextFieldWidget extends StatelessWidget {
   const ChatTextFieldWidget({
     super.key,
-    required this.onChanged,
     required this.controller,
   });
-
-  final ValueChanged<String> onChanged;
 
   final TextEditingController controller;
 
@@ -18,7 +15,6 @@ class ChatTextFieldWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 2.0),
         child: TextField(
-          onChanged: onChanged,
           controller: controller,
           keyboardType: TextInputType.multiline,
           minLines: 1,

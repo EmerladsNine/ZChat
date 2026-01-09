@@ -17,6 +17,12 @@ class ChatMessagesFooterWidget extends StatefulWidget {
 class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
   TextEditingController controller = TextEditingController();
 
+  @override void initState() {
+    super.initState();
+    controller.addListener((){
+      setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,9 +44,6 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
                 EmojiPanelButtonWidget(),
                 ChatTextFieldWidget(
                   controller: controller,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
                 ),
                 AddFileWidget(),
                 CameraButtonWidget(),
