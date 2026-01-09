@@ -30,8 +30,7 @@ class NavbarItemWidget extends StatelessWidget {
 
         return InkWell(
           onTap: () {
-            if (AppNotifiers.isNavigating.value || selected) return;
-            AppNotifiers.isNavigating.value = true;
+            if (selected) return;
 
             pageController.jumpToPage(pageNumber);
           },
@@ -51,7 +50,6 @@ class NavbarItemWidget extends StatelessWidget {
                         duration: const Duration(
                           milliseconds: animationDuration,
                         ),
-                        onEnd: () => AppNotifiers.isNavigating.value = false,
                         width: selected ? 60 : 0,
                         height: 30,
                         decoration: BoxDecoration(
