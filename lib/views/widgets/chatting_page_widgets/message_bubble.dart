@@ -8,12 +8,14 @@ class MessageBubble extends StatelessWidget {
     required this.text,
     required this.time,
     required this.maxBubbleWidth,
+    required this.isChildBubble,
     this.senderName,
     this.replyData,
   });
 
   final String text;
   final String time;
+  final bool isChildBubble;
   final MessageReplyData? replyData;
   final double maxBubbleWidth;
   final String? senderName;
@@ -29,7 +31,9 @@ class MessageBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 5,
         children: [
+          //Pfp of sender
           if (senderName != null)
+            isChildBubble ? SizedBox(width: 40,height: 40,) :
             Container(
               decoration: BoxDecoration(
                 color: AppThemes.darkThemeColors.cardsColor,
@@ -39,6 +43,7 @@ class MessageBubble extends StatelessWidget {
               height: 40,
               child: Icon(Icons.person),
             ),
+
           IntrinsicWidth(
             child: Container(
               constraints: BoxConstraints(minWidth: 50, maxWidth: maxBubbleWidth),
@@ -52,7 +57,7 @@ class MessageBubble extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
-                  if (senderName != null)
+                  if (senderName != null && !isChildBubble)
                     Text(
                       senderName!,
                       style: TextStyle(

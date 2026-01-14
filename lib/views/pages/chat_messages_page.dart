@@ -83,7 +83,7 @@ class ChatMessagesPage extends StatelessWidget {
                             itemCount: chat.messages.length,
                             itemBuilder: (context, index) {
                               return chat.messages[index].getMessageBubble(
-                                maxWidth,
+                                maxWidth
                               );
                             },
                           );

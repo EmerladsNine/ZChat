@@ -57,6 +57,7 @@ class MessagingService {
         ...utf8.encode(message),
       ]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
+
       chat.addMessage(Message(text: message, timestamp: timestamp));
       printOnDebug('sent: $message');
     } catch (e) {
