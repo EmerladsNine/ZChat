@@ -99,7 +99,7 @@ class MessageBubble extends StatelessWidget {
                       ),
                     ),
 
-                  Text(text, style: TextStyle(fontSize: 17 , height: 1)),
+                  Text(text, style: TextStyle(fontSize: text.characters.length == 1 ? 32 : 17 , height: 1)),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
