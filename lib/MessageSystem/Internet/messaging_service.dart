@@ -52,6 +52,7 @@ class MessagingService {
 
   Future<void> sendMessage(String message, Chat chat) async {
     currentChat ??= chat;
+    message = message.trim();
     try {
       sendProtocolUnit(MessageType.normalMessage, [...utf8.encode(message)]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
