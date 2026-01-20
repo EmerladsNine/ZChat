@@ -65,10 +65,9 @@ class ChatCardWidget extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              Chat chat = Chat();
-              currentChat = chat;
-              return ChangeNotifierProvider(
-                create: (_) => chat,
+              Chat chat = currentChat!;
+              return ChangeNotifierProvider.value(
+                value: chat,
                 child: ChatMessagesPage()
               );
             },

@@ -8,7 +8,7 @@ import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/MessageSystem/message.dart';
 import 'package:zchat/utils/print_on_debug.dart';
 
-Chat? currentChat; // Todo : remove this when it becomes useless
+Chat? currentChat = Chat(); // Todo : remove this when it becomes useless
 
 class MessagingService {
   late Socket socket;
@@ -51,7 +51,6 @@ class MessagingService {
   }
 
   Future<void> sendMessage(String message, Chat chat) async {
-    currentChat ??= chat;
     message = message.trim();
     try {
       sendProtocolUnit(MessageType.normalMessage, [...utf8.encode(message)]);
