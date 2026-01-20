@@ -38,6 +38,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/FlutterIpaExport.ipa
-          tag: v1.02
+          tag: v1.01
           overwrite: true
           body: "chat screen"
