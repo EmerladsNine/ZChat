@@ -8,6 +8,7 @@ class MessageBubble extends StatelessWidget {
     required this.text,
     required this.time,
     required this.maxBubbleWidth,
+    required this.isEmojiBubble,
     required this.isChildBubble,
     this.senderName,
     this.replyData,
@@ -15,6 +16,7 @@ class MessageBubble extends StatelessWidget {
 
   final String text;
   final String time;
+  final bool isEmojiBubble;
   final bool isChildBubble;
   final MessageReplyData? replyData;
   final double maxBubbleWidth;
@@ -99,7 +101,7 @@ class MessageBubble extends StatelessWidget {
                       ),
                     ),
 
-                  Text(text, style: TextStyle(fontSize: text.characters.length == 1 ? 32 : 17 , height: 1)),
+                  Text(text, style: TextStyle(fontSize: isEmojiBubble ? 32 : 20 , height: 1)),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

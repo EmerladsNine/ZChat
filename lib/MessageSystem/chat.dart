@@ -1,3 +1,4 @@
+import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:zchat/MessageSystem/message.dart';
 import 'package:zchat/utils/print_on_debug.dart';
@@ -8,6 +9,7 @@ class Chat extends ChangeNotifier{
 
   void addMessage(Message message) {
     message.isChildMessage = _messages.isNotEmpty && _messages[0].senderName == message.senderName;
+    message.isEmoji = message.text.characters.length == 1 && emojiRegex().hasMatch(message.text);
     _messages.insert(0,message);
     notifyListeners();
   }
