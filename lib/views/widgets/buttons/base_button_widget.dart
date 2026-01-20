@@ -7,6 +7,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
     this.onTap,
     this.onTapDown,
     this.onTapCancel,
+    this.padding = EdgeInsetsGeometry.zero,
     ValueNotifier<bool>? disableSet,
     ValueNotifier<bool>? appStateNotifier,
   }) : disableSet = disableSet ?? ValueNotifier(false),
@@ -18,6 +19,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
   final GestureTapCancelCallback? onTapCancel;
   final ValueNotifier<bool> disableSet;
   final ValueNotifier<bool> appStateNotifier;
+  final EdgeInsetsGeometry padding;
 
   Widget buildOverlay(
     BuildContext context,
@@ -92,7 +94,10 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
       },
       child: Stack(
         children: [
-          widget.child,
+          Padding(
+            padding: widget.padding,
+            child: widget.child,
+          ),
           widget.buildOverlay(context, _pressed, markAnimationAsDone),
         ],
       ),
