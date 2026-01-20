@@ -53,9 +53,7 @@ class MessagingService {
   Future<void> sendMessage(String message, Chat chat) async {
     currentChat ??= chat;
     try {
-      sendProtocolUnit(MessageType.normalMessage, [
-        ...utf8.encode(message),
-      ]);
+      sendProtocolUnit(MessageType.normalMessage, [...utf8.encode(message)]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
 
       chat.addMessage(Message(text: message, timestamp: timestamp));
@@ -68,18 +66,29 @@ class MessagingService {
   Future<void> connectServer(String caller) async {
     final String host = "92.113.26.192";
     final int port = 9999;
-    try {
-      socket = await Socket.connect(host, port);
-      printOnDebug('$caller Connected to $host:$port');
-      socket.listen(
-        listener.onData,
-        onDone: () => reconnectServer("onDone socket.listen"),
-        onError: (_) {
-          reconnectServer("onError socket.listen");
-        },
-      );
-    } catch (e) {
-      printOnDebug(e);
+    Duration delay = Duration.zero;
+    while (true) {
+      try {
+        socket = await Socket.connect(host, port);
+        printOnDebug('$caller Connected to $host:$port');
+        socket.listen(
+          listener.onData,
+          onDone: () => reconnectServer("onDone socket.listen"),
+          onError: (_) {
+            reconnectServer("onError socket.listen");
+          },
+        );
+        break;
+      } on SocketException catch (e) {
+        printOnDebug(e);
+        await Future.delayed(delay);
+        if (delay.inSeconds < 6) {
+          delay = Duration(seconds: delay.inSeconds + 1);
+        }
+      } catch (e) {
+        printOnDebug(e);
+        break;
+      }
     }
   }
 
@@ -87,7 +96,7 @@ class MessagingService {
   Future<void> reconnectServer(String caller) async {
     if (isReconnecting) return;
     isReconnecting = true;
-    socket.close();
+    await socket.close();
     socket.destroy();
     await connectServer(caller);
     isReconnecting = false;
