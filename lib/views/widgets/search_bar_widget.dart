@@ -4,10 +4,11 @@ import 'package:zchat/views/data/app_themes.dart';
 import '../data/app_text_styles.dart';
 
 class SearchBarWidget extends StatelessWidget {
-  SearchBarWidget({super.key, this.text = 'Search'});
+  SearchBarWidget({super.key, this.text = 'Search',this.sideWidget});
 
   final String text;
   final focusNode = FocusNode();
+  final Widget? sideWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,9 @@ class SearchBarWidget extends StatelessWidget {
         color: AppThemes.darkThemeColors.cardsColor,
       ),
       child: Row(
+        spacing: 8,
         children: [
           Icon(Icons.search, color: AppThemes.darkThemeColors.hintColor),
-          SizedBox(width: 8),
           Expanded(
             child: TextField(
               focusNode: focusNode,
@@ -36,6 +37,11 @@ class SearchBarWidget extends StatelessWidget {
               ),
             ),
           ),
+          if(sideWidget != null)
+            sideWidget!,
+          if(sideWidget != null)
+            SizedBox(width: 4,),
+
         ],
       ),
     );
