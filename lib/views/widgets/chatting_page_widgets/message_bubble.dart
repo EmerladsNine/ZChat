@@ -49,7 +49,7 @@ class MessageBubble extends StatelessWidget {
           IntrinsicWidth(
             child: Container(
               constraints: BoxConstraints(minWidth: 50, maxWidth: maxBubbleWidth),
-              decoration: BoxDecoration(
+              decoration: isEmojiBubble ? BoxDecoration() : BoxDecoration(
                 color: AppThemes.darkThemeColors.cardsColor,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: AppThemes.darkThemeColors.dividerColor),
