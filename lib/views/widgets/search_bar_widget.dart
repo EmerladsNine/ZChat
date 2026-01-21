@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/controllers/custom_text_controller.dart';
 
+import '../../controllers/custom_text_controller.dart';
 import '../../themes_system/app_theme.dart';
 import '../data/app_text_styles.dart';
 

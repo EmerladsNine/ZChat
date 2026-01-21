@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
-import '../../controllers/custom_text_controller.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
   const ChatTextFieldWidget({super.key, required this.controller});
