@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/MessageSystem/chat.dart';
-import 'package:zchat/views/data/app_themes.dart';
+
+import '../../../themes_system/app_theme.dart';
 
 class SendButtonWidget extends StatelessWidget {
   const SendButtonWidget({super.key, required this.controller});
@@ -21,31 +22,30 @@ class SendButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return InkWell(
-      onTap: !hasVisibleText(controller.text) ? () {
-        //Record a voice
-      } :
-          () {
-        final msgService = context.read<MessagingService>();
-        msgService.sendMessage(controller.text, context.read<Chat> ());
-        controller.text = "";
-      },
+      onTap: !hasVisibleText(controller.text)
+          ? () {
+              //Record a voice
+            }
+          : () {
+              final msgService = context.read<MessagingService>();
+              msgService.sendMessage(controller.text, context.read<Chat>());
+              controller.text = "";
+            },
       borderRadius: BorderRadius.circular(15),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: !hasVisibleText(controller.text)
-            ? Icon(
-                Icons.mic,
-                size: 25,
-                color: AppThemes.darkThemeColors.primaryColor,
-              )
+            ? Icon(Icons.mic, size: 25, color: colors.primaryColor)
             : Transform.translate(
                 offset: Offset(0, -3),
                 child: Transform.rotate(
                   angle: -0.3,
                   child: Icon(
                     Icons.send_rounded,
-                    color: AppThemes.darkThemeColors.primaryColor,
+                    color: colors.primaryColor,
                     size: 25,
                   ),
                 ),

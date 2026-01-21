@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/data_classes/message_reply_data.dart';
+
+import '../../../themes_system/app_theme.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
@@ -24,8 +25,10 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2,horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
       child: Row(
         mainAxisAlignment: senderName == null
             ? MainAxisAlignment.end
@@ -35,38 +38,43 @@ class MessageBubble extends StatelessWidget {
         children: [
           //Pfp of sender
           if (senderName != null)
-            isChildBubble ? SizedBox(width: 40,height: 40,) :
-            Container(
-              decoration: BoxDecoration(
-                color: AppThemes.darkThemeColors.cardsColor,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              width: 40,
-              height: 40,
-              child: Icon(Icons.person),
-            ),
+            isChildBubble
+                ? SizedBox(width: 40, height: 40)
+                : Container(
+                    decoration: BoxDecoration(
+                      color: colors.cardsColor,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    width: 40,
+                    height: 40,
+                    child: Icon(Icons.person),
+                  ),
 
           IntrinsicWidth(
             child: Container(
-              constraints: BoxConstraints(minWidth: 50, maxWidth: maxBubbleWidth),
-              decoration: isEmojiBubble ? BoxDecoration() : BoxDecoration(
-                color: AppThemes.darkThemeColors.cardsColor,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppThemes.darkThemeColors.dividerColor),
+              constraints: BoxConstraints(
+                minWidth: 50,
+                maxWidth: maxBubbleWidth,
               ),
-              padding: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+              decoration: isEmojiBubble
+                  ? BoxDecoration()
+                  : BoxDecoration(
+                      color: colors.cardsColor,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: colors.dividerColor),
+                    ),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   if (senderName != null && !isChildBubble)
                     Text(
                       senderName!,
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 15,
-                        color: AppThemes.darkThemeColors.brandPrimaryColor,
-                        height: 1
+                        color: colors.brandPrimaryColor,
+                        height: 1,
                       ),
                     ),
 
@@ -74,7 +82,7 @@ class MessageBubble extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: AppThemes.darkThemeColors.dividerColor,
+                        color: colors.dividerColor,
                         borderRadius: BorderRadius.circular(5),
                         border: BoxBorder.fromLTRB(
                           left: BorderSide(color: Colors.white, width: 3),
@@ -91,9 +99,7 @@ class MessageBubble extends StatelessWidget {
                               ),
                               Text(
                                 replyData!.replyText,
-                                style: TextStyle(
-                                  color: AppThemes.darkThemeColors.hintColor,
-                                ),
+                                style: TextStyle(color: colors.hintColor),
                               ),
                             ],
                           ),
@@ -101,7 +107,13 @@ class MessageBubble extends StatelessWidget {
                       ),
                     ),
 
-                  Text(text, style: TextStyle(fontSize: isEmojiBubble ? 32 : 20 , height: 1)),
+                  Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: isEmojiBubble ? 32 : 20,
+                      height: 1,
+                    ),
+                  ),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -109,7 +121,7 @@ class MessageBubble extends StatelessWidget {
                       Text(
                         time,
                         style: TextStyle(
-                          color: AppThemes.darkThemeColors.primaryColor,
+                          color: colors.primaryColor,
                           fontSize: 10,
                         ),
                       ),

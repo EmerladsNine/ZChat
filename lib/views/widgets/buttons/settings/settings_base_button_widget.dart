@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
 
+import '../../../../themes_system/app_theme.dart';
 import '../../../data/app_notifiers.dart';
 import '../../../data/app_text_styles.dart';
 import '../ripple_effect_button_widget.dart';
@@ -20,12 +20,14 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableSettingsPageButtons,
       appStateNotifier: AppNotifiers.isNavigating,
       onTap: () => onTap(context),
       child: Container(
-        color: AppThemes.darkThemeColors.cardsColor,
+        color: colors.cardsColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -51,7 +53,9 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
                           ),
                           child: Text(
                             data.label,
-                            style: AppTextStyles.settingsCardsButtonsTextStyle,
+                            style: AppTextStyles.settingsCardsButtonsTextStyle(
+                              colors,
+                            ),
                           ),
                         ),
 
@@ -60,7 +64,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
                             padding: EdgeInsetsGeometry.only(left: 12),
                             child: Text(
                               data.helpText!,
-                              style: AppTextStyles.hintTextStyle,
+                              style: AppTextStyles.hintTextStyle(colors),
                               maxLines: 3,
                             ),
                           ),
@@ -71,11 +75,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
               ),
             ),
 
-            if (drawBorder)
-              Container(
-                height: 0.5,
-                color: AppThemes.darkThemeColors.dividerColor,
-              ),
+            if (drawBorder) Container(height: 0.5, color: colors.dividerColor),
           ],
         ),
       ),

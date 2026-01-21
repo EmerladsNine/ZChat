@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 
-import '../data/app_themes.dart';
+import '../../themes_system/app_theme.dart';
 
 /// Page displaying a conversation with messages.
 class ChatMessagesPage extends StatelessWidget {
@@ -49,6 +49,8 @@ class ChatMessagesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -56,16 +58,12 @@ class ChatMessagesPage extends StatelessWidget {
         children: [
           //BackgroundImageFallBack
           Positioned.fill(
-            child: Container(
-              color: AppThemes.darkThemeColors.primaryBackgroundColor,
-            ),
+            child: Container(color: colors.primaryBackgroundColor),
           ),
           Image(
             image: Image.asset('assets/images/bg4.jpeg').image,
             fit: BoxFit.cover,
-            color: AppThemes.darkThemeColors.primaryBackgroundColor.withAlpha(
-              220,
-            ),
+            color: colors.primaryBackgroundColor.withAlpha(220),
             colorBlendMode: BlendMode.overlay,
           ),
           Column(
@@ -83,7 +81,7 @@ class ChatMessagesPage extends StatelessWidget {
                             itemCount: chat.messages.length,
                             itemBuilder: (context, index) {
                               return chat.messages[index].getMessageBubble(
-                                maxWidth
+                                maxWidth,
                               );
                             },
                           );

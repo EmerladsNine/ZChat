@@ -5,7 +5,7 @@ import 'package:zchat/views/data/navbar_data.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
-import 'data/app_themes.dart';
+import '../themes_system/app_theme.dart';
 
 int? pendingPage;
 
@@ -21,11 +21,13 @@ class WidgetTree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.selectedPageNotifier,
       builder: (context, selectedPage, child) {
         return Scaffold(
-          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
+          backgroundColor: colors.primaryBackgroundColor,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: AppBarWidget(
@@ -74,7 +76,7 @@ class WidgetTree extends StatelessWidget {
               ? FloatingActionButton(
                   onPressed: () {},
                   tooltip: 'Launch a rocket',
-                  backgroundColor: AppThemes.darkThemeColors.brandPrimaryColor,
+                  backgroundColor: colors.brandPrimaryColor,
                   child: const Icon(Icons.rocket, color: Colors.black87),
                 )
               : null,

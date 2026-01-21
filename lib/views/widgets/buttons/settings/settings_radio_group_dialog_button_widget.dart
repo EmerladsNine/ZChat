@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/data_classes/settings/settings_radio_group_dialog_button_data.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
 
+import '../../../../themes_system/app_theme.dart';
 import '../../../data/app_text_styles.dart';
 
 class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
@@ -14,6 +14,8 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
 
   @override
   void onTap(context) async {
+    final colors = AppTheme.of(context);
+
     await showDialog<T>(
       context: context,
       builder: (_) {
@@ -23,7 +25,7 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
         return AlertDialog(
           title: Text(
             dataCasted.dialogTitle,
-            style: AppTextStyles.appBarPrimaryTextStyle,
+            style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
 
           content: ValueListenableBuilder(
@@ -41,10 +43,12 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
                   ) {
                     return RadioListTile<T>(
                       value: dataCasted.dialogOptions[index].value,
-                      activeColor: AppThemes.darkThemeColors.brandPrimaryColor,
+                      activeColor: colors.brandPrimaryColor,
                       title: Text(
                         dataCasted.dialogOptions[index].displayText,
-                        style: AppTextStyles.settingsCardsButtonsTextStyle,
+                        style: AppTextStyles.settingsCardsButtonsTextStyle(
+                          colors,
+                        ),
                       ),
                     );
                   }),
@@ -57,7 +61,7 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
               onPressed: () => Navigator.pop(context),
               child: Text(
                 'Cancel',
-                style: AppTextStyles.settingsCardsButtonsTextStyle,
+                style: AppTextStyles.settingsCardsButtonsTextStyle(colors),
               ),
             ),
             TextButton(
@@ -68,7 +72,7 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
               },
               child: Text(
                 'OK',
-                style: AppTextStyles.settingsCardsButtonsTextStyle,
+                style: AppTextStyles.settingsCardsButtonsTextStyle(colors),
               ),
             ),
           ],
