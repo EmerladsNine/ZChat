@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../themes_system/app_theme.dart';
+import '../../controllers/custom_text_controller.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
   const ChatTextFieldWidget({super.key, required this.controller});
 
-  final TextEditingController controller;
+  final CustomTextController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class ChatTextFieldWidget extends StatelessWidget {
             letterSpacing: 0,
             wordSpacing: 0,
             height: 1.2,
+            color: colors.primaryColor,
           ),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 15, right: 15, top: 4),

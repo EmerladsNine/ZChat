@@ -3,6 +3,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/chat_text_field_widget
 import 'package:zchat/views/widgets/chatting_page_widgets/send_button_widget.dart';
 
 import '../../../themes_system/app_theme.dart';
+import '../../controllers/custom_text_controller.dart';
 import 'add_file_widget.dart';
 import 'camera_button_widget.dart';
 import 'emoji_panel_button_widget.dart';
@@ -16,7 +17,7 @@ class ChatMessagesFooterWidget extends StatefulWidget {
 }
 
 class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
-  TextEditingController controller = TextEditingController();
+  CustomTextController controller = CustomTextController();
 
   @override
   void initState() {

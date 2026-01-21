@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/controllers/custom_text_controller.dart';
 
 import '../../themes_system/app_theme.dart';
 import '../data/app_text_styles.dart';
@@ -26,10 +27,12 @@ class SearchBarWidget extends StatelessWidget {
           SizedBox(width: 8),
           Expanded(
             child: TextField(
+              controller: CustomTextController(),
               focusNode: focusNode,
               onTapOutside: (event) {
                 focusNode.unfocus();
               },
+              style: TextStyle(color: colors.primaryColor),
               decoration: InputDecoration(
                 isDense: true,
                 hintText: text,

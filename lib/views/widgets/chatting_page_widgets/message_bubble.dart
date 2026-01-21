@@ -85,7 +85,10 @@ class MessageBubble extends StatelessWidget {
                         color: colors.dividerColor,
                         borderRadius: BorderRadius.circular(5),
                         border: BoxBorder.fromLTRB(
-                          left: BorderSide(color: Colors.white, width: 3),
+                          left: BorderSide(
+                            color: colors.primaryColor,
+                            width: 3,
+                          ),
                         ),
                       ),
                       child: Row(
@@ -112,6 +115,7 @@ class MessageBubble extends StatelessWidget {
                     style: TextStyle(
                       fontSize: isEmojiBubble ? 32 : 20,
                       height: 1,
+                      color: colors.primaryColor,
                     ),
                   ),
 
