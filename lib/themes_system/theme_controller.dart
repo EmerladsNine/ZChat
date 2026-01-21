@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zchat/views/data_classes/theme_color_scheme.dart';
+import 'package:zchat/themes_system/theme_color_scheme.dart';
 
 import '../views/data/app_themes.dart';
 

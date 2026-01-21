@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_constants.dart';
-import '../data_classes/theme_color_scheme.dart';
+import '../../themes_system/theme_color_scheme.dart';
 
 abstract final class AppTextStyles {
   static TextStyle appBarPrimaryTextStyle(ThemeColorScheme colors) => TextStyle(

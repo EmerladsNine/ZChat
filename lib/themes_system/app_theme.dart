@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 
-import '../views/data_classes/theme_color_scheme.dart';
+import 'theme_color_scheme.dart';
 
 class AppTheme extends InheritedNotifier<ThemeController> {
   const AppTheme({
