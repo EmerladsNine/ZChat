@@ -14,56 +14,59 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: colors.primaryBackgroundColor,
-        appBar: AppBar(
+    return Container(
+      color: colors.primaryBackgroundColor,
+      child: SafeArea(
+        child: Scaffold(
           backgroundColor: colors.primaryBackgroundColor,
-          elevation: 0,
-          title: Text(
-            'Settings',
-            style: AppTextStyles.appBarPrimaryTextStyle(colors),
+          appBar: AppBar(
+            backgroundColor: colors.primaryBackgroundColor,
+            elevation: 0,
+            title: Text(
+              'Settings',
+              style: AppTextStyles.appBarPrimaryTextStyle(colors),
+            ),
           ),
-        ),
 
-        body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 10.0,
-            children: [
-              SearchBarWidget(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ProfileWidget(),
+          body: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 10.0,
+              children: [
+                SearchBarWidget(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ProfileWidget(),
 
-                      SettingsCardWidget(
-                        category: "Account and Privacy",
-                        buttons: accountAndPrivacySettingsButtons,
-                      ),
+                        SettingsCardWidget(
+                          category: "Account and Privacy",
+                          buttons: accountAndPrivacySettingsButtons,
+                        ),
 
-                      SettingsCardWidget(
-                        category: "Zane",
-                        buttons: zaneSettingsButtons,
-                      ),
+                        SettingsCardWidget(
+                          category: "Zane",
+                          buttons: zaneSettingsButtons,
+                        ),
 
-                      SettingsCardWidget(
-                        category: "Customization",
-                        buttons: customizationSettingsButtons,
-                      ),
+                        SettingsCardWidget(
+                          category: "Customization",
+                          buttons: customizationSettingsButtons,
+                        ),
 
-                      SettingsCardWidget(
-                        category: "Miscellaneous",
-                        buttons: miscellaneousSettingsButtons,
-                      ),
-                    ],
+                        SettingsCardWidget(
+                          category: "Miscellaneous",
+                          buttons: miscellaneousSettingsButtons,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

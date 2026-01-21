@@ -60,12 +60,30 @@ class ChatMessagesPage extends StatelessWidget {
           Positioned.fill(
             child: Container(color: colors.primaryBackgroundColor),
           ),
+
           Image(
             image: Image.asset('assets/images/bg4.jpeg').image,
             fit: BoxFit.cover,
             color: colors.primaryBackgroundColor.withAlpha(220),
             colorBlendMode: BlendMode.overlay,
           ),
+
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            height: View.of(context).viewPadding.top,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [colors.primaryBackgroundColor, Colors.transparent],
+                ),
+              ),
+            ),
+          ),
+
           Column(
             children: [
               Expanded(
