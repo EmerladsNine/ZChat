@@ -16,6 +16,7 @@ class ChatsPageAppbarActionsWidget extends StatelessWidget {
       padding: EdgeInsetsGeometry.only(right: 16),
       child: RippleEffectButtonWidget(
         disableSet: AppNotifiers.disableChatsPageButtons,
+        padding: const EdgeInsetsGeometry.all(8.0),
         animationDuration: Duration(milliseconds: 30),
         appStateNotifier: AppNotifiers.isNavigating,
         onTap: () {
@@ -24,10 +25,7 @@ class ChatsPageAppbarActionsWidget extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const SettingsPage()),
           );
         },
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Icon(Icons.settings, color: colors.primaryColor, size: 25),
-        ),
+        child: Icon(Icons.settings, color: colors.primaryColor, size: 25),
       ),
     );
   }

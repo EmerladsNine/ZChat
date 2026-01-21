@@ -4,6 +4,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
   BaseButtonWidget({
     super.key,
     required this.child,
+    this.transparentIsTappable = true,
     this.onTap,
     this.onTapDown,
     this.onTapCancel,
@@ -14,6 +15,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
        appStateNotifier = appStateNotifier ?? ValueNotifier(false);
 
   final Widget child;
+  final bool transparentIsTappable;
   final GestureTapCallback? onTap;
   final GestureTapDownCallback? onTapDown;
   final GestureTapCancelCallback? onTapCancel;
@@ -106,6 +108,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: widget.transparentIsTappable ? HitTestBehavior.opaque : null,
       onTapDown: tapDown,
       onTapCancel: () {
         tapCancel(context);
