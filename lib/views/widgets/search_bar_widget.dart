@@ -5,10 +5,11 @@ import '../../themes_system/app_theme.dart';
 import '../data/app_text_styles.dart';
 
 class SearchBarWidget extends StatelessWidget {
-  SearchBarWidget({super.key, this.text = 'Search'});
+  SearchBarWidget({super.key, this.text = 'Search',this.sideWidget});
 
   final String text;
   final focusNode = FocusNode();
+  final Widget? sideWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,9 @@ class SearchBarWidget extends StatelessWidget {
         color: colors.cardsColor,
       ),
       child: Row(
+        spacing: 8,
         children: [
           Icon(Icons.search, color: colors.hintColor),
-          SizedBox(width: 8),
           Expanded(
             child: TextField(
               controller: CustomTextController(),
@@ -41,6 +42,9 @@ class SearchBarWidget extends StatelessWidget {
               ),
             ),
           ),
+          if(sideWidget != null)
+            sideWidget!,
+
         ],
       ),
     );

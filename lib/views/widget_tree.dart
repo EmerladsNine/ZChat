@@ -72,15 +72,6 @@ class WidgetTree extends StatelessWidget {
               ),
             ),
           ),
-          floatingActionButton: selectedPage == 0
-              ? FloatingActionButton(
-                  onPressed: () {},
-                  tooltip: 'Launch a rocket',
-                  backgroundColor: colors.brandPrimaryColor,
-                  child: const Icon(Icons.rocket, color: Colors.black87),
-                )
-              : null,
-
           //Footer
           bottomNavigationBar: NavbarWidget(pageController: pageController),
         );

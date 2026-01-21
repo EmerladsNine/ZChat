@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/themes_system/app_theme.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
 
@@ -74,12 +77,20 @@ class ChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchBarWidget(text: 'Search'),
+          SearchBarWidget(text: 'Search',
+              sideWidget: RippleEffectButtonWidget(
+                padding: EdgeInsetsGeometry.all(4.0),
+                disableSet: AppNotifiers.disableChatsPageButtons,
+                appStateNotifier: AppNotifiers.isNavigating,
+                child: Icon(Icons.add,color: colors.hintColor,),
+              ),
+              ),
           SizedBox(height: 10),
           Expanded(
             child: ListView.builder(

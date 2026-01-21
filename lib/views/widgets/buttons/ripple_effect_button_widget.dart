@@ -7,6 +7,7 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
   RippleEffectButtonWidget({
     super.key,
     required super.child,
+    super.padding,
     super.onTap,
     super.onTapDown,
     super.onTapCancel,
@@ -21,7 +22,8 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
   Widget buildOverlay(
     BuildContext context,
     bool pressed,
-    VoidCallback markAnimationAsDone,
+    VoidCallback markFillAnimationAsDone,
+    VoidCallback markEmptyAnimationAsDone,
   ) {
     final colors = AppTheme.of(context);
 
@@ -29,10 +31,10 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
       child: Center(
         child: AnimatedOpacity(
           opacity: pressed ? 0.3 : 0,
-          duration: pressed ? animationDuration : Duration.zero,
+          duration: pressed ? animationDuration : Duration(seconds: 0),
           child: AnimatedContainer(
-            duration: pressed ? animationDuration : Duration.zero,
-            onEnd: () => markAnimationAsDone(),
+            duration: pressed ? animationDuration : Duration(seconds: 0),
+            onEnd: pressed ? markFillAnimationAsDone : markEmptyAnimationAsDone,
             curve: Curves.easeOut,
             width: pressed ? MediaQuery.of(context).size.width : 0,
             // grows horizontally
