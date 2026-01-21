@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/data/app_themes.dart';
+
+import '../../../themes_system/app_theme.dart';
 
 const int animationDuration = 300;
 
@@ -23,6 +24,8 @@ class NavbarItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.selectedPageNotifier,
       builder: (context, selectedPage, child) {
@@ -54,7 +57,7 @@ class NavbarItemWidget extends StatelessWidget {
                         height: 30,
                         decoration: BoxDecoration(
                           color: selected
-                              ? AppThemes.darkThemeColors.brandPrimaryColor
+                              ? colors.brandPrimaryColor
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -62,12 +65,11 @@ class NavbarItemWidget extends StatelessWidget {
                       AnimatedCrossFade(
                         firstChild: Icon(
                           selectedIcon,
-                          color:
-                              AppThemes.darkThemeColors.selectedPageIconColor,
+                          color: colors.selectedPageIconColor,
                         ),
                         secondChild: Icon(
                           unselectedIcon,
-                          color: AppThemes.darkThemeColors.iconDefaultColor,
+                          color: colors.iconDefaultColor,
                         ),
                         crossFadeState: selected
                             ? CrossFadeState.showFirst
@@ -80,7 +82,7 @@ class NavbarItemWidget extends StatelessWidget {
               ),
               AnimatedDefaultTextStyle(
                 style: TextStyle(
-                  color: AppThemes.darkThemeColors.primaryColor,
+                  color: colors.primaryColor,
                   fontWeight: selected ? FontWeight.bold : FontWeight.normal,
                   fontFamily: 'Inter',
                 ),

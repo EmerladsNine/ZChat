@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/widgets/buttons/base_button_widget.dart';
+
+import '../../../themes_system/app_theme.dart';
 
 class RippleEffectButtonWidget extends BaseButtonWidget {
   RippleEffectButtonWidget({
@@ -13,11 +14,9 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
     super.disableSet,
     super.appStateNotifier,
     this.animationDuration = const Duration(milliseconds: 200),
-    Color? cardColor,
-  }) : cardColor = cardColor ?? AppThemes.darkThemeColors.hintColor;
+  });
 
   final Duration animationDuration;
-  final Color cardColor;
 
   @override
   Widget buildOverlay(
@@ -26,6 +25,8 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
     VoidCallback markFillAnimationAsDone,
     VoidCallback markEmptyAnimationAsDone,
   ) {
+    final colors = AppTheme.of(context);
+
     return Positioned.fill(
       child: Center(
         child: AnimatedOpacity(
@@ -39,7 +40,7 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
             // grows horizontally
             height: double.infinity,
             decoration: BoxDecoration(
-              color: cardColor,
+              color: colors.cardsColor,
               borderRadius: BorderRadius.circular(10),
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
+import '../../../../themes_system/app_theme.dart';
 import '../../../data/app_text_styles.dart';
 
 abstract class SettingsBaseCardWidget extends StatelessWidget {
@@ -11,14 +11,13 @@ abstract class SettingsBaseCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: AppThemes.darkThemeColors.cardsColor,
-        border: BoxBorder.all(
-          color: AppThemes.darkThemeColors.dividerColor,
-          width: 0.5,
-        ),
+        color: colors.cardsColor,
+        border: BoxBorder.all(color: colors.dividerColor, width: 0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -26,10 +25,13 @@ abstract class SettingsBaseCardWidget extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsetsGeometry.only(left: 8, bottom: 8, top: 8),
-            child: Text(category, style: AppTextStyles.chatCardNameTextStyle),
+            child: Text(
+              category,
+              style: AppTextStyles.chatCardNameTextStyle(colors),
+            ),
           ),
 
-          Container(height: 0.5, color: AppThemes.darkThemeColors.dividerColor),
+          Container(height: 0.5, color: colors.dividerColor),
 
           ...buildButtons(context),
         ],
