@@ -23,16 +23,17 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
   Widget buildOverlay(
     BuildContext context,
     bool pressed,
-    VoidCallback markAnimationAsDone,
+    VoidCallback markFillAnimationAsDone,
+    VoidCallback markEmptyAnimationAsDone,
   ) {
     return Positioned.fill(
       child: Center(
         child: AnimatedOpacity(
           opacity: pressed ? 0.3 : 0,
-          duration: pressed ? animationDuration : Duration.zero,
+          duration: pressed ? animationDuration : Duration(seconds: 0),
           child: AnimatedContainer(
-            duration: pressed ? animationDuration : Duration.zero,
-            onEnd: () => markAnimationAsDone(),
+            duration: pressed ? animationDuration : Duration(seconds: 0),
+            onEnd: pressed ? markFillAnimationAsDone : markEmptyAnimationAsDone,
             curve: Curves.easeOut,
             width: pressed ? MediaQuery.of(context).size.width : 0,
             // grows horizontally

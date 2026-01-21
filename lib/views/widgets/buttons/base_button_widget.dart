@@ -24,7 +24,8 @@ abstract class BaseButtonWidget extends StatefulWidget {
   Widget buildOverlay(
     BuildContext context,
     bool pressed,
-    VoidCallback markAnimationAsDone,
+    VoidCallback markFillAnimationAsDone,
+    VoidCallback markEmptyAnimationAsDone,
   );
 
   @override
@@ -35,70 +36,92 @@ abstract class BaseButtonWidget extends StatefulWidget {
 
 class BaseButtonWidgetState extends State<BaseButtonWidget> {
   bool _pressed = false;
-  bool _animationDone = false;
+  bool _fillAnimationDone = false;
+  bool _emptyAnimationDone = false;
 
-  void markAnimationAsDone() {
-    _animationDone = true;
+  void markFillAnimationAsDone() {
+    _fillAnimationDone = true;
+  }
+
+  void markEmptyAnimationAsDone() {
+    _emptyAnimationDone = true;
+  }
+
+  void tapDown(TapDownDetails details) {
+    //Only Animate if there is no other animation running.
+    if (widget.disableSet.value) return;
+    widget.disableSet.value = true;
+
+    //Animate
+    _fillAnimationDone = false;
+    _emptyAnimationDone = false;
+    setState(() {
+      _pressed = true;
+    });
+    widget.onTapDown?.call(details);
+  }
+
+  void tapCancel(BuildContext context) async {
+    //Consider canceling navigation if the Cancelled tap is the one that is making navigation.
+    if (!_pressed || widget.appStateNotifier.value) return;
+
+    //reset
+    setState(() {
+      _pressed = false;
+    });
+
+    while (!_emptyAnimationDone && context.mounted) {
+      await Future.delayed(Duration(milliseconds: 30));
+    }
+    widget.disableSet.value = false;
+    widget.onTapCancel?.call();
+  }
+
+  void tap(BuildContext context) async {
+    //Only Navigate if there is no other navigation running and you are the button being animated.
+    if (!_pressed || widget.appStateNotifier.value) return;
+    widget.appStateNotifier.value = true;
+
+    //Keep waiting as long as the animation running , or just stop everything if context is no longer mounted .
+    while ((!_fillAnimationDone || !_emptyAnimationDone) && context.mounted) {
+      if (_fillAnimationDone && _pressed) {
+        // start the empty animation ( it starts on the next frame , not instantly ).
+        setState(() {
+          _pressed = false;
+        });
+      }
+      await Future.delayed(Duration(milliseconds: 30));
+    }
+
+    //reset
+    _pressed = false;
+    widget.appStateNotifier.value = false;
+    widget.disableSet.value = false;
+
+    if (!context.mounted) return;
+
+    widget.onTap?.call();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (details) {
-        //Only Animate if there is no other animation running.
-        if (widget.disableSet.value) return;
-        widget.disableSet.value = true;
-
-        //Animate
-        _animationDone = false;
-        setState(() {
-          _pressed = true;
-        });
-        widget.onTapDown?.call(details);
-      },
-
+      onTapDown: tapDown,
       onTapCancel: () {
-        //Consider canceling navigation if the Cancelled tap is the one that is making navigation.
-        if (!_pressed || widget.appStateNotifier.value) return;
-
-        //reset
-        widget.disableSet.value = false;
-        setState(() {
-          _pressed = false;
-        });
-
-        widget.onTapCancel?.call();
+        tapCancel(context);
       },
-
-      onTap: () async {
-        //Only Navigate if there is no other navigation running and you are the button being animated.
-        if (!_pressed || widget.appStateNotifier.value) return;
-        widget.appStateNotifier.value = true;
-
-        //Keep waiting as long as the animation running , or just stop everything if context is no longer mounted .
-        while (!_animationDone && context.mounted) {
-          await Future.delayed(Duration(milliseconds: 30));
-        }
-
-        //reset
-        widget.appStateNotifier.value = false;
-        widget.disableSet.value = false;
-        _pressed = false; // overlay is now hidden instantly
-
-        if (!context.mounted) return;
-
-        //context is mounted , now refresh everything.
-        setState(() {});
-
-        widget.onTap?.call();
+      onTap: () {
+        tap(context);
       },
       child: Stack(
         children: [
-          Padding(
-            padding: widget.padding,
-            child: widget.child,
+          Padding(padding: widget.padding, child: widget.child),
+          widget.buildOverlay(
+            context,
+            _pressed,
+            markFillAnimationAsDone,
+            markEmptyAnimationAsDone,
           ),
-          widget.buildOverlay(context, _pressed, markAnimationAsDone),
         ],
       ),
     );

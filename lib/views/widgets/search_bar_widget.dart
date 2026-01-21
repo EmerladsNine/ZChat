@@ -39,8 +39,6 @@ class SearchBarWidget extends StatelessWidget {
           ),
           if(sideWidget != null)
             sideWidget!,
-          if(sideWidget != null)
-            SizedBox(width: 4,),
 
         ],
       ),
