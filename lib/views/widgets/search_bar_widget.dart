@@ -26,7 +26,6 @@ class SearchBarWidget extends StatelessWidget {
         spacing: 8,
         children: [
           Icon(Icons.search, color: colors.hintColor),
-          SizedBox(width: 8),
           Expanded(
             child: TextField(
               controller: CustomTextController(),

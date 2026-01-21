@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
@@ -76,6 +77,7 @@ class ChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -86,7 +88,7 @@ class ChatsPage extends StatelessWidget {
                 padding: EdgeInsetsGeometry.all(4.0),
                 disableSet: AppNotifiers.disableChatsPageButtons,
                 appStateNotifier: AppNotifiers.isNavigating,
-                child: Icon(Icons.add),
+                child: Icon(Icons.add,color: colors.hintColor,),
               ),
               ),
           SizedBox(height: 10),
