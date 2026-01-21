@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
+
+import '../../../controllers/custom_text_controller.dart';
+import '../../../themes_system/app_theme.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
-  const ChatTextFieldWidget({
-    super.key,
-    required this.controller,
-  });
+  const ChatTextFieldWidget({super.key, required this.controller});
 
-  final TextEditingController controller;
+  final CustomTextController controller;
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 2.0),
@@ -24,12 +25,13 @@ class ChatTextFieldWidget extends StatelessWidget {
             letterSpacing: 0,
             wordSpacing: 0,
             height: 1.2,
+            color: colors.primaryColor,
           ),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 15, right: 15, top: 4),
             isDense: true,
             filled: true,
-            fillColor: AppThemes.darkThemeColors.dividerColor,
+            fillColor: colors.dividerColor,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(20),

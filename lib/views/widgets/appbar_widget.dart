@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../themes_system/app_theme.dart';
 import '../data/app_text_styles.dart';
-import '../data/app_themes.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key, required this.title, this.actions});
@@ -15,17 +15,23 @@ class AppBarWidget extends StatelessWidget {
     final String remainingTitleLetters = title.length > 1
         ? title.substring(1)
         : '';
+
+    final colors = AppTheme.of(context);
+
     return AppBar(
       title: Row(
         children: [
-          Text(firstLetter, style: AppTextStyles.appBarSecondaryTextStyle),
+          Text(
+            firstLetter,
+            style: AppTextStyles.appBarSecondaryTextStyle(colors),
+          ),
           Text(
             remainingTitleLetters,
-            style: AppTextStyles.appBarPrimaryTextStyle,
+            style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
         ],
       ),
-      backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
+      backgroundColor: colors.primaryBackgroundColor,
       actions: actions,
     );
   }

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
-import '../data/app_themes.dart';
+import '../../themes_system/app_theme.dart';
 
 class ZanePage extends StatelessWidget {
   const ZanePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
+        backgroundColor: colors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
+          backgroundColor: colors.primaryBackgroundColor,
           elevation: 0,
         ),
         body: Container(),

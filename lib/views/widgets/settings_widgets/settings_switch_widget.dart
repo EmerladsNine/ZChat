@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zchat/views/data/app_themes.dart';
 
+import '../../../themes_system/app_theme.dart';
 import '../../data/app_text_styles.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
 
@@ -21,18 +21,32 @@ class SettingsSwitchWidget extends StatefulWidget {
 }
 
 class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
-  bool isOn = false;
+  late final ValueNotifier<bool> isOn;
+
+  @override
+  void initState() {
+    super.initState();
+    isOn = widget.data.value ?? ValueNotifier<bool>(false);
+  }
+
+  @override
+  void dispose() {
+    if (widget.data.value == null) {
+      isOn.dispose(); // prevent memory leak
+    }
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: AppThemes.darkThemeColors.cardsColor,
-        border: BoxBorder.all(
-          color: AppThemes.darkThemeColors.dividerColor,
-          width: 0.5,
-        ),
+        color: colors.cardsColor,
+        border: BoxBorder.all(color: colors.dividerColor, width: 0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -68,7 +82,9 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                               child: Text(
                                 widget.data.label,
                                 style:
-                                    AppTextStyles.settingsCardsButtonsTextStyle,
+                                    AppTextStyles.settingsCardsButtonsTextStyle(
+                                      colors,
+                                    ),
                               ),
                             ),
 
@@ -77,7 +93,7 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                                 padding: EdgeInsetsGeometry.only(left: 12),
                                 child: Text(
                                   widget.data.helpText!,
-                                  style: AppTextStyles.hintTextStyle,
+                                  style: AppTextStyles.hintTextStyle(colors),
                                   maxLines: 3,
                                 ),
                               ),
@@ -89,19 +105,16 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                 ),
 
                 if (widget.drawBorder)
-                  Container(
-                    height: 0.5,
-                    color: AppThemes.darkThemeColors.dividerColor,
-                  ),
+                  Container(height: 0.5, color: colors.dividerColor),
               ],
             ),
           ),
 
           CupertinoSwitch(
-            value: isOn,
+            value: isOn.value,
             onChanged: (bool value) {
               setState(() {
-                isOn = value;
+                isOn.value = value;
               });
 
               widget.data.onChanged?.call(value);

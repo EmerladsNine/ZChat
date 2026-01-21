@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
+
+import '../../../themes_system/app_theme.dart';
 
 class CameraButtonWidget extends StatelessWidget {
   const CameraButtonWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return InkWell(
       onTap: () {},
       borderRadius: BorderRadius.circular(15),
@@ -13,7 +16,7 @@ class CameraButtonWidget extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Icon(
           Icons.camera_alt_outlined,
-          color: AppThemes.darkThemeColors.primaryColor,
+          color: colors.primaryColor,
           size: 25,
         ),
       ),

@@ -3,22 +3,27 @@ import 'package:zchat/views/widgets/settings_widgets/cards/settings_card_widget.
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
 
+import '../../themes_system/app_theme.dart';
 import '../data/settings_page_data.dart';
 import '../data/app_text_styles.dart';
-import '../data/app_themes.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
+        backgroundColor: colors.primaryBackgroundColor,
         appBar: AppBar(
-          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
+          backgroundColor: colors.primaryBackgroundColor,
           elevation: 0,
-          title: Text('Settings', style: AppTextStyles.appBarPrimaryTextStyle),
+          title: Text(
+            'Settings',
+            style: AppTextStyles.appBarPrimaryTextStyle(colors),
+          ),
         ),
 
         body: Container(

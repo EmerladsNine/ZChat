@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
 
+import '../../controllers/custom_text_controller.dart';
+import '../../themes_system/app_theme.dart';
 import '../data/app_text_styles.dart';
 
 class SearchBarWidget extends StatelessWidget {
@@ -11,27 +12,31 @@ class SearchBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return Container(
       padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
       height: 35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: AppThemes.darkThemeColors.cardsColor,
+        color: colors.cardsColor,
       ),
       child: Row(
         children: [
-          Icon(Icons.search, color: AppThemes.darkThemeColors.hintColor),
+          Icon(Icons.search, color: colors.hintColor),
           SizedBox(width: 8),
           Expanded(
             child: TextField(
+              controller: CustomTextController(),
               focusNode: focusNode,
               onTapOutside: (event) {
                 focusNode.unfocus();
               },
+              style: TextStyle(color: colors.primaryColor),
               decoration: InputDecoration(
                 isDense: true,
                 hintText: text,
-                hintStyle: AppTextStyles.hintTextStyle,
+                hintStyle: AppTextStyles.hintTextStyle(colors),
                 border: InputBorder.none,
               ),
             ),

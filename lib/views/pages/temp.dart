@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/app_themes.dart';
+import '../../themes_system/app_theme.dart';
 
 class TempPage extends StatelessWidget {
   const TempPage({super.key});
@@ -9,7 +9,7 @@ class TempPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
+        backgroundColor: AppTheme.of(context).primaryBackgroundColor,
         body: Container(),
       ),
     );

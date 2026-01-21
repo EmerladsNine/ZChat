@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
+import 'package:zchat/themes_system/app_theme.dart';
+import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
+final themeController = ThemeController();
+
 void main() {
   runApp(
-    Provider<MessagingService>(
-      create: (_) => MessagingService(),
-      dispose: (context, service) {
-        service.dispose();
-      },
-      child: MyApp(),
+    AppTheme(
+      controller: themeController,
+      child: Provider<MessagingService>(
+        create: (_) => MessagingService(),
+        dispose: (context, service) {
+          service.dispose();
+        },
+        child: MyApp(),
+      ),
     ),
   );
 }
@@ -25,10 +31,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return MaterialApp(
       title: 'ZChat',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: colors.iconDefaultColor),
+        ),
+
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.blue,
           selectionHandleColor: Colors.transparent,
@@ -36,8 +48,8 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
-          primary: AppThemes.darkThemeColors.primaryBackgroundColor,
-          onPrimary: AppThemes.darkThemeColors.primaryColor,
+          primary: colors.primaryBackgroundColor,
+          onPrimary: colors.primaryColor,
           secondary: Color(AppConstants.secondaryColorHex),
           onSecondary: Colors.white,
           surface: Color(AppConstants.surfaceColorHex),

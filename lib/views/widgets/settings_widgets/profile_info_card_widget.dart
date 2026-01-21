@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
+import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../../data/app_text_styles.dart';
 
@@ -21,6 +21,8 @@ class ProfileInfoCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -41,7 +43,9 @@ class ProfileInfoCardWidget extends StatelessWidget {
                       ),
                       child: Text(
                         label,
-                        style: AppTextStyles.settingsCardsButtonsTextStyle,
+                        style: AppTextStyles.settingsCardsButtonsTextStyle(
+                          colors,
+                        ),
                       ),
                     ),
                   ),
@@ -56,13 +60,12 @@ class ProfileInfoCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       text,
-                      style: AppTextStyles.settingsProfileDescriptionTextStyle,
+                      style: AppTextStyles.settingsProfileDescriptionTextStyle(
+                        colors,
+                      ),
                       maxLines: 3,
                     ),
-                    Container(
-                      height: 0.5,
-                      color: AppThemes.darkThemeColors.dividerColor,
-                    ),
+                    Container(height: 0.5, color: colors.dividerColor),
                   ],
                 ),
               ),
@@ -80,10 +83,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
                   onTap: () {},
                   child: Padding(
                     padding: EdgeInsetsGeometry.only(right: 10, left: 10),
-                    child: Icon(
-                      Icons.edit,
-                      color: AppThemes.darkThemeColors.iconDefaultColor,
-                    ),
+                    child: Icon(Icons.edit, color: colors.iconDefaultColor),
                   ),
                 ),
               )

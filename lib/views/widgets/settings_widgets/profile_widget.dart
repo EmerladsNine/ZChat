@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data/app_themes.dart';
 import 'package:zchat/views/pages/settings/profile_settings_page.dart';
 
+import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../../data/app_text_styles.dart';
 import '../buttons/ripple_effect_button_widget.dart';
@@ -18,6 +18,8 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableSettingsPageButtons,
       appStateNotifier: AppNotifiers.isNavigating,
@@ -34,7 +36,7 @@ class ProfileWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: AppThemes.darkThemeColors.cardsColor,
+          color: colors.cardsColor,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Row(
@@ -46,18 +48,27 @@ class ProfileWidget extends StatelessWidget {
               height: 50.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.0),
-                color: Colors.white10,
+                color: colors.dividerColor,
               ),
-              child: Icon(Icons.person, size: 30.0),
+              child: Icon(
+                Icons.person,
+                size: 30.0,
+                color: colors.iconDefaultColor,
+              ),
             ),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: AppTextStyles.settingsProfileNameTextStyle),
+                Text(
+                  name,
+                  style: AppTextStyles.settingsProfileNameTextStyle(colors),
+                ),
                 Text(
                   description,
-                  style: AppTextStyles.settingsProfileDescriptionTextStyle,
+                  style: AppTextStyles.settingsProfileDescriptionTextStyle(
+                    colors,
+                  ),
                 ),
               ],
             ),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_text_styles.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_info_card_widget.dart';
 
+import '../../../themes_system/app_theme.dart';
 import '../../data/app_themes.dart';
+import 'base_settings_page.dart';
 
 /// Page for viewing and editing profile information.
 class ProfileSettingsPage extends StatelessWidget {
@@ -10,68 +12,63 @@ class ProfileSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: AppThemes.darkThemeColors.primaryBackgroundColor,
-          elevation: 0,
-          title: Text('Profile', style: AppTextStyles.appBarPrimaryTextStyle),
-        ),
-        body: Column(
-          children: [
-            Container(
-              padding: EdgeInsetsGeometry.all(15),
-              margin: EdgeInsetsGeometry.only(top: 20),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white10,
-              ),
-              child: Icon(
-                Icons.person,
-                color: AppThemes.darkThemeColors.iconDefaultColor,
-                size: 80,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsGeometry.only(top: 10),
-              child: Text(
-                'Ahmad Msheik',
-                style: AppTextStyles.ownProfileNameTextStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
+    final colors = AppTheme.of(context);
 
-            Padding(
-              padding: EdgeInsetsGeometry.only(top: 70),
-              child: ProfileInfoCardWidget(
-                icon: '👤',
-                label: 'Display Name',
-                text: "Tesla's best friend",
-              ),
+    return BaseSettingsPage(
+      title: 'Profile',
+      pageContent: Column(
+        children: [
+          Container(
+            padding: EdgeInsetsGeometry.all(15),
+            margin: EdgeInsetsGeometry.only(top: 20),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white10,
             ),
+            child: Icon(
+              Icons.person,
+              color: AppThemes.darkThemeColors.iconDefaultColor,
+              size: 80,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsGeometry.only(top: 10),
+            child: Text(
+              'Ahmad Msheik',
+              style: AppTextStyles.ownProfileNameTextStyle(colors),
+              textAlign: TextAlign.center,
+            ),
+          ),
 
-            Padding(
-              padding: EdgeInsetsGeometry.only(top: 15),
-              child: ProfileInfoCardWidget(
-                icon: '✍️',
-                label: 'Bio',
-                text: "I am Ahmad You are no one.",
-              ),
+          Padding(
+            padding: EdgeInsetsGeometry.only(top: 70),
+            child: ProfileInfoCardWidget(
+              icon: '\ud83d\udc64',
+              label: 'Display Name',
+              text: "Tesla's best friend",
             ),
+          ),
 
-            Padding(
-              padding: EdgeInsetsGeometry.only(top: 15),
-              child: ProfileInfoCardWidget(
-                icon: '📞',
-                label: 'Phone Number',
-                text: '+961 71 527 426',
-                displayEditButton: false,
-              ),
+          Padding(
+            padding: EdgeInsetsGeometry.only(top: 15),
+            child: ProfileInfoCardWidget(
+              icon: '\u270d\ufe0f',
+              label: 'Bio',
+              text: "I am Ahmad You are no one.",
             ),
-          ],
-        ),
+          ),
+
+          Padding(
+            padding: EdgeInsetsGeometry.only(top: 15),
+            child: ProfileInfoCardWidget(
+              icon: '\ud83d\udcde',
+              label: 'Phone Number',
+              text: '+961 71 527 426',
+              displayEditButton: false,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../themes_system/app_theme.dart';
 import '../../data/navbar_data.dart';
 import '../../data/app_notifiers.dart';
-import '../../data/app_themes.dart';
 import 'navbar_item_widget.dart';
 
 class NavbarWidget extends StatelessWidget {
@@ -12,21 +12,20 @@ class NavbarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = AppTheme.of(context);
+
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.selectedPageNotifier,
       builder: (context, selectedPage, child) {
         return Padding(
           padding: EdgeInsetsGeometry.only(bottom: 15),
           child: Container(
-            color: AppThemes.darkThemeColors.primaryBackgroundColor,
+            color: colors.primaryBackgroundColor,
             child: SafeArea(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    height: 0.5,
-                    color: AppThemes.darkThemeColors.dividerColor,
-                  ),
+                  Container(height: 0.5, color: colors.dividerColor),
                   Padding(
                     padding: EdgeInsetsGeometry.only(top: 15),
                     child: Row(
