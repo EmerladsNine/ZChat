@@ -24,13 +24,9 @@ class ProfileSettingsPage extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white10,
+              color: colors.dividerColor,
             ),
-            child: Icon(
-              Icons.person,
-              color: AppThemes.darkThemeColors.iconDefaultColor,
-              size: 80,
-            ),
+            child: Icon(Icons.person, color: colors.iconDefaultColor, size: 80),
           ),
           Padding(
             padding: EdgeInsetsGeometry.only(top: 10),
