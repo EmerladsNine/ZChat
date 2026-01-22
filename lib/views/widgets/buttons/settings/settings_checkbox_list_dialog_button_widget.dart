@@ -29,7 +29,7 @@ class SettingsCheckboxListDialogButtonWidget<T>
             dataCasted.dialogTitle,
             style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
-
+          backgroundColor: colors.cardsColor,
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

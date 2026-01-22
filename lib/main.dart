@@ -51,7 +51,17 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             iconTheme: IconThemeData(color: colors.iconDefaultColor),
           ),
-
+          checkboxTheme: CheckboxThemeData(
+            side: BorderSide(color: colors.primaryColor, width: 2),
+          ),
+          radioTheme: RadioThemeData(
+            fillColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return colors.brandPrimaryColor;
+              }
+              return colors.primaryColor;
+            }),
+          ),
           textSelectionTheme: TextSelectionThemeData(
             cursorColor: Colors.blue,
             selectionHandleColor: Colors.transparent,

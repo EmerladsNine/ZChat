@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/main.dart';
+import '../../../enums/font_size.dart';
+import '../../data/settings/themes_widgets_data.dart';
+import '../../data_classes/settings/dialog_option_data.dart';
+import '../../data_classes/settings/settings_radio_group_dialog_button_data.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
+import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 import 'base_settings_page.dart';
 
@@ -26,6 +31,10 @@ class ThemesSettingsPage extends StatelessWidget {
               onChanged: (value) => themeController.toggleTheme(value),
             ),
             drawBorder: false,
+          ),
+          SettingsCardWidget(
+            category: 'Customization',
+            buttons: themesCustomizationButtonsData,
           ),
         ],
       ),

@@ -13,7 +13,7 @@ class ChatsSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseSettingsPage(
-      title: 'Account',
+      title: 'Chats',
       pageContent: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -43,6 +43,15 @@ class ChatsSettingsPage extends StatelessWidget {
               label: 'Chat Backup',
               helpText: 'Automatically back up your chats to cloud storage.',
               icon: '💾',
+            ),
+            drawBorder: false,
+          ),
+          SettingsSwitchWidget(
+            data: SettingsSwitchData(
+              label: 'Keep Screen On',
+              helpText:
+                  'Prevent the screen from turning off when viewing images or videos.',
+              icon: '🔆',
             ),
             drawBorder: false,
           ),
