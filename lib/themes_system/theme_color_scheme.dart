@@ -14,6 +14,7 @@ class ThemeColorScheme {
   final Color defaultTickColor;
 
   final Color hintColor;
+  final Color overlayColor;
   final Color textSecondaryColor;
   final Color iconDefaultColor;
   final Color selectedPageIconColor;
@@ -30,6 +31,7 @@ class ThemeColorScheme {
     required this.readMessageIndicatorColor,
     required this.defaultTickColor,
     required this.hintColor,
+    required this.overlayColor,
     required this.textSecondaryColor,
     required this.iconDefaultColor,
     required this.selectedPageIconColor,
@@ -47,6 +49,7 @@ class ThemeColorScheme {
     Color? readMessageIndicatorColor,
     Color? defaultTickColor,
     Color? hintColor,
+    Color? overlayColor,
     Color? textSecondaryColor,
     Color? iconDefaultColor,
     Color? selectedPageIconColor,
@@ -65,6 +68,7 @@ class ThemeColorScheme {
           readMessageIndicatorColor ?? this.readMessageIndicatorColor,
       defaultTickColor: defaultTickColor ?? this.defaultTickColor,
       hintColor: hintColor ?? this.hintColor,
+      overlayColor: overlayColor ?? this.overlayColor,
       textSecondaryColor: textSecondaryColor ?? this.textSecondaryColor,
       iconDefaultColor: iconDefaultColor ?? this.iconDefaultColor,
       selectedPageIconColor:
@@ -86,6 +90,7 @@ class ThemeColorScheme {
           readMessageIndicatorColor == other.readMessageIndicatorColor &&
           defaultTickColor == other.defaultTickColor &&
           hintColor == other.hintColor &&
+          overlayColor == other.overlayColor &&
           textSecondaryColor == other.textSecondaryColor &&
           iconDefaultColor == other.iconDefaultColor &&
           selectedPageIconColor == other.selectedPageIconColor &&
@@ -102,6 +107,7 @@ class ThemeColorScheme {
     readMessageIndicatorColor,
     defaultTickColor,
     hintColor,
+    overlayColor,
     textSecondaryColor,
     iconDefaultColor,
     selectedPageIconColor,
