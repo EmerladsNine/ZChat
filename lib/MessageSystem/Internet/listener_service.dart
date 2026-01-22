@@ -36,7 +36,7 @@ class ListenerService {
         if (buffer.length < expectedLength!) return false;
       }
 
-      handlers[head]!.handle(buffer, messagingService);
+      handlers[head]!.handle(buffer.sublist(0,expectedLength), messagingService);
 
       head = null;
       expectedLength = null;
