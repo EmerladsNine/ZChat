@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/MessageSystem/chat.dart';
+import 'package:zchat/views/widgets/custom_tool_tip.dart';
 
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
@@ -47,38 +50,41 @@ class SendButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    return RippleEffectButtonWidget(
-      disableSet: AppNotifiers.disableButtons,
-      animationDuration: Duration(milliseconds: 150),
-      appStateNotifier: AppNotifiers.isNavigating,
-      overlayCircularRadius: 15,
-      onTap: !hasVisibleText(controller.text)
-          ? () {
-              //Record a voice
-            }
-          : () {
-              final msgService = context.read<MessagingService>();
-              msgService.sendMessage(controller.text, context.read<Chat>());
-              controller.text = "";
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                _scrollToBottom();
-              });
-            },
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: !hasVisibleText(controller.text)
-            ? Icon(Icons.mic, size: 25, color: colors.primaryColor)
-            : Transform.translate(
-                offset: Offset(0, -3),
-                child: Transform.rotate(
-                  angle: -0.3,
-                  child: Icon(
-                    Icons.send_rounded,
-                    color: colors.primaryColor,
-                    size: 25,
+    return CustomToolTip(
+      message: !hasVisibleText(controller.text) ? 'Send Voice' : 'Send Message',
+      child: RippleEffectButtonWidget(
+        disableSet: AppNotifiers.disableButtons,
+        animationDuration: Duration(milliseconds: 150),
+        appStateNotifier: AppNotifiers.isNavigating,
+        overlayCircularRadius: 15,
+        onTap: !hasVisibleText(controller.text)
+            ? () {
+                //Record a voice
+              }
+            : () {
+                final msgService = context.read<MessagingService>();
+                msgService.sendMessage(controller.text, context.read<Chat>());
+                controller.text = "";
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  _scrollToBottom();
+                });
+              },
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: !hasVisibleText(controller.text)
+              ? Icon(Icons.mic, size: 25, color: colors.primaryColor)
+              : Transform.translate(
+                  offset: Offset(0, -3),
+                  child: Transform.rotate(
+                    angle: -0.3,
+                    child: Icon(
+                      Icons.send_rounded,
+                      color: colors.primaryColor,
+                      size: 25,
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

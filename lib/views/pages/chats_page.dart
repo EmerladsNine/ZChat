@@ -4,6 +4,7 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
+import 'package:zchat/views/widgets/custom_tool_tip.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
 
 /// Page displaying a list of active chat conversations.
@@ -84,12 +85,16 @@ class ChatsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchBarWidget(
-            text: 'Search',
-            sideWidget: RippleEffectButtonWidget(
-              padding: EdgeInsetsGeometry.all(4.0),
-              disableSet: AppNotifiers.disableButtons,
-              appStateNotifier: AppNotifiers.isNavigating,
-              child: Icon(Icons.add, color: colors.hintColor),
+            hintText: 'Search',
+            sideWidget: CustomToolTip(
+              message: 'Add Chat',
+              preferBelow: true,
+              child: RippleEffectButtonWidget(
+                padding: EdgeInsetsGeometry.all(4.0),
+                disableSet: AppNotifiers.disableButtons,
+                appStateNotifier: AppNotifiers.isNavigating,
+                child: Icon(Icons.add, color: colors.hintColor),
+              ),
             ),
           ),
           SizedBox(height: 10),
