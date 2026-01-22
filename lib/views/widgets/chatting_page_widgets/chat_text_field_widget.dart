@@ -19,6 +19,7 @@ class ChatTextFieldWidget extends StatelessWidget {
         child: TextField(
           controller: controller,
           textDirection: TextFieldUtils.getTextDirection(controller.text),
+          textCapitalization: TextCapitalization.sentences,
           keyboardType: TextInputType.multiline,
           minLines: 1,
           maxLines: 4,
