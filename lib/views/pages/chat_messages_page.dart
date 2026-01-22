@@ -6,9 +6,14 @@ import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_w
 import '../../themes_system/app_theme.dart';
 
 /// Page displaying a conversation with messages.
-class ChatMessagesPage extends StatelessWidget {
+class ChatMessagesPage extends StatefulWidget {
   const ChatMessagesPage({super.key});
 
+  @override
+  State<ChatMessagesPage> createState() => _ChatMessagesPageState();
+}
+
+class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final messages = const [
     "Hello",
     "Hi Brother",
@@ -47,9 +52,39 @@ class ChatMessagesPage extends StatelessWidget {
     "I want to kill you",
   ];
 
+  final ScrollController _scrollController = ScrollController();
+
+  double oldScrollOffset = -1.0;
+  double oldMaxScrollExtent = -1.0;
+
+  @override
+  void initState() {
+    //Scroll to bottom
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
+
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      if (MediaQuery.of(context).viewInsets.bottom != 0) {
+        if(oldScrollOffset == -1.0)
+        {
+          oldScrollOffset = _scrollController.offset;
+        }
+        if (oldMaxScrollExtent - oldScrollOffset <= 100) {
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+        }
+      }
+      if (MediaQuery.of(context).viewInsets.bottom == 0) {
+        oldScrollOffset = -1.0;
+        oldMaxScrollExtent = _scrollController.position.maxScrollExtent;
+      }
+    });
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -95,7 +130,8 @@ class ChatMessagesPage extends StatelessWidget {
                       return Consumer<Chat>(
                         builder: (context, chat, child) {
                           return ListView.builder(
-                            reverse: true,
+                            padding: EdgeInsetsGeometry.zero,
+                            controller: _scrollController,
                             itemCount: chat.messages.length,
                             itemBuilder: (context, index) {
                               return chat.messages[index].getMessageBubble(
@@ -113,7 +149,9 @@ class ChatMessagesPage extends StatelessWidget {
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: ChatMessagesFooterWidget(),
+                child: ChatMessagesFooterWidget(
+                  scrollController: _scrollController,
+                ),
               ),
             ],
           ),

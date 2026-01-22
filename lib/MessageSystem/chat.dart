@@ -8,9 +8,9 @@ class Chat extends ChangeNotifier{
   List<Message> get messages => List.unmodifiable(_messages);
 
   void addMessage(Message message) {
-    message.isChildMessage = _messages.isNotEmpty && _messages[0].senderName == message.senderName;
+    message.isChildMessage = _messages.isNotEmpty && _messages.last.senderName == message.senderName;
     message.isEmoji = message.text.characters.length == 1 && emojiRegex().hasMatch(message.text);
-    _messages.insert(0,message);
+    _messages.add(message);
     notifyListeners();
   }
 

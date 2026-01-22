@@ -8,8 +8,9 @@ import '../../data/app_notifiers.dart';
 import '../buttons/ripple_effect_button_widget.dart';
 
 class SendButtonWidget extends StatelessWidget {
-  const SendButtonWidget({super.key, required this.controller});
+  const SendButtonWidget({super.key, required this.controller,required this.scrollController});
 
+  final ScrollController scrollController;
   final TextEditingController controller;
 
   //TODO Ensure messages contain visible characters at send time, not only when toggling the send button, so this can’t be bypassed via an API.
@@ -39,6 +40,9 @@ class SendButtonWidget extends StatelessWidget {
               final msgService = context.read<MessagingService>();
               msgService.sendMessage(controller.text, context.read<Chat>());
               controller.text = "";
+              WidgetsBinding.instance.addPostFrameCallback((_){
+                scrollController.jumpTo(scrollController.position.maxScrollExtent);
+              });
             },
       child: Padding(
         padding: const EdgeInsets.all(4.0),
