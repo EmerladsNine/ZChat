@@ -9,12 +9,10 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
-final themeController = ThemeController();
-
 void main() {
   runApp(
     AppTheme(
-      controller: themeController,
+      controller: ThemeController(),
       child: Provider<MessagingService>(
         create: (_) => MessagingService(),
         dispose: (context, service) {
@@ -37,10 +35,10 @@ class MyApp extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: themeController.isDarkMode
+        statusBarIconBrightness: AppTheme.controllerOf(context).isDarkMode
             ? Brightness.light
             : Brightness.dark,
-        statusBarBrightness: themeController.isDarkMode
+        statusBarBrightness: AppTheme.controllerOf(context).isDarkMode
             ? Brightness.dark
             : Brightness.light,
       ),
@@ -51,7 +49,17 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             iconTheme: IconThemeData(color: colors.iconDefaultColor),
           ),
-
+          checkboxTheme: CheckboxThemeData(
+            side: BorderSide(color: colors.primaryColor, width: 2),
+          ),
+          radioTheme: RadioThemeData(
+            fillColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return colors.brandPrimaryColor;
+              }
+              return colors.primaryColor;
+            }),
+          ),
           textSelectionTheme: TextSelectionThemeData(
             cursorColor: Colors.blue,
             selectionHandleColor: Colors.transparent,

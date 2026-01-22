@@ -27,7 +27,7 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
             dataCasted.dialogTitle,
             style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
-
+          backgroundColor: colors.cardsColor,
           content: ValueListenableBuilder(
             valueListenable: tempNotifier,
             builder: (context, value, _) {

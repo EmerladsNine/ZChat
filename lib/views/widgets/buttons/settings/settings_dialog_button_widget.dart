@@ -26,7 +26,7 @@ class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
             castedData.dialogTitle,
             style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
-
+          backgroundColor: colors.cardsColor,
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,

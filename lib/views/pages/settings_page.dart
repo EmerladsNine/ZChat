@@ -42,25 +42,12 @@ class SettingsPage extends StatelessWidget {
                       children: [
                         ProfileWidget(),
 
-                        SettingsCardWidget(
-                          category: "Account and Privacy",
-                          buttons: accountAndPrivacySettingsButtons,
-                        ),
-
-                        SettingsCardWidget(
-                          category: "Zane",
-                          buttons: zaneSettingsButtons,
-                        ),
-
-                        SettingsCardWidget(
-                          category: "Customization",
-                          buttons: customizationSettingsButtons,
-                        ),
-
-                        SettingsCardWidget(
-                          category: "Miscellaneous",
-                          buttons: miscellaneousSettingsButtons,
-                        ),
+                        ...settingsCardsData.map((section) {
+                          return SettingsCardWidget(
+                            category: section.category,
+                            buttons: section.buttons,
+                          );
+                        }),
                       ],
                     ),
                   ),

@@ -1,6 +1,7 @@
 import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
 import 'package:zchat/views/pages/settings/account_settings_page.dart';
 
+import '../data_classes/settings_card_data.dart';
 import '../pages/settings/chats_settings_page.dart';
 import '../pages/settings/help_settings_page.dart';
 import '../pages/settings/language_settings_page.dart';
@@ -82,5 +83,21 @@ final List<SettingsNavigationButtonData> zaneSettingsButtons = [
     label: 'Tools',
     goToPage: ZaneToolsSettingsPage(),
     icon: '🛠️',
+  ),
+];
+
+final List<SettingsCardData> settingsCardsData = [
+  SettingsCardData(
+    category: "Account and Privacy",
+    buttons: accountAndPrivacySettingsButtons,
+  ),
+  SettingsCardData(category: "Zane", buttons: zaneSettingsButtons),
+  SettingsCardData(
+    category: "Customization",
+    buttons: customizationSettingsButtons,
+  ),
+  SettingsCardData(
+    category: "Miscellaneous",
+    buttons: miscellaneousSettingsButtons,
   ),
 ];
