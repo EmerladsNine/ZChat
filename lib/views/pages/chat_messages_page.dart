@@ -148,21 +148,16 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                           final double maxWidth = constraints.maxWidth * 0.7;
                           return Consumer<Chat>(
                             builder: (context, chat, child) {
-                              return Align(
-                                alignment: AlignmentGeometry.topCenter,
-                                child: ListView.builder(
-                                  padding: EdgeInsetsGeometry.zero,
-                                  shrinkWrap: chat.messages.length < 10
-                                      ? true
-                                      : false,
-                                  reverse: true,
-                                  controller: _scrollController,
-                                  itemCount: chat.messages.length,
-                                  itemBuilder: (context, index) {
-                                    return chat.messages[index]
-                                        .getMessageBubble(maxWidth);
-                                  },
-                                ),
+                              return ListView.builder(
+                                padding: EdgeInsetsGeometry.zero,
+                                shrinkWrap: chat.messages.length < 20 ? true : false,
+                                reverse: true,
+                                controller: _scrollController,
+                                itemCount: chat.messages.length,
+                                itemBuilder: (context, index) {
+                                  return chat.messages[index]
+                                      .getMessageBubble(maxWidth);
+                                },
                               );
                             },
                           );
