@@ -68,6 +68,7 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
             child: TextField(
               controller: controller,
               textDirection: TextFieldUtils.getTextDirection(controller.text),
+              textCapitalization: TextCapitalization.sentences,
               strutStyle: const StrutStyle(fontSize: 20, height: 1.2),
               focusNode: focusNode,
               onTapOutside: (event) {
