@@ -78,7 +78,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
                 width: 45,
                 height: 25,
                 child: RippleEffectButtonWidget(
-                  disableSet: AppNotifiers.disableSettingsPageButtons,
+                  disableSet: AppNotifiers.disableButtons,
                   appStateNotifier: AppNotifiers.isNavigating,
                   onTap: () {},
                   child: Padding(

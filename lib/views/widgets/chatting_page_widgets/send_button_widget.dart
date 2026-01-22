@@ -4,6 +4,8 @@ import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/MessageSystem/chat.dart';
 
 import '../../../themes_system/app_theme.dart';
+import '../../data/app_notifiers.dart';
+import '../buttons/ripple_effect_button_widget.dart';
 
 class SendButtonWidget extends StatelessWidget {
   const SendButtonWidget({super.key, required this.controller});
@@ -24,7 +26,11 @@ class SendButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    return InkWell(
+    return RippleEffectButtonWidget(
+      disableSet: AppNotifiers.disableButtons,
+      animationDuration: Duration(milliseconds: 150),
+      appStateNotifier: AppNotifiers.isNavigating,
+      overlayCircularRadius: 15,
       onTap: !hasVisibleText(controller.text)
           ? () {
               //Record a voice
@@ -34,7 +40,6 @@ class SendButtonWidget extends StatelessWidget {
               msgService.sendMessage(controller.text, context.read<Chat>());
               controller.text = "";
             },
-      borderRadius: BorderRadius.circular(15),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: !hasVisibleText(controller.text)

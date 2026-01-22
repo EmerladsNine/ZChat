@@ -4,12 +4,7 @@ abstract final class AppNotifiers {
   static final ValueNotifier<int> selectedPageNotifier = ValueNotifier(0);
   static final ValueNotifier<double> stretchFactor = ValueNotifier(1.0);
   static final ValueNotifier<bool> isNavigating = ValueNotifier(false);
-  static final ValueNotifier<bool> disableChatsPageButtons = ValueNotifier(
-    false,
-  );
-  static final ValueNotifier<bool> disableSettingsPageButtons = ValueNotifier(
-    false,
-  );
+  static final ValueNotifier<bool> disableButtons = ValueNotifier(false);
   static final ValueNotifier<bool> fastSwipeNotifier = ValueNotifier<bool>(
     false,
   );

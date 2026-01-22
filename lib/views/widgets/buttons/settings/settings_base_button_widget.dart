@@ -23,7 +23,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
     final colors = AppTheme.of(context);
 
     return RippleEffectButtonWidget(
-      disableSet: AppNotifiers.disableSettingsPageButtons,
+      disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
       onTap: () => onTap(context),
       child: Container(

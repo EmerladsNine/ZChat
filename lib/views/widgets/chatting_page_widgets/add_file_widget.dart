@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../themes_system/app_theme.dart';
+import '../../data/app_notifiers.dart';
+import '../buttons/ripple_effect_button_widget.dart';
 
 class AddFileWidget extends StatelessWidget {
   const AddFileWidget({super.key});
@@ -9,9 +11,12 @@ class AddFileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    return InkWell(
+    return RippleEffectButtonWidget(
+      disableSet: AppNotifiers.disableButtons,
+      animationDuration: Duration(milliseconds: 150),
+      appStateNotifier: AppNotifiers.isNavigating,
+      overlayCircularRadius: 15,
       onTap: () {},
-      borderRadius: BorderRadius.circular(15),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Icon(Icons.add, color: colors.primaryColor, size: 25),

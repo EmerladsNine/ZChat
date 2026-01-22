@@ -15,7 +15,7 @@ class ChatsPageAppbarActionsWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsetsGeometry.only(right: 16),
       child: RippleEffectButtonWidget(
-        disableSet: AppNotifiers.disableChatsPageButtons,
+        disableSet: AppNotifiers.disableButtons,
         padding: const EdgeInsetsGeometry.all(8.0),
         animationDuration: Duration(milliseconds: 30),
         appStateNotifier: AppNotifiers.isNavigating,

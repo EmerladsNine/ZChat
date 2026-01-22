@@ -83,14 +83,15 @@ class ChatsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchBarWidget(text: 'Search',
-              sideWidget: RippleEffectButtonWidget(
-                padding: EdgeInsetsGeometry.all(4.0),
-                disableSet: AppNotifiers.disableChatsPageButtons,
-                appStateNotifier: AppNotifiers.isNavigating,
-                child: Icon(Icons.add,color: colors.hintColor,),
-              ),
-              ),
+          SearchBarWidget(
+            text: 'Search',
+            sideWidget: RippleEffectButtonWidget(
+              padding: EdgeInsetsGeometry.all(4.0),
+              disableSet: AppNotifiers.disableButtons,
+              appStateNotifier: AppNotifiers.isNavigating,
+              child: Icon(Icons.add, color: colors.hintColor),
+            ),
+          ),
           SizedBox(height: 10),
           Expanded(
             child: ListView.builder(

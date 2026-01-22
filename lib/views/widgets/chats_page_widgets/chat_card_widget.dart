@@ -67,7 +67,7 @@ class ChatCardWidget extends StatelessWidget {
     final colors = AppTheme.of(context);
 
     return RippleEffectButtonWidget(
-      disableSet: AppNotifiers.disableChatsPageButtons,
+      disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
       onTap: () {
         Navigator.push(
