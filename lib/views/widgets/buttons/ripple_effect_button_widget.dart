@@ -40,7 +40,7 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
             // grows horizontally
             height: double.infinity,
             decoration: BoxDecoration(
-              color: colors.cardsColor,
+              color: colors.hintColor,
               borderRadius: BorderRadius.circular(10),
             ),
           ),
