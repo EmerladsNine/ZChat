@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    precacheImage(AssetImage('assets/images/bg4.jpeg'), context);
+    precacheImage(AssetImage('assets/images/bg5.jpeg'), context);
   }
 
   @override

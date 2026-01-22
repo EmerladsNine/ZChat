@@ -62,7 +62,7 @@ class ChatMessagesPage extends StatelessWidget {
           ),
 
           Image(
-            image: Image.asset('assets/images/bg4.jpeg').image,
+            image: Image.asset('assets/images/bg5.jpeg').image,
             fit: BoxFit.cover,
             color: colors.primaryBackgroundColor.withAlpha(220),
             colorBlendMode: BlendMode.overlay,

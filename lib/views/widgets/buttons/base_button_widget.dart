@@ -46,10 +46,10 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
   @override
   void dispose() {
     if (_fillAnimationDone != null && !_fillAnimationDone!.isCompleted) {
-      _fillAnimationDone?.complete();
+      _fillAnimationDone!.complete();
     }
     if (_emptyAnimationDone != null && !_emptyAnimationDone!.isCompleted) {
-      _emptyAnimationDone?.complete();
+      _emptyAnimationDone!.complete();
     }
     super.dispose();
   }
