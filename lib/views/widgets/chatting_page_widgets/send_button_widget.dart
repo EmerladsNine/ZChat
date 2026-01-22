@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
@@ -14,10 +12,10 @@ class SendButtonWidget extends StatelessWidget {
   const SendButtonWidget({
     super.key,
     required this.controller,
-    required this.scrollController,
+    required this.scrollToBottom,
   });
 
-  final ScrollController scrollController;
+  final void Function() scrollToBottom;
   final TextEditingController controller;
 
   //TODO Ensure messages contain visible characters at send time, not only when toggling the send button, so this can’t be bypassed via an API.
@@ -30,19 +28,7 @@ class SendButtonWidget extends StatelessWidget {
     return RegExp(r'[^\p{M}\p{Z}\p{C}]', unicode: true).hasMatch(cleaned);
   }
 
-  void _scrollToBottom() async {
-    Completer<void> canContinueScrolling = Completer<void>();
-    while (scrollController.offset != 0.0) {
-      scrollController.jumpTo(0.0);
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!canContinueScrolling.isCompleted) {
-          canContinueScrolling.complete();
-        }
-      });
-      await canContinueScrolling.future;
-      canContinueScrolling = Completer<void>();
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +49,7 @@ class SendButtonWidget extends StatelessWidget {
                 final msgService = context.read<MessagingService>();
                 msgService.sendMessage(controller.text, context.read<Chat>());
                 controller.text = "";
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _scrollToBottom();
-                });
+                scrollToBottom();
               },
         child: Padding(
           padding: const EdgeInsets.all(4.0),
