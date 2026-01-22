@@ -16,7 +16,7 @@ class CameraButtonWidget extends StatelessWidget {
       message: 'Camera',
       child: RippleEffectButtonWidget(
         disableSet: AppNotifiers.disableButtons,
-        animationDuration: Duration(milliseconds: 150),
+        animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
         overlayCircularRadius: 15,
         onTap: () {},
