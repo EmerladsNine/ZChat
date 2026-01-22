@@ -31,6 +31,7 @@ class SearchBarWidget extends StatelessWidget {
             child: TextField(
               controller: CustomTextController(),
               textDirection: TextFieldUtils.getTextDirection(text),
+              strutStyle: StrutStyle(fontSize: 20, height: 1.2),
               focusNode: focusNode,
               onTapOutside: (event) {
                 focusNode.unfocus();

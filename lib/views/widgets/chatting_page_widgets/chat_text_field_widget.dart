@@ -29,6 +29,7 @@ class ChatTextFieldWidget extends StatelessWidget {
             height: 1.2,
             color: colors.primaryColor,
           ),
+          strutStyle: StrutStyle(fontSize: 20, height: 1.2),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 15, right: 15, top: 4),
             isDense: true,
