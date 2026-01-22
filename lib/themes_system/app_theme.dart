@@ -15,4 +15,10 @@ class AppTheme extends InheritedNotifier<ThemeController> {
     assert(theme != null, 'AppTheme not found in widget tree');
     return theme!.notifier!.colors;
   }
+
+  static ThemeController controllerOf(BuildContext context) {
+    final theme = context.dependOnInheritedWidgetOfExactType<AppTheme>();
+    assert(theme != null, 'AppTheme not found in widget tree');
+    return theme!.notifier!;
+  }
 }
