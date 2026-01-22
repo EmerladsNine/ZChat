@@ -9,7 +9,8 @@ import 'camera_button_widget.dart';
 import 'emoji_panel_button_widget.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
-  const ChatMessagesFooterWidget({super.key,required this.scrollController});
+  const ChatMessagesFooterWidget({super.key, required this.scrollController});
+
   final ScrollController scrollController;
 
   @override
@@ -34,6 +35,7 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
 
     return Container(
       color: colors.cardsColor,
+      margin: EdgeInsetsGeometry.only(top: 5),
       child: SafeArea(
         top: false,
         child: Material(
@@ -52,7 +54,10 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
                 ChatTextFieldWidget(controller: controller),
                 AddFileWidget(),
                 CameraButtonWidget(),
-                SendButtonWidget(controller: controller,scrollController: widget.scrollController,),
+                SendButtonWidget(
+                  controller: controller,
+                  scrollController: widget.scrollController,
+                ),
               ],
             ),
           ),
