@@ -17,22 +17,25 @@ class BaseSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: colors.primaryBackgroundColor,
-        appBar: AppBar(
+    return Container(
+      color: colors.primaryBackgroundColor,
+      child: SafeArea(
+        child: Scaffold(
           backgroundColor: colors.primaryBackgroundColor,
-          elevation: 0,
-          title: Text(
-            title,
-            style: AppTextStyles.appBarPrimaryTextStyle(colors),
+          appBar: AppBar(
+            backgroundColor: colors.primaryBackgroundColor,
+            elevation: 0,
+            title: Text(
+              title,
+              style: AppTextStyles.appBarPrimaryTextStyle(colors),
+            ),
           ),
-        ),
-        body: Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
-          padding: EdgeInsetsGeometry.all(8),
-          color: colors.primaryBackgroundColor,
-          child: SingleChildScrollView(child: pageContent),
+          body: Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsetsGeometry.all(8),
+            color: colors.primaryBackgroundColor,
+            child: SingleChildScrollView(child: pageContent),
+          ),
         ),
       ),
     );

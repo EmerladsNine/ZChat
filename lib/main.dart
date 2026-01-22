@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/themes_system/app_theme.dart';
@@ -33,32 +34,43 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    return MaterialApp(
-      title: 'ZChat',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          iconTheme: IconThemeData(color: colors.iconDefaultColor),
-        ),
-
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: Colors.blue,
-          selectionHandleColor: Colors.transparent,
-          selectionColor: Colors.blue,
-        ),
-        colorScheme: ColorScheme(
-          brightness: Brightness.dark,
-          primary: colors.primaryBackgroundColor,
-          onPrimary: colors.primaryColor,
-          secondary: Color(AppConstants.secondaryColorHex),
-          onSecondary: Colors.white,
-          surface: Color(AppConstants.surfaceColorHex),
-          onSurface: Colors.white,
-          error: Color(AppConstants.errorColorHex),
-          onError: Colors.white,
-        ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: themeController.isDarkMode
+            ? Brightness.light
+            : Brightness.dark,
+        statusBarBrightness: themeController.isDarkMode
+            ? Brightness.dark
+            : Brightness.light,
       ),
-      home: const MyHomePage(),
+      child: MaterialApp(
+        title: 'ZChat',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(color: colors.iconDefaultColor),
+          ),
+
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: Colors.blue,
+            selectionHandleColor: Colors.transparent,
+            selectionColor: Colors.blue,
+          ),
+          colorScheme: ColorScheme(
+            brightness: Brightness.dark,
+            primary: colors.primaryBackgroundColor,
+            onPrimary: colors.primaryColor,
+            secondary: Color(AppConstants.secondaryColorHex),
+            onSecondary: Colors.white,
+            surface: Color(AppConstants.surfaceColorHex),
+            onSurface: Colors.white,
+            error: Color(AppConstants.errorColorHex),
+            onError: Colors.white,
+          ),
+        ),
+        home: const MyHomePage(),
+      ),
     );
   }
 }

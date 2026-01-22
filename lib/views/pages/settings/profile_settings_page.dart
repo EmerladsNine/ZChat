@@ -3,7 +3,6 @@ import 'package:zchat/views/data/app_text_styles.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_info_card_widget.dart';
 
 import '../../../themes_system/app_theme.dart';
-import '../../data/app_themes.dart';
 import 'base_settings_page.dart';
 
 /// Page for viewing and editing profile information.
@@ -24,13 +23,9 @@ class ProfileSettingsPage extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white10,
+              color: colors.dividerColor,
             ),
-            child: Icon(
-              Icons.person,
-              color: AppThemes.darkThemeColors.iconDefaultColor,
-              size: 80,
-            ),
+            child: Icon(Icons.person, color: colors.iconDefaultColor, size: 80),
           ),
           Padding(
             padding: EdgeInsetsGeometry.only(top: 10),
