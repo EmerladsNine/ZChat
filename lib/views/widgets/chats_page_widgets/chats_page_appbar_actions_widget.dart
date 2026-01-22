@@ -19,6 +19,7 @@ class ChatsPageAppbarActionsWidget extends StatelessWidget {
         padding: const EdgeInsetsGeometry.all(8.0),
         animationDuration: Duration(milliseconds: 30),
         appStateNotifier: AppNotifiers.isNavigating,
+        overlayCircularRadius: 10,
         onTap: () {
           Navigator.push(
             context,

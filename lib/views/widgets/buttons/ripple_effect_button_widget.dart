@@ -13,10 +13,12 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
     super.onTapCancel,
     super.disableSet,
     super.appStateNotifier,
+    this.overlayCircularRadius = 0,
     this.animationDuration = const Duration(milliseconds: 200),
   });
 
   final Duration animationDuration;
+  final double overlayCircularRadius;
 
   @override
   Widget buildOverlay(
@@ -41,7 +43,7 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
             height: double.infinity,
             decoration: BoxDecoration(
               color: colors.overlayColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(overlayCircularRadius),
             ),
           ),
         ),
