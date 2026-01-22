@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../controllers/custom_text_controller.dart';
 import '../../themes_system/app_theme.dart';
+import '../../utils/text_field_utils.dart';
 import '../data/app_text_styles.dart';
 
 class SearchBarWidget extends StatelessWidget {
-  SearchBarWidget({super.key, this.text = 'Search',this.sideWidget});
+  SearchBarWidget({super.key, this.text = 'Search', this.sideWidget});
 
   final String text;
   final focusNode = FocusNode();
@@ -29,6 +30,7 @@ class SearchBarWidget extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: CustomTextController(),
+              textDirection: TextFieldUtils.getTextDirection(text),
               focusNode: focusNode,
               onTapOutside: (event) {
                 focusNode.unfocus();
@@ -42,9 +44,7 @@ class SearchBarWidget extends StatelessWidget {
               ),
             ),
           ),
-          if(sideWidget != null)
-            sideWidget!,
-
+          if (sideWidget != null) sideWidget!,
         ],
       ),
     );

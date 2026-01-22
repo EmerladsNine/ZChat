@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
+import '../../../utils/text_field_utils.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
   const ChatTextFieldWidget({super.key, required this.controller});
@@ -17,6 +18,7 @@ class ChatTextFieldWidget extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 2.0),
         child: TextField(
           controller: controller,
+          textDirection: TextFieldUtils.getTextDirection(controller.text),
           keyboardType: TextInputType.multiline,
           minLines: 1,
           maxLines: 4,
