@@ -47,7 +47,7 @@ class MessageBubble extends StatelessWidget {
                     ),
                     width: 40,
                     height: 40,
-                    child: Icon(Icons.person),
+                    child: Icon(Icons.person, color: colors.iconDefaultColor),
                   ),
 
           IntrinsicWidth(

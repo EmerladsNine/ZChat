@@ -85,7 +85,7 @@ class ChatsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchBarWidget(
-            text: 'Search',
+            hintText: 'Search',
             sideWidget: CustomToolTip(
               message: 'Add Chat',
               preferBelow: true,
