@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 abstract class BaseButtonWidget extends StatefulWidget {
@@ -38,15 +40,30 @@ abstract class BaseButtonWidget extends StatefulWidget {
 
 class BaseButtonWidgetState extends State<BaseButtonWidget> {
   bool _pressed = false;
-  bool _fillAnimationDone = false;
-  bool _emptyAnimationDone = false;
+  Completer<void>? _fillAnimationDone;
+  Completer<void>? _emptyAnimationDone;
+
+  @override
+  void dispose() {
+    if (_fillAnimationDone != null && !_fillAnimationDone!.isCompleted) {
+      _fillAnimationDone?.complete();
+    }
+    if (_emptyAnimationDone != null && !_emptyAnimationDone!.isCompleted) {
+      _emptyAnimationDone?.complete();
+    }
+    super.dispose();
+  }
 
   void markFillAnimationAsDone() {
-    _fillAnimationDone = true;
+    if (!_fillAnimationDone!.isCompleted) {
+      _fillAnimationDone!.complete();
+    }
   }
 
   void markEmptyAnimationAsDone() {
-    _emptyAnimationDone = true;
+    if (!_emptyAnimationDone!.isCompleted) {
+      _emptyAnimationDone!.complete();
+    }
   }
 
   void tapDown(TapDownDetails details) {
@@ -55,8 +72,8 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     widget.disableSet.value = true;
 
     //Animate
-    _fillAnimationDone = false;
-    _emptyAnimationDone = false;
+    _fillAnimationDone = Completer<void>();
+    _emptyAnimationDone = Completer<void>();
     setState(() {
       _pressed = true;
     });
@@ -72,10 +89,10 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
       _pressed = false;
     });
 
-    while (!_emptyAnimationDone && context.mounted) {
-      await Future.delayed(Duration(milliseconds: 30));
-    }
+    await _emptyAnimationDone!.future;
+
     widget.disableSet.value = false;
+    if (!context.mounted) return;
     widget.onTapCancel?.call();
   }
 
@@ -84,16 +101,13 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     if (!_pressed || widget.appStateNotifier.value) return;
     widget.appStateNotifier.value = true;
 
-    //Keep waiting as long as the animation running , or just stop everything if context is no longer mounted .
-    while ((!_fillAnimationDone || !_emptyAnimationDone) && context.mounted) {
-      if (_fillAnimationDone && _pressed) {
-        // start the empty animation ( it starts on the next frame , not instantly ).
-        setState(() {
-          _pressed = false;
-        });
-      }
-      await Future.delayed(Duration(milliseconds: 30));
+    await _fillAnimationDone!.future;
+    if (context.mounted) {
+      setState(() {
+        _pressed = false;
+      });
     }
+    await _emptyAnimationDone!.future;
 
     //reset
     _pressed = false;
