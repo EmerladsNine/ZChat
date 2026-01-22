@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/widgets/custom_tool_tip.dart';
 
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
@@ -11,18 +12,21 @@ class EmojiPanelButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    return RippleEffectButtonWidget(
-      disableSet: AppNotifiers.disableButtons,
-      animationDuration: Duration(milliseconds: 150),
-      appStateNotifier: AppNotifiers.isNavigating,
-      overlayCircularRadius: 15,
-      onTap: () {},
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Icon(
-          Icons.emoji_emotions_outlined,
-          color: colors.primaryColor,
-          size: 25,
+    return CustomToolTip(
+      message: 'Emoji Panel',
+      child: RippleEffectButtonWidget(
+        disableSet: AppNotifiers.disableButtons,
+        animationDuration: Duration(milliseconds: 150),
+        appStateNotifier: AppNotifiers.isNavigating,
+        overlayCircularRadius: 15,
+        onTap: () {},
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Icon(
+            Icons.emoji_emotions_outlined,
+            color: colors.primaryColor,
+            size: 25,
+          ),
         ),
       ),
     );
