@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
@@ -8,7 +10,11 @@ import '../../data/app_notifiers.dart';
 import '../buttons/ripple_effect_button_widget.dart';
 
 class SendButtonWidget extends StatelessWidget {
-  const SendButtonWidget({super.key, required this.controller,required this.scrollController});
+  const SendButtonWidget({
+    super.key,
+    required this.controller,
+    required this.scrollController,
+  });
 
   final ScrollController scrollController;
   final TextEditingController controller;
@@ -21,6 +27,20 @@ class SendButtonWidget extends StatelessWidget {
         .trim();
 
     return RegExp(r'[^\p{M}\p{Z}\p{C}]', unicode: true).hasMatch(cleaned);
+  }
+
+  void _scrollToBottom() async {
+    Completer<void> canContinueScrolling = Completer<void>();
+    while (scrollController.offset != 0.0) {
+      scrollController.jumpTo(0.0);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!canContinueScrolling.isCompleted) {
+          canContinueScrolling.complete();
+        }
+      });
+      await canContinueScrolling.future;
+      canContinueScrolling = Completer<void>();
+    }
   }
 
   @override
@@ -40,8 +60,8 @@ class SendButtonWidget extends StatelessWidget {
               final msgService = context.read<MessagingService>();
               msgService.sendMessage(controller.text, context.read<Chat>());
               controller.text = "";
-              WidgetsBinding.instance.addPostFrameCallback((_){
-                scrollController.jumpTo(scrollController.position.maxScrollExtent);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _scrollToBottom();
               });
             },
       child: Padding(

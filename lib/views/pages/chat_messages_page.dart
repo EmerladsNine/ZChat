@@ -54,35 +54,15 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   final ScrollController _scrollController = ScrollController();
 
-  double oldScrollOffset = -1.0;
-  double oldMaxScrollExtent = -1.0;
-
-  @override
-  void initState() {
-    //Scroll to bottom
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (MediaQuery.of(context).viewInsets.bottom != 0) {
-        if(oldScrollOffset == -1.0)
-        {
-          oldScrollOffset = _scrollController.offset;
+        if (_scrollController.offset <= 100.0) {
+          _scrollController.jumpTo(0.0);
         }
-        if (oldMaxScrollExtent - oldScrollOffset <= 100) {
-          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-        }
-      }
-      if (MediaQuery.of(context).viewInsets.bottom == 0) {
-        oldScrollOffset = -1.0;
-        oldMaxScrollExtent = _scrollController.position.maxScrollExtent;
       }
     });
 
@@ -129,15 +109,20 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       final double maxWidth = constraints.maxWidth * 0.7;
                       return Consumer<Chat>(
                         builder: (context, chat, child) {
-                          return ListView.builder(
-                            padding: EdgeInsetsGeometry.zero,
-                            controller: _scrollController,
-                            itemCount: chat.messages.length,
-                            itemBuilder: (context, index) {
-                              return chat.messages[index].getMessageBubble(
-                                maxWidth,
-                              );
-                            },
+                          return Align(
+                            alignment: AlignmentGeometry.topCenter,
+                            child: ListView.builder(
+                              padding: EdgeInsetsGeometry.zero,
+                              shrinkWrap: chat.messages.length < 10 ? true : false,
+                              reverse: true,
+                              controller: _scrollController,
+                              itemCount: chat.messages.length,
+                              itemBuilder: (context, index) {
+                                return chat.messages[index].getMessageBubble(
+                                  maxWidth
+                                );
+                              },
+                            ),
                           );
                         },
                       );
@@ -150,7 +135,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
                 child: ChatMessagesFooterWidget(
-                  scrollController: _scrollController,
+                  scrollController: _scrollController
                 ),
               ),
             ],
