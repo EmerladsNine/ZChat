@@ -71,11 +71,15 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     if (widget.disableSet.value) return;
     widget.disableSet.value = true;
 
-    //Animate
-    _fillAnimationDone = Completer<void>();
-    _emptyAnimationDone = Completer<void>();
+    //trigger animation on the next frame
     setState(() {
       _pressed = true;
+    });
+    _fillAnimationDone = Completer<void>();
+    _emptyAnimationDone = null;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //Next Frame , animation will start.
+      _emptyAnimationDone = Completer<void>();
     });
     widget.onTapDown?.call(details);
   }
@@ -89,7 +93,9 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
       _pressed = false;
     });
 
-    await _emptyAnimationDone!.future;
+    if (_emptyAnimationDone != null && !_emptyAnimationDone!.isCompleted) {
+      await _emptyAnimationDone!.future;
+    }
 
     widget.disableSet.value = false;
     if (!context.mounted) return;
