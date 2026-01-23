@@ -86,6 +86,7 @@ class ChatsPage extends StatelessWidget {
         children: [
           SearchBarWidget(
             hintText: 'Search',
+            disableSet: AppNotifiers.disableButtons,
             sideWidget: CustomToolTip(
               message: 'Add Chat',
               preferBelow: true,

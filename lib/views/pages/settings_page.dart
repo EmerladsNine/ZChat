@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/settings_widgets/cards/settings_card_widget.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
@@ -35,7 +36,7 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10.0,
               children: [
-                SearchBarWidget(),
+                SearchBarWidget(disableSet: AppNotifiers.disableButtons,),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(

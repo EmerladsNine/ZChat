@@ -9,8 +9,14 @@ import '../../utils/text_field_utils.dart';
 import '../data/app_text_styles.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({super.key, this.hintText = 'Search', this.sideWidget});
+  const SearchBarWidget({
+    super.key,
+    this.hintText = 'Search',
+    this.sideWidget,
+    required this.disableSet,
+  });
 
+  final ValueNotifier<bool> disableSet;
   final String hintText;
   final Widget? sideWidget;
 
@@ -65,22 +71,29 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
           Icon(Icons.search, color: colors.hintColor),
           const SizedBox(width: 8),
           Expanded(
-            child: TextField(
-              controller: controller,
-              textDirection: TextFieldUtils.getTextDirection(controller.text),
-              textCapitalization: TextCapitalization.sentences,
-              strutStyle: const StrutStyle(fontSize: 20, height: 1.2),
-              focusNode: focusNode,
-              onTapOutside: (event) {
-                focusNode.unfocus();
-              },
-              style: TextStyle(color: colors.primaryColor),
-              decoration: InputDecoration(
-                isDense: true,
-                hintText: widget.hintText,
-                hintStyle: AppTextStyles.hintTextStyle(colors),
-                border: InputBorder.none,
-              ),
+            child: ValueListenableBuilder(
+              valueListenable: widget.disableSet,
+              builder: (context,value,child) {
+                return TextField(
+                  controller: controller,
+                  enabled: !value,
+                  textDirection: TextFieldUtils.getTextDirection(controller.text),
+                  textCapitalization: TextCapitalization.sentences,
+                  strutStyle: const StrutStyle(fontSize: 20, height: 1.2),
+                  focusNode: focusNode,
+                  onTapOutside: (event) {
+                    focusNode.unfocus();
+                  },
+                  style: TextStyle(color: colors.primaryColor),
+
+                  decoration: InputDecoration(
+                    isDense: true,
+                    hintText: widget.hintText,
+                    hintStyle: AppTextStyles.hintTextStyle(colors),
+                    border: InputBorder.none,
+                  ),
+                );
+              }
             ),
           ),
           if (widget.sideWidget != null) widget.sideWidget!,
