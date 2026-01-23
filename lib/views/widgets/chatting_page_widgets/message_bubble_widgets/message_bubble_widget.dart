@@ -163,7 +163,7 @@ class MessageBubbleWidget extends StatelessWidget {
 
                     Padding(
                       padding: EdgeInsetsGeometry.symmetric(
-                        horizontal: isEmojiBubble ? 9 : 0,
+                        horizontal: received && isEmojiBubble ? 9 : 0,
                       ),
                       child: Column(
                         spacing: 5,
