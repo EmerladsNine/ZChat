@@ -35,40 +35,6 @@ class ChatCardWidget extends StatelessWidget {
         : unreadMessagesNumber.toString();
   }
 
-  Widget buildMessageStatusIndicator(BuildContext context) {
-    final colors = AppTheme.of(context);
-    switch (userLastMessageStatus) {
-      case MessageStatus.unsent:
-        return Icon(
-          Icons.access_time,
-          size: AppConstants.messageStatusIndicatorFontSize,
-          color: colors.textSecondaryColor,
-        );
-      case MessageStatus.undelivered:
-        return Text(
-          '›',
-          style: AppTextStyles.messageStatusIndicatorStyle(colors),
-        );
-
-      case MessageStatus.delivered:
-        return Text(
-          '››',
-          style: AppTextStyles.messageStatusIndicatorStyle(colors),
-        );
-
-      case MessageStatus.read:
-        return Text(
-          '››',
-          style: AppTextStyles.messageStatusIndicatorStyle(
-            colors,
-          ).copyWith(color: colors.readMessageIndicatorColor),
-        );
-
-      case MessageStatus.notLast:
-        return SizedBox(width: 18);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
@@ -172,7 +138,11 @@ class ChatCardWidget extends StatelessWidget {
                                 right: 0,
                                 left: 5,
                               ),
-                              child: buildMessageStatusIndicator(context),
+                              child: buildMessageStatusIndicator(
+                                context,
+                                userLastMessageStatus,
+                                AppConstants.messageStatusIndicatorFontSize,
+                              ),
                             ),
                     ],
                   ),

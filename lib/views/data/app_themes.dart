@@ -17,6 +17,8 @@ abstract final class AppThemes {
     iconDefaultColor: Color(0xFFECECEC),
     selectedPageIconColor: Color(0xFF121212),
     dividerColor: Color(0xFF262728),
+    sentMessageBubbleColor: Color(0xFF191919),
+    receivedMessageBubbleColor: Color(0xFF191919),
   );
 
   static const lightThemeColors = ThemeColorScheme(
@@ -34,5 +36,7 @@ abstract final class AppThemes {
     iconDefaultColor: Color(0xFF2C2C2C),
     selectedPageIconColor: Color(0xFFFFFFFF),
     dividerColor: Color(0xFFE0E0E0),
+    sentMessageBubbleColor: Color(0xFFFFFFFF),
+    receivedMessageBubbleColor: Color(0xFFFFFFFF),
   );
 }

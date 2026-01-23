@@ -1,35 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
+import 'package:zchat/views/painters/message_bubble_painter.dart';
 
 class SenderNameWidget extends StatelessWidget {
   const SenderNameWidget({
     super.key,
     required this.senderName,
-    this.hasBackground = false,
+    this.isSeparate = false,
+    required this.maxBubbleWidth,
   });
 
   final String senderName;
-  final bool hasBackground;
+  final bool isSeparate;
+  final double maxBubbleWidth;
 
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
-    return Container(
-      padding: hasBackground ? EdgeInsetsGeometry.symmetric(horizontal: 3) : EdgeInsetsGeometry.zero,
-      decoration: hasBackground
-          ? BoxDecoration(
-              color: colors.cardsColor,
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: colors.dividerColor),
-            )
-          : BoxDecoration(),
-      child: Text(
-        senderName,
-        style: TextStyle(
-          fontWeight: FontWeight.w900,
-          fontSize: 15,
-          color: colors.brandPrimaryColor,
-          height: 1,
+    return CustomPaint(
+      painter: MessageBubblePainter(
+        color: colors.receivedMessageBubbleColor,
+        shadowColor: colors.brandPrimaryColor,
+        alignment: Alignment.bottomRight,
+        tail: true,
+        draw: isSeparate,
+      ),
+      child: IntrinsicWidth(
+        child: Container(
+          constraints: BoxConstraints(minWidth: 50, maxWidth: maxBubbleWidth),
+          padding: isSeparate
+              ? EdgeInsets.only(left: 14)
+              : EdgeInsetsGeometry.all(0),
+          child: Text(
+            senderName,
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 15,
+              color: colors.brandPrimaryColor,
+              height: 1,
+            ),
+          ),
         ),
       ),
     );
