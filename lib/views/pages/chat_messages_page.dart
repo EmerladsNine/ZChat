@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:zchat/MessageSystem/chat.dart';
-import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
 
 import '../../themes_system/app_theme.dart';
 
@@ -139,58 +137,10 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
           Column(
             children: [
               Expanded(
-                child: Stack(
-                  children: [
-                    SafeArea(
-                      bottom: false,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          final double maxWidth = constraints.maxWidth * 0.7;
-                          return Consumer<Chat>(
-                            builder: (context, chat, child) {
-                              return ListView.builder(
-                                padding: EdgeInsetsGeometry.zero,
-                                shrinkWrap: chat.messages.length < 20 ? true : false,
-                                reverse: true,
-                                controller: _scrollController,
-                                itemCount: chat.messages.length,
-                                itemBuilder: (context, index) {
-                                  return chat.messages[index]
-                                      .getMessageBubble(maxWidth);
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 8,
-                      right: 8,
-                      child: AnimatedScale(
-                        duration: Duration(milliseconds: 100),
-                        scale: isDownButtonShown ? 1 : 0,
-                        child: RippleEffectButtonWidget(
-                          animationDuration: Duration(milliseconds: 0),
-                          overlayCircularRadius: 50,
-                          onTap: () {
-                              _scrollToBottom();
-                          },
-                          child: Container(
-                            padding: EdgeInsetsGeometry.all(3),
-                            decoration: BoxDecoration(
-                              color: colors.dividerColor,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Icon(
-                              Icons.keyboard_arrow_down,
-                              size: 27,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: MessagesPanelWidget(
+                  scrollController: _scrollController,
+                  isDownButtonShown: isDownButtonShown,
+                  scrollToBottom: _scrollToBottom,
                 ),
               ),
               Padding(

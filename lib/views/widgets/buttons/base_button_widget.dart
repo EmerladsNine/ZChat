@@ -55,13 +55,13 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
   }
 
   void markFillAnimationAsDone() {
-    if (!_fillAnimationDone!.isCompleted) {
+    if (_fillAnimationDone != null && !_fillAnimationDone!.isCompleted) {
       _fillAnimationDone!.complete();
     }
   }
 
   void markEmptyAnimationAsDone() {
-    if (!_emptyAnimationDone!.isCompleted) {
+    if (_emptyAnimationDone != null && !_emptyAnimationDone!.isCompleted) {
       _emptyAnimationDone!.complete();
     }
   }

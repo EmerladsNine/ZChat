@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/MessageSystem/chat.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/go_down_button_widget.dart';
+
+class MessagesPanelWidget extends StatelessWidget {
+  const MessagesPanelWidget({
+    super.key,
+    required this.scrollController,
+    required this.isDownButtonShown,
+    required this.scrollToBottom,
+  });
+
+  final ScrollController scrollController;
+  final bool isDownButtonShown;
+  final void Function() scrollToBottom;
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SafeArea(
+          bottom: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final double maxWidth = constraints.maxWidth * 0.7;
+              return Consumer<Chat>(
+                builder: (context, chat, child) {
+                  return ListView.builder(
+                    padding: EdgeInsetsGeometry.zero,
+                    shrinkWrap: chat.messages.length < 20 ? true : false,
+                    reverse: true,
+                    controller: scrollController,
+                    itemCount: chat.messages.length,
+                    itemBuilder: (context, index) {
+                      return chat.messages[index].getMessageBubble(maxWidth);
+                    },
+                  );
+                },
+              );
+            },
+          ),
+        ),
+
+        //Down Button
+        Positioned(
+          bottom: 8,
+          right: 8,
+          child: GoDownButtonWidget(
+            isDownButtonShown: isDownButtonShown,
+            scrollToBottom: scrollToBottom,
+          ),
+        ),
+      ],
+    );
+  }
+}

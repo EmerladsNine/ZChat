@@ -91,6 +91,7 @@ class ChatsPage extends StatelessWidget {
               preferBelow: true,
               child: RippleEffectButtonWidget(
                 padding: EdgeInsetsGeometry.all(4.0),
+                overlayCircularRadius: 8,
                 disableSet: AppNotifiers.disableButtons,
                 appStateNotifier: AppNotifiers.isNavigating,
                 child: Icon(Icons.add, color: colors.hintColor),
