@@ -27,7 +27,7 @@ class SenderNameWidget extends StatelessWidget {
       ),
       child: IntrinsicWidth(
         child: Container(
-          constraints: BoxConstraints(minWidth: 50, maxWidth: maxBubbleWidth),
+          constraints: BoxConstraints(minWidth: 70, maxWidth: maxBubbleWidth),
           padding: isSeparate
               ? EdgeInsets.only(left: 14)
               : EdgeInsetsGeometry.all(0),
