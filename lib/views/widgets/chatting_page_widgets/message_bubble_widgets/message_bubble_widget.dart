@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data_classes/message_reply_data.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/sender_name_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/timestamp_widget.dart';
 
-import '../../../themes_system/app_theme.dart';
+import '../../../../themes_system/app_theme.dart';
 
-class MessageBubble extends StatelessWidget {
-  const MessageBubble({
+class MessageBubbleWidget extends StatelessWidget {
+  const MessageBubbleWidget({
     super.key,
     required this.text,
     required this.time,
@@ -63,20 +65,13 @@ class MessageBubble extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: colors.dividerColor),
                     ),
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: isEmojiBubble ? 4 : 1,
                 children: [
                   if (senderName != null && !isChildBubble)
-                    Text(
-                      senderName!,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 15,
-                        color: colors.brandPrimaryColor,
-                        height: 1,
-                      ),
-                    ),
+                    SenderNameWidget(senderName: senderName!,hasBackground: isEmojiBubble,),
 
                   if (replyData != null)
                     Container(
@@ -110,6 +105,7 @@ class MessageBubble extends StatelessWidget {
                       ),
                     ),
 
+                  //Message Text
                   Text(
                     text,
                     style: TextStyle(
@@ -119,21 +115,8 @@ class MessageBubble extends StatelessWidget {
                     ),
                   ),
 
-                  Padding(
-                    padding: EdgeInsetsGeometry.only(top: 2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          time,
-                          style: TextStyle(
-                            color: colors.primaryColor,
-                            fontSize: 10,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+
+                  TimestampWidget(time: time,hasBackground: isEmojiBubble,),
                 ],
               ),
             ),
