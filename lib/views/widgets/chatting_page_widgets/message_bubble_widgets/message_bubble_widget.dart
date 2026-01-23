@@ -90,7 +90,7 @@ class MessageBubbleWidget extends StatelessWidget {
               color: received
                   ? colors.receivedMessageBubbleColor
                   : colors.sentMessageBubbleColor,
-              shadowColor: colors.brandPrimaryColor,
+              shadowColor: colors.messageBubbleShadowColor,
               alignment: received ? Alignment.topLeft : Alignment.topRight,
               tail: !isChildBubble,
               draw: !isEmojiBubble,

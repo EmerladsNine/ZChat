@@ -19,6 +19,7 @@ abstract final class AppThemes {
     dividerColor: Color(0xFF262728),
     sentMessageBubbleColor: Color(0xFF191919),
     receivedMessageBubbleColor: Color(0xFF191919),
+    messageBubbleShadowColor: Colors.white,
   );
 
   static const lightThemeColors = ThemeColorScheme(
@@ -38,5 +39,6 @@ abstract final class AppThemes {
     dividerColor: Color(0xFFE0E0E0),
     sentMessageBubbleColor: Color(0xFFFFFFFF),
     receivedMessageBubbleColor: Color(0xFFFFFFFF),
+    messageBubbleShadowColor: Colors.black,
   );
 }
