@@ -6,6 +6,7 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/pages/sign_in_page.dart';
 import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
@@ -120,11 +121,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  final bool _isSignedIn = false;
   @override
   Widget build(BuildContext context) {
-    return WidgetTree(
-      pageController: pageController,
-      fullSwipeController: fullSwipeController,
-    );
+    if(_isSignedIn)
+      {
+        return WidgetTree(
+          pageController: pageController,
+          fullSwipeController: fullSwipeController,
+        );
+      }
+    return SignInPage();
   }
 }
