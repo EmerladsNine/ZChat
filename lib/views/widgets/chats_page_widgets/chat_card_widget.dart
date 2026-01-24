@@ -70,15 +70,15 @@ class ChatCardWidget extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              height: 70,
-              padding: EdgeInsets.fromLTRB(0, 8, 12.5, 0),
+              height: 61,
+              padding: EdgeInsets.fromLTRB(0, 3, 12.5, 0),
               decoration: BoxDecoration(
                 border: BoxBorder.fromLTRB(
-                  bottom: BorderSide(color: colors.dividerColor),
+                  bottom: BorderSide(color: colors.dividerColor,width: 0.5),
                 ),
               ),
               child: Column(
-                spacing: 4,
+                spacing: 5,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
@@ -115,7 +115,7 @@ class ChatCardWidget extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(
                                 11,
                                 0,
-                                12.5,
+                                10.5,
                                 5,
                               ),
                               alignment: Alignment.center,
@@ -129,7 +129,7 @@ class ChatCardWidget extends StatelessWidget {
                                     ),
                                 smallSize: 12,
                                 largeSize: 14,
-                                padding: const EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(3),
                                 child: SizedBox(width: 0, height: 0),
                               ),
                             )

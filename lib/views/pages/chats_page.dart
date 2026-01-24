@@ -80,22 +80,25 @@ class ChatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 3.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchBarWidget(
-            hintText: 'Search',
-            disableSet: AppNotifiers.disableButtons,
-            sideWidget: CustomToolTip(
-              message: 'Add Chat',
-              preferBelow: true,
-              child: RippleEffectButtonWidget(
-                padding: EdgeInsetsGeometry.all(4.0),
-                overlayCircularRadius: 8,
-                disableSet: AppNotifiers.disableButtons,
-                appStateNotifier: AppNotifiers.isNavigating,
-                child: Icon(Icons.add, color: colors.hintColor),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: SearchBarWidget(
+              hintText: 'Search',
+              disableSet: AppNotifiers.disableButtons,
+              sideWidget: CustomToolTip(
+                message: 'Add Chat',
+                preferBelow: true,
+                child: RippleEffectButtonWidget(
+                  padding: EdgeInsetsGeometry.all(4.0),
+                  overlayCircularRadius: 8,
+                  disableSet: AppNotifiers.disableButtons,
+                  appStateNotifier: AppNotifiers.isNavigating,
+                  child: Icon(Icons.add, color: colors.hintColor),
+                ),
               ),
             ),
           ),

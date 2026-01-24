@@ -22,7 +22,7 @@ class MessageInfoWidget extends StatelessWidget {
 
     return Container(
       padding: hasBackground
-          ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 0)
+          ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2)
           : EdgeInsetsGeometry.zero,
       decoration: hasBackground
           ? BoxDecoration(
@@ -30,7 +30,6 @@ class MessageInfoWidget extends StatelessWidget {
                   ? colors.receivedMessageBubbleColor
                   : colors.sentMessageBubbleColor,
               borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: colors.dividerColor),
             )
           : BoxDecoration(),
       child: Row(

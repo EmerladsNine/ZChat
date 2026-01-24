@@ -15,16 +15,16 @@ abstract class SettingsBaseCardWidget extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsetsGeometry.all(5),
       decoration: BoxDecoration(
         color: colors.cardsColor,
-        border: BoxBorder.all(color: colors.dividerColor, width: 0.5),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsetsGeometry.only(left: 8, bottom: 8, top: 8),
+            padding: EdgeInsetsGeometry.only(left: 8, bottom: 8, top: 5),
             child: Text(
               category,
               style: AppTextStyles.chatCardNameTextStyle(colors),
