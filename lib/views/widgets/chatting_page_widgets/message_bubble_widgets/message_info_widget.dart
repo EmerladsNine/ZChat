@@ -41,7 +41,7 @@ class MessageInfoWidget extends StatelessWidget {
             style: TextStyle(color: colors.primaryColor, fontSize: 10),
           ),
 
-          buildMessageStatusIndicator(context, messageStatus, 10),
+          buildMessageStatusIndicator(context, messageStatus, 15),
         ],
       ),
     );

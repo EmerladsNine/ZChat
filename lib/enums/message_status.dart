@@ -23,28 +23,13 @@ Widget buildMessageStatusIndicator(
       );
 
     case MessageStatus.undelivered:
-      return Text(
-        '›',
-        style: AppTextStyles.messageStatusIndicatorStyle(
-          colors,
-        ).copyWith(fontSize: size),
-      );
+      return Icon(Icons.keyboard_arrow_right_rounded,size: size,color: colors.primaryColor,);
 
     case MessageStatus.delivered:
-      return Text(
-        '››',
-        style: AppTextStyles.messageStatusIndicatorStyle(
-          colors,
-        ).copyWith(fontSize: size),
-      );
+      return Icon(Icons.keyboard_double_arrow_right_rounded,size: size,color: colors.primaryColor,);
 
     case MessageStatus.read:
-      return Text(
-        '››',
-        style: AppTextStyles.messageStatusIndicatorStyle(
-          colors,
-        ).copyWith(fontSize: size, color: colors.readMessageIndicatorColor),
-      );
+      return Icon(Icons.keyboard_double_arrow_right_rounded,size: size,color: colors.readMessageIndicatorColor,);
 
     case MessageStatus.notLast:
       return SizedBox(width: size);

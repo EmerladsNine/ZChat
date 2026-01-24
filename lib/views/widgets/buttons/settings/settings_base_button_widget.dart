@@ -25,6 +25,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
+      overlayCircularRadius: 3,
       onTap: () => onTap(context),
       child: Container(
         color: colors.cardsColor,
@@ -32,7 +33,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsetsGeometry.symmetric(vertical: 8),
+              padding: EdgeInsetsGeometry.symmetric(vertical: 6),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

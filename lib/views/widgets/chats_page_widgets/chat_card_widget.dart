@@ -70,8 +70,8 @@ class ChatCardWidget extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              height: 61,
-              padding: EdgeInsets.fromLTRB(0, 3, 12.5, 0),
+              height: 63,
+              padding: EdgeInsets.fromLTRB(0, 6, 12.5, 0),
               decoration: BoxDecoration(
                 border: BoxBorder.fromLTRB(
                   bottom: BorderSide(color: colors.dividerColor,width: 0.5),
@@ -136,12 +136,12 @@ class ChatCardWidget extends StatelessWidget {
                           : Padding(
                               padding: EdgeInsetsGeometry.only(
                                 right: 0,
-                                left: 5,
+                                left: 3,
                               ),
                               child: buildMessageStatusIndicator(
                                 context,
                                 userLastMessageStatus,
-                                AppConstants.messageStatusIndicatorFontSize,
+                                18,
                               ),
                             ),
                     ],

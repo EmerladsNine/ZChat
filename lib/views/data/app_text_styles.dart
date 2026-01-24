@@ -49,14 +49,7 @@ abstract final class AppTextStyles {
       );
 
   static TextStyle chatCardMessageDetailsTextStyle(ThemeColorScheme colors) =>
-      TextStyle(color: colors.textSecondaryColor,fontSize: 13, fontFamily: 'Inter');
-
-  static TextStyle messageStatusIndicatorStyle(ThemeColorScheme colors) =>
-      TextStyle(
-        color: colors.textSecondaryColor,
-        fontFamily: 'Inter',
-        fontSize: AppConstants.messageStatusIndicatorFontSize,
-      );
+      TextStyle(color: colors.textSecondaryColor,fontSize: 13.5, fontFamily: 'Inter');
 
   static TextStyle settingsCardsButtonsTextStyle(ThemeColorScheme colors) =>
       TextStyle(

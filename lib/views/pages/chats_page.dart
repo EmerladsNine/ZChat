@@ -80,7 +80,7 @@ class ChatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3.0),
+      padding: const EdgeInsets.only(left: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
