@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../themes_system/app_theme.dart';
-import '../views/data/app_constants.dart';
-import '../views/data/app_text_styles.dart';
 
 /// Enumeration representing the status of a message (e.g., delivered, read).
 enum MessageStatus { unsent, undelivered, delivered, read, notLast }

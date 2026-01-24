@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/themes_system/app_theme.dart';
-import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
