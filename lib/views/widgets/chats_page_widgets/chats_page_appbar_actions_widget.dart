@@ -14,7 +14,7 @@ class ChatsPageAppbarActionsWidget extends StatelessWidget {
     final colors = AppTheme.of(context);
 
     return Padding(
-      padding: EdgeInsetsGeometry.only(right: 16),
+      padding: EdgeInsetsGeometry.only(right: 2),
       child: CustomToolTip(
         message: 'Settings',
         preferBelow: true,
