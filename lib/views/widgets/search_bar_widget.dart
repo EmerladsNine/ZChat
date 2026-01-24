@@ -79,7 +79,7 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
                   enabled: !value,
                   textDirection: TextFieldUtils.getTextDirection(controller.text),
                   textCapitalization: TextCapitalization.sentences,
-                  strutStyle: const StrutStyle(fontSize: 20, height: 1.2),
+                  strutStyle: const StrutStyle(fontSize: 20, height: 1),
                   focusNode: focusNode,
                   onTapOutside: (event) {
                     focusNode.unfocus();
