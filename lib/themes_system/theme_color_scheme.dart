@@ -25,6 +25,8 @@ class ThemeColorScheme {
   final Color receivedMessageBubbleColor;
   final Color messageBubbleShadowColor;
 
+  final Color emojiPanelColor;
+
   const ThemeColorScheme({
     required this.primaryBackgroundColor,
     required this.cardsColor,
@@ -43,6 +45,7 @@ class ThemeColorScheme {
     required this.sentMessageBubbleColor,
     required this.receivedMessageBubbleColor,
     required this.messageBubbleShadowColor,
+    required this.emojiPanelColor,
   });
 
   /// Creates a copy of this color scheme with the given fields replaced with the new values.
@@ -64,6 +67,7 @@ class ThemeColorScheme {
     Color? sentMessageBubbleColor,
     Color? receivedMessageBubbleColor,
     Color? messageBubbleShadowColor,
+    Color? emojiPanelColor,
   }) {
     return ThemeColorScheme(
       primaryBackgroundColor:
@@ -90,6 +94,7 @@ class ThemeColorScheme {
           receivedMessageBubbleColor ?? this.receivedMessageBubbleColor,
       messageBubbleShadowColor:
           messageBubbleShadowColor ?? this.messageBubbleShadowColor,
+      emojiPanelColor: emojiPanelColor ?? this.emojiPanelColor,
     );
   }
 
@@ -113,7 +118,8 @@ class ThemeColorScheme {
           dividerColor == other.dividerColor &&
           sentMessageBubbleColor == other.sentMessageBubbleColor &&
           receivedMessageBubbleColor == other.receivedMessageBubbleColor &&
-          messageBubbleShadowColor == other.messageBubbleShadowColor;
+          messageBubbleShadowColor == other.messageBubbleShadowColor &&
+          emojiPanelColor == other.emojiPanelColor;
 
   @override
   int get hashCode => Object.hash(
@@ -134,5 +140,6 @@ class ThemeColorScheme {
     sentMessageBubbleColor,
     receivedMessageBubbleColor,
     messageBubbleShadowColor,
+    emojiPanelColor,
   );
 }

@@ -20,6 +20,7 @@ abstract final class AppThemes {
     sentMessageBubbleColor: Color(0xFF191919),
     receivedMessageBubbleColor: Color(0xFF191919),
     messageBubbleShadowColor: Colors.white,
+    emojiPanelColor: Color(0xFF161616),
   );
 
   static const lightThemeColors = ThemeColorScheme(
@@ -40,5 +41,6 @@ abstract final class AppThemes {
     sentMessageBubbleColor: Color(0xFFFFFFFF),
     receivedMessageBubbleColor: Color(0xFFFFFFFF),
     messageBubbleShadowColor: Colors.black,
+    emojiPanelColor: Color(0xFFF1F3F4),
   );
 }
