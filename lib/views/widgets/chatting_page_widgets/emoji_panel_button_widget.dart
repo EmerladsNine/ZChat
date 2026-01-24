@@ -19,7 +19,10 @@ class EmojiPanelButtonWidget extends StatelessWidget {
         animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
         overlayCircularRadius: 15,
-        onTap: () {},
+        onTap: () {
+          AppNotifiers.isEmojiPickerVisible.value =
+              !AppNotifiers.isEmojiPickerVisible.value;
+        },
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Icon(
