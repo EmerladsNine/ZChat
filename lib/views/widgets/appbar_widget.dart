@@ -23,7 +23,7 @@ class AppBarWidget extends StatelessWidget {
         children: [
           Text(
             firstLetter,
-            style: AppTextStyles.appBarSecondaryTextStyle(colors),
+            style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
           Text(
             remainingTitleLetters,
@@ -32,6 +32,7 @@ class AppBarWidget extends StatelessWidget {
         ],
       ),
       backgroundColor: colors.primaryBackgroundColor,
+      actionsPadding: EdgeInsetsGeometry.all(0),
       actions: actions,
     );
   }

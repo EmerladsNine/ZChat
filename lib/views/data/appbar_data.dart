@@ -3,8 +3,8 @@ import 'package:zchat/views/widgets/chats_page_widgets/chats_page_appbar_actions
 import '../data_classes/appbar_config.dart';
 
 final List<AppBarConfig> appBarData = const [
-  AppBarConfig(title: 'ZChat', actions: ChatsPageAppbarActionsWidget()),
-  AppBarConfig(title: 'ZPosts'),
+  AppBarConfig(title: 'Chats', actions: ChatsPageAppbarActionsWidget()),
+  AppBarConfig(title: 'Posts'),
   AppBarConfig(title: 'Zane'),
-  AppBarConfig(title: 'ZCalls'),
+  AppBarConfig(title: 'Calls'),
 ];
