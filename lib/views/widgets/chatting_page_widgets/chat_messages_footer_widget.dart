@@ -9,10 +9,16 @@ import 'camera_button_widget.dart';
 import 'emoji_panel_button_widget.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
-  const ChatMessagesFooterWidget({super.key,required this.isInSafeArea, required this.scrollToBottom});
+  const ChatMessagesFooterWidget({
+    super.key,
+    required this.isInSafeArea,
+    required this.scrollToBottom,
+    required this.focusNode,
+  });
 
   final bool isInSafeArea;
   final void Function() scrollToBottom;
+  final FocusNode focusNode;
 
   @override
   State<ChatMessagesFooterWidget> createState() =>
@@ -52,8 +58,11 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                EmojiPanelButtonWidget(),
-                ChatTextFieldWidget(controller: controller),
+                EmojiPanelButtonWidget(focusNode: widget.focusNode),
+                ChatTextFieldWidget(
+                  controller: controller,
+                  focusNode: widget.focusNode,
+                ),
                 AddFileWidget(),
                 CameraButtonWidget(),
                 SendButtonWidget(

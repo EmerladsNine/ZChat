@@ -20,6 +20,7 @@ class ChatMessagesPage extends StatefulWidget {
 
 class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final ScrollController _scrollController = ScrollController();
+  final FocusNode focusNode = FocusNode();
 
   void _scrollToBottom() async {
     Completer<void> canContinueScrolling = Completer<void>();
@@ -74,7 +75,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
     double bottomPadding = Platform.isAndroid
         ? (NativeKeyboardAndroid.keyboardHeight ?? 0) /
-        MediaQuery.of(context).devicePixelRatio
+              MediaQuery.of(context).devicePixelRatio
         : MediaQuery.of(context).viewInsets.bottom;
 
     return ValueListenableBuilder(
@@ -133,12 +134,14 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       ),
                     ),
 
-                    ChatMessagesFooterWidget(scrollToBottom: _scrollToBottom,isInSafeArea: bottomPadding != 0,),
+                    ChatMessagesFooterWidget(
+                      scrollToBottom: _scrollToBottom,
+                      isInSafeArea: bottomPadding != 0 || isEmojiPickerVisible,
+                      focusNode: focusNode,
+                    ),
 
                     Padding(
-                      padding: EdgeInsets.only(
-                        bottom: bottomPadding,
-                      ),
+                      padding: EdgeInsets.only(bottom: bottomPadding),
                       child: EmojiPanelWidget(),
                     ),
                   ],

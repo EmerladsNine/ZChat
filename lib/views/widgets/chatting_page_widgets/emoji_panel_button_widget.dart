@@ -6,7 +6,9 @@ import '../../data/app_notifiers.dart';
 import '../buttons/ripple_effect_button_widget.dart';
 
 class EmojiPanelButtonWidget extends StatelessWidget {
-  const EmojiPanelButtonWidget({super.key});
+  const EmojiPanelButtonWidget({super.key, required this.focusNode});
+
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
