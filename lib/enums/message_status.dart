@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../themes_system/app_theme.dart';
-import '../views/data/app_constants.dart';
-import '../views/data/app_text_styles.dart';
 
 /// Enumeration representing the status of a message (e.g., delivered, read).
 enum MessageStatus { unsent, undelivered, delivered, read, notLast }
@@ -23,28 +21,13 @@ Widget buildMessageStatusIndicator(
       );
 
     case MessageStatus.undelivered:
-      return Text(
-        '›',
-        style: AppTextStyles.messageStatusIndicatorStyle(
-          colors,
-        ).copyWith(fontSize: size),
-      );
+      return Icon(Icons.keyboard_arrow_right_rounded,size: size,color: colors.primaryColor,);
 
     case MessageStatus.delivered:
-      return Text(
-        '››',
-        style: AppTextStyles.messageStatusIndicatorStyle(
-          colors,
-        ).copyWith(fontSize: size),
-      );
+      return Icon(Icons.keyboard_double_arrow_right_rounded,size: size,color: colors.primaryColor,);
 
     case MessageStatus.read:
-      return Text(
-        '››',
-        style: AppTextStyles.messageStatusIndicatorStyle(
-          colors,
-        ).copyWith(fontSize: size, color: colors.readMessageIndicatorColor),
-      );
+      return Icon(Icons.keyboard_double_arrow_right_rounded,size: size,color: colors.readMessageIndicatorColor,);
 
     case MessageStatus.notLast:
       return SizedBox(width: size);

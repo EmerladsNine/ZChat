@@ -2,9 +2,8 @@ abstract final class AppConstants {
   // Text Styles
   static const double appBarTitleFontSize = 27.0;
   static const double settingsProfileNameFontSize = 18.0;
-  static const double chatCardNameFontSize = 18.0;
+  static const double chatCardNameFontSize = 16.0;
   static const double chatCardUnreadNumFontSize = 11.0;
-  static const double messageStatusIndicatorFontSize = 18.0;
   static const double settingsCardsButtonsFontSize = 16.0;
   static const double ownProfileNameFontSize = 22.0;
 

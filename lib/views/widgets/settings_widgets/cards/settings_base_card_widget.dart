@@ -13,27 +13,30 @@ abstract class SettingsBaseCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      decoration: BoxDecoration(
-        color: colors.cardsColor,
-        border: BoxBorder.all(color: colors.dividerColor, width: 0.5),
-        borderRadius: BorderRadius.circular(10),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsetsGeometry.only(left: 8, bottom: 8, top: 8),
+            padding: EdgeInsetsGeometry.only(left: 8, bottom: 0, top: 5),
             child: Text(
               category,
               style: AppTextStyles.chatCardNameTextStyle(colors),
             ),
           ),
-
-          Container(height: 0.5, color: colors.dividerColor),
-
-          ...buildButtons(context),
+          Container(
+            padding: EdgeInsetsGeometry.symmetric(horizontal: 4,vertical: 3),
+            decoration: BoxDecoration(
+              color: colors.cardsColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              children: [
+                ...buildButtons(context),
+              ],
+            ),
+          ),
         ],
       ),
     );

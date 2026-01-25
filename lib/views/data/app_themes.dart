@@ -16,7 +16,7 @@ abstract final class AppThemes {
     textSecondaryColor: Color(0xFFB0B0B0),
     iconDefaultColor: Color(0xFFECECEC),
     selectedPageIconColor: Color(0xFF121212),
-    dividerColor: Color(0xFF262728),
+    dividerColor: Color(0xFF464748),
     sentMessageBubbleColor: Color(0xFF191919),
     receivedMessageBubbleColor: Color(0xFF191919),
     messageBubbleShadowColor: Colors.white,

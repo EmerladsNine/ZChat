@@ -46,7 +46,6 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         color: colors.cardsColor,
-        border: BoxBorder.all(color: colors.dividerColor, width: 0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
