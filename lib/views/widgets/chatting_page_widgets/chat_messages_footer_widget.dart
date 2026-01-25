@@ -9,8 +9,9 @@ import 'camera_button_widget.dart';
 import 'emoji_panel_button_widget.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
-  const ChatMessagesFooterWidget({super.key, required this.scrollToBottom});
+  const ChatMessagesFooterWidget({super.key,required this.isInSafeArea, required this.scrollToBottom});
 
+  final bool isInSafeArea;
   final void Function() scrollToBottom;
 
   @override
@@ -38,6 +39,7 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
       margin: EdgeInsetsGeometry.only(top: 5),
       child: SafeArea(
         top: false,
+        bottom: !widget.isInSafeArea,
         child: Material(
           color: colors.cardsColor,
           child: Padding(

@@ -66,7 +66,6 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    print(NativeKeyboardAndroid.keyboardHeight);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (MediaQuery.of(context).viewInsets.bottom != 0) {
         if (_scrollController.offset <= 100.0) {
@@ -74,6 +73,11 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
         }
       }
     });
+
+    double bottomPadding = Platform.isAndroid
+        ? (NativeKeyboardAndroid.keyboardHeight ?? 0) /
+        MediaQuery.of(context).devicePixelRatio
+        : MediaQuery.of(context).viewInsets.bottom;
 
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isEmojiPickerVisible,
@@ -131,14 +135,11 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       ),
                     ),
 
-                    ChatMessagesFooterWidget(scrollToBottom: _scrollToBottom),
+                    ChatMessagesFooterWidget(scrollToBottom: _scrollToBottom,isInSafeArea: bottomPadding != 0,),
 
                     Padding(
                       padding: EdgeInsets.only(
-                        bottom: Platform.isAndroid
-                            ? (NativeKeyboardAndroid.keyboardHeight ?? 0) /
-                                  MediaQuery.of(context).devicePixelRatio
-                            : MediaQuery.of(context).viewInsets.bottom,
+                        bottom: bottomPadding,
                       ),
                       child: EmojiPanelWidget(),
                     ),
