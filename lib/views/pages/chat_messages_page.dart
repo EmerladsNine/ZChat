@@ -20,7 +20,6 @@ class ChatMessagesPage extends StatefulWidget {
 
 class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final ScrollController _scrollController = ScrollController();
-  late StreamSubscription<bool> keyboardSubscription;
 
   void _scrollToBottom() async {
     Completer<void> canContinueScrolling = Completer<void>();
@@ -58,7 +57,6 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   @override
   void dispose() {
-    keyboardSubscription.cancel();
     super.dispose();
   }
 
