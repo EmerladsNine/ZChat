@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:zchat/android/native_keyboard_android.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
@@ -18,6 +20,7 @@ class ChatMessagesPage extends StatefulWidget {
 
 class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final ScrollController _scrollController = ScrollController();
+  late StreamSubscription<bool> keyboardSubscription;
 
   void _scrollToBottom() async {
     Completer<void> canContinueScrolling = Completer<void>();
@@ -50,14 +53,20 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
         }
       });
     });
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    keyboardSubscription.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
+    print(NativeKeyboardAndroid.keyboardHeight);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (MediaQuery.of(context).viewInsets.bottom != 0) {
         if (_scrollController.offset <= 100.0) {
@@ -112,27 +121,28 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                   ),
                 ),
 
-                SafeArea(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: MessagesPanelWidget(
-                          scrollController: _scrollController,
-                          isDownButtonShown: isDownButtonShown,
-                          scrollToBottom: _scrollToBottom,
-                        ),
+                Column(
+                  children: [
+                    Expanded(
+                      child: MessagesPanelWidget(
+                        scrollController: _scrollController,
+                        isDownButtonShown: isDownButtonShown,
+                        scrollToBottom: _scrollToBottom,
                       ),
+                    ),
 
-                      ChatMessagesFooterWidget(scrollToBottom: _scrollToBottom),
+                    ChatMessagesFooterWidget(scrollToBottom: _scrollToBottom),
 
-                      Padding(
-                        padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom,
-                        ),
-                        child: EmojiPanelWidget(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        bottom: Platform.isAndroid
+                            ? (NativeKeyboardAndroid.keyboardHeight ?? 0) /
+                                  MediaQuery.of(context).devicePixelRatio
+                            : MediaQuery.of(context).viewInsets.bottom,
                       ),
-                    ],
-                  ),
+                      child: EmojiPanelWidget(),
+                    ),
+                  ],
                 ),
               ],
             ),

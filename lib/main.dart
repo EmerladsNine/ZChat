@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
+import 'package:zchat/android/native_keyboard_android.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
@@ -10,6 +13,14 @@ import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //Android stuff
+  if (Platform.isAndroid) {
+    NativeKeyboardAndroid.init();
+  }
+
+  //Run app
   runApp(
     AppTheme(
       controller: ThemeController(),
