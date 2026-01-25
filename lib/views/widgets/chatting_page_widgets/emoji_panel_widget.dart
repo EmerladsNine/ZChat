@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:zchat/android/native_keyboard_android.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
 import '../../../themes_system/app_theme.dart';
@@ -13,17 +16,11 @@ class EmojiPanelWidget extends StatefulWidget {
 }
 
 class EmojiPanelWidgetState extends State<EmojiPanelWidget> {
-  double keyboardHeight = 0;
+  double keyboardHeight = 300;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final bottom = MediaQuery.of(context).viewInsets.bottom;
-      if (bottom > 0) {
-        setState(() => keyboardHeight = bottom);
-      }
-    });
   }
 
   @override
@@ -33,24 +30,28 @@ class EmojiPanelWidgetState extends State<EmojiPanelWidget> {
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isEmojiPickerVisible,
       builder: (context, isEmojiPickerVisible, child) {
-        final double emojiPanelHeight = isEmojiPickerVisible
-            ? (keyboardHeight > 0 ? keyboardHeight : 280)
-            : 0;
+        double bottom = Platform.isAndroid
+            ? (NativeKeyboardAndroid.keyboardHeight ?? 0) /
+                  MediaQuery.of(context).devicePixelRatio
+            : MediaQuery.of(context).viewInsets.bottom;
 
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          curve: Curves.easeOut,
+        if (bottom > 0) {
+          keyboardHeight = bottom;
+        }
+
+        double emojiPanelHeight = isEmojiPickerVisible ? keyboardHeight : 0;
+
+        return Container(
           height: emojiPanelHeight,
-          child: Container(
-            color: colors.emojiPanelColor,
-            child: buildGrid(context),
-          ),
+          width: double.infinity,
+          color: colors.emojiPanelColor,
+          child: buildGrid(context),
         );
       },
     );
   }
 
   Widget buildGrid(BuildContext context) {
-    return Text('NOPE');
+    return Text('NOPE', textAlign: TextAlign.center);
   }
 }

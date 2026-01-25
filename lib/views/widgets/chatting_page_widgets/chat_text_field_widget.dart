@@ -6,9 +6,14 @@ import '../../../utils/text_field_utils.dart';
 import '../../data/app_notifiers.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
-  const ChatTextFieldWidget({super.key, required this.controller});
+  const ChatTextFieldWidget({
+    super.key,
+    required this.controller,
+    required this.focusNode,
+  });
 
   final CustomTextController controller;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,7 @@ class ChatTextFieldWidget extends StatelessWidget {
                 AppNotifiers.isEmojiPickerVisible.value = false;
               },
               controller: controller,
+              focusNode: focusNode,
               readOnly: isEmojiPickerVisible,
               showCursor: true,
               textDirection: TextFieldUtils.getTextDirection(controller.text),
