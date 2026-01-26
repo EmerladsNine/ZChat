@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_timings.dart';
 
-import '../../themes_system/app_theme.dart';
+import '../../../themes_system/app_theme.dart';
 
 class CustomToolTip extends StatelessWidget {
   const CustomToolTip({
@@ -17,7 +17,7 @@ class CustomToolTip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return Tooltip(
       message: message,

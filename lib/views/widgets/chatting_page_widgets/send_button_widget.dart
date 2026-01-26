@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/MessageSystem/chat.dart';
-import 'package:zchat/views/widgets/custom_tool_tip.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
@@ -28,11 +28,9 @@ class SendButtonWidget extends StatelessWidget {
     return RegExp(r'[^\p{M}\p{Z}\p{C}]', unicode: true).hasMatch(cleaned);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return CustomToolTip(
       message: !hasVisibleText(controller.text) ? 'Send Voice' : 'Send Message',

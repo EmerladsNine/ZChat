@@ -10,7 +10,7 @@ Widget buildMessageStatusIndicator(
   MessageStatus messageStatus,
   double size,
 ) {
-  final colors = AppTheme.of(context);
+  final colors = AppTheme.themeColorsOf(context);
 
   switch (messageStatus) {
     case MessageStatus.unsent:
@@ -18,16 +18,32 @@ Widget buildMessageStatusIndicator(
         Icons.access_time,
         size: size,
         color: colors.textSecondaryColor,
+        applyTextScaling: true,
       );
 
     case MessageStatus.undelivered:
-      return Icon(Icons.keyboard_arrow_right_rounded,size: size,color: colors.primaryColor,);
+      return Icon(
+        Icons.keyboard_arrow_right_rounded,
+        size: size,
+        color: colors.primaryColor,
+        applyTextScaling: true,
+      );
 
     case MessageStatus.delivered:
-      return Icon(Icons.keyboard_double_arrow_right_rounded,size: size,color: colors.primaryColor,);
+      return Icon(
+        Icons.keyboard_double_arrow_right_rounded,
+        size: size,
+        color: colors.primaryColor,
+        applyTextScaling: true,
+      );
 
     case MessageStatus.read:
-      return Icon(Icons.keyboard_double_arrow_right_rounded,size: size,color: colors.readMessageIndicatorColor,);
+      return Icon(
+        Icons.keyboard_double_arrow_right_rounded,
+        size: size,
+        color: colors.readMessageIndicatorColor,
+        applyTextScaling: true,
+      );
 
     case MessageStatus.notLast:
       return SizedBox(width: size);

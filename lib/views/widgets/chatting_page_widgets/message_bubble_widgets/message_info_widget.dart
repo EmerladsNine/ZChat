@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
+import '../../miscellaneous/scaled_text_widget.dart';
+
 class MessageInfoWidget extends StatelessWidget {
   const MessageInfoWidget({
     super.key,
@@ -18,7 +20,7 @@ class MessageInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return Container(
       padding: hasBackground
@@ -36,7 +38,7 @@ class MessageInfoWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         spacing: 2,
         children: [
-          Text(
+          ScaledTextWidget(
             time,
             style: TextStyle(color: colors.primaryColor, fontSize: 10),
           ),

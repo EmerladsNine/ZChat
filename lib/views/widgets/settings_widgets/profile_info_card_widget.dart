@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
+import '../miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../../data/app_text_styles.dart';
@@ -21,7 +22,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +34,10 @@ class ProfileInfoCardWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Padding(padding: EdgeInsets.only(left: 8), child: Text(icon)),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: ScaledTextWidget(icon),
+                  ),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsetsGeometry.only(
@@ -41,7 +45,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
                         bottom: 3,
                         top: 3,
                       ),
-                      child: Text(
+                      child: ScaledTextWidget(
                         label,
                         style: AppTextStyles.settingsCardsButtonsTextStyle(
                           colors,
@@ -58,7 +62,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
                   spacing: 5,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    ScaledTextWidget(
                       text,
                       style: AppTextStyles.settingsProfileDescriptionTextStyle(
                         colors,

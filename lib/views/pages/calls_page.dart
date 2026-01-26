@@ -9,7 +9,7 @@ class CallsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppTheme.of(context).primaryBackgroundColor,
+        backgroundColor: AppTheme.themeColorsOf(context).primaryBackgroundColor,
         body: Container(),
       ),
     );

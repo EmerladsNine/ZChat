@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data_classes/settings/settings_dialog_button_data.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
 
+import '../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
 import '../../../data/app_text_styles.dart';
 
@@ -14,7 +15,7 @@ class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
 
   @override
   void onTap(context) async {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     await showDialog(
       context: context,
@@ -22,7 +23,7 @@ class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
         SettingsDialogButtonData castedData = data as SettingsDialogButtonData;
 
         return AlertDialog(
-          title: Text(
+          title: ScaledTextWidget(
             castedData.dialogTitle,
             style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
@@ -32,18 +33,18 @@ class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (castedData.dialogHelpText != null)
-                Text(
+                ScaledTextWidget(
                   castedData.dialogHelpText!,
-                  style: AppTextStyles.hintTextStyle(
-                    colors,
-                  ).copyWith(color: AppTheme.of(context).primaryColor),
+                  style: AppTextStyles.hintTextStyle(colors).copyWith(
+                    color: AppTheme.themeColorsOf(context).primaryColor,
+                  ),
                 ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(
+              child: ScaledTextWidget(
                 'Cancel',
                 style: AppTextStyles.settingsCardsButtonsTextStyle(colors),
               ),
@@ -53,7 +54,7 @@ class SettingsDialogButtonWidget extends SettingsBaseButtonWidget {
                 castedData.onChange.call();
                 Navigator.pop(context);
               },
-              child: Text(
+              child: ScaledTextWidget(
                 'OK',
                 style: AppTextStyles.settingsCardsButtonsTextStyle(colors),
               ),

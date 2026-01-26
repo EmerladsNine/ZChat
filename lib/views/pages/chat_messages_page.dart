@@ -83,7 +83,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     double bottomPadding =
         Keyboard.nextKeyboardHeight /

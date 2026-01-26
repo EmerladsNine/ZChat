@@ -7,7 +7,7 @@ class SettingsRadioGroupDialogButtonData<T> extends SettingsBaseButtonData {
   final String dialogTitle;
   final List<DialogOptionData<T>> dialogOptions;
   final ValueNotifier<T> valueNotifier;
-  final VoidCallback? onChange;
+  final ValueChanged<T>? onChange;
 
   SettingsRadioGroupDialogButtonData({
     required super.label,

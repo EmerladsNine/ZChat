@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_text_styles.dart';
 
+import '../../widgets/miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 
 /// Settings Base Page
@@ -16,7 +17,7 @@ class BaseSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
     return Container(
       color: colors.primaryBackgroundColor,
       child: SafeArea(
@@ -25,7 +26,7 @@ class BaseSettingsPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: colors.primaryBackgroundColor,
             elevation: 0,
-            title: Text(
+            title: ScaledTextWidget(
               title,
               style: AppTextStyles.appBarPrimaryTextStyle(colors),
             ),
