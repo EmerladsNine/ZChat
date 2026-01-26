@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:zchat/android/native_keyboard_android.dart';
+import 'package:zchat/keyboard/keyboard.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
@@ -38,8 +37,26 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   bool isDownButtonShown = false;
 
+  void onKeyboardStateChange(bool isFullyOpen)
+  {
+    if (AppNotifiers.isEmojiPickerVisible.value && isFullyOpen) {
+      AppNotifiers.isEmojiPickerVisible.value = false;
+    }
+  }
+
+  void onKeyboardAnimationStart()
+  {
+    if (Keyboard.nextKeyboardHeight > 0) {
+      if (_scrollController.offset <= 100.0) {
+        _scrollController.jumpTo(0.0);
+      }
+    }
+  }
+
   @override
   void initState() {
+    Keyboard.onChangeState.add(onKeyboardStateChange);
+    Keyboard.onAnimatingStart.add(onKeyboardAnimationStart);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.addListener(() {
         if (!isDownButtonShown && _scrollController.offset > 100) {
@@ -58,25 +75,21 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   @override
   void dispose() {
+    Keyboard.onChangeState.clear();
+    Keyboard.onAnimatingStart.clear();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (MediaQuery.of(context).viewInsets.bottom != 0) {
-        if (_scrollController.offset <= 100.0) {
-          _scrollController.jumpTo(0.0);
-        }
-      }
-    });
+    double bottomPadding =
+        Keyboard.nextKeyboardHeight /
+        MediaQuery.devicePixelRatioOf(context);
 
-    double bottomPadding = Platform.isAndroid
-        ? (NativeKeyboardAndroid.keyboardHeight ?? 0) /
-              MediaQuery.of(context).devicePixelRatio
-        : MediaQuery.of(context).viewInsets.bottom;
+    double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
 
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isEmojiPickerVisible,
@@ -134,16 +147,20 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       ),
                     ),
 
-                    ChatMessagesFooterWidget(
-                      scrollToBottom: _scrollToBottom,
-                      isInSafeArea: bottomPadding != 0 || isEmojiPickerVisible,
-                      focusNode: focusNode,
+                    Padding(
+                      padding: isEmojiPickerVisible
+                          ? EdgeInsetsGeometry.zero
+                          : EdgeInsetsGeometry.only(bottom: bottomPadding),
+                      child: ChatMessagesFooterWidget(
+                        scrollToBottom: _scrollToBottom,
+                        bottomSafeArea: bottomSafeArea,
+                        isInSafeArea:
+                            bottomPadding != 0 || isEmojiPickerVisible,
+                        focusNode: focusNode,
+                      ),
                     ),
 
-                    Padding(
-                      padding: EdgeInsets.only(bottom: bottomPadding),
-                      child: EmojiPanelWidget(),
-                    ),
+                    EmojiPanelWidget(),
                   ],
                 ),
               ],

@@ -12,11 +12,13 @@ class ChatMessagesFooterWidget extends StatefulWidget {
   const ChatMessagesFooterWidget({
     super.key,
     required this.isInSafeArea,
+    required this.bottomSafeArea,
     required this.scrollToBottom,
     required this.focusNode,
   });
 
   final bool isInSafeArea;
+  final double bottomSafeArea;
   final void Function() scrollToBottom;
   final FocusNode focusNode;
 
@@ -43,9 +45,8 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
     return Container(
       color: colors.cardsColor,
       margin: EdgeInsetsGeometry.only(top: 5),
-      child: SafeArea(
-        top: false,
-        bottom: !widget.isInSafeArea,
+      child: Padding(
+        padding: widget.isInSafeArea ? EdgeInsetsGeometry.zero : EdgeInsets.only(bottom: widget.bottomSafeArea),
         child: Material(
           color: colors.cardsColor,
           child: Padding(
