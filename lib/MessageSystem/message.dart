@@ -26,6 +26,9 @@ class Message {
         isUtc: true,
       ).add(DateTime.now().timeZoneOffset),
     );
+    if (senderName != null) {
+      maxBubbleWidth = maxBubbleWidth - 40; // remove the width used by pfp
+    }
     return MessageBubbleWidget(
       text: text,
       time: time,

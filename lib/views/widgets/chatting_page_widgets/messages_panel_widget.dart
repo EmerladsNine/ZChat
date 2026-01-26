@@ -22,7 +22,7 @@ class MessagesPanelWidget extends StatelessWidget {
           bottom: false,
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final double maxWidth = constraints.maxWidth * 0.7;
+              final double maxWidth = constraints.maxWidth * 0.83;
               return Consumer<Chat>(
                 builder: (context, chat, child) {
                   return ListView.builder(

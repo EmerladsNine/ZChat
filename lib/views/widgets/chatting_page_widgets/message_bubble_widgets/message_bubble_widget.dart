@@ -55,7 +55,7 @@ class MessageBubbleWidget extends StatelessWidget {
     required this.isChildBubble,
     this.replyData,
     required this.maxBubbleWidth,
-    required this.messageStatus,
+    required this.messageStatus
   });
 
   @override
@@ -64,7 +64,7 @@ class MessageBubbleWidget extends StatelessWidget {
     bool received = senderName != null;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+      padding: EdgeInsets.only(top: isChildBubble ? 2 : 10, left: 6,right: 6, bottom: 2),
       child: Row(
         mainAxisAlignment: senderName == null
             ? MainAxisAlignment.end
