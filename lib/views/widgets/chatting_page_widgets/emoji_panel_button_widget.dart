@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/android/native_keyboard_android.dart';
+import 'package:zchat/keyboard/keyboard.dart';
 import 'package:zchat/views/widgets/custom_tool_tip.dart';
 
 import '../../../themes_system/app_theme.dart';
@@ -23,21 +23,21 @@ class EmojiPanelButtonWidget extends StatelessWidget {
         appStateNotifier: AppNotifiers.isNavigating,
         overlayCircularRadius: 15,
         onTap: () {
-          if (!AppNotifiers.isEmojiPickerVisible.value && MediaQuery.of(context).viewInsets.bottom == 0) {
+          if (!AppNotifiers.isEmojiPickerVisible.value && Keyboard.isFullyClosed()) {
             AppNotifiers.isEmojiPickerVisible.value = true;
           }
-          else if(AppNotifiers.isEmojiPickerVisible.value && MediaQuery.of(context).viewInsets.bottom == 0)
-            {
+          else if(AppNotifiers.isEmojiPickerVisible.value && Keyboard.isFullyClosed())
+          {
               FocusScope.of(context).unfocus();
               WidgetsBinding.instance.addPostFrameCallback((_){
                 focusNode.requestFocus();
               });
-            }
-           else if(!AppNotifiers.isEmojiPickerVisible.value && MediaQuery.of(context).viewInsets.bottom == NativeKeyboardAndroid.lastkeyboardHeight / MediaQuery.devicePixelRatioOf(context))
-             {
-               focusNode.unfocus();
+          }
+          else if(!AppNotifiers.isEmojiPickerVisible.value && Keyboard.isFullyOpened() )
+          {
+               FocusScope.of(context).unfocus();
                AppNotifiers.isEmojiPickerVisible.value = true;
-             }
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(4.0),

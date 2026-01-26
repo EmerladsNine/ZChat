@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/android/native_keyboard_android.dart';
+import 'package:zchat/keyboard/keyboard.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
 import '../../../themes_system/app_theme.dart';
@@ -27,8 +27,7 @@ class EmojiPanelWidgetState extends State<EmojiPanelWidget> {
       valueListenable: AppNotifiers.isEmojiPickerVisible,
       builder: (context, isEmojiPickerVisible, child) {
 
-        // Todo handle if ios
-        double emojiPanelHeight = isEmojiPickerVisible ? NativeKeyboardAndroid.lastkeyboardHeight/MediaQuery.of(context).devicePixelRatio : 0;
+        double emojiPanelHeight = isEmojiPickerVisible ? Keyboard.approximatedKeyboardHeight / MediaQuery.devicePixelRatioOf(context) : 0;
 
         return Container(
           height: emojiPanelHeight,
