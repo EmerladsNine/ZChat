@@ -78,6 +78,16 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
               MediaQuery.of(context).devicePixelRatio
         : MediaQuery.of(context).viewInsets.bottom;
 
+    if(AppNotifiers.isEmojiPickerVisible.value &&
+        MediaQuery.of(context).viewInsets.bottom == NativeKeyboardAndroid.lastkeyboardHeight / MediaQuery.of(context).devicePixelRatio)
+    {
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        AppNotifiers.isEmojiPickerVisible.value = false;
+      });
+    }
+
+    double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
+
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isEmojiPickerVisible,
       builder: (context, isEmojiPickerVisible, child) {
@@ -134,16 +144,17 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       ),
                     ),
 
-                    ChatMessagesFooterWidget(
-                      scrollToBottom: _scrollToBottom,
-                      isInSafeArea: bottomPadding != 0 || isEmojiPickerVisible,
-                      focusNode: focusNode,
+                    Padding(
+                      padding: isEmojiPickerVisible ? EdgeInsetsGeometry.zero : EdgeInsetsGeometry.only(bottom: bottomPadding),
+                      child: ChatMessagesFooterWidget(
+                        scrollToBottom: _scrollToBottom,
+                        bottomSafeArea: bottomSafeArea,
+                        isInSafeArea: bottomPadding != 0 || isEmojiPickerVisible,
+                        focusNode: focusNode,
+                      ),
                     ),
 
-                    Padding(
-                      padding: EdgeInsets.only(bottom: bottomPadding),
-                      child: EmojiPanelWidget(),
-                    ),
+                    EmojiPanelWidget(),
                   ],
                 ),
               ],

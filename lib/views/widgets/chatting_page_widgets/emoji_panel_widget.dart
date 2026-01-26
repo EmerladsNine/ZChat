@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:zchat/android/native_keyboard_android.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
@@ -16,8 +14,6 @@ class EmojiPanelWidget extends StatefulWidget {
 }
 
 class EmojiPanelWidgetState extends State<EmojiPanelWidget> {
-  double keyboardHeight = 300;
-
   @override
   void initState() {
     super.initState();
@@ -30,16 +26,9 @@ class EmojiPanelWidgetState extends State<EmojiPanelWidget> {
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isEmojiPickerVisible,
       builder: (context, isEmojiPickerVisible, child) {
-        double bottom = Platform.isAndroid
-            ? (NativeKeyboardAndroid.keyboardHeight ?? 0) /
-                  MediaQuery.of(context).devicePixelRatio
-            : MediaQuery.of(context).viewInsets.bottom;
 
-        if (bottom > 0) {
-          keyboardHeight = bottom;
-        }
-
-        double emojiPanelHeight = isEmojiPickerVisible ? keyboardHeight : 0;
+        // Todo handle if ios
+        double emojiPanelHeight = isEmojiPickerVisible ? NativeKeyboardAndroid.lastkeyboardHeight/MediaQuery.of(context).devicePixelRatio : 0;
 
         return Container(
           height: emojiPanelHeight,
