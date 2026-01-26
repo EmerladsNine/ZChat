@@ -74,7 +74,7 @@ class ChatCardWidget extends StatelessWidget {
             child: IntrinsicHeight(
               child: Container(
                 constraints: BoxConstraints(minHeight: 50, maxHeight: 100),
-                padding: EdgeInsets.fromLTRB(0, 6, 12.5, 0),
+                padding: EdgeInsets.fromLTRB(0, 6, 12.5, 6),
                 decoration: BoxDecoration(
                   border: BoxBorder.fromLTRB(
                     bottom: BorderSide(color: colors.dividerColor, width: 0.5),
