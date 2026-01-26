@@ -74,12 +74,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    print(MediaQuery.of(context).viewInsets.bottom);
-    print("isFullyOpened ${Keyboard.isFullyOpened()}");
-    print("isFullyClosed ${Keyboard.isFullyClosed()}");
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print("on next frame : ${MediaQuery.of(context).viewInsets.bottom}");
       if (MediaQuery.of(context).viewInsets.bottom != 0) {
         if (_scrollController.offset <= 100.0) {
           _scrollController.jumpTo(0.0);
