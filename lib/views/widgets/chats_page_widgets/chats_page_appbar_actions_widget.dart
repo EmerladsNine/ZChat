@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/settings_page.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
-import 'package:zchat/views/widgets/custom_tool_tip.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
 import '../../../themes_system/app_theme.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
-import '../../../miscellaneous/scaled_text_widget.dart';
+import '../miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../../data/app_text_styles.dart';

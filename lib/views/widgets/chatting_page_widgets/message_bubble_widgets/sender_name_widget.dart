@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/painters/message_bubble_painter.dart';
 
-import '../../../../miscellaneous/scaled_text_widget.dart';
+import '../../miscellaneous/scaled_text_widget.dart';
 
 class SenderNameWidget extends StatelessWidget {
   const SenderNameWidget({

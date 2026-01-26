@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
-import 'package:zchat/views/widgets/custom_tool_tip.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
 class GoDownButtonWidget extends StatelessWidget {
   const GoDownButtonWidget({

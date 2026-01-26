@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
-import '../../../miscellaneous/scaled_text_widget.dart';
+import '../miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 
 const int animationDuration = 300;

@@ -2,7 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import '../themes_system/app_theme.dart';
+import '../../../themes_system/app_theme.dart';
 
 class ScaledTextWidget extends StatelessWidget {
   const ScaledTextWidget(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../buttons/ripple_effect_button_widget.dart';
-import '../custom_tool_tip.dart';
+import '../miscellaneous/custom_tool_tip.dart';
 
 class CameraButtonWidget extends StatelessWidget {
   const CameraButtonWidget({super.key});

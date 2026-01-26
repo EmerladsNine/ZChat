@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../controllers/custom_text_controller.dart';
+import '../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../../utils/text_field_utils.dart';
 import '../../data/app_notifiers.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_text_styles.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_info_card_widget.dart';
 
-import '../../../miscellaneous/scaled_text_widget.dart';
+import '../../widgets/miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 import 'base_settings_page.dart';
 

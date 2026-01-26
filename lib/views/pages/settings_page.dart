@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/settings_widgets/cards/settings_card_widget.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
-import 'package:zchat/views/widgets/search_bar_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
-import '../../miscellaneous/scaled_text_widget.dart';
+import '../widgets/miscellaneous/scaled_text_widget.dart';
 import '../../themes_system/app_theme.dart';
 import '../data/settings_page_data.dart';
 import '../data/app_text_styles.dart';

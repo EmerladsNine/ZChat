@@ -4,8 +4,8 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
-import 'package:zchat/views/widgets/custom_tool_tip.dart';
-import 'package:zchat/views/widgets/search_bar_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
+import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
 /// Page displaying a list of active chat conversations.
 class ChatsPage extends StatelessWidget {

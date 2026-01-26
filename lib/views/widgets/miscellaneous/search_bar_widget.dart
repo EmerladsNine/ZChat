@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import '../../controllers/custom_text_controller.dart';
-import '../../themes_system/app_theme.dart';
-import '../../utils/text_field_utils.dart';
-import '../data/app_text_styles.dart';
+import '../../../themes_system/app_theme.dart';
+import '../../../utils/text_field_utils.dart';
+import '../../data/app_text_styles.dart';
 
 class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget({

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
-import '../../../../miscellaneous/scaled_text_widget.dart';
+import '../../miscellaneous/scaled_text_widget.dart';
 
 class MessageInfoWidget extends StatelessWidget {
   const MessageInfoWidget({

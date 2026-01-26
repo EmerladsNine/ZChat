@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../miscellaneous/scaled_text_widget.dart';
-import '../../themes_system/app_theme.dart';
-import '../data/app_text_styles.dart';
+import 'scaled_text_widget.dart';
+import '../../../themes_system/app_theme.dart';
+import '../../data/app_text_styles.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key, required this.title, this.actions});

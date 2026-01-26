@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../miscellaneous/scaled_text_widget.dart';
+import '../miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_text_styles.dart';
 import '../../data_classes/settings/settings_switch_data.dart';

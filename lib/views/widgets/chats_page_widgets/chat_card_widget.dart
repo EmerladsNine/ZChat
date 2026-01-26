@@ -7,7 +7,7 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
-import '../../../miscellaneous/scaled_text_widget.dart';
+import '../miscellaneous/scaled_text_widget.dart';
 import '../../data/app_text_styles.dart';
 import '../../pages/chat_messages_page.dart';
 
