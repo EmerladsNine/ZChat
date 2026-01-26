@@ -31,6 +31,7 @@ import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/sender_name_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_info_widget.dart';
 
+import '../../../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
 import '../../../data_classes/message_reply_data.dart';
 import '../../../painters/message_bubble_painter.dart';
@@ -59,7 +60,7 @@ class MessageBubbleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
     bool received = senderName != null;
 
     return Padding(
@@ -147,11 +148,11 @@ class MessageBubbleWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                ScaledTextWidget(
                                   replyData!.replyTextSender,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                Text(
+                                ScaledTextWidget(
                                   replyData!.replyText,
                                   style: TextStyle(color: colors.hintColor),
                                 ),
@@ -173,10 +174,12 @@ class MessageBubbleWidget extends StatelessWidget {
                             alignment: isEmojiBubble
                                 ? Alignment.center
                                 : Alignment.centerLeft,
-                            child: Text(
+                            child: ScaledTextWidget(
                               text,
                               style: TextStyle(
-                                fontSize: isEmojiBubble ? 40 : 20,
+                                fontSize: isEmojiBubble
+                                    ? AppTheme.emojiBubbleSizeOf(context)
+                                    : 20,
                                 height: 1,
                                 color: colors.primaryColor,
                               ),

@@ -57,7 +57,7 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return Container(
       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -73,11 +73,13 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: widget.disableSet,
-              builder: (context,value,child) {
+              builder: (context, value, child) {
                 return TextField(
                   controller: controller,
                   enabled: !value,
-                  textDirection: TextFieldUtils.getTextDirection(controller.text),
+                  textDirection: TextFieldUtils.getTextDirection(
+                    controller.text,
+                  ),
                   textCapitalization: TextCapitalization.sentences,
                   strutStyle: const StrutStyle(fontSize: 20, height: 1),
                   focusNode: focusNode,
@@ -93,7 +95,7 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
                     border: InputBorder.none,
                   ),
                 );
-              }
+              },
             ),
           ),
           if (widget.sideWidget != null) widget.sideWidget!,

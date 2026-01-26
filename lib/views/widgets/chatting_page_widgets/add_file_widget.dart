@@ -10,7 +10,7 @@ class AddFileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return CustomToolTip(
       message: 'Attach File',

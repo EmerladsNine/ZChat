@@ -63,7 +63,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (MediaQuery.of(context).viewInsets.bottom != 0) {

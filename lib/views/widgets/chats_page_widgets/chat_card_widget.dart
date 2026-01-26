@@ -7,6 +7,7 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
+import '../../../miscellaneous/scaled_text_widget.dart';
 import '../../data/app_text_styles.dart';
 import '../../pages/chat_messages_page.dart';
 
@@ -36,7 +37,7 @@ class ChatCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableButtons,
@@ -68,84 +69,87 @@ class ChatCardWidget extends StatelessWidget {
             child: Icon(cardIcon, size: 30, color: colors.primaryColor),
           ),
           Expanded(
-            child: Container(
-              height: 63,
-              padding: EdgeInsets.fromLTRB(0, 6, 12.5, 0),
-              decoration: BoxDecoration(
-                border: BoxBorder.fromLTRB(
-                  bottom: BorderSide(color: colors.dividerColor,width: 0.5),
-                ),
-              ),
-              child: Column(
-                spacing: 5,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          chatName,
-                          style: AppTextStyles.chatCardNameTextStyle(colors),
-                        ),
-                      ),
-                      Text(
-                        timeStamp,
-                        style: AppTextStyles.chatCardMessageDetailsTextStyle(
-                          colors,
-                        ),
-                      ),
-                    ],
+            child: IntrinsicHeight(
+              child: Container(
+                constraints: BoxConstraints(minHeight: 63, maxHeight: 100),
+                padding: EdgeInsets.fromLTRB(0, 6, 12.5, 0),
+                decoration: BoxDecoration(
+                  border: BoxBorder.fromLTRB(
+                    bottom: BorderSide(color: colors.dividerColor, width: 0.5),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          message,
-                          overflow: TextOverflow.ellipsis,
+                ),
+                child: Column(
+                  spacing: 5,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ScaledTextWidget(
+                            chatName,
+                            style: AppTextStyles.chatCardNameTextStyle(colors),
+                          ),
+                        ),
+                        ScaledTextWidget(
+                          timeStamp,
                           style: AppTextStyles.chatCardMessageDetailsTextStyle(
                             colors,
                           ),
                         ),
-                      ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ScaledTextWidget(
+                            message,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                AppTextStyles.chatCardMessageDetailsTextStyle(
+                                  colors,
+                                ),
+                          ),
+                        ),
 
-                      (unreadMessagesNumber > 0)
-                          ? Container(
-                              padding: const EdgeInsets.fromLTRB(
-                                11,
-                                0,
-                                10.5,
-                                5,
+                        (unreadMessagesNumber > 0)
+                            ? Container(
+                                padding: const EdgeInsets.fromLTRB(
+                                  11,
+                                  0,
+                                  10.5,
+                                  5,
+                                ),
+                                alignment: Alignment.center,
+                                child: Badge.count(
+                                  count: unreadMessagesNumber,
+                                  maxCount: 99,
+                                  backgroundColor: colors.unreadIndicatorColor,
+                                  textStyle:
+                                      AppTextStyles.chatCardUnreadNumTextStyle(
+                                        colors,
+                                      ),
+                                  smallSize: 12,
+                                  largeSize: 14,
+                                  padding: const EdgeInsets.all(3),
+                                  child: SizedBox(width: 0, height: 0),
+                                ),
+                              )
+                            : Padding(
+                                padding: EdgeInsetsGeometry.only(
+                                  right: 0,
+                                  left: 3,
+                                ),
+                                child: buildMessageStatusIndicator(
+                                  context,
+                                  userLastMessageStatus,
+                                  18,
+                                ),
                               ),
-                              alignment: Alignment.center,
-                              child: Badge.count(
-                                count: unreadMessagesNumber,
-                                maxCount: 99,
-                                backgroundColor: colors.unreadIndicatorColor,
-                                textStyle:
-                                    AppTextStyles.chatCardUnreadNumTextStyle(
-                                      colors,
-                                    ),
-                                smallSize: 12,
-                                largeSize: 14,
-                                padding: const EdgeInsets.all(3),
-                                child: SizedBox(width: 0, height: 0),
-                              ),
-                            )
-                          : Padding(
-                              padding: EdgeInsetsGeometry.only(
-                                right: 0,
-                                left: 3,
-                              ),
-                              child: buildMessageStatusIndicator(
-                                context,
-                                userLastMessageStatus,
-                                18,
-                              ),
-                            ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

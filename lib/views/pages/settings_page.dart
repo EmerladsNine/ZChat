@@ -4,6 +4,7 @@ import 'package:zchat/views/widgets/settings_widgets/cards/settings_card_widget.
 import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
 import 'package:zchat/views/widgets/search_bar_widget.dart';
 
+import '../../miscellaneous/scaled_text_widget.dart';
 import '../../themes_system/app_theme.dart';
 import '../data/settings_page_data.dart';
 import '../data/app_text_styles.dart';
@@ -13,7 +14,7 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return Container(
       color: colors.primaryBackgroundColor,
@@ -23,7 +24,7 @@ class SettingsPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: colors.primaryBackgroundColor,
             elevation: 0,
-            title: Text(
+            title: ScaledTextWidget(
               'Settings',
               style: AppTextStyles.appBarPrimaryTextStyle(colors),
             ),
@@ -36,7 +37,7 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10.0,
               children: [
-                SearchBarWidget(disableSet: AppNotifiers.disableButtons,),
+                SearchBarWidget(disableSet: AppNotifiers.disableButtons),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../enums/font_size_level.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../data/settings/themes_widgets_data.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
@@ -30,9 +31,9 @@ class ThemesSettingsPage extends StatelessWidget {
             ),
             drawBorder: false,
           ),
-          SettingsCardWidget(
+          SettingsCardWidget<FontSizeLevel>(
             category: 'Customization',
-            buttons: themesCustomizationButtonsData,
+            buttons: themesCustomizationButtonsData(context),
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data_classes/settings/settings_radio_group_dialog_button_data.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
 
+import '../../../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
 import '../../../data/app_text_styles.dart';
 
@@ -14,7 +15,7 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
 
   @override
   void onTap(context) async {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     await showDialog<T>(
       context: context,
@@ -23,7 +24,7 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
         final tempNotifier = ValueNotifier<T>(dataCasted.valueNotifier.value);
 
         return AlertDialog(
-          title: Text(
+          title: ScaledTextWidget(
             dataCasted.dialogTitle,
             style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
@@ -44,7 +45,7 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
                     return RadioListTile<T>(
                       value: dataCasted.dialogOptions[index].value,
                       activeColor: colors.brandPrimaryColor,
-                      title: Text(
+                      title: ScaledTextWidget(
                         dataCasted.dialogOptions[index].displayText,
                         style: AppTextStyles.settingsCardsButtonsTextStyle(
                           colors,
@@ -59,7 +60,7 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(
+              child: ScaledTextWidget(
                 'Cancel',
                 style: AppTextStyles.settingsCardsButtonsTextStyle(colors),
               ),
@@ -67,10 +68,10 @@ class SettingsRadioGroupDialogButtonWidget<T> extends SettingsBaseButtonWidget {
             TextButton(
               onPressed: () {
                 dataCasted.valueNotifier.value = tempNotifier.value;
-                dataCasted.onChange?.call();
+                dataCasted.onChange?.call(dataCasted.valueNotifier.value);
                 Navigator.pop(context);
               },
-              child: Text(
+              child: ScaledTextWidget(
                 'OK',
                 style: AppTextStyles.settingsCardsButtonsTextStyle(colors),
               ),

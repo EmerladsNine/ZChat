@@ -28,11 +28,9 @@ class SendButtonWidget extends StatelessWidget {
     return RegExp(r'[^\p{M}\p{Z}\p{C}]', unicode: true).hasMatch(cleaned);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return CustomToolTip(
       message: !hasVisibleText(controller.text) ? 'Send Voice' : 'Send Message',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
+import '../../../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
 import '../../../data/app_text_styles.dart';
 import '../../../data_classes/settings/settings_checkbox_list_dialog_button_data.dart';
@@ -14,7 +15,7 @@ class SettingsCheckboxListDialogButtonWidget<T>
 
   @override
   void onTap(context) async {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     await showDialog<T>(
       context: context,
@@ -25,7 +26,7 @@ class SettingsCheckboxListDialogButtonWidget<T>
         );
 
         return AlertDialog(
-          title: Text(
+          title: ScaledTextWidget(
             dataCasted.dialogTitle,
             style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
@@ -43,13 +44,15 @@ class SettingsCheckboxListDialogButtonWidget<T>
 
                     return CheckboxListTile(
                       value: isSelected,
-                      title: Text(
+                      title: ScaledTextWidget(
                         option.displayText,
                         style: AppTextStyles.settingsCardsButtonsTextStyle(
                           colors,
                         ),
                       ),
-                      activeColor: AppTheme.of(context).checkboxSelectedColor,
+                      activeColor: AppTheme.themeColorsOf(
+                        context,
+                      ).checkboxSelectedColor,
                       onChanged: (bool? checked) {
                         if (checked == null) return;
 
@@ -71,7 +74,7 @@ class SettingsCheckboxListDialogButtonWidget<T>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(
+              child: ScaledTextWidget(
                 'Cancel',
                 style: AppTextStyles.settingsCardsButtonsTextStyle(colors),
               ),
@@ -83,7 +86,7 @@ class SettingsCheckboxListDialogButtonWidget<T>
                 dataCasted.onChange?.call();
                 Navigator.pop(context);
               },
-              child: Text(
+              child: ScaledTextWidget(
                 'OK',
                 style: AppTextStyles.settingsCardsButtonsTextStyle(colors),
               ),

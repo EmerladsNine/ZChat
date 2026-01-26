@@ -78,7 +78,7 @@ class ChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
     return Padding(
       padding: const EdgeInsets.only(left: 5),
       child: Column(

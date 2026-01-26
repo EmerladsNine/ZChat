@@ -15,7 +15,7 @@ class GoDownButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return AnimatedScale(
       duration: Duration(milliseconds: 100),

@@ -10,10 +10,22 @@ class AppTheme extends InheritedNotifier<ThemeController> {
     required super.child,
   }) : super(notifier: controller);
 
-  static ThemeColorScheme of(BuildContext context) {
+  static ThemeColorScheme themeColorsOf(BuildContext context) {
     final theme = context.dependOnInheritedWidgetOfExactType<AppTheme>();
     assert(theme != null, 'AppTheme not found in widget tree');
     return theme!.notifier!.colors;
+  }
+
+  static double emojiBubbleSizeOf(BuildContext context) {
+    final theme = context.dependOnInheritedWidgetOfExactType<AppTheme>();
+    assert(theme != null, 'AppTheme not found in widget tree');
+    return theme!.notifier!.emojiBubbleSize.emojiBubbleSize;
+  }
+
+  static double fontScaleOf(BuildContext context) {
+    final theme = context.dependOnInheritedWidgetOfExactType<AppTheme>();
+    assert(theme != null, 'AppTheme not found in widget tree');
+    return theme!.notifier!.fontScale.fontScale;
   }
 
   static ThemeController controllerOf(BuildContext context) {
