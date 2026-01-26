@@ -34,6 +34,18 @@ public class MainActivity extends FlutterActivity {
 
         ViewCompat.setWindowInsetsAnimationCallback(rootView, new
         WindowInsetsAnimationCompat.Callback(WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_STOP){
+
+            @Override
+            public WindowInsetsAnimationCompat.@org.jspecify.annotations.NonNull BoundsCompat onStart(@org.jspecify.annotations.NonNull WindowInsetsAnimationCompat animation, WindowInsetsAnimationCompat.@org.jspecify.annotations.NonNull BoundsCompat bounds) {
+
+                if((animation.getTypeMask() & WindowInsetsCompat.Type.ime()) != 0)
+                {
+                    channel.invokeMethod("keyboardAnimationStart",null);
+                }
+
+                return super.onStart(animation, bounds);
+            }
+
             @Override
             public @org.jspecify.annotations.NonNull WindowInsetsCompat onProgress(@org.jspecify.annotations.NonNull WindowInsetsCompat insets, @org.jspecify.annotations.NonNull List<WindowInsetsAnimationCompat> runningAnimations) {
                 return insets;

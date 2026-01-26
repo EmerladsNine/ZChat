@@ -18,12 +18,15 @@ class Keyboard {
         bool isFullyOpen = (call.arguments as bool);
         Keyboard.changeState(isFullyOpen,!isFullyOpen);
       }
+      else if(call.method == "keyboardAnimationStart")
+        {
+          isFullyOpen = false;
+          isFullyClose = false;
+        }
     });
   }
 
   static void changeHeight(double newHeight) {
-    isFullyOpen = false;
-    isFullyClose = false;
 
     if (newHeight != 0) {
       approximatedKeyboardHeight = newHeight;
