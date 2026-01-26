@@ -20,9 +20,9 @@ enum FontSizeLevel {
   double get fontScale {
     switch (this) {
       case FontSizeLevel.small:
-        return 0.75;
-      case FontSizeLevel.medium:
         return 1.0;
+      case FontSizeLevel.medium:
+        return 1.1;
       case FontSizeLevel.large:
         return 1.2;
       case FontSizeLevel.extraLarge:

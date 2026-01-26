@@ -7,6 +7,7 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
+import '../../data/app_constants.dart';
 import '../miscellaneous/scaled_text_widget.dart';
 import '../../data/app_text_styles.dart';
 import '../../pages/chat_messages_page.dart';
@@ -38,6 +39,7 @@ class ChatCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
+    final scale = AppTheme.fontScaleOf(context);
 
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableButtons,
@@ -71,7 +73,7 @@ class ChatCardWidget extends StatelessWidget {
           Expanded(
             child: IntrinsicHeight(
               child: Container(
-                constraints: BoxConstraints(minHeight: 63, maxHeight: 100),
+                constraints: BoxConstraints(minHeight: 50, maxHeight: 100),
                 padding: EdgeInsets.fromLTRB(0, 6, 12.5, 0),
                 decoration: BoxDecoration(
                   border: BoxBorder.fromLTRB(
@@ -114,24 +116,22 @@ class ChatCardWidget extends StatelessWidget {
 
                         (unreadMessagesNumber > 0)
                             ? Container(
-                                padding: const EdgeInsets.fromLTRB(
-                                  11,
-                                  0,
-                                  10.5,
-                                  5,
-                                ),
+                                padding: EdgeInsets.fromLTRB(11, 0, 10.5, 15),
                                 alignment: Alignment.center,
                                 child: Badge.count(
                                   count: unreadMessagesNumber,
                                   maxCount: 99,
                                   backgroundColor: colors.unreadIndicatorColor,
-                                  textStyle:
-                                      AppTextStyles.chatCardUnreadNumTextStyle(
-                                        colors,
-                                      ),
+                                  textStyle: TextStyle(
+                                    color: colors.primaryColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize:
+                                        AppConstants.chatCardUnreadNumFontSize *
+                                        scale,
+                                  ),
                                   smallSize: 12,
                                   largeSize: 14,
-                                  padding: const EdgeInsets.all(3),
+                                  padding: EdgeInsets.all(3),
                                   child: SizedBox(width: 0, height: 0),
                                 ),
                               )

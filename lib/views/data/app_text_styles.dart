@@ -36,13 +36,6 @@ abstract final class AppTextStyles {
     fontSize: AppConstants.chatCardNameFontSize,
   );
 
-  static TextStyle chatCardUnreadNumTextStyle(ThemeColorScheme colors) =>
-      TextStyle(
-        color: colors.primaryColor,
-        fontWeight: FontWeight.w700,
-        fontSize: AppConstants.chatCardUnreadNumFontSize,
-      );
-
   static TextStyle chatCardMessageDetailsTextStyle(ThemeColorScheme colors) =>
       TextStyle(color: colors.textSecondaryColor, fontSize: 13.5);
 
