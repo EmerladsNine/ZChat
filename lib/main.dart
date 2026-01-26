@@ -15,8 +15,7 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-
+void main() async {
   // for storage db on desktop
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
     sqfliteFfiInit();
@@ -25,7 +24,10 @@ void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  StorageManager.openMessagesDatabase().then((_){
+  ThemeController themeController = ThemeController();
+  await themeController.init();
+
+  StorageManager.openMessagesDatabase().then((_) {
     ChatsStorageManager.loadChats();
   });
 
@@ -37,7 +39,7 @@ void main() {
   //Run app
   runApp(
     AppTheme(
-      controller: ThemeController(),
+      controller: themeController,
       child: Provider<MessagingService>(
         create: (_) => MessagingService(),
         dispose: (context, service) {
