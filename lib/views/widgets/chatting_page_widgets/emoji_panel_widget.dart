@@ -27,7 +27,7 @@ class EmojiPanelWidgetState extends State<EmojiPanelWidget> {
       valueListenable: AppNotifiers.isEmojiPickerVisible,
       builder: (context, isEmojiPickerVisible, child) {
 
-        double emojiPanelHeight = isEmojiPickerVisible ? Keyboard.approximatedKeyboardHeight / MediaQuery.devicePixelRatioOf(context) : 0;
+        double emojiPanelHeight = isEmojiPickerVisible ? Keyboard.actualKeyboardHeight / MediaQuery.devicePixelRatioOf(context) : 0;
 
         return Container(
           height: emojiPanelHeight,

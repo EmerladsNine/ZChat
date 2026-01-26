@@ -44,9 +44,19 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     }
   }
 
+  void onKeyboardAnimationStart()
+  {
+    if (Keyboard.nextKeyboardHeight > 0) {
+      if (_scrollController.offset <= 100.0) {
+        _scrollController.jumpTo(0.0);
+      }
+    }
+  }
+
   @override
   void initState() {
     Keyboard.onChangeState.add(onKeyboardStateChange);
+    Keyboard.onAnimatingStart.add(onKeyboardAnimationStart);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.addListener(() {
         if (!isDownButtonShown && _scrollController.offset > 100) {
@@ -66,6 +76,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   @override
   void dispose() {
     Keyboard.onChangeState.clear();
+    Keyboard.onAnimatingStart.clear();
     super.dispose();
   }
 
@@ -74,16 +85,8 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   Widget build(BuildContext context) {
     final colors = AppTheme.of(context);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (MediaQuery.of(context).viewInsets.bottom != 0) {
-        if (_scrollController.offset <= 100.0) {
-          _scrollController.jumpTo(0.0);
-        }
-      }
-    });
-
     double bottomPadding =
-        Keyboard.predictedNextKeyboardHeight /
+        Keyboard.nextKeyboardHeight /
         MediaQuery.devicePixelRatioOf(context);
 
     double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
