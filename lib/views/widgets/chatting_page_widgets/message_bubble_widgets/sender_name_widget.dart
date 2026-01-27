@@ -27,13 +27,14 @@ class SenderNameWidget extends StatelessWidget {
     final ThemeColorScheme colors = themeController.colors;
     final List<MessageBubbleColor> messageBubbleColors =
         themeController.messageBubbleColors;
+    final int alpha = (themeController.opacity * 255).round();
 
     return CustomPaint(
       painter: MessageBubblePainter(
         color: AppMessageBubbleColors.get(
           messageBubbleColors[1],
           themeController.isDarkMode,
-        ),
+        ).withAlpha(alpha),
         shadowColor: colors.brandPrimaryColor,
         alignment: Alignment.bottomRight,
         tail: true,

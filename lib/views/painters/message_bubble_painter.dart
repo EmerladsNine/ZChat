@@ -91,7 +91,7 @@ class MessageBubblePainter extends CustomPainter {
       );
 
       if (tail) {
-        canvas.drawRRect(
+        path.addRRect(
           RRect.fromLTRBAndCorners(
             _x,
             0,
@@ -101,9 +101,6 @@ class MessageBubblePainter extends CustomPainter {
             topRight: Radius.circular(_radius),
             bottomLeft: Radius.circular(_radius),
           ),
-          Paint()
-            ..color = color
-            ..style = PaintingStyle.fill,
         );
         path.moveTo(_x, 0);
         path.lineTo(_x, 10);

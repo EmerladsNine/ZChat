@@ -35,6 +35,12 @@ class AppTheme extends InheritedNotifier<ThemeController> {
     return theme!.notifier!.messageBubbleColors;
   }
 
+  static double messageBubbleOpacityOf(BuildContext context) {
+    final theme = context.dependOnInheritedWidgetOfExactType<AppTheme>();
+    assert(theme != null, 'AppTheme not found in widget tree');
+    return theme!.notifier!.opacity;
+  }
+
   static ThemeController controllerOf(BuildContext context) {
     final theme = context.dependOnInheritedWidgetOfExactType<AppTheme>();
     assert(theme != null, 'AppTheme not found in widget tree');

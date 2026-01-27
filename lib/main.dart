@@ -96,6 +96,9 @@ class MyApp extends StatelessWidget {
             selectionHandleColor: Colors.transparent,
             selectionColor: Colors.blue,
           ),
+          sliderTheme: SliderThemeData(
+            showValueIndicator: ShowValueIndicator.onDrag,
+          ),
           colorScheme: ColorScheme(
             brightness: Brightness.dark,
             primary: colors.primaryBackgroundColor,
