@@ -68,6 +68,10 @@ class MyApp extends StatelessWidget {
         statusBarBrightness: AppTheme.controllerOf(context).isDarkMode
             ? Brightness.dark
             : Brightness.light,
+        systemNavigationBarIconBrightness:
+            AppTheme.controllerOf(context).isDarkMode
+            ? Brightness.light
+            : Brightness.dark,
       ),
       child: MaterialApp(
         title: 'ZChat',
