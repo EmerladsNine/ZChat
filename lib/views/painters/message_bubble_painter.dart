@@ -27,6 +27,7 @@ SOFTWARE.
 */
 
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data/app_constants.dart';
 
 ///custom painter use to create the shape of the chat bubble
 class MessageBubblePainter extends CustomPainter {
@@ -45,7 +46,7 @@ class MessageBubblePainter extends CustomPainter {
   final bool draw;
 
   final double _radius = 10.0;
-  final double _x = 10.0;
+  final double _x = AppConstants.messageTailSize;
 
   @override
   void paint(Canvas canvas, Size size) {

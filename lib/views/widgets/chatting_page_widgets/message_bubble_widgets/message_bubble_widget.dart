@@ -31,6 +31,7 @@ import 'package:zchat/enums/message_bubble_color.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/themes_system/theme_color_scheme.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
+import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_message_bubble_colors.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/sender_name_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_info_widget.dart';
@@ -116,7 +117,6 @@ class MessageBubbleWidget extends StatelessWidget {
             ),
             child: IntrinsicWidth(
               child: Container(
-                // color: Colors.green,
                 constraints: BoxConstraints(
                   minWidth: 50,
                   maxWidth: maxBubbleWidth,
@@ -127,12 +127,12 @@ class MessageBubbleWidget extends StatelessWidget {
                   right: received
                       ? 2
                       : isEmojiBubble
-                      ? 10
-                      : 15,
+                      ? AppConstants.messageTailSize
+                      : 5 + AppConstants.messageTailSize,
                   left: received
                       ? isEmojiBubble
                             ? 0
-                            : 15
+                            : 5 + AppConstants.messageTailSize
                       : isEmojiBubble
                       ? 0
                       : 5,

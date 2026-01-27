@@ -20,4 +20,7 @@ abstract final class AppConstants {
   static const int secondaryColorHex = 0xFF1E2A33;
   static const int surfaceColorHex = 0xFF141A20;
   static const int errorColorHex = 0xFFCF6679;
+
+  // Dimensions
+  static const double messageTailSize = 5;
 }

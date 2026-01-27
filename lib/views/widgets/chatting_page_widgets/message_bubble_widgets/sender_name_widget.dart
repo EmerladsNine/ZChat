@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
+import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/painters/message_bubble_painter.dart';
 
 import '../../../../enums/message_bubble_color.dart';
@@ -42,7 +43,7 @@ class SenderNameWidget extends StatelessWidget {
         child: Container(
           constraints: BoxConstraints(minWidth: 70, maxWidth: maxBubbleWidth),
           padding: isSeparate
-              ? EdgeInsets.only(left: 14)
+              ? EdgeInsets.only(left: 4 + AppConstants.messageTailSize)
               : EdgeInsetsGeometry.all(0),
           child: ScaledTextWidget(
             senderName,
