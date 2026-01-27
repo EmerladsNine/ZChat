@@ -22,47 +22,51 @@ class MessageBubbleColorPage extends StatelessWidget {
 
     return BaseSettingsPage(
       title: isSent ? 'Sent' : 'Received',
-      pageContent: GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 25,
-          childAspectRatio: 1,
-        ),
-        itemCount: AppMessageBubbleColors.palette.length,
-        itemBuilder: (context, index) {
-          bool isSelected =
-              messageBubbleColors[isSent ? 0 : 1] ==
-              MessageBubbleColor.values[index];
+      pageContent: Column(
+        children: [
+          GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 25,
+              childAspectRatio: 1,
+            ),
+            itemCount: AppMessageBubbleColors.palette.length,
+            itemBuilder: (context, index) {
+              bool isSelected =
+                  messageBubbleColors[isSent ? 0 : 1] ==
+                  MessageBubbleColor.values[index];
 
-          return RippleEffectButtonWidget(
-            disableSet: AppNotifiers.disableButtons,
-            animationDuration: Duration(milliseconds: 50),
-            appStateNotifier: AppNotifiers.isNavigating,
-            overlayCircularRadius: 100,
-            onTap: () => themeController.setMessageBubblesColor(
-              MessageBubbleColor.values[index],
-              isSent,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppMessageBubbleColors.get(
+              return RippleEffectButtonWidget(
+                disableSet: AppNotifiers.disableButtons,
+                animationDuration: Duration(milliseconds: 50),
+                appStateNotifier: AppNotifiers.isNavigating,
+                overlayCircularRadius: 100,
+                onTap: () => themeController.setMessageBubblesColor(
                   MessageBubbleColor.values[index],
-                  themeController.isDarkMode,
+                  isSent,
                 ),
-                border: isSelected
-                    ? Border.all(
-                        color: colors.selectedMessageBubbleColor,
-                        width: 3,
-                      )
-                    : null,
-                shape: BoxShape.circle,
-              ),
-            ),
-          );
-        },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppMessageBubbleColors.get(
+                      MessageBubbleColor.values[index],
+                      themeController.isDarkMode,
+                    ),
+                    border: isSelected
+                        ? Border.all(
+                            color: colors.selectedMessageBubbleColor,
+                            width: 3,
+                          )
+                        : null,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

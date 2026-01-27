@@ -28,6 +28,7 @@ class MessageInfoWidget extends StatelessWidget {
     final ThemeColorScheme colors = themeController.colors;
     final List<MessageBubbleColor> messageBubbleColors =
         themeController.messageBubbleColors;
+    final int alpha = (themeController.opacity * 255).round();
 
     return Container(
       padding: hasBackground
@@ -39,11 +40,11 @@ class MessageInfoWidget extends StatelessWidget {
                   ? AppMessageBubbleColors.get(
                       messageBubbleColors[1],
                       themeController.isDarkMode,
-                    )
+                    ).withAlpha(alpha)
                   : AppMessageBubbleColors.get(
                       messageBubbleColors[0],
                       themeController.isDarkMode,
-                    ),
+                    ).withAlpha(alpha),
 
               borderRadius: BorderRadius.circular(5),
             )

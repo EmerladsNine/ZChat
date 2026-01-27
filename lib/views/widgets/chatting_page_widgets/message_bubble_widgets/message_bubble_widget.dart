@@ -69,6 +69,8 @@ class MessageBubbleWidget extends StatelessWidget {
     final ThemeColorScheme colors = themeController.colors;
     final List<MessageBubbleColor> messageBubbleColors =
         themeController.messageBubbleColors;
+    final int alpha = (themeController.opacity * 255).round();
+
     bool received = senderName != null;
 
     return Padding(
@@ -105,11 +107,11 @@ class MessageBubbleWidget extends StatelessWidget {
                   ? AppMessageBubbleColors.get(
                       messageBubbleColors[1],
                       themeController.isDarkMode,
-                    )
+                    ).withAlpha(alpha)
                   : AppMessageBubbleColors.get(
                       messageBubbleColors[0],
                       themeController.isDarkMode,
-                    ),
+                    ).withAlpha(alpha),
               shadowColor: Colors.transparent,
               alignment: received ? Alignment.topLeft : Alignment.topRight,
               tail: !isChildBubble,
