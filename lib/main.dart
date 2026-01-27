@@ -31,10 +31,7 @@ void main() async {
     ChatsStorageManager.loadChats();
   });
 
-  //Android stuff
-  if (Platform.isAndroid) {
-    Keyboard.init();
-  }
+  Keyboard.init();
 
   //Run app
   runApp(
