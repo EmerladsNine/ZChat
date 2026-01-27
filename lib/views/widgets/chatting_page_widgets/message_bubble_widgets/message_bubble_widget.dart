@@ -27,7 +27,11 @@ SOFTWARE.
 */
 
 import 'package:flutter/material.dart';
+import 'package:zchat/enums/message_bubble_color.dart';
 import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/themes_system/theme_color_scheme.dart';
+import 'package:zchat/themes_system/theme_controller.dart';
+import 'package:zchat/views/data/app_message_bubble_colors.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/sender_name_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_info_widget.dart';
 
@@ -55,16 +59,24 @@ class MessageBubbleWidget extends StatelessWidget {
     required this.isChildBubble,
     this.replyData,
     required this.maxBubbleWidth,
-    required this.messageStatus
+    required this.messageStatus,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.themeColorsOf(context);
+    final ThemeController themeController = AppTheme.controllerOf(context);
+    final ThemeColorScheme colors = themeController.colors;
+    final List<MessageBubbleColor> messageBubbleColors =
+        themeController.messageBubbleColors;
     bool received = senderName != null;
 
     return Padding(
-      padding: EdgeInsets.only(top: isChildBubble ? 2 : 10, left: 6,right: 6, bottom: 2),
+      padding: EdgeInsets.only(
+        top: isChildBubble ? 2 : 10,
+        left: 6,
+        right: 6,
+        bottom: 2,
+      ),
       child: Row(
         mainAxisAlignment: senderName == null
             ? MainAxisAlignment.end
@@ -89,8 +101,14 @@ class MessageBubbleWidget extends StatelessWidget {
           CustomPaint(
             painter: MessageBubblePainter(
               color: received
-                  ? colors.receivedMessageBubbleColor
-                  : colors.sentMessageBubbleColor,
+                  ? AppMessageBubbleColors.get(
+                      messageBubbleColors[1],
+                      themeController.isDarkMode,
+                    )
+                  : AppMessageBubbleColors.get(
+                      messageBubbleColors[0],
+                      themeController.isDarkMode,
+                    ),
               shadowColor: Colors.transparent,
               alignment: received ? Alignment.topLeft : Alignment.topRight,
               tail: !isChildBubble,

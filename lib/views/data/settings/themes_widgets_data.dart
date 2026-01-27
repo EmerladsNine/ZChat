@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
+import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
+import 'package:zchat/views/pages/settings/message_bubble_color_page.dart';
 
 import '../../../enums/font_size_level.dart';
 import '../../../themes_system/app_theme.dart';
@@ -47,6 +49,18 @@ List<SettingsBaseButtonData> themesCustomizationButtonsData(
       ),
       onChange: (value) =>
           AppTheme.controllerOf(context).setEmojiBubbleSize(value),
+    ),
+
+    SettingsNavigationButtonData(
+      label: 'Sent Bubble Color',
+      goToPage: MessageBubbleColorPage(isSent: true),
+      icon: '📨',
+    ),
+
+    SettingsNavigationButtonData(
+      label: 'Received Bubble Color',
+      goToPage: MessageBubbleColorPage(isSent: false),
+      icon: '💬',
     ),
   ];
 }

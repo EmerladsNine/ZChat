@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/enums/message_bubble_color.dart';
 
 /// Data class holding the color scheme for the application theme.
 class ThemeColorScheme {
@@ -21,9 +22,8 @@ class ThemeColorScheme {
 
   final Color dividerColor;
 
-  final Color sentMessageBubbleColor;
-  final Color receivedMessageBubbleColor;
   final Color messageBubbleShadowColor;
+  final Color selectedMessageBubbleColor;
 
   final Color emojiPanelColor;
 
@@ -42,10 +42,9 @@ class ThemeColorScheme {
     required this.iconDefaultColor,
     required this.selectedPageIconColor,
     required this.dividerColor,
-    required this.sentMessageBubbleColor,
-    required this.receivedMessageBubbleColor,
     required this.messageBubbleShadowColor,
     required this.emojiPanelColor,
+    required this.selectedMessageBubbleColor,
   });
 
   /// Creates a copy of this color scheme with the given fields replaced with the new values.
@@ -64,10 +63,11 @@ class ThemeColorScheme {
     Color? iconDefaultColor,
     Color? selectedPageIconColor,
     Color? dividerColor,
-    Color? sentMessageBubbleColor,
-    Color? receivedMessageBubbleColor,
+    MessageBubbleColor? sentMessageBubbleColor,
+    MessageBubbleColor? receivedMessageBubbleColor,
     Color? messageBubbleShadowColor,
     Color? emojiPanelColor,
+    Color? selectedMessageBubbleColor,
   }) {
     return ThemeColorScheme(
       primaryBackgroundColor:
@@ -88,13 +88,11 @@ class ThemeColorScheme {
       selectedPageIconColor:
           selectedPageIconColor ?? this.selectedPageIconColor,
       dividerColor: dividerColor ?? this.dividerColor,
-      sentMessageBubbleColor:
-          sentMessageBubbleColor ?? this.sentMessageBubbleColor,
-      receivedMessageBubbleColor:
-          receivedMessageBubbleColor ?? this.receivedMessageBubbleColor,
       messageBubbleShadowColor:
           messageBubbleShadowColor ?? this.messageBubbleShadowColor,
       emojiPanelColor: emojiPanelColor ?? this.emojiPanelColor,
+      selectedMessageBubbleColor:
+          selectedMessageBubbleColor ?? this.selectedMessageBubbleColor,
     );
   }
 
@@ -116,10 +114,9 @@ class ThemeColorScheme {
           iconDefaultColor == other.iconDefaultColor &&
           selectedPageIconColor == other.selectedPageIconColor &&
           dividerColor == other.dividerColor &&
-          sentMessageBubbleColor == other.sentMessageBubbleColor &&
-          receivedMessageBubbleColor == other.receivedMessageBubbleColor &&
           messageBubbleShadowColor == other.messageBubbleShadowColor &&
-          emojiPanelColor == other.emojiPanelColor;
+          emojiPanelColor == other.emojiPanelColor &&
+          selectedMessageBubbleColor == other.selectedMessageBubbleColor;
 
   @override
   int get hashCode => Object.hash(
@@ -137,9 +134,8 @@ class ThemeColorScheme {
     iconDefaultColor,
     selectedPageIconColor,
     dividerColor,
-    sentMessageBubbleColor,
-    receivedMessageBubbleColor,
     messageBubbleShadowColor,
     emojiPanelColor,
+    selectedMessageBubbleColor,
   );
 }

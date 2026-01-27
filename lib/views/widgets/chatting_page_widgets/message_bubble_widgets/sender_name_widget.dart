@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/painters/message_bubble_painter.dart';
 
+import '../../../../enums/message_bubble_color.dart';
+import '../../../../themes_system/theme_color_scheme.dart';
+import '../../../../themes_system/theme_controller.dart';
+import '../../../data/app_message_bubble_colors.dart';
 import '../../miscellaneous/scaled_text_widget.dart';
 
 class SenderNameWidget extends StatelessWidget {
@@ -18,10 +22,17 @@ class SenderNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.themeColorsOf(context);
+    final ThemeController themeController = AppTheme.controllerOf(context);
+    final ThemeColorScheme colors = themeController.colors;
+    final List<MessageBubbleColor> messageBubbleColors =
+        themeController.messageBubbleColors;
+
     return CustomPaint(
       painter: MessageBubblePainter(
-        color: colors.receivedMessageBubbleColor,
+        color: AppMessageBubbleColors.get(
+          messageBubbleColors[1],
+          themeController.isDarkMode,
+        ),
         shadowColor: colors.brandPrimaryColor,
         alignment: Alignment.bottomRight,
         tail: true,

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
+import '../../../../enums/message_bubble_color.dart';
+import '../../../../themes_system/theme_color_scheme.dart';
+import '../../../../themes_system/theme_controller.dart';
+import '../../../data/app_message_bubble_colors.dart';
 import '../../miscellaneous/scaled_text_widget.dart';
 
 class MessageInfoWidget extends StatelessWidget {
@@ -20,7 +24,10 @@ class MessageInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.themeColorsOf(context);
+    final ThemeController themeController = AppTheme.controllerOf(context);
+    final ThemeColorScheme colors = themeController.colors;
+    final List<MessageBubbleColor> messageBubbleColors =
+        themeController.messageBubbleColors;
 
     return Container(
       padding: hasBackground
@@ -29,8 +36,15 @@ class MessageInfoWidget extends StatelessWidget {
       decoration: hasBackground
           ? BoxDecoration(
               color: received
-                  ? colors.receivedMessageBubbleColor
-                  : colors.sentMessageBubbleColor,
+                  ? AppMessageBubbleColors.get(
+                      messageBubbleColors[1],
+                      themeController.isDarkMode,
+                    )
+                  : AppMessageBubbleColors.get(
+                      messageBubbleColors[0],
+                      themeController.isDarkMode,
+                    ),
+
               borderRadius: BorderRadius.circular(5),
             )
           : BoxDecoration(),
