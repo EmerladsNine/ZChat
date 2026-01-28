@@ -26,6 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/material.dart';
 import 'package:zchat/enums/message_bubble_color.dart';
 import 'package:zchat/enums/message_status.dart';
@@ -199,7 +200,7 @@ class MessageBubbleWidget extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: isEmojiBubble
                                     ? AppTheme.emojiBubbleSizeOf(context)
-                                    : 17,
+                                    : resolveMessageFontSize(context, text),
                                 height: 1.5,
                                 color: colors.primaryColor,
                               ),
@@ -223,5 +224,26 @@ class MessageBubbleWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  double resolveMessageFontSize(BuildContext context, String text) {
+    final double baseEmojiSize = AppTheme.emojiBubbleSizeOf(context);
+
+    final String trimmed = text.replaceAll(RegExp(r'\s'), '');
+
+    final List<RegExpMatch> matches = emojiRegex().allMatches(trimmed).toList();
+
+    if (matches.isEmpty || trimmed.replaceAll(emojiRegex(), '').isNotEmpty) {
+      return 17;
+    }
+
+    switch (matches.length) {
+      case 2:
+        return baseEmojiSize * 0.7;
+      case 3:
+        return baseEmojiSize * 0.6;
+      default:
+        return 17;
+    }
   }
 }
