@@ -16,18 +16,18 @@ import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // for storage db on desktop
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
 
-  WidgetsFlutterBinding.ensureInitialized();
-
   ThemeController themeController = ThemeController();
   await themeController.init();
 
-  StorageManager.openMessagesDatabase().then((_) {
+  await StorageManager.openMessagesDatabase().then((_) {
     ChatsStorageManager.loadChats();
   });
 
