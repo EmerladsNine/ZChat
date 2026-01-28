@@ -200,7 +200,7 @@ class MessageBubbleWidget extends StatelessWidget {
                                 fontSize: isEmojiBubble
                                     ? AppTheme.emojiBubbleSizeOf(context)
                                     : 17,
-                                height: 1,
+                                height: 1.5,
                                 color: colors.primaryColor,
                               ),
                             ),
