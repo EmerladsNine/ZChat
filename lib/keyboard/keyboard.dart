@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:zchat/views/widgets/miscellaneous/debug_logs_widget.dart';
 
 class Keyboard {
   static double actualKeyboardHeight = 300;
@@ -15,13 +16,17 @@ class Keyboard {
     _channel.setMethodCallHandler((call) async {
       if (call.method == "keyboardHeight") {
         double keyboardHeight = (call.arguments as int).toDouble();
+        DebugLogsWidget.addLog("keyboardHeight event : $keyboardHeight");
         Keyboard.changeHeight(keyboardHeight);
       } else if (call.method == "keyboardAnimationDone") {
-        bool isFullyOpen = (call.arguments as bool);
-        Keyboard.changeState(isFullyOpen,!isFullyOpen);
+        bool isOpen = (call.arguments as bool);
+
+        DebugLogsWidget.addLog("keyboardAnimationDone. isOpen: $isOpen");
+        Keyboard.changeState(isOpen,!isOpen);
       }
       else if(call.method == "keyboardAnimationStart")
         {
+          DebugLogsWidget.addLog("keyboardAnimationStart event");
           isFullyOpen = false;
           isFullyClose = false;
           for(void Function() func in onAnimatingStart)

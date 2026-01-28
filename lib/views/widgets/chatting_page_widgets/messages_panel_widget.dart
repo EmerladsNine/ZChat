@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/go_down_button_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/debug_logs_widget.dart';
 
 class MessagesPanelWidget extends StatelessWidget {
   const MessagesPanelWidget({
@@ -50,6 +51,8 @@ class MessagesPanelWidget extends StatelessWidget {
             scrollToBottom: scrollToBottom,
           ),
         ),
+
+        DebugLogsWidget()
       ],
     );
   }
