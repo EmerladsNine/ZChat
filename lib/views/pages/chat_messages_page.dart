@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:zchat/keyboard/keyboard.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
 
 import '../../themes_system/app_theme.dart';
@@ -15,49 +18,13 @@ class ChatMessagesPage extends StatefulWidget {
 }
 
 class _ChatMessagesPageState extends State<ChatMessagesPage> {
-  final messages = const [
-    "Hello",
-    "Hi Brother",
-    "How are you",
-    "I want to learn programming",
-    "I want to kill you",
-    "Hello",
-    "Hi Brother",
-    "How are you",
-    "I want to learn programming",
-    "I want to kill you",
-    "Hello",
-    "Hi Brother",
-    "How are you",
-    "I want to learn programming",
-    "I want to kill you",
-    "Hello",
-    "Hi Brother",
-    "How are you",
-    "I want to learn programming",
-    "I want to kill you",
-    "Hello",
-    "Hi Brother",
-    "How are you",
-    "I want to learn programming",
-    "I want to kill you",
-    "Hello",
-    "Hi Brother",
-    "How are you",
-    "I want to learn programming",
-    "I want to kill you",
-    "Hello",
-    "Hi Brother",
-    "How are you",
-    "I want to learn programming",
-    "I want to kill you",
-  ];
-
   final ScrollController _scrollController = ScrollController();
+  final FocusNode focusNode = FocusNode();
+
   void _scrollToBottom() async {
     Completer<void> canContinueScrolling = Completer<void>();
     while (_scrollController.offset != 0.0) {
-      _scrollController.jumpTo(0.0);
+      await _scrollController.animateTo(0.0,duration: Duration(milliseconds: 200),curve: Curves.linear);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!canContinueScrolling.isCompleted) {
           canContinueScrolling.complete();
@@ -70,8 +37,26 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   bool isDownButtonShown = false;
 
+  void onKeyboardStateChange(bool isFullyOpen)
+  {
+    if (AppNotifiers.isEmojiPickerVisible.value && isFullyOpen) {
+      AppNotifiers.isEmojiPickerVisible.value = false;
+    }
+  }
+
+  void onKeyboardAnimationStart()
+  {
+    if (Keyboard.nextKeyboardHeight > 0) {
+      if (_scrollController.offset <= 100.0) {
+        _scrollController.jumpTo(0.0);
+      }
+    }
+  }
+
   @override
   void initState() {
+    Keyboard.onChangeState.add(onKeyboardStateChange);
+    Keyboard.onAnimatingStart.add(onKeyboardAnimationStart);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.addListener(() {
         if (!isDownButtonShown && _scrollController.offset > 100) {
@@ -85,76 +70,104 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
         }
       });
     });
-
     super.initState();
   }
 
   @override
+  void dispose() {
+    Keyboard.onChangeState.clear();
+    Keyboard.onAnimatingStart.clear();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (MediaQuery.of(context).viewInsets.bottom != 0) {
-        if (_scrollController.offset <= 100.0) {
-          _scrollController.jumpTo(0.0);
-        }
-      }
-    });
+    double bottomPadding =
+        Keyboard.nextKeyboardHeight /
+        MediaQuery.devicePixelRatioOf(context);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          //BackgroundImageFallBack
-          Positioned.fill(
-            child: Container(color: colors.primaryBackgroundColor),
-          ),
+    double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
 
-          Image(
-            image: Image.asset('assets/images/bg5.jpeg').image,
-            fit: BoxFit.cover,
-            color: colors.primaryBackgroundColor.withAlpha(220),
-            colorBlendMode: BlendMode.overlay,
-          ),
-
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: View.of(context).viewPadding.top,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [colors.primaryBackgroundColor, Colors.transparent],
+    return ValueListenableBuilder(
+      valueListenable: AppNotifiers.isEmojiPickerVisible,
+      builder: (context, isEmojiPickerVisible, child) {
+        return PopScope(
+          canPop: !isEmojiPickerVisible,
+          onPopInvokedWithResult: (didPop, dynamic result) {
+            if (AppNotifiers.isEmojiPickerVisible.value) {
+              AppNotifiers.isEmojiPickerVisible.value = false;
+            }
+          },
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Stack(
+              fit: StackFit.expand,
+              children: [
+                //BackgroundImageFallBack
+                Positioned.fill(
+                  child: Container(color: colors.primaryBackgroundColor),
                 ),
-              ),
+
+                Image(
+                  image: Image.asset('assets/images/bg5.jpeg').image,
+                  fit: BoxFit.cover,
+                  color: colors.primaryBackgroundColor.withAlpha(220),
+                  colorBlendMode: BlendMode.overlay,
+                ),
+
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: View.of(context).viewPadding.top,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          colors.primaryBackgroundColor,
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                Column(
+                  children: [
+                    Expanded(
+                      child: MessagesPanelWidget(
+                        scrollController: _scrollController,
+                        isDownButtonShown: isDownButtonShown,
+                        scrollToBottom: _scrollToBottom,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: isEmojiPickerVisible
+                          ? EdgeInsetsGeometry.zero
+                          : EdgeInsetsGeometry.only(bottom: bottomPadding),
+                      child: ChatMessagesFooterWidget(
+                        scrollToBottom: _scrollToBottom,
+                        bottomSafeArea: bottomSafeArea,
+                        isInSafeArea:
+                            bottomPadding != 0 || isEmojiPickerVisible,
+                        focusNode: focusNode,
+                      ),
+                    ),
+
+                    EmojiPanelWidget(),
+                  ],
+                ),
+              ],
             ),
           ),
-
-          Column(
-            children: [
-              Expanded(
-                child: MessagesPanelWidget(
-                  scrollController: _scrollController,
-                  isDownButtonShown: isDownButtonShown,
-                  scrollToBottom: _scrollToBottom,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
-                child: ChatMessagesFooterWidget(
-                  scrollToBottom: _scrollToBottom,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

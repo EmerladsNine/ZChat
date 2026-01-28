@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../themes_system/app_theme.dart';
-import '../data/app_text_styles.dart';
+import 'scaled_text_widget.dart';
+import '../../../themes_system/app_theme.dart';
+import '../../data/app_text_styles.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key, required this.title, this.actions});
@@ -16,22 +17,23 @@ class AppBarWidget extends StatelessWidget {
         ? title.substring(1)
         : '';
 
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return AppBar(
       title: Row(
         children: [
-          Text(
+          ScaledTextWidget(
             firstLetter,
-            style: AppTextStyles.appBarSecondaryTextStyle(colors),
+            style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
-          Text(
+          ScaledTextWidget(
             remainingTitleLetters,
             style: AppTextStyles.appBarPrimaryTextStyle(colors),
           ),
         ],
       ),
       backgroundColor: colors.primaryBackgroundColor,
+      actionsPadding: EdgeInsetsGeometry.all(0),
       actions: actions,
     );
   }

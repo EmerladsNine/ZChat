@@ -4,8 +4,8 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
-import 'package:zchat/views/widgets/custom_tool_tip.dart';
-import 'package:zchat/views/widgets/search_bar_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
+import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
 /// Page displaying a list of active chat conversations.
 class ChatsPage extends StatelessWidget {
@@ -78,24 +78,27 @@ class ChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchBarWidget(
-            hintText: 'Search',
-            disableSet: AppNotifiers.disableButtons,
-            sideWidget: CustomToolTip(
-              message: 'Add Chat',
-              preferBelow: true,
-              child: RippleEffectButtonWidget(
-                padding: EdgeInsetsGeometry.all(4.0),
-                overlayCircularRadius: 8,
-                disableSet: AppNotifiers.disableButtons,
-                appStateNotifier: AppNotifiers.isNavigating,
-                child: Icon(Icons.add, color: colors.hintColor),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: SearchBarWidget(
+              hintText: 'Search',
+              disableSet: AppNotifiers.disableButtons,
+              sideWidget: CustomToolTip(
+                message: 'Add Chat',
+                preferBelow: true,
+                child: RippleEffectButtonWidget(
+                  padding: EdgeInsetsGeometry.all(4.0),
+                  overlayCircularRadius: 8,
+                  disableSet: AppNotifiers.disableButtons,
+                  appStateNotifier: AppNotifiers.isNavigating,
+                  child: Icon(Icons.add, color: colors.hintColor),
+                ),
               ),
             ),
           ),

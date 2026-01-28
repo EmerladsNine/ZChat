@@ -2,9 +2,8 @@ abstract final class AppConstants {
   // Text Styles
   static const double appBarTitleFontSize = 27.0;
   static const double settingsProfileNameFontSize = 18.0;
-  static const double chatCardNameFontSize = 18.0;
+  static const double chatCardNameFontSize = 16.0;
   static const double chatCardUnreadNumFontSize = 11.0;
-  static const double messageStatusIndicatorFontSize = 18.0;
   static const double settingsCardsButtonsFontSize = 16.0;
   static const double ownProfileNameFontSize = 22.0;
 
@@ -21,4 +20,7 @@ abstract final class AppConstants {
   static const int secondaryColorHex = 0xFF1E2A33;
   static const int surfaceColorHex = 0xFF141A20;
   static const int errorColorHex = 0xFFCF6679;
+
+  // Dimensions
+  static const double messageTailSize = 5;
 }

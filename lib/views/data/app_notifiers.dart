@@ -8,4 +8,5 @@ abstract final class AppNotifiers {
   static final ValueNotifier<bool> fastSwipeNotifier = ValueNotifier<bool>(
     false,
   );
+  static final ValueNotifier<bool> isEmojiPickerVisible = ValueNotifier(false);
 }

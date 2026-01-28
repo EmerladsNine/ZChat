@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_text_styles.dart';
 import '../../data_classes/settings/settings_switch_data.dart';
@@ -40,13 +41,12 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         color: colors.cardsColor,
-        border: BoxBorder.all(color: colors.dividerColor, width: 0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -64,7 +64,7 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                       if (widget.data.icon != null)
                         Padding(
                           padding: EdgeInsets.only(left: 8),
-                          child: Text(
+                          child: ScaledTextWidget(
                             widget.data.icon!,
                             style: TextStyle(fontSize: 24),
                           ),
@@ -79,7 +79,7 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                                 bottom: 3,
                                 top: 3,
                               ),
-                              child: Text(
+                              child: ScaledTextWidget(
                                 widget.data.label,
                                 style:
                                     AppTextStyles.settingsCardsButtonsTextStyle(
@@ -91,7 +91,7 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                             if (widget.data.helpText != null)
                               Padding(
                                 padding: EdgeInsetsGeometry.only(left: 12),
-                                child: Text(
+                                child: ScaledTextWidget(
                                   widget.data.helpText!,
                                   style: AppTextStyles.hintTextStyle(colors),
                                   maxLines: 3,

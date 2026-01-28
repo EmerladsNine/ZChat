@@ -2,7 +2,7 @@ import 'package:zchat/themes_system/theme_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 abstract final class AppThemes {
-  static const darkThemeColors = ThemeColorScheme(
+  static ThemeColorScheme darkThemeColors = ThemeColorScheme(
     primaryBackgroundColor: Color(0xFF0A0A0D),
     cardsColor: Color(0xFF131313),
     primaryColor: Color(0xFFD0D0D0),
@@ -16,13 +16,13 @@ abstract final class AppThemes {
     textSecondaryColor: Color(0xFFB0B0B0),
     iconDefaultColor: Color(0xFFECECEC),
     selectedPageIconColor: Color(0xFF121212),
-    dividerColor: Color(0xFF262728),
-    sentMessageBubbleColor: Color(0xFF191919),
-    receivedMessageBubbleColor: Color(0xFF191919),
+    dividerColor: Color(0xFF464748),
     messageBubbleShadowColor: Colors.white,
+    emojiPanelColor: Color(0xFF161616),
+    selectedMessageBubbleColor: Color(0xFFFFC107),
   );
 
-  static const lightThemeColors = ThemeColorScheme(
+  static ThemeColorScheme lightThemeColors = ThemeColorScheme(
     primaryBackgroundColor: Color(0xFFF7F8FA),
     cardsColor: Color(0xFFFFFFFF),
     primaryColor: Color(0xFF1A1A1A),
@@ -37,8 +37,8 @@ abstract final class AppThemes {
     iconDefaultColor: Color(0xFF2C2C2C),
     selectedPageIconColor: Color(0xFFFFFFFF),
     dividerColor: Color(0xFFE0E0E0),
-    sentMessageBubbleColor: Color(0xFFFFFFFF),
-    receivedMessageBubbleColor: Color(0xFFFFFFFF),
     messageBubbleShadowColor: Colors.black,
+    emojiPanelColor: Color(0xFFF1F3F4),
+    selectedMessageBubbleColor: Color(0xFF1E88E5),
   );
 }

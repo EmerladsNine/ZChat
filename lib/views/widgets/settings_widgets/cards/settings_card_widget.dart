@@ -13,7 +13,7 @@ import '../../buttons/settings/settings_navigation_button_widget.dart';
 import '../../buttons/settings/settings_radio_group_dialog_button_widget.dart';
 
 /// A widget that displays a settings card containing a list of buttons.
-class SettingsCardWidget extends SettingsBaseCardWidget {
+class SettingsCardWidget<T> extends SettingsBaseCardWidget {
   const SettingsCardWidget({
     super.key,
     required super.category,
@@ -40,8 +40,8 @@ class SettingsCardWidget extends SettingsBaseCardWidget {
           drawBorder: drawBorder,
         ),
         SettingsRadioGroupDialogButtonData data =>
-          SettingsRadioGroupDialogButtonWidget(
-            data: data,
+          SettingsRadioGroupDialogButtonWidget<T>(
+            data: (data as SettingsRadioGroupDialogButtonData<T>),
             drawBorder: drawBorder,
           ),
         SettingsCheckboxListDialogButtonData _ => throw InvalidDataClassUsage(

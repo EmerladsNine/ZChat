@@ -8,7 +8,7 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
     return Scaffold(
       backgroundColor: colors.primaryBackgroundColor,
       body: SafeArea(
@@ -38,6 +38,9 @@ class SignInPage extends StatelessWidget {
                           "assets/icons/google_web_signIn_svg/dark/web_dark_sq_SI.svg",
                           height: 54,
                         ),
+                        onTap: (){
+
+                        },
                       ),
                       RippleEffectButtonWidget(
                         child: Container(

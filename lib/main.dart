@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
+import 'package:zchat/keyboard/keyboard.dart';
+import 'package:zchat/storage_managment/chats_storage_manager.dart';
+import 'package:zchat/storage_managment/storage_manager.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
@@ -10,10 +16,28 @@ import 'package:zchat/views/pages/sign_in_page.dart';
 import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // for storage db on desktop
+  if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
+
+  ThemeController themeController = ThemeController();
+  await themeController.init();
+
+  await StorageManager.openMessagesDatabase().then((_) {
+    ChatsStorageManager.loadChats();
+  });
+
+  Keyboard.init();
+
+  //Run app
   runApp(
     AppTheme(
-      controller: ThemeController(),
+      controller: themeController,
       child: Provider<MessagingService>(
         create: (_) => MessagingService(),
         dispose: (context, service) {
@@ -31,7 +55,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
@@ -42,6 +66,10 @@ class MyApp extends StatelessWidget {
         statusBarBrightness: AppTheme.controllerOf(context).isDarkMode
             ? Brightness.dark
             : Brightness.light,
+        systemNavigationBarIconBrightness:
+            AppTheme.controllerOf(context).isDarkMode
+            ? Brightness.light
+            : Brightness.dark,
       ),
       child: MaterialApp(
         title: 'ZChat',
@@ -65,6 +93,9 @@ class MyApp extends StatelessWidget {
             cursorColor: Colors.blue,
             selectionHandleColor: Colors.transparent,
             selectionColor: Colors.blue,
+          ),
+          sliderTheme: SliderThemeData(
+            showValueIndicator: ShowValueIndicator.onDrag,
           ),
           colorScheme: ColorScheme(
             brightness: Brightness.dark,

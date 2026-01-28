@@ -6,9 +6,8 @@ import 'package:zchat/MessageSystem/Internet/listener_service.dart';
 import 'package:zchat/MessageSystem/Internet/message_type.dart';
 import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/MessageSystem/message.dart';
+import 'package:zchat/storage_managment/chats_storage_manager.dart';
 import 'package:zchat/utils/print_on_debug.dart';
-
-Chat? currentChat = Chat(); // Todo : remove this when it becomes useless
 
 class MessagingService {
   late Socket socket;
@@ -56,12 +55,16 @@ class MessagingService {
       sendProtocolUnit(MessageType.normalMessage, [...utf8.encode(message)]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
 
+      ChatsStorageManager.insertMessage(senderId: 0,timestamp: timestamp,msg: message);
       chat.addMessage(Message(text: message, timestamp: timestamp));
+
       printOnDebug('sent: $message');
     } catch (e) {
       printOnDebug(e);
     }
   }
+
+
 
   Future<void> connectServer(String caller) async {
     final String host = "92.113.26.192";

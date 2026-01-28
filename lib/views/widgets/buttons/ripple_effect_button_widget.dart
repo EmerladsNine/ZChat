@@ -27,7 +27,7 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
     VoidCallback markFillAnimationAsDone,
     VoidCallback markEmptyAnimationAsDone,
   ) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return Positioned.fill(
       child: Center(

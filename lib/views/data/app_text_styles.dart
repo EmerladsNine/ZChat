@@ -7,7 +7,6 @@ abstract final class AppTextStyles {
     fontSize: AppConstants.appBarTitleFontSize,
     fontWeight: FontWeight.w800,
     color: colors.primaryColor,
-    fontFamily: 'InterDisplay',
   );
 
   static TextStyle appBarSecondaryTextStyle(ThemeColorScheme colors) =>
@@ -15,7 +14,6 @@ abstract final class AppTextStyles {
         fontSize: AppConstants.appBarTitleFontSize,
         fontWeight: FontWeight.w800,
         color: colors.brandPrimaryColor,
-        fontFamily: 'InterDisplay',
       );
 
   static TextStyle hintTextStyle(ThemeColorScheme colors) =>
@@ -26,7 +24,6 @@ abstract final class AppTextStyles {
         fontSize: AppConstants.settingsProfileNameFontSize,
         fontWeight: FontWeight.w400,
         color: colors.primaryColor,
-        fontFamily: 'Inter',
       );
 
   static TextStyle settingsProfileDescriptionTextStyle(
@@ -37,33 +34,16 @@ abstract final class AppTextStyles {
     color: colors.primaryColor,
     fontWeight: FontWeight.w700,
     fontSize: AppConstants.chatCardNameFontSize,
-    fontFamily: 'Inter',
   );
 
-  static TextStyle chatCardUnreadNumTextStyle(ThemeColorScheme colors) =>
-      TextStyle(
-        color: colors.primaryColor,
-        fontWeight: FontWeight.w700,
-        fontSize: AppConstants.chatCardUnreadNumFontSize,
-        fontFamily: 'Inter',
-      );
-
   static TextStyle chatCardMessageDetailsTextStyle(ThemeColorScheme colors) =>
-      TextStyle(color: colors.textSecondaryColor, fontFamily: 'Inter');
-
-  static TextStyle messageStatusIndicatorStyle(ThemeColorScheme colors) =>
-      TextStyle(
-        color: colors.textSecondaryColor,
-        fontFamily: 'Inter',
-        fontSize: AppConstants.messageStatusIndicatorFontSize,
-      );
+      TextStyle(color: colors.textSecondaryColor, fontSize: 13.5);
 
   static TextStyle settingsCardsButtonsTextStyle(ThemeColorScheme colors) =>
       TextStyle(
         fontSize: AppConstants.settingsCardsButtonsFontSize,
         fontWeight: FontWeight.w600,
         color: colors.primaryColor,
-        fontFamily: 'Inter',
       );
 
   static TextStyle ownProfileNameTextStyle(ThemeColorScheme colors) =>
@@ -71,6 +51,5 @@ abstract final class AppTextStyles {
         fontSize: AppConstants.ownProfileNameFontSize,
         fontWeight: FontWeight.w700,
         color: colors.primaryColor,
-        fontFamily: 'Inter',
       );
 }

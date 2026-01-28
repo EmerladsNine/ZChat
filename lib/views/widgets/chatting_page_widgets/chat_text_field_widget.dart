@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 
-import '../../../controllers/custom_text_controller.dart';
+import '../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../../utils/text_field_utils.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
-  const ChatTextFieldWidget({super.key, required this.controller});
+  const ChatTextFieldWidget({
+    super.key,
+    required this.controller,
+    required this.focusNode,
+  });
 
   final CustomTextController controller;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 2.0),
         child: TextField(
+          onTap: () {
+            //focus
+
+          },
           controller: controller,
+          focusNode: focusNode,
+          showCursor: true,
           textDirection: TextFieldUtils.getTextDirection(controller.text),
           textCapitalization: TextCapitalization.sentences,
           keyboardType: TextInputType.multiline,

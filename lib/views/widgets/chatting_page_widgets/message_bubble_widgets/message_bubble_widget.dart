@@ -27,10 +27,16 @@ SOFTWARE.
 */
 
 import 'package:flutter/material.dart';
+import 'package:zchat/enums/message_bubble_color.dart';
 import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/themes_system/theme_color_scheme.dart';
+import 'package:zchat/themes_system/theme_controller.dart';
+import 'package:zchat/views/data/app_constants.dart';
+import 'package:zchat/views/data/app_message_bubble_colors.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/sender_name_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_info_widget.dart';
 
+import '../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
 import '../../../data_classes/message_reply_data.dart';
 import '../../../painters/message_bubble_painter.dart';
@@ -59,11 +65,21 @@ class MessageBubbleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final ThemeController themeController = AppTheme.controllerOf(context);
+    final ThemeColorScheme colors = themeController.colors;
+    final List<MessageBubbleColor> messageBubbleColors =
+        themeController.messageBubbleColors;
+    final int alpha = (themeController.opacity * 255).round();
+
     bool received = senderName != null;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+      padding: EdgeInsets.only(
+        top: isChildBubble ? 2 : 10,
+        left: 6,
+        right: 6,
+        bottom: 2,
+      ),
       child: Row(
         mainAxisAlignment: senderName == null
             ? MainAxisAlignment.end
@@ -88,16 +104,21 @@ class MessageBubbleWidget extends StatelessWidget {
           CustomPaint(
             painter: MessageBubblePainter(
               color: received
-                  ? colors.receivedMessageBubbleColor
-                  : colors.sentMessageBubbleColor,
-              shadowColor: colors.messageBubbleShadowColor,
+                  ? AppMessageBubbleColors.get(
+                      messageBubbleColors[1],
+                      themeController.isDarkMode,
+                    ).withAlpha(alpha)
+                  : AppMessageBubbleColors.get(
+                      messageBubbleColors[0],
+                      themeController.isDarkMode,
+                    ).withAlpha(alpha),
+              shadowColor: Colors.transparent,
               alignment: received ? Alignment.topLeft : Alignment.topRight,
               tail: !isChildBubble,
               draw: !isEmojiBubble,
             ),
             child: IntrinsicWidth(
               child: Container(
-                // color: Colors.green,
                 constraints: BoxConstraints(
                   minWidth: 50,
                   maxWidth: maxBubbleWidth,
@@ -108,12 +129,12 @@ class MessageBubbleWidget extends StatelessWidget {
                   right: received
                       ? 2
                       : isEmojiBubble
-                      ? 10
-                      : 15,
+                      ? AppConstants.messageTailSize
+                      : 5 + AppConstants.messageTailSize,
                   left: received
                       ? isEmojiBubble
                             ? 0
-                            : 15
+                            : 5 + AppConstants.messageTailSize
                       : isEmojiBubble
                       ? 0
                       : 5,
@@ -147,11 +168,11 @@ class MessageBubbleWidget extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                ScaledTextWidget(
                                   replyData!.replyTextSender,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                Text(
+                                ScaledTextWidget(
                                   replyData!.replyText,
                                   style: TextStyle(color: colors.hintColor),
                                 ),
@@ -173,10 +194,12 @@ class MessageBubbleWidget extends StatelessWidget {
                             alignment: isEmojiBubble
                                 ? Alignment.center
                                 : Alignment.centerLeft,
-                            child: Text(
+                            child: ScaledTextWidget(
                               text,
                               style: TextStyle(
-                                fontSize: isEmojiBubble ? 40 : 20,
+                                fontSize: isEmojiBubble
+                                    ? AppTheme.emojiBubbleSizeOf(context)
+                                    : 17,
                                 height: 1,
                                 color: colors.primaryColor,
                               ),

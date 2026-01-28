@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_text_styles.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_info_card_widget.dart';
 
+import '../../widgets/miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 import 'base_settings_page.dart';
 
@@ -11,7 +12,7 @@ class ProfileSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return BaseSettingsPage(
       title: 'Profile',
@@ -29,7 +30,7 @@ class ProfileSettingsPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsetsGeometry.only(top: 10),
-            child: Text(
+            child: ScaledTextWidget(
               'Ahmad Msheik',
               style: AppTextStyles.ownProfileNameTextStyle(colors),
               textAlign: TextAlign.center,

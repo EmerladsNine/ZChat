@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
+import '../../../../enums/message_bubble_color.dart';
+import '../../../../themes_system/theme_color_scheme.dart';
+import '../../../../themes_system/theme_controller.dart';
+import '../../../data/app_message_bubble_colors.dart';
+import '../../miscellaneous/scaled_text_widget.dart';
+
 class MessageInfoWidget extends StatelessWidget {
   const MessageInfoWidget({
     super.key,
@@ -18,31 +24,41 @@ class MessageInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final ThemeController themeController = AppTheme.controllerOf(context);
+    final ThemeColorScheme colors = themeController.colors;
+    final List<MessageBubbleColor> messageBubbleColors =
+        themeController.messageBubbleColors;
+    final int alpha = (themeController.opacity * 255).round();
 
     return Container(
       padding: hasBackground
-          ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 0)
+          ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2)
           : EdgeInsetsGeometry.zero,
       decoration: hasBackground
           ? BoxDecoration(
               color: received
-                  ? colors.receivedMessageBubbleColor
-                  : colors.sentMessageBubbleColor,
+                  ? AppMessageBubbleColors.get(
+                      messageBubbleColors[1],
+                      themeController.isDarkMode,
+                    ).withAlpha(alpha)
+                  : AppMessageBubbleColors.get(
+                      messageBubbleColors[0],
+                      themeController.isDarkMode,
+                    ).withAlpha(alpha),
+
               borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: colors.dividerColor),
             )
           : BoxDecoration(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         spacing: 2,
         children: [
-          Text(
+          ScaledTextWidget(
             time,
             style: TextStyle(color: colors.primaryColor, fontSize: 10),
           ),
 
-          buildMessageStatusIndicator(context, messageStatus, 10),
+          buildMessageStatusIndicator(context, messageStatus, 15),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
 
+import '../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
 import '../../../data/app_notifiers.dart';
 import '../../../data/app_text_styles.dart';
@@ -20,11 +21,12 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
+      overlayCircularRadius: 3,
       onTap: () => onTap(context),
       child: Container(
         color: colors.cardsColor,
@@ -32,14 +34,14 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsetsGeometry.symmetric(vertical: 8),
+              padding: EdgeInsetsGeometry.symmetric(vertical: 6),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   if (data.icon != null)
                     Padding(
                       padding: EdgeInsets.only(left: 8),
-                      child: Text(data.icon!),
+                      child: ScaledTextWidget(data.icon!),
                     ),
                   Expanded(
                     child: Column(
@@ -51,7 +53,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
                             bottom: 3,
                             top: 3,
                           ),
-                          child: Text(
+                          child: ScaledTextWidget(
                             data.label,
                             style: AppTextStyles.settingsCardsButtonsTextStyle(
                               colors,
@@ -62,7 +64,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
                         if (data.helpText != null)
                           Padding(
                             padding: EdgeInsetsGeometry.only(left: 12),
-                            child: Text(
+                            child: ScaledTextWidget(
                               data.helpText!,
                               style: AppTextStyles.hintTextStyle(colors),
                               maxLines: 3,

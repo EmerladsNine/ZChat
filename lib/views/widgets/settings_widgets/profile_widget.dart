@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/pages/settings/profile_settings_page.dart';
 
+import '../miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../../data/app_text_styles.dart';
@@ -18,7 +19,7 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.of(context);
+    final colors = AppTheme.themeColorsOf(context);
 
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableButtons,
@@ -60,11 +61,11 @@ class ProfileWidget extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                ScaledTextWidget(
                   name,
                   style: AppTextStyles.settingsProfileNameTextStyle(colors),
                 ),
-                Text(
+                ScaledTextWidget(
                   description,
                   style: AppTextStyles.settingsProfileDescriptionTextStyle(
                     colors,
