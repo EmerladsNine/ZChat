@@ -24,7 +24,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   void _scrollToBottom() async {
     Completer<void> canContinueScrolling = Completer<void>();
     while (_scrollController.offset != 0.0) {
-      _scrollController.jumpTo(0.0);
+      await _scrollController.animateTo(0.0,duration: Duration(milliseconds: 200),curve: Curves.linear);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!canContinueScrolling.isCompleted) {
           canContinueScrolling.complete();
