@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/widgets/miscellaneous/debug_logs_widget.dart';
 
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
@@ -19,7 +20,11 @@ class CameraButtonWidget extends StatelessWidget {
         animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
         overlayCircularRadius: 15,
-        onTap: () {},
+        onTap: () {
+          //Todo remove this later
+          DebugLogsWidget.appLogs.clear();
+          DebugLogsWidget.addLog("Cleared!");
+        },
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Icon(
