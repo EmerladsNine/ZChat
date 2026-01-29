@@ -17,7 +17,9 @@ class StorageManager {
             id INTEGER PRIMARY KEY,
             senderId INTEGER,
             timestamp INTEGER,
-            message TEXT NOT NULL
+            message TEXT NOT NULL,
+            replySenderName TEXT,
+            replyText TEXT
             )
             ''');
       },

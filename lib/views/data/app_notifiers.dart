@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/data_classes/message_reply_data.dart';
 
 abstract final class AppNotifiers {
   static final ValueNotifier<int> selectedPageNotifier = ValueNotifier(0);
@@ -9,4 +10,5 @@ abstract final class AppNotifiers {
     false,
   );
   static final ValueNotifier<bool> isEmojiPickerVisible = ValueNotifier(false);
+  static final ValueNotifier<MessageReplyData?> replyData = ValueNotifier(null);
 }

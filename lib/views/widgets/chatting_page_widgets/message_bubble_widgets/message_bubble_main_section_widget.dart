@@ -36,11 +36,16 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
         horizontal: received && isEmojiBubble ? 9 : 0,
       ),
       child: Column(
+        crossAxisAlignment: received
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.end,
         spacing: 5,
         children: [
           //Message Text
           Container(
-            alignment: isEmojiBubble ? Alignment.center : Alignment.centerLeft,
+            alignment: isEmojiBubble
+                ? (received ? Alignment.centerLeft : Alignment.centerRight)
+                : Alignment.centerLeft,
             child: ScaledTextWidget(
               text,
               style: TextStyle(

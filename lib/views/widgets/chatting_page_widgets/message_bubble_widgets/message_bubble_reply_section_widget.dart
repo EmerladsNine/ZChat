@@ -17,26 +17,25 @@ class MessageBubbleReplySectionWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: colors.dividerColor,
+        color: colors.dividerColor.withAlpha(150),
         borderRadius: BorderRadius.circular(5),
         border: BoxBorder.fromLTRB(
           left: BorderSide(color: colors.primaryColor, width: 3),
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ScaledTextWidget(
-                replyData.replyTextSender,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              ScaledTextWidget(
-                replyData.replyText,
-                style: TextStyle(color: colors.hintColor),
-              ),
-            ],
+          Row(),
+          ScaledTextWidget(
+            replyData.replyTextSender != "" ? replyData.replyTextSender : "You",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          ScaledTextWidget(
+            replyData.replyText,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: colors.primaryColor),
           ),
         ],
       ),

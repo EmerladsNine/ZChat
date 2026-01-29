@@ -44,7 +44,6 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
 
     return Container(
       color: colors.cardsColor,
-      margin: EdgeInsetsGeometry.only(top: 5),
       child: Padding(
         padding: widget.isInSafeArea ? EdgeInsetsGeometry.zero : EdgeInsets.only(bottom: widget.bottomSafeArea),
         child: Material(

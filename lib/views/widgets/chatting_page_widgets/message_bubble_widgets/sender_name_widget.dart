@@ -40,22 +40,25 @@ class SenderNameWidget extends StatelessWidget {
         tail: true,
         draw: isSeparate,
       ),
-      child: IntrinsicWidth(
-        child: Container(
-          constraints: BoxConstraints(minWidth: 70, maxWidth: maxBubbleWidth),
-          padding: isSeparate
-              ? EdgeInsets.only(left: 10 + AppConstants.messageTailSize)
-              : EdgeInsetsGeometry.zero,
-          child: ScaledTextWidget(
-            senderName,
-            style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 15,
-              color: colors.brandPrimaryColor,
-              height: 1,
+      child: Row(
+        children: [
+          Container(
+            constraints: BoxConstraints(minWidth: 70, maxWidth: maxBubbleWidth),
+            padding: isSeparate
+                ? EdgeInsets.only(left: 10 + AppConstants.messageTailSize)
+                : EdgeInsetsGeometry.zero,
+            child: ScaledTextWidget(
+              senderName,
+              textAlign: isSeparate ? TextAlign.center : TextAlign.start,
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 15,
+                color: colors.brandPrimaryColor,
+                height: 1,
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

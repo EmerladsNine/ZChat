@@ -8,6 +8,8 @@ import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/MessageSystem/message.dart';
 import 'package:zchat/storage_managment/chats_storage_manager.dart';
 import 'package:zchat/utils/print_on_debug.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/data_classes/message_reply_data.dart';
 
 class MessagingService {
   late Socket socket;
@@ -51,12 +53,15 @@ class MessagingService {
 
   Future<void> sendMessage(String message, Chat chat) async {
     message = message.trim();
+    MessageReplyData? replyData = AppNotifiers.replyData.value;
     try {
       sendProtocolUnit(MessageType.normalMessage, [...utf8.encode(message)]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
 
-      ChatsStorageManager.insertMessage(senderId: 0,timestamp: timestamp,msg: message);
-      chat.addMessage(Message(text: message, timestamp: timestamp));
+      Message msg = Message(text: message, timestamp: timestamp,replyData: replyData);
+      ChatsStorageManager.insertMessage(message: msg);
+      AppNotifiers.replyData.value = null;
+      chat.addMessage(msg);
 
       printOnDebug('sent: $message');
     } catch (e) {

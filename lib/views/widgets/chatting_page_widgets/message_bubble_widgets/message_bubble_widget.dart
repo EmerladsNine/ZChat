@@ -26,12 +26,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zchat/enums/message_bubble_color.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_message_bubble_colors.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_bubble_main_section_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_bubble_reply_section_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/pfp_of_sender_widget.dart';
@@ -40,7 +44,7 @@ import '../../../../themes_system/app_theme.dart';
 import '../../../data_classes/message_reply_data.dart';
 import '../../../painters/message_bubble_painter.dart';
 
-class MessageBubbleWidget extends StatelessWidget {
+class MessageBubbleWidget extends StatefulWidget {
   final String? senderName;
   final String text;
   final String time;
@@ -63,95 +67,143 @@ class MessageBubbleWidget extends StatelessWidget {
   });
 
   @override
+  State<MessageBubbleWidget> createState() => _MessageBubbleWidgetState();
+}
+
+class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
+
+  double dragWidth = 0.0;
+  double dragStart = 0.0;
+  bool didVibrate  = false;
+
+
+  @override
   Widget build(BuildContext context) {
     final ThemeController themeController = AppTheme.controllerOf(context);
     final List<MessageBubbleColor> messageBubbleColors =
         themeController.messageBubbleColors;
     final int alpha = (themeController.opacity * 255).round();
 
-    bool received = senderName != null;
+    bool received = widget.senderName != null;
 
-    return Padding(
-      padding: EdgeInsets.only(
-        top: isChildBubble ? 2 : 10,
-        left: 6,
-        right: 6,
-        bottom: 2,
-      ),
-      child: Row(
-        mainAxisAlignment: senderName == null
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 5,
-        children: [
-          if (received) PfpOfSenderWidget(isChildBubble: isChildBubble),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onHorizontalDragCancel: (){
+        setState(() {
+          dragWidth = 0;
+        });
+      },
+      onHorizontalDragUpdate: (details){
+        if(!didVibrate && -dragWidth * 4 >= widget.maxBubbleWidth)
+        {
+          HapticFeedback.selectionClick();
+          didVibrate = true;
+        }
+        setState(() {
+          dragWidth = dragStart - details.localPosition.dx;
+          if(dragWidth > 0) dragWidth = 0;
+        });
+      },
+      onHorizontalDragDown: (details){
+        dragStart = details.localPosition.dx;
+        didVibrate = false;
+      },
+      onHorizontalDragEnd: (_){
+        setState(() {
+          if(-dragWidth * 4 >= widget.maxBubbleWidth)
+          {
+            AppNotifiers.replyData.value = MessageReplyData(widget.text, widget.senderName ?? "");
+          }
+          dragWidth = 0;
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOutCubic,
+        transform: Matrix4.translationValues(sqrt(-dragWidth) * (received ? 8 : 8), 0, 0),
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: widget.isChildBubble ? 2 : 10,
+            left: 6,
+            right: 6,
+            bottom: 2,
+          ),
+          child: Row(
+            mainAxisAlignment: !received
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 5,
+            children: [
+              if (received) PfpOfSenderWidget(isChildBubble: widget.isChildBubble),
 
-          CustomPaint(
-            painter: MessageBubblePainter(
-              color: received
-                  ? AppMessageBubbleColors.get(
-                      messageBubbleColors[1],
-                      themeController.isDarkMode,
-                    ).withAlpha(alpha)
-                  : AppMessageBubbleColors.get(
-                      messageBubbleColors[0],
-                      themeController.isDarkMode,
-                    ).withAlpha(alpha),
-              shadowColor: Colors.transparent,
-              alignment: received ? Alignment.topLeft : Alignment.topRight,
-              tail: !isChildBubble,
-              draw: !isEmojiBubble,
-            ),
-            child: IntrinsicWidth(
-              child: Container(
-                constraints: BoxConstraints(
-                  minWidth: 50,
-                  maxWidth: maxBubbleWidth,
+              CustomPaint(
+                painter: MessageBubblePainter(
+                  color: received
+                      ? AppMessageBubbleColors.get(
+                          messageBubbleColors[1],
+                          themeController.isDarkMode,
+                        ).withAlpha(alpha)
+                      : AppMessageBubbleColors.get(
+                          messageBubbleColors[0],
+                          themeController.isDarkMode,
+                        ).withAlpha(alpha),
+                  shadowColor: Colors.transparent,
+                  alignment: received ? Alignment.topLeft : Alignment.topRight,
+                  tail: !widget.isChildBubble,
+                  draw: !widget.isEmojiBubble,
                 ),
-                padding: EdgeInsets.only(
-                  top: 3,
-                  bottom: 3,
-                  right: received
-                      ? 2
-                      : isEmojiBubble
-                      ? AppConstants.messageTailSize
-                      : 5 + AppConstants.messageTailSize,
-                  left: received
-                      ? isEmojiBubble
-                            ? 0
-                            : 5 + AppConstants.messageTailSize
-                      : isEmojiBubble
-                      ? 0
-                      : 5,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: isEmojiBubble ? 5 : 1,
-                  children: [
-                    if (received && !isChildBubble)
-                      SenderNameWidget(
-                        senderName: senderName!,
-                        isSeparate: isEmojiBubble,
-                        maxBubbleWidth: maxBubbleWidth,
-                      ),
-
-                    if (replyData != null)
-                      MessageBubbleReplySectionWidget(replyData: replyData!),
-
-                    MessageBubbleMainSectionWidget(
-                      text: text,
-                      time: time,
-                      isEmojiBubble: isEmojiBubble,
-                      messageStatus: messageStatus,
-                      senderName: senderName,
+                child: IntrinsicWidth(
+                  child: Container(
+                    constraints: BoxConstraints(
+                      minWidth: 50,
+                      maxWidth: widget.maxBubbleWidth,
                     ),
-                  ],
+                    padding: EdgeInsets.only(
+                      top: 3,
+                      bottom: 3,
+                      right: received
+                          ? 2
+                          : widget.isEmojiBubble
+                          ? AppConstants.messageTailSize
+                          : 5 + AppConstants.messageTailSize,
+                      left: received
+                          ? widget.isEmojiBubble
+                                ? 0
+                                : 5 + AppConstants.messageTailSize
+                          : widget.isEmojiBubble
+                          ? 0
+                          : 5,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: widget.isEmojiBubble ? 5 : 1,
+                      children: [
+                        if (received && !widget.isChildBubble)
+                          SenderNameWidget(
+                            senderName: widget.senderName!,
+                            isSeparate: widget.isEmojiBubble,
+                            maxBubbleWidth: widget.maxBubbleWidth,
+                          ),
+
+                        if (widget.replyData != null)
+                          MessageBubbleReplySectionWidget(replyData: widget.replyData!),
+
+                        MessageBubbleMainSectionWidget(
+                          text: widget.text,
+                          time: widget.time,
+                          isEmojiBubble: widget.isEmojiBubble,
+                          messageStatus: widget.messageStatus,
+                          senderName: widget.senderName,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

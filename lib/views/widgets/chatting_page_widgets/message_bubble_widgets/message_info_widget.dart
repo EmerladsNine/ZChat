@@ -51,6 +51,7 @@ class MessageInfoWidget extends StatelessWidget {
           : BoxDecoration(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
         spacing: 2,
         children: [
           ScaledTextWidget(
