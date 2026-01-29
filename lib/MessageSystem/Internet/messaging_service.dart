@@ -11,6 +11,23 @@ import 'package:zchat/utils/print_on_debug.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/data_classes/message_reply_data.dart';
 
+List<int> intToBigEndian(int num, int bytes) {
+  List<int> list = [];
+  for (int i = bytes - 1; i != -1; i--) {
+    list.add(num >> (i * 8) & 0xff);
+  }
+  return list;
+}
+
+int bigEndianToInt(List<int> buffer, int bytes) {
+  int res = 0;
+  for (int i = 0; i < bytes; i++) {
+    res = res << bytes | buffer[i];
+  }
+  buffer.removeRange(0, bytes);
+  return res;
+}
+
 class MessagingService {
   late Socket socket;
   Timer? pingTimeout;
@@ -20,14 +37,6 @@ class MessagingService {
 
   MessagingService() {
     listener = ListenerService(this);
-  }
-
-  List<int> intToBigEndian(int num, int bytes) {
-    List<int> list = [];
-    for (int i = bytes - 1; i != -1; i--) {
-      list.add(num >> (i * 8) & 0xff);
-    }
-    return list;
   }
 
   void sendProtocolUnit(MessageType type, List<int> data) {
@@ -55,10 +64,20 @@ class MessagingService {
     message = message.trim();
     MessageReplyData? replyData = AppNotifiers.replyData.value;
     try {
-      sendProtocolUnit(MessageType.normalMessage, [...utf8.encode(message)]);
+      sendProtocolUnit(MessageType.normalMessage, [
+        ...intToBigEndian(replyData?.replyTextSender.length ?? 0, 4),
+        ...utf8.encode(replyData?.replyTextSender ?? ""),
+        ...intToBigEndian(replyData?.replyText.length ?? 0, 4),
+        ...utf8.encode(replyData?.replyText ?? ""),
+        ...utf8.encode(message),
+      ]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
 
-      Message msg = Message(text: message, timestamp: timestamp,replyData: replyData);
+      Message msg = Message(
+        text: message,
+        timestamp: timestamp,
+        replyData: replyData,
+      );
       ChatsStorageManager.insertMessage(message: msg);
       AppNotifiers.replyData.value = null;
       chat.addMessage(msg);
@@ -68,8 +87,6 @@ class MessagingService {
       printOnDebug(e);
     }
   }
-
-
 
   Future<void> connectServer(String caller) async {
     final String host = "92.113.26.192";
