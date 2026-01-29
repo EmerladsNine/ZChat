@@ -26,7 +26,7 @@ class MessagesPanelWidget extends StatelessWidget {
               return Consumer<Chat>(
                 builder: (context, chat, child) {
                   return ListView.builder(
-                    padding: EdgeInsetsGeometry.zero,
+                    padding: EdgeInsetsGeometry.only(bottom: 10),
                     shrinkWrap: chat.messages.length < 20 ? true : false,
                     reverse: true,
                     controller: scrollController,

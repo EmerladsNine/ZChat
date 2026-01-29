@@ -177,7 +177,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: widget.isEmojiBubble ? 5 : 1,
+                      spacing: widget.isEmojiBubble ? 5 : 3,
                       children: [
                         if (received && !widget.isChildBubble)
                           SenderNameWidget(

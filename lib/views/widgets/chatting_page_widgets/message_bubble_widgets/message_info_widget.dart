@@ -52,11 +52,11 @@ class MessageInfoWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
-        spacing: 2,
+        spacing: 4,
         children: [
           ScaledTextWidget(
             time,
-            style: TextStyle(color: colors.primaryColor, fontSize: 10),
+            style: TextStyle(color: colors.primaryColor.withAlpha(200), fontSize: 8),
           ),
 
           buildMessageStatusIndicator(context, messageStatus, 15),

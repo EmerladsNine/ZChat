@@ -15,7 +15,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
     required this.text,
     required this.time,
     required this.isEmojiBubble,
-    required this.messageStatus,
+    required this.messageStatus
   });
 
   final String? senderName;
@@ -39,7 +39,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
         crossAxisAlignment: received
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.end,
-        spacing: 5,
+        spacing: isEmojiBubble ? 5 : 0,
         children: [
           //Message Text
           Container(
@@ -52,7 +52,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
                 fontSize: isEmojiBubble
                     ? AppTheme.emojiBubbleSizeOf(context)
                     : resolveMessageFontSize(context, text),
-                height: 1.5,
+                height: 1,
                 color: colors.primaryColor,
               ),
             ),
@@ -63,7 +63,8 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
             messageStatus: messageStatus,
             hasBackground: isEmojiBubble,
             received: received,
-          ),
+          )
+
         ],
       ),
     );

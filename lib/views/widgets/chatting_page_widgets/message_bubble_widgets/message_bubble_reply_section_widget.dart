@@ -17,7 +17,7 @@ class MessageBubbleReplySectionWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: colors.dividerColor.withAlpha(150),
+        color: colors.primaryColor.withAlpha(40),
         borderRadius: BorderRadius.circular(5),
         border: BoxBorder.fromLTRB(
           left: BorderSide(color: colors.primaryColor, width: 3),
