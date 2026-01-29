@@ -1,10 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zchat/authentication/google_auth_service.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
-class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+class SignInPage extends StatefulWidget {
+   const SignInPage({super.key});
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+
+  bool _signIn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +46,28 @@ class SignInPage extends StatelessWidget {
                     children: [
                       RippleEffectButtonWidget(
                         child: SvgPicture.asset(
-                          "assets/icons/google_web_signIn_svg/dark/web_dark_sq_SI.svg",
-                          height: 54,
+                          "assets/icons/google_web_signIn_svg/dark/web_dark_sq_ctn.svg",
+                          height: 51,
                         ),
                         onTap: (){
-
+                            GoogleAuthService.signIn();
                         },
+                      ),
+                      if(Platform.isIOS)
+                      RippleEffectButtonWidget(
+                        child: Container(
+                          height: 54,
+                          width: 240,
+                          decoration: BoxDecoration(
+                            color: colors.cardsColor,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: Color.fromARGB(0xff, 0x8E, 0x91, 0x8F),
+                              width: 1,
+                            ),
+                          ),
+                          child: Image.asset("assets/icons/apple_buttons/appleid_button@4xDark.png",height: 51,),
+                        )
                       ),
                       RippleEffectButtonWidget(
                         child: Container(
@@ -51,7 +78,7 @@ class SignInPage extends StatelessWidget {
                             horizontal: 15,
                           ),
                           decoration: BoxDecoration(
-                            color: colors.cardsColor,
+                            color: Colors.black,
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(
                               color: Color.fromARGB(0xff, 0x8E, 0x91, 0x8F),
@@ -65,7 +92,8 @@ class SignInPage extends StatelessWidget {
                             children: [
                               Icon(Icons.email_rounded,size: 25,),
                               Text(
-                                "Sign in with Email",
+                                _signIn ?
+                                "Sign in with Email" : "Sign up with Email",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 19,
@@ -77,8 +105,14 @@ class SignInPage extends StatelessWidget {
                         ),
                       ),
                       Row(children: [
-                        Text("Don't have an account ? "),
-                        Text("Sign up",style: TextStyle(color: colors.brandPrimaryColor),)
+                        Text(_signIn ? "Don't have an account ? " : "Already have an account ? "),
+                        GestureDetector(
+                            onTap: (){
+                                setState(() {
+                                  _signIn = !_signIn;
+                                });
+                            },
+                            child: Text( _signIn ? "Sign up" : "Sign in",style: TextStyle(color: colors.brandPrimaryColor),))
                       ],),
                       Column(
                         children: [
