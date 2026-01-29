@@ -94,6 +94,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
         Keyboard.nextKeyboardHeight / MediaQuery.devicePixelRatioOf(context);
 
     double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
+    bottomSafeArea = bottomSafeArea < 46 ? 46 : bottomSafeArea;
 
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isEmojiPickerVisible,

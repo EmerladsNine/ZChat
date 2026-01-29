@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/keyboard/keyboard.dart';
@@ -41,9 +43,10 @@ class EmojiPanelButtonWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Icon(
-            Icons.emoji_emotions_outlined,
+            Platform.isIOS ?
+            Icons.widgets_outlined : Icons.emoji_emotions_outlined,
             color: colors.primaryColor,
-            size: 25,
+            size: 21,
           ),
         ),
       ),

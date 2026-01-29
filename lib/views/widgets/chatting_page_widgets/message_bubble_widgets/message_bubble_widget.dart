@@ -71,11 +71,9 @@ class MessageBubbleWidget extends StatefulWidget {
 }
 
 class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
-
   double dragWidth = 0.0;
   double dragStart = 0.0;
-  bool didVibrate  = false;
-
+  bool didVibrate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -88,31 +86,32 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onHorizontalDragCancel: (){
+      onHorizontalDragCancel: () {
         setState(() {
           dragWidth = 0;
         });
       },
-      onHorizontalDragUpdate: (details){
-        if(!didVibrate && -dragWidth * 4 >= widget.maxBubbleWidth)
-        {
+      onHorizontalDragUpdate: (details) {
+        if (!didVibrate && -dragWidth * 4 >= widget.maxBubbleWidth) {
           HapticFeedback.selectionClick();
           didVibrate = true;
         }
         setState(() {
           dragWidth = dragStart - details.localPosition.dx;
-          if(dragWidth > 0) dragWidth = 0;
+          if (dragWidth > 0) dragWidth = 0;
         });
       },
-      onHorizontalDragDown: (details){
+      onHorizontalDragDown: (details) {
         dragStart = details.localPosition.dx;
         didVibrate = false;
       },
-      onHorizontalDragEnd: (_){
+      onHorizontalDragEnd: (_) {
         setState(() {
-          if(-dragWidth * 4 >= widget.maxBubbleWidth)
-          {
-            AppNotifiers.replyData.value = MessageReplyData(widget.text, widget.senderName ?? "");
+          if (-dragWidth * 4 >= widget.maxBubbleWidth) {
+            AppNotifiers.replyData.value = MessageReplyData(
+              widget.text,
+              widget.senderName ?? "",
+            );
           }
           dragWidth = 0;
         });
@@ -120,7 +119,11 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOutCubic,
-        transform: Matrix4.translationValues(sqrt(-dragWidth) * (received ? 8 : 8), 0, 0),
+        transform: Matrix4.translationValues(
+          sqrt(-dragWidth) * (received ? 8 : 8),
+          0,
+          0,
+        ),
         child: Padding(
           padding: EdgeInsets.only(
             top: widget.isChildBubble ? 2 : 10,
@@ -135,7 +138,8 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 5,
             children: [
-              if (received) PfpOfSenderWidget(isChildBubble: widget.isChildBubble),
+              if (received)
+                PfpOfSenderWidget(isChildBubble: widget.isChildBubble),
 
               CustomPaint(
                 painter: MessageBubblePainter(
@@ -160,17 +164,17 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                       maxWidth: widget.maxBubbleWidth,
                     ),
                     padding: EdgeInsets.only(
-                      top: 3,
+                      top: 5,
                       bottom: 3,
                       right: received
-                          ? 2
+                          ? 5
                           : widget.isEmojiBubble
                           ? AppConstants.messageTailSize
-                          : 5 + AppConstants.messageTailSize,
+                          : 7 + AppConstants.messageTailSize,
                       left: received
                           ? widget.isEmojiBubble
                                 ? 0
-                                : 5 + AppConstants.messageTailSize
+                                : 7 + AppConstants.messageTailSize
                           : widget.isEmojiBubble
                           ? 0
                           : 5,
@@ -187,7 +191,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                           ),
 
                         if (widget.replyData != null)
-                          MessageBubbleReplySectionWidget(replyData: widget.replyData!),
+                          MessageBubbleReplySectionWidget(isSeparate: widget.isEmojiBubble,received: received,replyData: widget.replyData!),
 
                         MessageBubbleMainSectionWidget(
                           text: widget.text,

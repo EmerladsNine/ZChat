@@ -43,6 +43,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
         children: [
           //Message Text
           Container(
+            constraints: BoxConstraints(minWidth: 80),
             alignment: isEmojiBubble
                 ? (received ? Alignment.centerLeft : Alignment.centerRight)
                 : Alignment.centerLeft,

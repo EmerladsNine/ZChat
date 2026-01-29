@@ -30,38 +30,46 @@ class MessageInfoWidget extends StatelessWidget {
         themeController.messageBubbleColors;
     final int alpha = (themeController.opacity * 255).round();
 
-    return Container(
-      padding: hasBackground
-          ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2)
-          : EdgeInsetsGeometry.zero,
-      decoration: hasBackground
-          ? BoxDecoration(
-              color: received
-                  ? AppMessageBubbleColors.get(
-                      messageBubbleColors[1],
-                      themeController.isDarkMode,
-                    ).withAlpha(alpha)
-                  : AppMessageBubbleColors.get(
-                      messageBubbleColors[0],
-                      themeController.isDarkMode,
-                    ).withAlpha(alpha),
+    return Row(
+      mainAxisAlignment: hasBackground ?
+                  received ? MainAxisAlignment.start : MainAxisAlignment.end :
+                  received ? MainAxisAlignment.end : MainAxisAlignment.end
+      ,
+      children: [
+        Container(
+          padding: hasBackground
+              ? EdgeInsetsGeometry.symmetric(horizontal: 2, vertical: 2)
+              : EdgeInsetsGeometry.zero,
+          decoration: hasBackground
+              ? BoxDecoration(
+                  color: received
+                      ? AppMessageBubbleColors.get(
+                          messageBubbleColors[1],
+                          themeController.isDarkMode,
+                        ).withAlpha(alpha)
+                      : AppMessageBubbleColors.get(
+                          messageBubbleColors[0],
+                          themeController.isDarkMode,
+                        ).withAlpha(alpha),
 
-              borderRadius: BorderRadius.circular(5),
-            )
-          : BoxDecoration(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
-        spacing: 4,
-        children: [
-          ScaledTextWidget(
-            time,
-            style: TextStyle(color: colors.primaryColor.withAlpha(200), fontSize: 8),
+                  borderRadius: BorderRadius.circular(5),
+                )
+              : BoxDecoration(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            spacing: 4,
+            children: [
+              ScaledTextWidget(
+                time,
+                style: TextStyle(color: colors.primaryColor.withAlpha(200), fontSize: 8),
+              ),
+
+              buildMessageStatusIndicator(context, messageStatus, 15),
+            ],
           ),
-
-          buildMessageStatusIndicator(context, messageStatus, 15),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
