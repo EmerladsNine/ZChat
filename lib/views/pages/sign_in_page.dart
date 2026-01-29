@@ -107,12 +107,17 @@ class _SignInPageState extends State<SignInPage> {
                       Row(children: [
                         Text(_signIn ? "Don't have an account ? " : "Already have an account ? "),
                         GestureDetector(
+
+                          behavior: HitTestBehavior.opaque,
                             onTap: (){
                                 setState(() {
                                   _signIn = !_signIn;
                                 });
                             },
-                            child: Text( _signIn ? "Sign up" : "Sign in",style: TextStyle(color: colors.brandPrimaryColor),))
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text( _signIn ? "Sign up" : "Sign in",style: TextStyle(color: colors.brandPrimaryColor),),
+                            ))
                       ],),
                       Column(
                         children: [

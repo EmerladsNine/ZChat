@@ -8,9 +8,15 @@ class GoogleAuthService {
     await _googleSignIn.initialize(
         clientId: Platform.isIOS ? "com.googleusercontent.apps.987307069745-oqrmd1ak9fpclfhodomfq0nmuggfnc4l" : null,
         serverClientId: "987307069745-gsd1drcikr8retccfcafgf3tme882ub3.apps.googleusercontent.com");
-    GoogleSignInAccount gUser = await _googleSignIn.authenticate();
-    print(gUser.email);
-    print(gUser.authentication.idToken);
-    print(gUser.displayName);
+    try {
+      GoogleSignInAccount gUser = await _googleSignIn.authenticate();
+      print(gUser.email);
+      print(gUser.authentication.idToken);
+      print(gUser.displayName);
+    }
+    on GoogleSignInException catch(e)
+    {
+      print("sign in cancelled");
+    }
   }
 }
