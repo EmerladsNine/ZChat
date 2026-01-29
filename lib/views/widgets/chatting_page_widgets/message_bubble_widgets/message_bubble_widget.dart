@@ -29,14 +29,13 @@ SOFTWARE.
 import 'package:flutter/material.dart';
 import 'package:zchat/enums/message_bubble_color.dart';
 import 'package:zchat/enums/message_status.dart';
-import 'package:zchat/themes_system/theme_color_scheme.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_message_bubble_colors.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_bubble_main_section_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_bubble_reply_section_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/pfp_of_sender_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/sender_name_widget.dart';
-import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_info_widget.dart';
-
-import '../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
 import '../../../data_classes/message_reply_data.dart';
 import '../../../painters/message_bubble_painter.dart';
@@ -66,7 +65,6 @@ class MessageBubbleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = AppTheme.controllerOf(context);
-    final ThemeColorScheme colors = themeController.colors;
     final List<MessageBubbleColor> messageBubbleColors =
         themeController.messageBubbleColors;
     final int alpha = (themeController.opacity * 255).round();
@@ -87,19 +85,7 @@ class MessageBubbleWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 5,
         children: [
-          //Pfp of sender
-          if (received)
-            isChildBubble
-                ? SizedBox(width: 40, height: 40)
-                : Container(
-                    decoration: BoxDecoration(
-                      color: colors.cardsColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    width: 40,
-                    height: 40,
-                    child: Icon(Icons.person, color: colors.iconDefaultColor),
-                  ),
+          if (received) PfpOfSenderWidget(isChildBubble: isChildBubble),
 
           CustomPaint(
             painter: MessageBubblePainter(
@@ -151,69 +137,13 @@ class MessageBubbleWidget extends StatelessWidget {
                       ),
 
                     if (replyData != null)
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: colors.dividerColor,
-                          borderRadius: BorderRadius.circular(5),
-                          border: BoxBorder.fromLTRB(
-                            left: BorderSide(
-                              color: colors.primaryColor,
-                              width: 3,
-                            ),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ScaledTextWidget(
-                                  replyData!.replyTextSender,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                ScaledTextWidget(
-                                  replyData!.replyText,
-                                  style: TextStyle(color: colors.hintColor),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      MessageBubbleReplySectionWidget(replyData: replyData!),
 
-                    Padding(
-                      padding: EdgeInsetsGeometry.symmetric(
-                        horizontal: received && isEmojiBubble ? 9 : 0,
-                      ),
-                      child: Column(
-                        spacing: 5,
-                        children: [
-                          //Message Text
-                          Container(
-                            alignment: isEmojiBubble
-                                ? Alignment.center
-                                : Alignment.centerLeft,
-                            child: ScaledTextWidget(
-                              text,
-                              style: TextStyle(
-                                fontSize: isEmojiBubble
-                                    ? AppTheme.emojiBubbleSizeOf(context)
-                                    : 17,
-                                height: 1,
-                                color: colors.primaryColor,
-                              ),
-                            ),
-                          ),
-
-                          MessageInfoWidget(
-                            time: time,
-                            messageStatus: messageStatus,
-                            hasBackground: isEmojiBubble,
-                            received: received,
-                          ),
-                        ],
-                      ),
+                    MessageBubbleMainSectionWidget(
+                      text: text,
+                      time: time,
+                      isEmojiBubble: isEmojiBubble,
+                      messageStatus: messageStatus,
                     ),
                   ],
                 ),
