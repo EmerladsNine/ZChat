@@ -144,6 +144,7 @@ class MessageBubbleWidget extends StatelessWidget {
                       time: time,
                       isEmojiBubble: isEmojiBubble,
                       messageStatus: messageStatus,
+                      senderName: senderName,
                     ),
                   ],
                 ),
