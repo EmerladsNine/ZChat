@@ -57,7 +57,6 @@ import UIKit
             return
         }
         
-        keyboardChannel?.invokeMethod("keyboardAnimationStart", arguments: nil)
 
         let screenHeight = UIScreen.main.bounds.height
         let keyboardHeight = max(0, screenHeight - frameEnd.origin.y)
@@ -66,6 +65,8 @@ import UIKit
             "keyboardHeight",
             arguments: Int(keyboardHeight)
         )
+
+        keyboardChannel?.invokeMethod("keyboardAnimationStart", arguments: nil)
     }
 
     @objc
