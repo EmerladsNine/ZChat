@@ -155,8 +155,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       valueListenable: AppNotifiers.replyData,
                       builder: (context, value, child) {
                         if(value != null) lastReplyData = value;
-                        return AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
+                        return Container(
                           height: value != null ? null : 0,
                           color: colors.cardsColor,
                           padding: EdgeInsets.all(5),
