@@ -45,7 +45,7 @@ class EmojiPanelButtonWidget extends StatelessWidget {
           child: Icon(
             Platform.isIOS ?
             Icons.widgets_outlined : Icons.emoji_emotions_outlined,
-            color: colors.primaryColor,
+            color: Colors.white,
             size: 24,
           ),
         ),

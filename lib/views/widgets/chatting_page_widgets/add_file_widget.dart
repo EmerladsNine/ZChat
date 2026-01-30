@@ -22,7 +22,7 @@ class AddFileWidget extends StatelessWidget {
         onTap: () {},
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: Icon(Icons.add, color: colors.primaryColor, size: 25),
+          child: Icon(Icons.add, color: Colors.white, size: 25),
         ),
       ),
     );

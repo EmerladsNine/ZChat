@@ -23,7 +23,7 @@ class GalleryButtonWidget extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           child: Icon(
             Icons.image_outlined,
-            color: colors.primaryColor,
+            color: Colors.white,
             size: 25,
           ),
         ),

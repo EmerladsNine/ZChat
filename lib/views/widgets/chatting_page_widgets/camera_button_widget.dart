@@ -24,7 +24,7 @@ class CameraButtonWidget extends StatelessWidget {
           padding: const EdgeInsets.all(2),
           child: Icon(
             Icons.camera_alt_outlined,
-            color: colors.primaryColor,
+            color: Colors.white,
             size: 24,
           ),
         ),

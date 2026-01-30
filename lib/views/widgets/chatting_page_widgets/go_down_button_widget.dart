@@ -36,7 +36,7 @@ class GoDownButtonWidget extends StatelessWidget {
             ),
             child: Icon(
               Icons.keyboard_arrow_down,
-              color: colors.textSecondaryColor,
+              color: Colors.white,
               size: 27,
             ),
           ),
