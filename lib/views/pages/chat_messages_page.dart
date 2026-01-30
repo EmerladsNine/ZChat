@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:zchat/keyboard/keyboard.dart';
@@ -91,7 +92,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     final colors = AppTheme.themeColorsOf(context);
 
     double bottomPadding =
-        Keyboard.nextKeyboardHeight / MediaQuery.devicePixelRatioOf(context);
+        Keyboard.nextKeyboardHeight / (Platform.isAndroid ? MediaQuery.devicePixelRatioOf(context) : 1.0 );
 
     double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
     bottomSafeArea = bottomSafeArea < 46 ? 46 : bottomSafeArea;

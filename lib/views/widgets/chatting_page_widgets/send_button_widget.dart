@@ -52,7 +52,7 @@ class SendButtonWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: !hasVisibleText(controller.text)
-              ? Icon(Icons.mic, size: 25, color: Colors.white)
+              ? Icon(Icons.graphic_eq_sharp, size: 25, color: Colors.white)
               : Transform.translate(
                   offset: Offset(0, -3),
                   child: Transform.rotate(
