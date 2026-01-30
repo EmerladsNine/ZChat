@@ -31,7 +31,7 @@ class GoDownButtonWidget extends StatelessWidget {
           child: Container(
             padding: EdgeInsetsGeometry.all(3),
             decoration: BoxDecoration(
-              color: colors.dividerColor,
+              color: Color(0xFF2d2d2d),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Icon(

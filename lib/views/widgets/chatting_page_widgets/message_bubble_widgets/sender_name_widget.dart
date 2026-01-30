@@ -45,7 +45,7 @@ class SenderNameWidget extends StatelessWidget {
           Container(
             constraints: BoxConstraints(maxWidth: maxBubbleWidth),
             padding: isSeparate
-                ? EdgeInsets.only(left: 10 + AppConstants.messageTailSize)
+                ? EdgeInsets.only(top: 3,bottom: 3,left: 8 + AppConstants.messageTailSize)
                 : EdgeInsetsGeometry.zero,
             child: ScaledTextWidget(
               senderName,

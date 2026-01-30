@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_text_field_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/gallery_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/send_button_widget.dart';
 
 import '../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
 import 'add_file_widget.dart';
-import 'camera_button_widget.dart';
 
 class ChatMessagesFooterWidget extends StatefulWidget {
   const ChatMessagesFooterWidget({
@@ -57,12 +57,12 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                AddFileWidget(),
+                GalleryButtonWidget(),
                 ChatTextFieldWidget(
                   controller: controller,
                   focusNode: widget.focusNode,
                 ),
-                AddFileWidget(),
-                CameraButtonWidget(),
                 SendButtonWidget(
                   controller: controller,
                   scrollToBottom: widget.scrollToBottom,

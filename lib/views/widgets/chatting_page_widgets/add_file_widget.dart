@@ -21,7 +21,7 @@ class AddFileWidget extends StatelessWidget {
         overlayCircularRadius: 15,
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(5.0),
           child: Icon(Icons.add, color: colors.primaryColor, size: 25),
         ),
       ),

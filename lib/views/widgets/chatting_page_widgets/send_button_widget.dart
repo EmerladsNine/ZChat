@@ -50,7 +50,7 @@ class SendButtonWidget extends StatelessWidget {
                 scrollToBottom();
               },
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(5.0),
           child: !hasVisibleText(controller.text)
               ? Icon(Icons.mic, size: 25, color: colors.primaryColor)
               : Transform.translate(

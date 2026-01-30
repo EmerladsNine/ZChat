@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/themes_system/app_theme.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
-import '../../../themes_system/app_theme.dart';
-import '../../data/app_notifiers.dart';
-import '../buttons/ripple_effect_button_widget.dart';
-import '../miscellaneous/custom_tool_tip.dart';
-
-class CameraButtonWidget extends StatelessWidget {
-  const CameraButtonWidget({super.key});
+class GalleryButtonWidget extends StatelessWidget {
+  const GalleryButtonWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
 
     return CustomToolTip(
-      message: 'Camera',
+      message: 'Gallery',
       child: RippleEffectButtonWidget(
         disableSet: AppNotifiers.disableButtons,
         animationDuration: Duration(milliseconds: 50),
@@ -21,11 +20,11 @@ class CameraButtonWidget extends StatelessWidget {
         overlayCircularRadius: 15,
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(2),
+          padding: const EdgeInsets.all(5),
           child: Icon(
-            Icons.camera_alt_outlined,
+            Icons.image_outlined,
             color: colors.primaryColor,
-            size: 24,
+            size: 25,
           ),
         ),
       ),

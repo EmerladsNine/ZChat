@@ -41,12 +41,12 @@ class EmojiPanelButtonWidget extends StatelessWidget {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(2.0),
           child: Icon(
             Platform.isIOS ?
             Icons.widgets_outlined : Icons.emoji_emotions_outlined,
             color: colors.primaryColor,
-            size: 21,
+            size: 24,
           ),
         ),
       ),
