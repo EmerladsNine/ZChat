@@ -30,8 +30,6 @@ class SendButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.themeColorsOf(context);
-
     return CustomToolTip(
       message: !hasVisibleText(controller.text) ? 'Send Voice' : 'Send Message',
       child: RippleEffectButtonWidget(
@@ -52,14 +50,22 @@ class SendButtonWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: !hasVisibleText(controller.text)
-              ? Icon(Icons.graphic_eq_sharp, size: 25, color: Colors.white)
+              ? Icon(
+                  Icons.graphic_eq_sharp,
+                  size: 25,
+                  color: AppTheme.controllerOf(context).isDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                )
               : Transform.translate(
                   offset: Offset(0, -3),
                   child: Transform.rotate(
                     angle: -0.3,
                     child: Icon(
                       Icons.send_rounded,
-                      color: Colors.white,
+                      color: AppTheme.controllerOf(context).isDarkMode
+                          ? Colors.white
+                          : Colors.black,
                       size: 25,
                     ),
                   ),

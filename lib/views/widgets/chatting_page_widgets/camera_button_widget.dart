@@ -10,8 +10,6 @@ class CameraButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.themeColorsOf(context);
-
     return CustomToolTip(
       message: 'Camera',
       child: RippleEffectButtonWidget(
@@ -24,7 +22,9 @@ class CameraButtonWidget extends StatelessWidget {
           padding: const EdgeInsets.all(2),
           child: Icon(
             Icons.camera_alt_outlined,
-            color: Colors.white,
+            color: AppTheme.controllerOf(context).isDarkMode
+                ? Colors.white
+                : Colors.black,
             size: 24,
           ),
         ),

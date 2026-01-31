@@ -20,6 +20,8 @@ abstract final class AppThemes {
     messageBubbleShadowColor: Colors.white,
     emojiPanelColor: Color(0xFF161616),
     selectedMessageBubbleColor: Color(0xFFFFC107),
+    goDownButtonColor: Color(0xFF2d2d2d),
+    chatTextFieldColor: Color(0xFF2d2d2d),
   );
 
   static ThemeColorScheme lightThemeColors = ThemeColorScheme(
@@ -40,5 +42,7 @@ abstract final class AppThemes {
     messageBubbleShadowColor: Colors.black,
     emojiPanelColor: Color(0xFFF1F3F4),
     selectedMessageBubbleColor: Color(0xFF1E88E5),
+    goDownButtonColor: Color(0xFFF2F2F2),
+    chatTextFieldColor: Color(0xFFF2F2F2),
   );
 }

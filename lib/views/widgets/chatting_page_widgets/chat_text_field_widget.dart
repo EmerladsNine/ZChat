@@ -25,8 +25,8 @@ class ChatTextFieldWidget extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 3.0),
         child: Container(
           decoration: BoxDecoration(
-            color: Color(0xFF2d2d2d),
-            borderRadius: BorderRadius.circular(20)
+            color: colors.chatTextFieldColor,
+            borderRadius: BorderRadius.circular(20),
           ),
           padding: EdgeInsetsGeometry.only(right: 3),
           child: Row(
@@ -40,7 +40,9 @@ class ChatTextFieldWidget extends StatelessWidget {
                   controller: controller,
                   focusNode: focusNode,
                   showCursor: true,
-                  textDirection: TextFieldUtils.getTextDirection(controller.text),
+                  textDirection: TextFieldUtils.getTextDirection(
+                    controller.text,
+                  ),
                   textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.multiline,
                   minLines: 1,
@@ -56,15 +58,13 @@ class ChatTextFieldWidget extends StatelessWidget {
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(left: 10, top: 4),
                     isDense: true,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
                   ),
                 ),
               ),
 
               EmojiPanelButtonWidget(focusNode: focusNode),
-              CameraButtonWidget()
+              CameraButtonWidget(),
             ],
           ),
         ),

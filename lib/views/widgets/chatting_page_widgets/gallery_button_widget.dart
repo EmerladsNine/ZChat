@@ -9,8 +9,6 @@ class GalleryButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.themeColorsOf(context);
-
     return CustomToolTip(
       message: 'Gallery',
       child: RippleEffectButtonWidget(
@@ -23,7 +21,9 @@ class GalleryButtonWidget extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           child: Icon(
             Icons.image_outlined,
-            color: Colors.white,
+            color: AppTheme.controllerOf(context).isDarkMode
+                ? Colors.white
+                : Colors.black,
             size: 25,
           ),
         ),

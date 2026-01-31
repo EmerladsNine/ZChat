@@ -31,12 +31,14 @@ class GoDownButtonWidget extends StatelessWidget {
           child: Container(
             padding: EdgeInsetsGeometry.all(3),
             decoration: BoxDecoration(
-              color: Color(0xFF2d2d2d),
+              color: colors.goDownButtonColor,
               borderRadius: BorderRadius.circular(50),
             ),
             child: Icon(
               Icons.keyboard_arrow_down,
-              color: Colors.white,
+              color: AppTheme.controllerOf(context).isDarkMode
+                  ? Colors.white
+                  : Colors.black,
               size: 27,
             ),
           ),
