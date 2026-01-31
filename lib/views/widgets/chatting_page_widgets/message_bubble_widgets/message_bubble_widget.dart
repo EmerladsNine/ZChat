@@ -112,6 +112,11 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
       onHorizontalDragEnd: (_) {
         setState(() {
           if (-dragWidth * 4 >= widget.maxBubbleWidth) {
+            if (!didVibrate)
+            {
+              HapticFeedback.selectionClick();
+              didVibrate = true;
+            }
             AppNotifiers.replyData.value = MessageReplyData(
               widget.text,
               widget.senderName ?? "",
