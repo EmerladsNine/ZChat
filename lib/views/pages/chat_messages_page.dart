@@ -150,6 +150,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                         scrollController: _scrollController,
                         isDownButtonShown: isDownButtonShown,
                         scrollToBottom: _scrollToBottom,
+                        footerTextFieldFocusNode: focusNode,
                       ),
                     ),
 

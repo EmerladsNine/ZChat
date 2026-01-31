@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:zchat/enums/message_status.dart';
 import 'package:zchat/views/data_classes/message_reply_data.dart';
@@ -22,7 +23,7 @@ class Message {
   bool isEmoji;
   MessageReplyData? replyData;
 
-  MessageBubbleWidget getMessageBubble(double maxBubbleWidth) {
+  MessageBubbleWidget getMessageBubble(double maxBubbleWidth,FocusNode footerTextFieldFocusNode) {
     String time = DateFormat('hh:mm a').format(
       DateTime.fromMicrosecondsSinceEpoch(
         timestamp,
@@ -41,6 +42,7 @@ class Message {
       isChildBubble: isChildMessage,
       messageStatus: MessageStatus.delivered, // Placeholder
       replyData: replyData,
+      footerTextFieldFocusNode: footerTextFieldFocusNode,
     );
   }
 }

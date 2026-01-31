@@ -9,11 +9,14 @@ class MessagesPanelWidget extends StatelessWidget {
     required this.scrollController,
     required this.isDownButtonShown,
     required this.scrollToBottom,
+    required this.footerTextFieldFocusNode
   });
 
   final ScrollController scrollController;
   final bool isDownButtonShown;
   final void Function() scrollToBottom;
+  final FocusNode footerTextFieldFocusNode;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -32,7 +35,7 @@ class MessagesPanelWidget extends StatelessWidget {
                     controller: scrollController,
                     itemCount: chat.messages.length,
                     itemBuilder: (context, index) {
-                      return chat.messages[index].getMessageBubble(maxWidth);
+                      return chat.messages[index].getMessageBubble(maxWidth,footerTextFieldFocusNode);
                     },
                   );
                 },

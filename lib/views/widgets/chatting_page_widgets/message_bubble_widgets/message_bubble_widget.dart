@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zchat/enums/message_bubble_color.dart';
 import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/keyboard/keyboard.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_message_bubble_colors.dart';
@@ -53,6 +54,8 @@ class MessageBubbleWidget extends StatefulWidget {
   final MessageReplyData? replyData;
   final double maxBubbleWidth;
   final MessageStatus messageStatus;
+  final FocusNode footerTextFieldFocusNode;
+
 
   const MessageBubbleWidget({
     super.key,
@@ -64,6 +67,7 @@ class MessageBubbleWidget extends StatefulWidget {
     this.replyData,
     required this.maxBubbleWidth,
     required this.messageStatus,
+    required this.footerTextFieldFocusNode
   });
 
   @override
@@ -112,6 +116,13 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
               widget.text,
               widget.senderName ?? "",
             );
+            if(Keyboard.nextKeyboardHeight == 0)
+            {
+              FocusScope.of(context).unfocus();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                widget.footerTextFieldFocusNode.requestFocus();
+              });
+            }
           }
           dragWidth = 0;
         });
