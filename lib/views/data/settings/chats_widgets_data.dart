@@ -1,3 +1,4 @@
+import 'package:zchat/storage_managment/chats_storage_manager.dart';
 import 'package:zchat/views/data_classes/settings/settings_dialog_button_data.dart';
 
 final List<SettingsDialogButtonData> chatManagementWidgetsData = [
@@ -12,7 +13,9 @@ final List<SettingsDialogButtonData> chatManagementWidgetsData = [
   SettingsDialogButtonData(
     label: 'Clear All Chats',
     icon: '🧹',
-    onChange: () {},
+    onChange: () {
+      ChatsStorageManager.clearAllChats();
+    },
     dialogTitle: 'Clear All Chats',
     dialogHelpText:
         'Remove all messages from your chats but keep the chat threads. This action is irreversible.',
