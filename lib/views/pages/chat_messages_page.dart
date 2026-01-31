@@ -1,7 +1,7 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:zchat/keyboard/keyboard.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/data_classes/message_reply_data.dart';
@@ -25,22 +25,20 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final ScrollController _scrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
 
+
+  bool _isScrolling = false;
   void _scrollToBottom() async {
-    Completer<void> canContinueScrolling = Completer<void>();
+    if(_isScrolling) return;
+    _isScrolling = true;
     while (_scrollController.offset != 0.0) {
       await _scrollController.animateTo(
         0.0,
         duration: Duration(milliseconds: 200),
         curve: Curves.linear,
       );
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!canContinueScrolling.isCompleted) {
-          canContinueScrolling.complete();
-        }
-      });
-      await canContinueScrolling.future;
-      canContinueScrolling = Completer<void>();
+      await SchedulerBinding.instance.endOfFrame;
     }
+    _isScrolling = false;
   }
 
   bool isDownButtonShown = false;
