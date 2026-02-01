@@ -7,7 +7,7 @@ abstract final class AppMessageBubbleColors {
   static const Map<MessageBubbleColor, ModeColor> palette = {
     MessageBubbleColor.main: ModeColor(
       light: Color(0xFFA4ECFC),
-      dark: Color(0xFF043f70),
+      dark: Color(0xFF043f90), //old one 0xFF043f70
     ),
     MessageBubbleColor.bland: ModeColor(
       light: Color(0xFFECECEC),

@@ -9,11 +9,14 @@ class MessagesPanelWidget extends StatelessWidget {
     required this.scrollController,
     required this.isDownButtonShown,
     required this.scrollToBottom,
+    required this.footerTextFieldFocusNode
   });
 
   final ScrollController scrollController;
   final bool isDownButtonShown;
   final void Function() scrollToBottom;
+  final FocusNode footerTextFieldFocusNode;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -26,13 +29,13 @@ class MessagesPanelWidget extends StatelessWidget {
               return Consumer<Chat>(
                 builder: (context, chat, child) {
                   return ListView.builder(
-                    padding: EdgeInsetsGeometry.zero,
+                    padding: EdgeInsetsGeometry.only(left: 5,right: 5, bottom: 10),
                     shrinkWrap: chat.messages.length < 20 ? true : false,
                     reverse: true,
                     controller: scrollController,
                     itemCount: chat.messages.length,
                     itemBuilder: (context, index) {
-                      return chat.messages[index].getMessageBubble(maxWidth);
+                      return chat.messages[index].getMessageBubble(maxWidth,footerTextFieldFocusNode);
                     },
                   );
                 },

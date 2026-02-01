@@ -10,8 +10,6 @@ class AddFileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.themeColorsOf(context);
-
     return CustomToolTip(
       message: 'Attach File',
       child: RippleEffectButtonWidget(
@@ -21,8 +19,14 @@ class AddFileWidget extends StatelessWidget {
         overlayCircularRadius: 15,
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Icon(Icons.add, color: colors.primaryColor, size: 25),
+          padding: const EdgeInsets.all(5.0),
+          child: Icon(
+            Icons.add,
+            color: AppTheme.controllerOf(context).isDarkMode
+                ? Colors.white
+                : Colors.black,
+            size: 25,
+          ),
         ),
       ),
     );

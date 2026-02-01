@@ -66,7 +66,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     }
   }
 
-  void tapDown(TapDownDetails details) {
+  void tapDown(TapDownDetails details, BuildContext context) {
     //Only Animate if there is no other animation running.
     if (widget.disableSet.value) return;
     widget.disableSet.value = true;
@@ -79,7 +79,9 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     _emptyAnimationDone = null;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //Next Frame , animation will start.
-      _emptyAnimationDone = Completer<void>();
+      if (context.mounted) {
+        _emptyAnimationDone = Completer<void>();
+      }
     });
     widget.onTapDown?.call(details);
   }
@@ -93,7 +95,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
       _pressed = false;
     });
 
-    if (_emptyAnimationDone != null && !_emptyAnimationDone!.isCompleted) {
+    if (_emptyAnimationDone != null) {
       await _emptyAnimationDone!.future;
     }
 
@@ -108,12 +110,17 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     widget.appStateNotifier.value = true;
 
     await _fillAnimationDone!.future;
+
     if (context.mounted) {
       setState(() {
         _pressed = false;
       });
     }
-    await _emptyAnimationDone!.future;
+
+    if(_emptyAnimationDone != null)
+    {
+        await _emptyAnimationDone!.future;
+    }
 
     //reset
     _pressed = false;
@@ -129,7 +136,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: widget.transparentIsTappable ? HitTestBehavior.opaque : null,
-      onTapDown: tapDown,
+      onTapDown: (details) {tapDown(details,context);},
       onTapCancel: () {
         tapCancel(context);
       },

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/keyboard/keyboard.dart';
@@ -12,8 +14,6 @@ class EmojiPanelButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppTheme.themeColorsOf(context);
-
     return CustomToolTip(
       message: 'Emoji Panel',
       child: RippleEffectButtonWidget(
@@ -22,28 +22,31 @@ class EmojiPanelButtonWidget extends StatelessWidget {
         appStateNotifier: AppNotifiers.isNavigating,
         overlayCircularRadius: 15,
         onTap: () {
-          if (!AppNotifiers.isEmojiPickerVisible.value && Keyboard.isFullyClosed()) {
+          if (!AppNotifiers.isEmojiPickerVisible.value &&
+              Keyboard.isFullyClosed()) {
             AppNotifiers.isEmojiPickerVisible.value = true;
-          }
-          else if(AppNotifiers.isEmojiPickerVisible.value && Keyboard.isFullyClosed())
-          {
-              FocusScope.of(context).unfocus();
-              WidgetsBinding.instance.addPostFrameCallback((_){
-                focusNode.requestFocus();
-              });
-          }
-          else if(!AppNotifiers.isEmojiPickerVisible.value && Keyboard.isFullyOpened() )
-          {
-               FocusScope.of(context).unfocus();
-               AppNotifiers.isEmojiPickerVisible.value = true;
+          } else if (AppNotifiers.isEmojiPickerVisible.value &&
+              Keyboard.isFullyClosed()) {
+            FocusScope.of(context).unfocus();
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              focusNode.requestFocus();
+            });
+          } else if (!AppNotifiers.isEmojiPickerVisible.value &&
+              Keyboard.isFullyOpened()) {
+            FocusScope.of(context).unfocus();
+            AppNotifiers.isEmojiPickerVisible.value = true;
           }
         },
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(2.0),
           child: Icon(
-            Icons.emoji_emotions_outlined,
-            color: colors.primaryColor,
-            size: 25,
+            Platform.isIOS
+                ? Icons.widgets_outlined
+                : Icons.emoji_emotions_outlined,
+            color: AppTheme.controllerOf(context).isDarkMode
+                ? Colors.white
+                : Colors.black,
+            size: 24,
           ),
         ),
       ),

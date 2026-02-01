@@ -8,6 +8,25 @@ import 'package:zchat/MessageSystem/chat.dart';
 import 'package:zchat/MessageSystem/message.dart';
 import 'package:zchat/storage_managment/chats_storage_manager.dart';
 import 'package:zchat/utils/print_on_debug.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/data_classes/message_reply_data.dart';
+
+List<int> intToBigEndian(int num, int bytes) {
+  List<int> list = [];
+  for (int i = bytes - 1; i != -1; i--) {
+    list.add(num >> (i * 8) & 0xff);
+  }
+  return list;
+}
+
+int bigEndianToInt(List<int> buffer, int bytes) {
+  int res = 0;
+  for (int i = 0; i < bytes; i++) {
+    res = res << bytes | buffer[i];
+  }
+  buffer.removeRange(0, bytes);
+  return res;
+}
 
 class MessagingService {
   late Socket socket;
@@ -18,14 +37,6 @@ class MessagingService {
 
   MessagingService() {
     listener = ListenerService(this);
-  }
-
-  List<int> intToBigEndian(int num, int bytes) {
-    List<int> list = [];
-    for (int i = bytes - 1; i != -1; i--) {
-      list.add(num >> (i * 8) & 0xff);
-    }
-    return list;
   }
 
   void sendProtocolUnit(MessageType type, List<int> data) {
@@ -51,20 +62,31 @@ class MessagingService {
 
   Future<void> sendMessage(String message, Chat chat) async {
     message = message.trim();
+    MessageReplyData? replyData = AppNotifiers.replyData.value;
     try {
-      sendProtocolUnit(MessageType.normalMessage, [...utf8.encode(message)]);
+      sendProtocolUnit(MessageType.normalMessage, [
+        ...intToBigEndian(replyData?.replyTextSender.length ?? 0, 4),
+        ...utf8.encode(replyData?.replyTextSender ?? ""),
+        ...intToBigEndian(replyData?.replyText.length ?? 0, 4),
+        ...utf8.encode(replyData?.replyText ?? ""),
+        ...utf8.encode(message),
+      ]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
 
-      ChatsStorageManager.insertMessage(senderId: 0,timestamp: timestamp,msg: message);
-      chat.addMessage(Message(text: message, timestamp: timestamp));
+      Message msg = Message(
+        text: message,
+        timestamp: timestamp,
+        replyData: replyData,
+      );
+      ChatsStorageManager.insertMessage(message: msg);
+      AppNotifiers.replyData.value = null;
+      chat.addMessage(msg);
 
       printOnDebug('sent: $message');
     } catch (e) {
       printOnDebug(e);
     }
   }
-
-
 
   Future<void> connectServer(String caller) async {
     final String host = "92.113.26.192";

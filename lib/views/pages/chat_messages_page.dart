@@ -1,11 +1,15 @@
-import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:zchat/keyboard/keyboard.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/data_classes/message_reply_data.dart';
+import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
 
 import '../../themes_system/app_theme.dart';
 
@@ -21,31 +25,31 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final ScrollController _scrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
 
+
+  bool _isScrolling = false;
   void _scrollToBottom() async {
-    Completer<void> canContinueScrolling = Completer<void>();
+    if(_isScrolling) return;
+    _isScrolling = true;
     while (_scrollController.offset != 0.0) {
-      await _scrollController.animateTo(0.0,duration: Duration(milliseconds: 200),curve: Curves.linear);
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!canContinueScrolling.isCompleted) {
-          canContinueScrolling.complete();
-        }
-      });
-      await canContinueScrolling.future;
-      canContinueScrolling = Completer<void>();
+      await _scrollController.animateTo(
+        0.0,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+      await SchedulerBinding.instance.endOfFrame;
     }
+    _isScrolling = false;
   }
 
   bool isDownButtonShown = false;
 
-  void onKeyboardStateChange(bool isFullyOpen)
-  {
+  void onKeyboardStateChange(bool isFullyOpen) {
     if (AppNotifiers.isEmojiPickerVisible.value && isFullyOpen) {
       AppNotifiers.isEmojiPickerVisible.value = false;
     }
   }
 
-  void onKeyboardAnimationStart()
-  {
+  void onKeyboardAnimationStart() {
     if (Keyboard.nextKeyboardHeight > 0) {
       if (_scrollController.offset <= 100.0) {
         _scrollController.jumpTo(0.0);
@@ -80,16 +84,16 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     super.dispose();
   }
 
-
+  MessageReplyData lastReplyData = MessageReplyData("", "");
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
 
     double bottomPadding =
-        Keyboard.nextKeyboardHeight /
-        MediaQuery.devicePixelRatioOf(context);
+        Keyboard.nextKeyboardHeight / (Platform.isAndroid ? MediaQuery.devicePixelRatioOf(context) : 1.0 );
 
     double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
+    bottomSafeArea = bottomSafeArea < 46 ? 46 : bottomSafeArea;
 
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isEmojiPickerVisible,
@@ -144,7 +148,52 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                         scrollController: _scrollController,
                         isDownButtonShown: isDownButtonShown,
                         scrollToBottom: _scrollToBottom,
+                        footerTextFieldFocusNode: focusNode,
                       ),
+                    ),
+
+                    ValueListenableBuilder(
+                      valueListenable: AppNotifiers.replyData,
+                      builder: (context, value, child) {
+                        if(value != null) lastReplyData = value;
+                        return Container(
+                          height: value != null ? null : 0,
+                          color: colors.cardsColor,
+                          padding: EdgeInsets.all(5),
+                          child: Row(
+                            spacing: 2,
+                            children: [
+                              Icon(Icons.reply_rounded),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsetsGeometry.all(5),
+                                  decoration: BoxDecoration(
+                                      color: colors.dividerColor,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border(left: BorderSide(color: colors.primaryColor,width: 3))
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ScaledTextWidget(lastReplyData.replyTextSender != "" ? lastReplyData.replyTextSender : "You",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),
+                                      ScaledTextWidget(lastReplyData.replyText,style: TextStyle(fontSize: 15,),maxLines: 2,overflow: TextOverflow.ellipsis,),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              RippleEffectButtonWidget(
+                                overlayCircularRadius: 20,
+                                padding: EdgeInsetsGeometry.all(5),
+                                onTap: () {
+                                  AppNotifiers.replyData.value = null;
+                                },
+                                child: Icon(Icons.close),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
 
                     Padding(
