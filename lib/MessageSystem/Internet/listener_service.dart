@@ -23,18 +23,18 @@ class ListenerService {
 
   //returns if the unit was received completely.
   bool processProtocolUnit() {
+
+    if (expectedLength == null) {
+      if (buffer.length < 2) return false;
+      expectedLength = (buffer[0] << 8) | buffer[1];
+      buffer.removeRange(0, 2);
+    }
+
+    if (buffer.length < expectedLength!) return false;
+
     if (head == null) {
       head = MessageType.fromId(buffer[0]);
       buffer.removeAt(0);
-    }
-
-    if (head!.hasBody) {
-      if (expectedLength == null) {
-        if (buffer.length < 2) return false;
-        expectedLength = (buffer[0] << 8) | buffer[1];
-        buffer.removeRange(0, 2);
-      }
-      if (buffer.length < expectedLength!) return false;
     }
 
     handlers[head]!.handle(buffer.sublist(0, expectedLength), messagingService);
