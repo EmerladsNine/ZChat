@@ -40,12 +40,10 @@ class MessagingService {
   }
 
   void sendProtocolUnit(MessageType type, List<int> data) {
-    socket.add([type.id]);
-    if (!type.hasBody) return;
+    List<int> encryptedData = [type.id, ...data];
+    socket.add(intToBigEndian(encryptedData.length, 2));
     // Todo : fail on data size larger than 65535
     // Todo : encrypt the data
-    List<int> encryptedData = data;
-    socket.add(intToBigEndian(encryptedData.length, 2));
     socket.add(encryptedData);
   }
 
@@ -89,7 +87,7 @@ class MessagingService {
   }
 
   Future<void> connectServer(String caller) async {
-    final String host = "92.113.26.192";
+    final String host = "127.0.0.1";//"92.113.26.192";
     final int port = 9999;
     Duration delay = Duration.zero;
     while (true) {
