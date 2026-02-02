@@ -37,7 +37,7 @@ class ListenerService {
       buffer.removeAt(0);
     }
 
-    handlers[head]!.handle(buffer.sublist(0, expectedLength), messagingService);
+    handlers[head]!.handle(buffer.sublist(0, expectedLength! - 1), messagingService);
 
     head = null;
     expectedLength = null;
