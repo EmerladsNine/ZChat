@@ -47,6 +47,8 @@ void main() async {
       ),
     ),
   );
+
+  StorageManager.closeMessagesDatabase();
 }
 
 /// The root widget of the application.

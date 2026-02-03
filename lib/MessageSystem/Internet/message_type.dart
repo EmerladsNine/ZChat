@@ -4,6 +4,9 @@ enum MessageType {
   ping(id: 0),
   pong(id: 1),
   normalMessage(id: 2),
+  emailSignIn(id: 3),
+  emailSignUp(id: 4),
+  responseCode(id: 5)
   ;
   final int id;
   const MessageType({required this.id});

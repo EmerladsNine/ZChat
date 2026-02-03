@@ -25,4 +25,7 @@ class StorageManager {
       },
     );
   }
+  static Future<void> closeMessagesDatabase() async {
+    db.close();
+  }
 }

@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/MessageSystem/Internet/message_type.dart';
+import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
@@ -12,6 +17,11 @@ class EmailAuthPage extends StatefulWidget {
 
 class _EmailAuthPageState extends State<EmailAuthPage> {
   late bool _signIn;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
   @override
   void initState() {
     _signIn = widget.isSignIn;
@@ -52,7 +62,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                         children: [
                           if (!_signIn)
                             TextField(
-                              controller: TextEditingController(),
+                              controller: usernameController,
                               decoration: InputDecoration(
                                 labelText: "Username",
                                 labelStyle: TextStyle(
@@ -68,7 +78,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                               ),
                             ),
                           TextField(
-                            controller: TextEditingController(),
+                            controller: emailController,
                             decoration: InputDecoration(
                               labelText: "Email",
                               labelStyle: TextStyle(color: colors.primaryColor),
@@ -86,7 +96,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                             ),
                           ),
                           TextField(
-                            controller: TextEditingController(),
+                            controller: passwordController,
                             decoration: InputDecoration(
                               labelText: "Password",
                               labelStyle: TextStyle(color: colors.primaryColor),
@@ -101,7 +111,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                           ),
                           if (!_signIn)
                             TextField(
-                              controller: TextEditingController(),
+                              controller: confirmPasswordController,
                               decoration: InputDecoration(
                                 labelText: "Confirm Password",
                                 labelStyle: TextStyle(
@@ -119,6 +129,29 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                           SizedBox(height: 10,),
                           RippleEffectButtonWidget(
                             overlayCircularRadius: 10,
+                            onTap: _signIn ? () {
+                              final msgService = context.read<MessagingService>();
+                              
+                              msgService.sendProtocolUnit(MessageType.emailSignIn, [
+                                ...intToBigEndian(emailController.text.length, 1),
+                                ...utf8.encode(emailController.text),
+                                ...utf8.encode(passwordController.text),
+                              ]);
+                            } : () {
+                              if(passwordController.text.length < 5 || passwordController.text != confirmPasswordController.text)
+                                {
+                                  //Todo
+                                  return;
+                                }
+                              final msgService = context.read<MessagingService>();
+                              msgService.sendProtocolUnit(MessageType.emailSignUp, [
+                                ...intToBigEndian(emailController.text.length, 1),
+                                ...utf8.encode(emailController.text),
+                                ...intToBigEndian(passwordController.text.length, 1),
+                                ...utf8.encode(passwordController.text),
+                                ...utf8.encode(usernameController.text),
+                              ]);
+                            },
                             child: Container(
                               padding: EdgeInsetsGeometry.symmetric(vertical: 10,horizontal: 40),
                               decoration: BoxDecoration(
