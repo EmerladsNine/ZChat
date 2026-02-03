@@ -46,10 +46,10 @@ abstract final class AppTextStyles {
         color: colors.primaryColor,
       );
 
-  static TextStyle ownProfileNameTextStyle(ThemeColorScheme colors) =>
+  static TextStyle editProfilePicTextStyle(ThemeColorScheme colors) =>
       TextStyle(
-        fontSize: AppConstants.ownProfileNameFontSize,
+        fontSize: 14,
         fontWeight: FontWeight.w700,
-        color: colors.primaryColor,
+        color: colors.brandPrimaryColor,
       );
 }
