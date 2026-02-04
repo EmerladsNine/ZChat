@@ -119,7 +119,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                 child: Scaffold(
                   resizeToAvoidBottomInset: false,
                   appBar: AppBar(
-                    backgroundColor: colors.primaryBackgroundColor,
+                    backgroundColor: colors.cardsColor,
                     title: ChattingPageAppBarWidget(),
                     elevation: 0,
                   ),
