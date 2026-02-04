@@ -43,7 +43,7 @@ class MessageBubbleColorPage extends StatelessWidget {
                 disableSet: AppNotifiers.disableButtons,
                 animationDuration: Duration(milliseconds: 50),
                 appStateNotifier: AppNotifiers.isNavigating,
-                overlayCircularRadius: 100,
+                overlayBorderRadius: BorderRadius.circular(100),
                 onTap: () => themeController.setMessageBubblesColor(
                   MessageBubbleColor.values[index],
                   isSent,

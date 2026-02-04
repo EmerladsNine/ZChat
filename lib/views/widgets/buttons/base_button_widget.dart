@@ -117,9 +117,8 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
       });
     }
 
-    if(_emptyAnimationDone != null)
-    {
-        await _emptyAnimationDone!.future;
+    if (_emptyAnimationDone != null) {
+      await _emptyAnimationDone!.future;
     }
 
     //reset
@@ -136,7 +135,9 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: widget.transparentIsTappable ? HitTestBehavior.opaque : null,
-      onTapDown: (details) {tapDown(details,context);},
+      onTapDown: (details) {
+        tapDown(details, context);
+      },
       onTapCancel: () {
         tapCancel(context);
       },

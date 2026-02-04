@@ -24,7 +24,7 @@ class GoDownButtonWidget extends StatelessWidget {
         message: 'Scroll To Bottom',
         child: RippleEffectButtonWidget(
           animationDuration: Duration(milliseconds: 0),
-          overlayCircularRadius: 50,
+          overlayBorderRadius: BorderRadius.circular(50),
           onTap: () {
             scrollToBottom();
           },
