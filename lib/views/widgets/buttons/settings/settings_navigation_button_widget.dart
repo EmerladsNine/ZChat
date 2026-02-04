@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget.dart';
 
-import '../../../data_classes/settings/settings_navigation_button_data.dart';
+import '../../../data_classes/pages/settings/settings_navigation_button_data.dart';
 
 class SettingsNavigationButtonWidget extends SettingsBaseButtonWidget {
   const SettingsNavigationButtonWidget({

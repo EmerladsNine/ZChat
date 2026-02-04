@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zchat/views/data_classes/settings/dialog_option_data.dart';
-import '../../data_classes/settings/settings_radio_group_dialog_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/dialog_option_data.dart';
+import '../../../data_classes/pages/settings/settings_radio_group_dialog_button_data.dart';
 
 // TODO make values parts of the prompt
 

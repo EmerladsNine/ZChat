@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../data/settings/notifications_widgets_data.dart';
+import '../../data/pages_data/settings/notifications_widgets_data.dart';
 import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
-import '../../data_classes/settings/settings_switch_data.dart';
+import '../../data_classes/pages/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 import 'base_settings_page.dart';
 

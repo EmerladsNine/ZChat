@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data_classes/settings/dialog_option_data.dart';
-import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/dialog_option_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_base_button_data.dart';
 
 /// Data class for a settings button that opens a dialog with a radio group for single selection.
 class SettingsRadioGroupDialogButtonData<T> extends SettingsBaseButtonData {

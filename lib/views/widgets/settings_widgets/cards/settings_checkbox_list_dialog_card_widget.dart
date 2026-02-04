@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data_classes/settings/settings_checkbox_list_dialog_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_checkbox_list_dialog_button_data.dart';
 import 'package:zchat/views/widgets/buttons/settings/settings_checkbox_list_dialog_button_widget.dart';
 import 'package:zchat/views/widgets/settings_widgets/cards/settings_base_card_widget.dart';
 
