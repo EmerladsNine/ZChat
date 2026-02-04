@@ -10,5 +10,8 @@ abstract final class AppNotifiers {
     false,
   );
   static final ValueNotifier<bool> isEmojiPickerVisible = ValueNotifier(false);
+  static final ValueNotifier<bool> isMessageActionsMenuVisible = ValueNotifier(
+    false,
+  );
   static final ValueNotifier<MessageReplyData?> replyData = ValueNotifier(null);
 }

@@ -9,6 +9,7 @@ class FlatTapButtonWidget extends BaseButtonWidget {
     super.onTap,
     super.onTapDown,
     super.onTapCancel,
+    super.onPanDown,
     super.disableSet,
     super.appStateNotifier,
   });

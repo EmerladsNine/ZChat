@@ -8,6 +8,7 @@ import 'package:zchat/views/data_classes/message_reply_data.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/message_actions_menu_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
 
@@ -101,130 +102,144 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     return Container(
       color: colors.primaryBackgroundColor,
       child: ValueListenableBuilder(
-        valueListenable: AppNotifiers.isEmojiPickerVisible,
-        builder: (context, isEmojiPickerVisible, child) {
-          return PopScope(
-            canPop: !isEmojiPickerVisible,
-            onPopInvokedWithResult: (didPop, dynamic result) {
-              if (AppNotifiers.isEmojiPickerVisible.value) {
-                AppNotifiers.isEmojiPickerVisible.value = false;
-              }
-            },
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              appBar: AppBar(
-                backgroundColor: colors.primaryBackgroundColor,
-                title: ChattingPageAppBarWidget(),
-                elevation: 0,
-              ),
-              body: Stack(
-                fit: StackFit.expand,
-                children: [
-                  //BackgroundImageFallBack
-                  Positioned.fill(
-                    child: Container(color: colors.primaryBackgroundColor),
+        valueListenable: AppNotifiers.isMessageActionsMenuVisible,
+        builder: (context, isMessageActionsMenuVisible, child) {
+          return ValueListenableBuilder(
+            valueListenable: AppNotifiers.isEmojiPickerVisible,
+            builder: (context, isEmojiPickerVisible, child) {
+              return PopScope(
+                canPop: !isEmojiPickerVisible && !isMessageActionsMenuVisible,
+                onPopInvokedWithResult: (didPop, dynamic result) {
+                  if (MessageActionsMenuWidget.menuOverlayEntry != null) {
+                    MessageActionsMenuWidget.removeOverlay();
+                  } else if (AppNotifiers.isEmojiPickerVisible.value) {
+                    AppNotifiers.isEmojiPickerVisible.value = false;
+                  }
+                },
+                child: Scaffold(
+                  resizeToAvoidBottomInset: false,
+                  appBar: AppBar(
+                    backgroundColor: colors.primaryBackgroundColor,
+                    title: ChattingPageAppBarWidget(),
+                    elevation: 0,
                   ),
-
-                  Image(
-                    image: Image.asset('assets/images/bg5.jpeg').image,
-                    fit: BoxFit.cover,
-                    color: colors.primaryBackgroundColor.withAlpha(220),
-                    colorBlendMode: BlendMode.overlay,
-                  ),
-
-                  Column(
+                  body: Stack(
+                    fit: StackFit.expand,
                     children: [
-                      Expanded(
-                        child: MessagesPanelWidget(
-                          scrollController: _scrollController,
-                          isDownButtonShown: isDownButtonShown,
-                          scrollToBottom: _scrollToBottom,
-                          footerTextFieldFocusNode: focusNode,
-                        ),
+                      //BackgroundImageFallBack
+                      Positioned.fill(
+                        child: Container(color: colors.primaryBackgroundColor),
                       ),
 
-                      ValueListenableBuilder(
-                        valueListenable: AppNotifiers.replyData,
-                        builder: (context, value, child) {
-                          if (value != null) lastReplyData = value;
-                          return Container(
-                            height: value != null ? null : 0,
-                            color: colors.cardsColor,
-                            padding: EdgeInsets.all(5),
-                            child: Row(
-                              spacing: 2,
-                              children: [
-                                Icon(Icons.reply_rounded),
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsetsGeometry.all(5),
-                                    decoration: BoxDecoration(
-                                      color: colors.dividerColor,
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border(
-                                        left: BorderSide(
-                                          color: colors.primaryColor,
-                                          width: 3,
+                      Image(
+                        image: Image.asset('assets/images/bg5.jpeg').image,
+                        fit: BoxFit.cover,
+                        color: colors.primaryBackgroundColor.withAlpha(220),
+                        colorBlendMode: BlendMode.overlay,
+                      ),
+
+                      Column(
+                        children: [
+                          Expanded(
+                            child: MessagesPanelWidget(
+                              scrollController: _scrollController,
+                              isDownButtonShown: isDownButtonShown,
+                              scrollToBottom: _scrollToBottom,
+                              footerTextFieldFocusNode: focusNode,
+                            ),
+                          ),
+
+                          ValueListenableBuilder(
+                            valueListenable: AppNotifiers.replyData,
+                            builder: (context, value, child) {
+                              if (value != null) lastReplyData = value;
+                              return Container(
+                                height: value != null ? null : 0,
+                                color: colors.cardsColor,
+                                padding: EdgeInsets.all(5),
+                                child: Row(
+                                  spacing: 2,
+                                  children: [
+                                    Icon(Icons.reply_rounded),
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsetsGeometry.all(5),
+                                        decoration: BoxDecoration(
+                                          color: colors.dividerColor,
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          border: Border(
+                                            left: BorderSide(
+                                              color: colors.primaryColor,
+                                              width: 3,
+                                            ),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            ScaledTextWidget(
+                                              lastReplyData.replyTextSender !=
+                                                      ""
+                                                  ? lastReplyData
+                                                        .replyTextSender
+                                                  : "You",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            ScaledTextWidget(
+                                              lastReplyData.replyText,
+                                              style: TextStyle(fontSize: 15),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ScaledTextWidget(
-                                          lastReplyData.replyTextSender != ""
-                                              ? lastReplyData.replyTextSender
-                                              : "You",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        ScaledTextWidget(
-                                          lastReplyData.replyText,
-                                          style: TextStyle(fontSize: 15),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
+                                    RippleEffectButtonWidget(
+                                      overlayBorderRadius:
+                                          BorderRadius.circular(20),
+                                      padding: EdgeInsetsGeometry.all(5),
+                                      onTap: () {
+                                        AppNotifiers.replyData.value = null;
+                                      },
+                                      child: Icon(Icons.close),
                                     ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+
+                          Padding(
+                            padding: isEmojiPickerVisible
+                                ? EdgeInsetsGeometry.zero
+                                : EdgeInsetsGeometry.only(
+                                    bottom: bottomPadding,
                                   ),
-                                ),
-                                RippleEffectButtonWidget(
-                                  overlayCircularRadius: 20,
-                                  padding: EdgeInsetsGeometry.all(5),
-                                  onTap: () {
-                                    AppNotifiers.replyData.value = null;
-                                  },
-                                  child: Icon(Icons.close),
-                                ),
-                              ],
+                            child: ChatMessagesFooterWidget(
+                              scrollToBottom: _scrollToBottom,
+                              bottomSafeArea: bottomSafeArea,
+                              isInSafeArea:
+                                  bottomPadding != 0 || isEmojiPickerVisible,
+                              focusNode: focusNode,
                             ),
-                          );
-                        },
-                      ),
+                          ),
 
-                      Padding(
-                        padding: isEmojiPickerVisible
-                            ? EdgeInsetsGeometry.zero
-                            : EdgeInsetsGeometry.only(bottom: bottomPadding),
-                        child: ChatMessagesFooterWidget(
-                          scrollToBottom: _scrollToBottom,
-                          bottomSafeArea: bottomSafeArea,
-                          isInSafeArea:
-                              bottomPadding != 0 || isEmojiPickerVisible,
-                          focusNode: focusNode,
-                        ),
+                          EmojiPanelWidget(),
+                        ],
                       ),
-
-                      EmojiPanelWidget(),
                     ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           );
         },
       ),

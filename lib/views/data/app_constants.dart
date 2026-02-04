@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 abstract final class AppConstants {
   // Text Styles
   static const double appBarTitleFontSize = 27.0;
@@ -23,4 +25,10 @@ abstract final class AppConstants {
 
   // Dimensions
   static const double messageTailSize = 5;
+  static const double messageActionsMenuSize = 160;
+  static const double messageActionsMenuBorderRadius = 12;
+  static const BorderRadius lastMessageActionMeuItemBorderRadius =
+      BorderRadius.vertical(
+        bottom: Radius.circular(AppConstants.messageActionsMenuBorderRadius),
+      );
 }
