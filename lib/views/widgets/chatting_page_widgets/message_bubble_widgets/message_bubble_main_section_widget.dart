@@ -15,13 +15,15 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
     required this.text,
     required this.time,
     required this.isEmojiBubble,
-    required this.messageStatus
+    required this.messageStatus,
+    required this.isReplyBubble,
   });
 
   final String? senderName;
   final String text;
   final String time;
   final bool isEmojiBubble;
+  final bool isReplyBubble;
   final MessageStatus messageStatus;
 
   @override
@@ -33,7 +35,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(
-        horizontal: received && isEmojiBubble ? 9 : 0,
+        horizontal: received && isEmojiBubble && !isReplyBubble ? 9 : 0,
       ),
       child: Column(
         crossAxisAlignment: received
@@ -43,8 +45,9 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
         children: [
           //Message Text
           Container(
+            padding: EdgeInsetsGeometry.only(top: isEmojiBubble ? 5 : 0),
             constraints: BoxConstraints(minWidth: 80),
-            alignment: isEmojiBubble
+            alignment: isEmojiBubble && !isReplyBubble
                 ? (received ? Alignment.centerLeft : Alignment.centerRight)
                 : Alignment.centerLeft,
             child: ScaledTextWidget(
@@ -62,10 +65,9 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
           MessageInfoWidget(
             time: time,
             messageStatus: messageStatus,
-            hasBackground: isEmojiBubble,
+            hasBackground: isEmojiBubble && !isReplyBubble,
             received: received,
-          )
-
+          ),
         ],
       ),
     );
