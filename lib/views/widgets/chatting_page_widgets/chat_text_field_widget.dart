@@ -5,7 +5,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_button_wid
 
 import '../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
-import '../../../utils/text_field_utils.dart';
+import '../../../utils/text_utils.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
   const ChatTextFieldWidget({
@@ -44,7 +44,7 @@ class ChatTextFieldWidget extends StatelessWidget {
                       controller: controller,
                       focusNode: focusNode,
                       showCursor: !isMessageActionsMenuVisible,
-                      textDirection: TextFieldUtils.getTextDirection(
+                      textDirection: TextUtils.getTextDirection(
                         controller.text,
                       ),
                       textCapitalization: TextCapitalization.sentences,

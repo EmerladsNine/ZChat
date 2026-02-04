@@ -1,5 +1,6 @@
 import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/material.dart';
+import 'package:zchat/utils/text_utils.dart';
 
 import '../../../../enums/message_status.dart';
 import '../../../../themes_system/app_theme.dart';
@@ -50,14 +51,18 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
             alignment: isEmojiBubble && !isReplyBubble
                 ? (received ? Alignment.centerLeft : Alignment.centerRight)
                 : Alignment.centerLeft,
-            child: ScaledTextWidget(
-              text,
-              style: TextStyle(
-                fontSize: isEmojiBubble
-                    ? AppTheme.emojiBubbleSizeOf(context)
-                    : resolveMessageFontSize(context, text),
-                height: 1,
-                color: colors.primaryColor,
+            child: Align(
+              alignment: TextUtils.getTextPlacement(text),
+              child: ScaledTextWidget(
+                text,
+                textDirection: TextUtils.getTextDirection(text),
+                style: TextStyle(
+                  fontSize: isEmojiBubble
+                      ? AppTheme.emojiBubbleSizeOf(context)
+                      : resolveMessageFontSize(context, text),
+                  height: 1,
+                  color: colors.primaryColor,
+                ),
               ),
             ),
           ),

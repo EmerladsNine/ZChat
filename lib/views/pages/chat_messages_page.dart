@@ -13,6 +13,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.
 import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
 
 import '../../themes_system/app_theme.dart';
+import '../../utils/text_utils.dart';
 import '../widgets/chatting_page_widgets/chatting_page_app_bar_widget.dart';
 
 /// Page displaying a conversation with messages.
@@ -153,6 +154,10 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                             valueListenable: AppNotifiers.replyData,
                             builder: (context, value, child) {
                               if (value != null) lastReplyData = value;
+                              final String replyTextSender =
+                                  lastReplyData.replyTextSender != ""
+                                  ? lastReplyData.replyTextSender
+                                  : "You";
                               return Container(
                                 height: value != null ? null : 0,
                                 color: colors.cardsColor,
@@ -182,21 +187,31 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             ScaledTextWidget(
-                                              lastReplyData.replyTextSender !=
-                                                      ""
-                                                  ? lastReplyData
-                                                        .replyTextSender
-                                                  : "You",
+                                              replyTextSender,
+                                              textDirection:
+                                                  TextUtils.getTextDirection(
+                                                    replyTextSender,
+                                                  ),
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            ScaledTextWidget(
-                                              lastReplyData.replyText,
-                                              style: TextStyle(fontSize: 15),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
+                                            Align(
+                                              alignment:
+                                                  TextUtils.getTextPlacement(
+                                                    lastReplyData.replyText,
+                                                  ),
+                                              child: ScaledTextWidget(
+                                                lastReplyData.replyText,
+                                                style: TextStyle(fontSize: 15),
+                                                textDirection:
+                                                    TextUtils.getTextDirection(
+                                                      lastReplyData.replyText,
+                                                    ),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                           ],
                                         ),
