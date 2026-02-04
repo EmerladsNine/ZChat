@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:zchat/MessageSystem/Internet/listener_service.dart';
 import 'package:zchat/MessageSystem/Internet/message_type.dart';
@@ -62,11 +63,13 @@ class MessagingService {
     message = message.trim();
     MessageReplyData? replyData = AppNotifiers.replyData.value;
     try {
+      Uint8List replyTextSender= utf8.encode(replyData?.replyTextSender ?? "");
+      Uint8List replyText = utf8.encode(replyData?.replyText ?? "");
       sendProtocolUnit(MessageType.normalMessage, [
-        ...intToBigEndian(replyData?.replyTextSender.length ?? 0, 4),
-        ...utf8.encode(replyData?.replyTextSender ?? ""),
-        ...intToBigEndian(replyData?.replyText.length ?? 0, 4),
-        ...utf8.encode(replyData?.replyText ?? ""),
+        ...intToBigEndian(replyTextSender.length, 4),
+        ...replyTextSender,
+        ...intToBigEndian(replyText.length, 4),
+        ...replyText,
         ...utf8.encode(message),
       ]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
