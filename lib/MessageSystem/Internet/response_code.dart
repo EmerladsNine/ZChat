@@ -2,11 +2,16 @@
 //Two types should not have the same id.
 enum ResponseCode {
   emailAccountCreated(id: 0),
-  ;
+  emailAccountEmailExistError(id: 1),
+  emailAccountUsernameExistError(id: 2),
+  emailAccountInvalidEmailLengthError(id: 3),
+  emailAccountInvalidPasswordLengthError(id: 4),
+  emailAccountInvalidUsernameLengthError(id: 5),
+  emailAccountCreationFailureError(id: 6);
+
   final int id;
   const ResponseCode({required this.id});
-  static ResponseCode fromId(int id)
-  {
+  static ResponseCode fromId(int id) {
     return ResponseCode.values.firstWhere((e) => e.id == id);
   }
 }
