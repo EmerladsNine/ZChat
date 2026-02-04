@@ -9,11 +9,17 @@ import '../../../data_classes/message_reply_data.dart';
 import '../../miscellaneous/scaled_text_widget.dart';
 
 class MessageBubbleReplySectionWidget extends StatelessWidget {
-  const MessageBubbleReplySectionWidget({super.key,required this.isSeparate,required this.received, required this.replyData});
+  const MessageBubbleReplySectionWidget({
+    super.key,
+    required this.isSeparate,
+    required this.received,
+    required this.replyData,
+  });
 
   final MessageReplyData replyData;
   final bool received;
   final bool isSeparate;
+
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = AppTheme.controllerOf(context);
@@ -24,16 +30,16 @@ class MessageBubbleReplySectionWidget extends StatelessWidget {
     return Container(
       padding: isSeparate ? EdgeInsetsGeometry.all(4) : EdgeInsetsGeometry.zero,
       decoration: BoxDecoration(
-      color: received
-          ? AppMessageBubbleColors.get(
-        messageBubbleColors[1],
-        themeController.isDarkMode,
-      ).withAlpha(alpha)
-          : AppMessageBubbleColors.get(
-        messageBubbleColors[0],
-        themeController.isDarkMode,
-      ).withAlpha(alpha),
-      borderRadius: BorderRadius.circular(8),
+        color: received
+            ? AppMessageBubbleColors.get(
+                messageBubbleColors[1],
+                themeController.isDarkMode,
+              ).withAlpha(alpha)
+            : AppMessageBubbleColors.get(
+                messageBubbleColors[0],
+                themeController.isDarkMode,
+              ).withAlpha(alpha),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Container(
         padding: EdgeInsets.all(5),
@@ -48,11 +54,15 @@ class MessageBubbleReplySectionWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Row(),
             ScaledTextWidget(
-              replyData.replyTextSender != "" ? replyData.replyTextSender : "You",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              replyData.replyTextSender != ""
+                  ? replyData.replyTextSender
+                  : "You",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: colors.primaryColor,
+              ),
             ),
             ScaledTextWidget(
               replyData.replyText,
