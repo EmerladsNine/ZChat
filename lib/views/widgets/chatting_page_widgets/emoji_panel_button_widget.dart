@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/keyboard/keyboard.dart';
 import '../../../themes_system/app_theme.dart';
@@ -37,17 +36,24 @@ class EmojiPanelButtonWidget extends StatelessWidget {
             AppNotifiers.isEmojiPickerVisible.value = true;
           }
         },
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Icon(
-            Platform.isIOS
-                ? Icons.widgets_outlined
-                : Icons.emoji_emotions_outlined,
-            color: AppTheme.controllerOf(context).isDarkMode
-                ? Colors.white
-                : Colors.black,
-            size: 24,
-          ),
+        child: ValueListenableBuilder(
+          valueListenable: AppNotifiers.isEmojiPickerVisible,
+          builder: (context, isEmojiPickerVisible, child) {
+            return Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: SvgPicture.asset(
+                'assets/icons/stickers.svg',
+                colorFilter: ColorFilter.mode(
+                  AppTheme.controllerOf(context).isDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                  BlendMode.srcIn,
+                ),
+                width: 25,
+                height: 25,
+              ),
+            );
+          },
         ),
       ),
     );

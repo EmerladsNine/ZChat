@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/MessageSystem/chat.dart';
@@ -50,12 +51,16 @@ class SendButtonWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: !hasVisibleText(controller.text)
-              ? Icon(
-                  Icons.graphic_eq_sharp,
-                  size: 25,
-                  color: AppTheme.controllerOf(context).isDarkMode
-                      ? Colors.white
-                      : Colors.black,
+              ? SvgPicture.asset(
+                  'assets/icons/send_audio.svg',
+                  colorFilter: ColorFilter.mode(
+                    AppTheme.controllerOf(context).isDarkMode
+                        ? Colors.white
+                        : Colors.black,
+                    BlendMode.srcIn,
+                  ),
+                  width: 25,
+                  height: 25,
                 )
               : Transform.translate(
                   offset: Offset(0, -3),

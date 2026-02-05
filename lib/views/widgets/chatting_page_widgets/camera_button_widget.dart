@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
@@ -20,12 +21,16 @@ class CameraButtonWidget extends StatelessWidget {
         onTap: () {},
         child: Padding(
           padding: const EdgeInsets.all(2),
-          child: Icon(
-            Icons.camera_alt_outlined,
-            color: AppTheme.controllerOf(context).isDarkMode
-                ? Colors.white
-                : Colors.black,
-            size: 24,
+          child: SvgPicture.asset(
+            'assets/icons/Lineicon_camera.svg',
+            colorFilter: ColorFilter.mode(
+              AppTheme.controllerOf(context).isDarkMode
+                  ? Colors.white
+                  : Colors.black,
+              BlendMode.srcIn,
+            ),
+            width: 25,
+            height: 25,
           ),
         ),
       ),

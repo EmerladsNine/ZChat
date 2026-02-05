@@ -8,7 +8,7 @@ jobs:
     name: 🎉 iOS Build
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: generalButtons/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
@@ -16,7 +16,7 @@ jobs:
           channel: 'stable'
           architecture: x64
       - run: flutter pub get
-      
+
 
       - run: pod repo update
         working-directory: ios
