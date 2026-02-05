@@ -4,16 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:zchat/keyboard/keyboard.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/data_classes/message_reply_data.dart';
-import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_actions_menu_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
-import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/reply_box_widget.dart';
 
 import '../../themes_system/app_theme.dart';
-import '../../utils/text_utils.dart';
 import '../widgets/chatting_page_widgets/chatting_page_app_bar_widget.dart';
 
 /// Page displaying a conversation with messages.
@@ -87,8 +84,6 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     super.dispose();
   }
 
-  MessageReplyData lastReplyData = MessageReplyData("", "");
-
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -150,87 +145,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                             ),
                           ),
 
-                          ValueListenableBuilder(
-                            valueListenable: AppNotifiers.replyData,
-                            builder: (context, value, child) {
-                              if (value != null) lastReplyData = value;
-                              final String replyTextSender =
-                                  lastReplyData.replyTextSender != ""
-                                  ? lastReplyData.replyTextSender
-                                  : "You";
-                              return Container(
-                                height: value != null ? null : 0,
-                                color: colors.cardsColor,
-                                padding: EdgeInsets.all(5),
-                                child: Row(
-                                  spacing: 2,
-                                  children: [
-                                    Icon(Icons.reply_rounded),
-                                    Expanded(
-                                      child: Container(
-                                        padding: EdgeInsetsGeometry.all(5),
-                                        decoration: BoxDecoration(
-                                          color: colors.dividerColor,
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          border: Border(
-                                            left: BorderSide(
-                                              color: colors.primaryColor,
-                                              width: 3,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            ScaledTextWidget(
-                                              replyTextSender,
-                                              textDirection:
-                                                  TextUtils.getTextDirection(
-                                                    replyTextSender,
-                                                  ),
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment:
-                                                  TextUtils.getTextPlacement(
-                                                    lastReplyData.replyText,
-                                                  ),
-                                              child: ScaledTextWidget(
-                                                lastReplyData.replyText,
-                                                style: TextStyle(fontSize: 15),
-                                                textDirection:
-                                                    TextUtils.getTextDirection(
-                                                      lastReplyData.replyText,
-                                                    ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    RippleEffectButtonWidget(
-                                      overlayBorderRadius:
-                                          BorderRadius.circular(20),
-                                      padding: EdgeInsetsGeometry.all(5),
-                                      onTap: () {
-                                        AppNotifiers.replyData.value = null;
-                                      },
-                                      child: Icon(Icons.close),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
+                          ReplyBoxWidget(),
 
                           Padding(
                             padding: isEmojiPickerVisible
