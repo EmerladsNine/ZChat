@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../themes_system/app_theme.dart';
-import '../../data/navbar_data.dart';
+import '../../data/pages_data/navbar_data.dart';
 import '../../data/app_notifiers.dart';
 import 'navbar_item_widget.dart';
 

@@ -13,6 +13,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
     this.padding = EdgeInsetsGeometry.zero,
     ValueNotifier<bool>? disableSet,
     ValueNotifier<bool>? appStateNotifier,
+    this.onPanDown,
   }) : disableSet = disableSet ?? ValueNotifier(false),
        appStateNotifier = appStateNotifier ?? ValueNotifier(false);
 
@@ -21,6 +22,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
   final GestureTapCallback? onTap;
   final GestureTapDownCallback? onTapDown;
   final GestureTapCancelCallback? onTapCancel;
+  final GestureDragDownCallback? onPanDown;
   final ValueNotifier<bool> disableSet;
   final ValueNotifier<bool> appStateNotifier;
   final EdgeInsetsGeometry padding;
@@ -117,9 +119,8 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
       });
     }
 
-    if(_emptyAnimationDone != null)
-    {
-        await _emptyAnimationDone!.future;
+    if (_emptyAnimationDone != null) {
+      await _emptyAnimationDone!.future;
     }
 
     //reset
@@ -136,13 +137,17 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: widget.transparentIsTappable ? HitTestBehavior.opaque : null,
-      onTapDown: (details) {tapDown(details,context);},
+      onTapDown: (details) {
+        tapDown(details, context);
+      },
       onTapCancel: () {
         tapCancel(context);
       },
       onTap: () {
         tap(context);
       },
+      onPanDown: (DragDownDetails dragDownDetails) =>
+          widget.onPanDown?.call(dragDownDetails),
       child: Stack(
         children: [
           Padding(padding: widget.padding, child: widget.child),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
-import 'package:zchat/views/data_classes/settings/settings_navigation_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_base_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_navigation_button_data.dart';
 import 'package:zchat/views/pages/settings/message_bubble_color_page.dart';
 
-import '../../../enums/font_size_level.dart';
-import '../../../themes_system/app_theme.dart';
-import '../../data_classes/settings/dialog_option_data.dart';
-import '../../data_classes/settings/settings_radio_group_dialog_button_data.dart';
+import '../../../../enums/font_size_level.dart';
+import '../../../../themes_system/app_theme.dart';
+import '../../../data_classes/pages/settings/dialog_option_data.dart';
+import '../../../data_classes/pages/settings/settings_radio_group_dialog_button_data.dart';
 
 List<SettingsBaseButtonData> themesCustomizationButtonsData(
   BuildContext context,

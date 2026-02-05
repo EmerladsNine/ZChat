@@ -1,5 +1,5 @@
-import '../../data_classes/settings/settings_navigation_button_data.dart';
-import '../../pages/temp.dart';
+import '../../../data_classes/pages/settings/settings_navigation_button_data.dart';
+import '../../../pages/temp.dart';
 
 final List<SettingsNavigationButtonData> personalInfoPrivacyWidgetsData = [
   SettingsNavigationButtonData(

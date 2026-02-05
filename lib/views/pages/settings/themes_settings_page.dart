@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
-import 'package:zchat/views/data_classes/settings/settings_slider_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_slider_data.dart';
 import 'package:zchat/views/widgets/settings_widgets/settings_slider_widget.dart';
 import '../../../enums/font_size_level.dart';
 import '../../../themes_system/app_theme.dart';
-import '../../data/settings/themes_widgets_data.dart';
-import '../../data_classes/settings/settings_switch_data.dart';
+import '../../data/pages_data/settings/themes_widgets_data.dart';
+import '../../data_classes/pages/settings/settings_switch_data.dart';
 import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 import '../../widgets/settings_widgets/settings_switch_widget.dart';
 import 'base_settings_page.dart';

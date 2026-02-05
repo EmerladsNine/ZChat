@@ -1,12 +1,12 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data_classes/settings/dialog_option_data.dart';
-import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
-import 'package:zchat/views/data_classes/settings/settings_radio_group_dialog_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/dialog_option_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_base_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_radio_group_dialog_button_data.dart';
 import 'package:zchat/enums/light.dart';
 import 'package:zchat/enums/vibrate.dart';
 
-import '../../data_classes/settings/settings_on_tap_button_data.dart';
+import '../../../data_classes/pages/settings/settings_on_tap_button_data.dart';
 
 final List<DialogOptionData<Vibrate>> vibrateOptions = [
   DialogOptionData(value: Vibrate.off, displayText: 'Off'),

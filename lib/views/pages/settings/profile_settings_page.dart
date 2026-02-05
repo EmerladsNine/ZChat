@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_text_styles.dart';
+import 'package:zchat/views/pages/temp.dart';
 import 'package:zchat/views/widgets/settings_widgets/profile_info_card_widget.dart';
 
+import '../../data/app_notifiers.dart';
+import '../../widgets/buttons/flat_tap_button_widget.dart';
 import '../../widgets/miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
 import 'base_settings_page.dart';
@@ -30,15 +33,29 @@ class ProfileSettingsPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsetsGeometry.only(top: 10),
-            child: ScaledTextWidget(
-              'Ahmad Msheik',
-              style: AppTextStyles.ownProfileNameTextStyle(colors),
-              textAlign: TextAlign.center,
+            child: FlatTapButtonWidget(
+              disableSet: AppNotifiers.disableButtons,
+              appStateNotifier: AppNotifiers.isNavigating,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return TempPage();
+                    },
+                  ),
+                );
+              },
+              child: ScaledTextWidget(
+                'Edit Profile',
+                style: AppTextStyles.editProfilePicTextStyle(colors),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
 
           Padding(
-            padding: EdgeInsetsGeometry.only(top: 70),
+            padding: EdgeInsetsGeometry.only(top: 40),
             child: ProfileInfoCardWidget(
               icon: '\ud83d\udc64',
               label: 'Display Name',

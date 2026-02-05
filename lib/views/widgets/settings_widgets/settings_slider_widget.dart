@@ -4,7 +4,7 @@ import '../../../themes_system/app_theme.dart';
 import '../../../themes_system/theme_color_scheme.dart';
 import '../../../themes_system/theme_controller.dart';
 import '../../data/app_text_styles.dart';
-import '../../data_classes/settings/settings_slider_data.dart';
+import '../../data_classes/pages/settings/settings_slider_data.dart';
 import '../miscellaneous/scaled_text_widget.dart';
 
 class SettingsSliderWidget extends StatelessWidget {

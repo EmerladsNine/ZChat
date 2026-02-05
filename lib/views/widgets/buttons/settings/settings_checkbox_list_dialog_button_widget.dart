@@ -3,7 +3,7 @@ import 'package:zchat/views/widgets/buttons/settings/settings_base_button_widget
 import '../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
 import '../../../data/app_text_styles.dart';
-import '../../../data_classes/settings/settings_checkbox_list_dialog_button_data.dart';
+import '../../../data_classes/pages/settings/settings_checkbox_list_dialog_button_data.dart';
 
 class SettingsCheckboxListDialogButtonWidget<T>
     extends SettingsBaseButtonWidget {

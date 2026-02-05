@@ -20,7 +20,7 @@ class EmojiPanelButtonWidget extends StatelessWidget {
         disableSet: AppNotifiers.disableButtons,
         animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
-        overlayCircularRadius: 15,
+        overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {
           if (!AppNotifiers.isEmojiPickerVisible.value &&
               Keyboard.isFullyClosed()) {

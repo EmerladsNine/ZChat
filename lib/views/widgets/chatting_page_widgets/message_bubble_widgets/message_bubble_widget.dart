@@ -37,6 +37,7 @@ import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_message_bubble_colors.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/widgets/buttons/flat_tap_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_bubble_main_section_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_bubble_reply_section_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/pfp_of_sender_widget.dart';
@@ -44,6 +45,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets
 import '../../../../themes_system/app_theme.dart';
 import '../../../data_classes/message_reply_data.dart';
 import '../../../painters/message_bubble_painter.dart';
+import '../message_actions_menu_widget.dart';
 
 class MessageBubbleWidget extends StatefulWidget {
   final String? senderName;
@@ -56,7 +58,6 @@ class MessageBubbleWidget extends StatefulWidget {
   final MessageStatus messageStatus;
   final FocusNode footerTextFieldFocusNode;
 
-
   const MessageBubbleWidget({
     super.key,
     required this.text,
@@ -67,7 +68,7 @@ class MessageBubbleWidget extends StatefulWidget {
     this.replyData,
     required this.maxBubbleWidth,
     required this.messageStatus,
-    required this.footerTextFieldFocusNode
+    required this.footerTextFieldFocusNode,
   });
 
   @override
@@ -112,8 +113,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
       onHorizontalDragEnd: (_) {
         setState(() {
           if (-dragWidth * 4 >= widget.maxBubbleWidth) {
-            if (!didVibrate)
-            {
+            if (!didVibrate) {
               HapticFeedback.selectionClick();
               didVibrate = true;
             }
@@ -121,8 +121,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
               widget.text,
               widget.senderName ?? "",
             );
-            if(Keyboard.nextKeyboardHeight == 0)
-            {
+            if (Keyboard.nextKeyboardHeight == 0) {
               FocusScope.of(context).unfocus();
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 widget.footerTextFieldFocusNode.requestFocus();
@@ -171,7 +170,9 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                   shadowColor: Colors.transparent,
                   alignment: received ? Alignment.topLeft : Alignment.topRight,
                   tail: !widget.isChildBubble,
-                  draw: !widget.isEmojiBubble,
+                  draw:
+                      !widget.isEmojiBubble ||
+                      (widget.isEmojiBubble && widget.replyData != null),
                 ),
                 child: IntrinsicWidth(
                   child: Container(
@@ -184,37 +185,71 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                       bottom: 3,
                       right: received
                           ? 5
-                          : widget.isEmojiBubble
+                          : widget.isEmojiBubble && widget.replyData == null
                           ? AppConstants.messageTailSize
                           : 7 + AppConstants.messageTailSize,
                       left: received
-                          ? widget.isEmojiBubble
+                          ? widget.isEmojiBubble && widget.replyData == null
                                 ? 0
                                 : 7 + AppConstants.messageTailSize
-                          : widget.isEmojiBubble
+                          : widget.isEmojiBubble && widget.replyData == null
                           ? 0
                           : 5,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: widget.isEmojiBubble ? 5 : 3,
+                      spacing: widget.isEmojiBubble && widget.replyData == null
+                          ? 5
+                          : 3,
                       children: [
                         if (received && !widget.isChildBubble)
                           SenderNameWidget(
                             senderName: widget.senderName!,
-                            isSeparate: widget.isEmojiBubble,
+                            isSeparate:
+                                widget.isEmojiBubble &&
+                                widget.replyData == null,
                             maxBubbleWidth: widget.maxBubbleWidth,
                           ),
 
                         if (widget.replyData != null)
-                          MessageBubbleReplySectionWidget(isSeparate: widget.isEmojiBubble,received: received,replyData: widget.replyData!),
+                          MessageBubbleReplySectionWidget(
+                            isSeparate:
+                                widget.isEmojiBubble &&
+                                widget.replyData == null,
+                            received: received,
+                            replyData: widget.replyData!,
+                          ),
 
-                        MessageBubbleMainSectionWidget(
-                          text: widget.text,
-                          time: widget.time,
-                          isEmojiBubble: widget.isEmojiBubble,
-                          messageStatus: widget.messageStatus,
-                          senderName: widget.senderName,
+                        Builder(
+                          builder: (context) {
+                            return FlatTapButtonWidget(
+                              disableSet: AppNotifiers.disableButtons,
+                              appStateNotifier: AppNotifiers.isNavigating,
+                              onTapDown: (details) {
+                                RenderBox box =
+                                    context.findRenderObject() as RenderBox;
+                                Offset globalTopLeft = box.localToGlobal(
+                                  Offset.zero,
+                                );
+
+                                MessageActionsMenuWidget.insertOverlayMenu(
+                                  globalTopLeft,
+                                  box.size,
+                                  received,
+                                  context,
+                                );
+                              },
+
+                              child: MessageBubbleMainSectionWidget(
+                                text: widget.text,
+                                time: widget.time,
+                                isEmojiBubble: widget.isEmojiBubble,
+                                isReplyBubble: widget.replyData != null,
+                                messageStatus: widget.messageStatus,
+                                senderName: widget.senderName,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

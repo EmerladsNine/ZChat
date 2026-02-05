@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_base_button_data.dart';
 
 import '../../miscellaneous/scaled_text_widget.dart';
 import '../../../../themes_system/app_theme.dart';
@@ -26,7 +26,7 @@ abstract class SettingsBaseButtonWidget extends StatelessWidget {
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
-      overlayCircularRadius: 3,
+      overlayBorderRadius: BorderRadius.circular(3),
       onTap: () => onTap(context),
       child: Container(
         color: colors.cardsColor,

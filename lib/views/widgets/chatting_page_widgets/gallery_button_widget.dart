@@ -15,7 +15,7 @@ class GalleryButtonWidget extends StatelessWidget {
         disableSet: AppNotifiers.disableButtons,
         animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
-        overlayCircularRadius: 15,
+        overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {},
         child: Padding(
           padding: const EdgeInsets.all(5),

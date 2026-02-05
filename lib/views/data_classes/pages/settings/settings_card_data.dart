@@ -1,4 +1,4 @@
-import 'package:zchat/views/data_classes/settings/settings_base_button_data.dart';
+import 'package:zchat/views/data_classes/pages/settings/settings_base_button_data.dart';
 
 class SettingsCardData {
   final String category;

@@ -6,7 +6,7 @@ import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
 import '../widgets/miscellaneous/scaled_text_widget.dart';
 import '../../themes_system/app_theme.dart';
-import '../data/settings_page_data.dart';
+import '../data/pages_data/settings_page_data.dart';
 import '../data/app_text_styles.dart';
 
 class SettingsPage extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/settings/language_widgets_data.dart';
+import '../../data/pages_data/settings/language_widgets_data.dart';
 
 import '../../widgets/settings_widgets/cards/settings_card_widget.dart';
 import 'base_settings_page.dart';

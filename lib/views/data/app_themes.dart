@@ -21,7 +21,7 @@ abstract final class AppThemes {
     emojiPanelColor: Color(0xFF161616),
     selectedMessageBubbleColor: Color(0xFFFFC107),
     goDownButtonColor: Color(0xFF2d2d2d),
-    chatTextFieldColor: Color(0xFF2d2d2d),
+    chatTextFieldColor: Color(0xff222222),
   );
 
   static ThemeColorScheme lightThemeColors = ThemeColorScheme(
