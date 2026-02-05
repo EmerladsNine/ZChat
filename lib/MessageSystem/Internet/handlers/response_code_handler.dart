@@ -25,7 +25,17 @@ class ResponseCodeHandler extends Handler {
     } else if (responseCode ==
         ResponseCode.emailAccountCreationFailureError.id) {
       print("Failed to create account , please try again later.");
+    } else if (responseCode == ResponseCode.emailSignInEmailNotExistError.id) {
+      print("Email does not exist");
+    } else if (responseCode == ResponseCode.emailSignInFailureError.id) {
+      print("Failed to Sign in, please tyy again later.");
+    } else if (responseCode ==
+        ResponseCode.emailSignInPasswordIncorrectError.id) {
+      print("Password Incorrect");
+    } else if (responseCode == ResponseCode.emailSignInDone.id) {
+      print("Signed in successfully");
     }
+
     return true;
   }
 }

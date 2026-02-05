@@ -7,7 +7,11 @@ enum ResponseCode {
   emailAccountInvalidEmailLengthError(id: 3),
   emailAccountInvalidPasswordLengthError(id: 4),
   emailAccountInvalidUsernameLengthError(id: 5),
-  emailAccountCreationFailureError(id: 6);
+  emailAccountCreationFailureError(id: 6),
+  emailSignInEmailNotExistError(id: 7),
+  emailSignInFailureError(id: 8),
+  emailSignInPasswordIncorrectError(id: 9),
+  emailSignInDone(id: 10);
 
   final int id;
   const ResponseCode({required this.id});
