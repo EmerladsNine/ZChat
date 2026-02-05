@@ -128,7 +128,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                             ),
                           SizedBox(height: 10,),
                           RippleEffectButtonWidget(
-                            overlayCircularRadius: 10,
+                            overlayBorderRadius: BorderRadius.circular(10),
                             onTap: _signIn ? () {
                               final msgService = context.read<MessagingService>();
                               
