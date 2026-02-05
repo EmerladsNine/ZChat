@@ -20,7 +20,7 @@ class AddFileWidget extends StatelessWidget {
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(7.0),
+          padding: const EdgeInsets.all(6.0),
           child: SvgPicture.asset(
             'assets/icons/add_file.svg',
             colorFilter: ColorFilter.mode(

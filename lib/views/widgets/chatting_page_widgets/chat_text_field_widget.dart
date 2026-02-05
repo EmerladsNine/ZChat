@@ -26,7 +26,7 @@ class ChatTextFieldWidget extends StatelessWidget {
       builder: (context, isMessageActionsMenuVisible, child) {
         return Flexible(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 3.0),
+            padding: const EdgeInsets.only(bottom: 1.0),
             child: Container(
               decoration: BoxDecoration(
                 color: colors.chatTextFieldColor,
@@ -66,7 +66,6 @@ class ChatTextFieldWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   EmojiPanelButtonWidget(focusNode: focusNode),
                   CameraButtonWidget(),
                 ],

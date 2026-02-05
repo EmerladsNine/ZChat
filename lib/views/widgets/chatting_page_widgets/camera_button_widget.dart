@@ -20,7 +20,7 @@ class CameraButtonWidget extends StatelessWidget {
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(2),
+          padding: const EdgeInsets.only(right: 8, left: 8, bottom: 6),
           child: SvgPicture.asset(
             'assets/icons/Lineicon_camera.svg',
             colorFilter: ColorFilter.mode(
@@ -29,8 +29,8 @@ class CameraButtonWidget extends StatelessWidget {
                   : Colors.black,
               BlendMode.srcIn,
             ),
-            width: 25,
-            height: 25,
+            width: 18,
+            height: 18,
           ),
         ),
       ),

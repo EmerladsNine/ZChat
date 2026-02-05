@@ -40,7 +40,7 @@ class EmojiPanelButtonWidget extends StatelessWidget {
           valueListenable: AppNotifiers.isEmojiPickerVisible,
           builder: (context, isEmojiPickerVisible, child) {
             return Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: const EdgeInsets.only(right: 6, left: 6, bottom: 5),
               child: SvgPicture.asset(
                 'assets/icons/stickers.svg',
                 colorFilter: ColorFilter.mode(
@@ -49,8 +49,8 @@ class EmojiPanelButtonWidget extends StatelessWidget {
                       : Colors.black,
                   BlendMode.srcIn,
                 ),
-                width: 25,
-                height: 25,
+                width: 20,
+                height: 20,
               ),
             );
           },

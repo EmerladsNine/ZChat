@@ -49,32 +49,36 @@ class SendButtonWidget extends StatelessWidget {
                 scrollToBottom();
               },
         child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: !hasVisibleText(controller.text)
-              ? SvgPicture.asset(
-                  'assets/icons/send_audio.svg',
-                  colorFilter: ColorFilter.mode(
-                    AppTheme.controllerOf(context).isDarkMode
-                        ? Colors.white
-                        : Colors.black,
-                    BlendMode.srcIn,
-                  ),
-                  width: 25,
-                  height: 25,
-                )
-              : Transform.translate(
-                  offset: Offset(0, -3),
-                  child: Transform.rotate(
-                    angle: -0.3,
-                    child: Icon(
-                      Icons.send_rounded,
-                      color: AppTheme.controllerOf(context).isDarkMode
+          padding: const EdgeInsets.all(6.0),
+          child: SizedBox(
+            width: 20,
+            height: 20,
+            child: !hasVisibleText(controller.text)
+                ? SvgPicture.asset(
+                    'assets/icons/send_audio.svg',
+                    colorFilter: ColorFilter.mode(
+                      AppTheme.controllerOf(context).isDarkMode
                           ? Colors.white
                           : Colors.black,
-                      size: 25,
+                      BlendMode.srcIn,
+                    ),
+                    width: 20,
+                    height: 20,
+                  )
+                : Transform.translate(
+                    offset: Offset(0, -3),
+                    child: Transform.rotate(
+                      angle: -0.3,
+                      child: Icon(
+                        Icons.send_rounded,
+                        color: AppTheme.controllerOf(context).isDarkMode
+                            ? Colors.white
+                            : Colors.black,
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
+          ),
         ),
       ),
     );
