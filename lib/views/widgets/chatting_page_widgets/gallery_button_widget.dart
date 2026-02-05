@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
@@ -18,13 +19,17 @@ class GalleryButtonWidget extends StatelessWidget {
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Icon(
-            Icons.image_outlined,
-            color: AppTheme.controllerOf(context).isDarkMode
-                ? Colors.white
-                : Colors.black,
-            size: 25,
+          padding: const EdgeInsets.all(7),
+          child: SvgPicture.asset(
+            'assets/icons/Lineicon_photos.svg',
+            colorFilter: ColorFilter.mode(
+              AppTheme.controllerOf(context).isDarkMode
+                  ? Colors.white
+                  : Colors.black,
+              BlendMode.srcIn,
+            ),
+            width: 18,
+            height: 18,
           ),
         ),
       ),

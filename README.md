@@ -71,6 +71,23 @@ If messaging apps were sports cars, **ZChat** would be carbon fiber.
 
 ---
 
+## Fonts
+
+This project includes the **Inter** and **Inter Display** typefaces.
+
+These fonts are licensed under the **SIL Open Font License 1.1 (OFL)**.  
+The full license text is available in [`assets/fonts/OFL.txt`](assets/fonts/OFL.txt).
+
+---
+
+## Third-Party Icons
+
+This project uses icons from **Lineicons**.  
+For detailed attributions and license information see:
+[`assets/fonts/Lineicons-License.txt`](assets/fonts/Lineicons-License.txt).
+
+---
+
 ## 🖼️ Visual Teaser
 
 <div align="center">

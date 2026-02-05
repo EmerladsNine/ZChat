@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
@@ -68,7 +69,12 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
       ),
       child: Row(
         children: [
-          Icon(Icons.search, color: colors.hintColor),
+          SvgPicture.asset(
+            'assets/icons/search.svg',
+            colorFilter: ColorFilter.mode(colors.hintColor, BlendMode.srcIn),
+            width: 18,
+            height: 18,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: ValueListenableBuilder(
