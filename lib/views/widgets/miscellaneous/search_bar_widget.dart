@@ -61,7 +61,7 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
     final colors = AppTheme.themeColorsOf(context);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+      padding: const EdgeInsets.fromLTRB(8, 0, 3, 0),
       height: 35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),

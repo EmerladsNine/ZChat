@@ -49,7 +49,7 @@ class ProfileWidget extends StatelessWidget {
               height: 50.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.0),
-                color: colors.dividerColor,
+                color: colors.defaultProfilePicColor,
               ),
               child: Icon(
                 Icons.person,
