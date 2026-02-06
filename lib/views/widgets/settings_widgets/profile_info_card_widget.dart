@@ -69,7 +69,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
                       ),
                       maxLines: 3,
                     ),
-                    Container(height: 0.5, color: colors.dividerColor),
+                    // Container(height: 0.5, color: colors.dividerColor),
                   ],
                 ),
               ),
@@ -78,20 +78,23 @@ class ProfileInfoCardWidget extends StatelessWidget {
         ),
 
         (displayEditButton)
-            ? SizedBox(
+            ? Container(
                 width: 45,
-                height: 25,
+                alignment: Alignment.center,
                 child: RippleEffectButtonWidget(
                   disableSet: AppNotifiers.disableButtons,
                   appStateNotifier: AppNotifiers.isNavigating,
                   onTap: () {},
                   child: Padding(
-                    padding: EdgeInsetsGeometry.only(right: 10, left: 10),
+                    padding: EdgeInsetsGeometry.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
+                    ),
                     child: Icon(Icons.edit, color: colors.iconDefaultColor),
                   ),
                 ),
               )
-            : SizedBox(width: 45, height: 25),
+            : SizedBox(width: 45),
       ],
     );
   }

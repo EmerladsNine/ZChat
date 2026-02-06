@@ -31,6 +31,8 @@ class ThemeColorScheme {
 
   final Color defaultProfilePicColor;
 
+  final Color navBarColor;
+
   const ThemeColorScheme({
     required this.primaryBackgroundColor,
     required this.cardsColor,
@@ -52,6 +54,7 @@ class ThemeColorScheme {
     required this.goDownButtonColor,
     required this.chatTextFieldColor,
     required this.defaultProfilePicColor,
+    required this.navBarColor,
   });
 
   /// Creates a copy of this color scheme with the given fields replaced with the new values.
@@ -78,6 +81,7 @@ class ThemeColorScheme {
     Color? goDownButtonColor,
     Color? chatTextFieldColor,
     Color? defaultProfilePicColor,
+    Color? navBarColor,
   }) {
     return ThemeColorScheme(
       primaryBackgroundColor:
@@ -107,6 +111,7 @@ class ThemeColorScheme {
       chatTextFieldColor: chatTextFieldColor ?? this.chatTextFieldColor,
       defaultProfilePicColor:
           defaultProfilePicColor ?? this.defaultProfilePicColor,
+      navBarColor: navBarColor ?? this.navBarColor,
     );
   }
 
@@ -133,10 +138,11 @@ class ThemeColorScheme {
           selectedMessageBubbleColor == other.selectedMessageBubbleColor &&
           goDownButtonColor == other.goDownButtonColor &&
           chatTextFieldColor == other.chatTextFieldColor &&
-          defaultProfilePicColor == other.defaultProfilePicColor;
+          defaultProfilePicColor == other.defaultProfilePicColor &&
+          navBarColor == other.navBarColor;
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     primaryBackgroundColor,
     cardsColor,
     primaryColor,
@@ -157,5 +163,6 @@ class ThemeColorScheme {
     goDownButtonColor,
     chatTextFieldColor,
     defaultProfilePicColor,
-  );
+    navBarColor,
+  ]);
 }

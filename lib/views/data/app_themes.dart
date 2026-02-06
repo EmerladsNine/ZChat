@@ -23,6 +23,7 @@ abstract final class AppThemes {
     goDownButtonColor: Color(0xFF2d2d2d),
     chatTextFieldColor: Color(0xff222222),
     defaultProfilePicColor: Color(0xFF464748),
+    navBarColor: Color(0xFF0F0F12),
   );
 
   static ThemeColorScheme lightThemeColors = ThemeColorScheme(
@@ -46,5 +47,6 @@ abstract final class AppThemes {
     goDownButtonColor: Color(0xFFF2F2F2),
     chatTextFieldColor: Color(0xFFF2F2F2),
     defaultProfilePicColor: Color(0xFFE0E0E0),
+    navBarColor: Color(0xFFF2F3F5),
   );
 }
