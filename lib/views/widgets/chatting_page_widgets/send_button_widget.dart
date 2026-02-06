@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/MessageSystem/chat.dart';
@@ -48,28 +49,36 @@ class SendButtonWidget extends StatelessWidget {
                 scrollToBottom();
               },
         child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: !hasVisibleText(controller.text)
-              ? Icon(
-                  Icons.graphic_eq_sharp,
-                  size: 25,
-                  color: AppTheme.controllerOf(context).isDarkMode
-                      ? Colors.white
-                      : Colors.black,
-                )
-              : Transform.translate(
-                  offset: Offset(0, -3),
-                  child: Transform.rotate(
-                    angle: -0.3,
-                    child: Icon(
-                      Icons.send_rounded,
-                      color: AppTheme.controllerOf(context).isDarkMode
+          padding: const EdgeInsets.all(6.0),
+          child: SizedBox(
+            width: 20,
+            height: 20,
+            child: !hasVisibleText(controller.text)
+                ? SvgPicture.asset(
+                    'assets/icons/send_audio.svg',
+                    colorFilter: ColorFilter.mode(
+                      AppTheme.controllerOf(context).isDarkMode
                           ? Colors.white
                           : Colors.black,
-                      size: 25,
+                      BlendMode.srcIn,
+                    ),
+                    width: 20,
+                    height: 20,
+                  )
+                : Transform.translate(
+                    offset: Offset(0, -3),
+                    child: Transform.rotate(
+                      angle: -0.3,
+                      child: Icon(
+                        Icons.send_rounded,
+                        color: AppTheme.controllerOf(context).isDarkMode
+                            ? Colors.white
+                            : Colors.black,
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
+          ),
         ),
       ),
     );

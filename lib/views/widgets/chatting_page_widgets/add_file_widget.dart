@@ -19,14 +19,10 @@ class AddFileWidget extends StatelessWidget {
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Icon(
-            Icons.add,
-            color: AppTheme.controllerOf(context).isDarkMode
-                ? Colors.white
-                : Colors.black,
-            size: 25,
-          ),
+          padding: const EdgeInsets.all(2.0),
+          child: Icon(Icons.add,size: 26,color: AppTheme.controllerOf(context).isDarkMode
+              ? Colors.white
+              : Colors.black,)
         ),
       ),
     );

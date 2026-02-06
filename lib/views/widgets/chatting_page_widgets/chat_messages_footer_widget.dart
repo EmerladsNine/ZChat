@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/camera_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_text_field_widget.dart';
-import 'package:zchat/views/widgets/chatting_page_widgets/gallery_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/send_button_widget.dart';
 
 import '../../controllers/custom_text_controller.dart';
@@ -44,7 +44,9 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
     return Container(
       color: colors.cardsColor,
       child: Padding(
-        padding: widget.isInSafeArea ? EdgeInsetsGeometry.zero : EdgeInsets.only(bottom: widget.bottomSafeArea),
+        padding: widget.isInSafeArea
+            ? EdgeInsetsGeometry.zero
+            : EdgeInsets.only(bottom: widget.bottomSafeArea),
         child: Material(
           color: colors.cardsColor,
           child: Padding(
@@ -56,13 +58,14 @@ class _ChatMessagesFooterWidgetState extends State<ChatMessagesFooterWidget> {
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
+              spacing: 10,
               children: [
                 AddFileWidget(),
-                GalleryButtonWidget(),
                 ChatTextFieldWidget(
                   controller: controller,
                   focusNode: widget.focusNode,
                 ),
+                CameraButtonWidget(),
                 SendButtonWidget(
                   controller: controller,
                   scrollToBottom: widget.scrollToBottom,

@@ -26,7 +26,19 @@ class ChattingPageAppBarWidget extends StatelessWidget {
           spacing: 10,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(Icons.person, color: colors.iconDefaultColor, size: 25),
+            Container(
+              width: 28.0,
+              height: 28.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50.0),
+                color: colors.defaultProfilePicColor,
+              ),
+              child: Icon(
+                Icons.person,
+                size: 25.0,
+                color: colors.iconDefaultColor,
+              ),
+            ),
             ScaledTextWidget(
               'Max',
               style: AppTextStyles.appBarPrimaryTextStyle(

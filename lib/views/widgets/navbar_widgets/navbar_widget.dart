@@ -20,12 +20,16 @@ class NavbarWidget extends StatelessWidget {
         return Padding(
           padding: EdgeInsetsGeometry.only(bottom: 15),
           child: Container(
-            color: colors.primaryBackgroundColor,
+            decoration: BoxDecoration(
+              color: colors.primaryBackgroundColor,
+              border: BoxBorder.fromLTRB(
+                top: BorderSide(color: colors.dividerColor, width: 0.1),
+              ),
+            ),
             child: SafeArea(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(height: 0.5, color: colors.dividerColor),
                   Padding(
                     padding: EdgeInsetsGeometry.only(top: 15),
                     child: Row(

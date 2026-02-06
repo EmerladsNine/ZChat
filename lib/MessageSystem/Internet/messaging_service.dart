@@ -42,9 +42,9 @@ class MessagingService {
 
   void sendProtocolUnit(MessageType type, List<int> data) {
     List<int> encryptedData = [type.id, ...data];
-    socket.add(intToBigEndian(encryptedData.length, 2));
     // Todo : fail on data size larger than 65535
     // Todo : encrypt the data
+    encryptedData.insertAll(0, intToBigEndian(encryptedData.length, 2));
     socket.add(encryptedData);
   }
 

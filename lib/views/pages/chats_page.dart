@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/enums/message_status.dart';
@@ -84,7 +85,8 @@ class ChatsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 3),
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: SearchBarWidget(
               hintText: 'Search',
@@ -97,7 +99,15 @@ class ChatsPage extends StatelessWidget {
                   overlayBorderRadius: BorderRadius.circular(8),
                   disableSet: AppNotifiers.disableButtons,
                   appStateNotifier: AppNotifiers.isNavigating,
-                  child: Icon(Icons.add, color: colors.hintColor),
+                  child: SvgPicture.asset(
+                    'assets/icons/add_file.svg',
+                    colorFilter: ColorFilter.mode(
+                      colors.hintColor,
+                      BlendMode.srcIn,
+                    ),
+                    width: 18,
+                    height: 18,
+                  ),
                 ),
               ),
             ),

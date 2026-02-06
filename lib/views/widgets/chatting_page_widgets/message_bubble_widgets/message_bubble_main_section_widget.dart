@@ -50,19 +50,16 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
             constraints: BoxConstraints(minWidth: 80),
             alignment: isEmojiBubble && !isReplyBubble
                 ? (received ? Alignment.centerLeft : Alignment.centerRight)
-                : Alignment.centerLeft,
-            child: Align(
-              alignment: TextUtils.getTextPlacement(text),
-              child: ScaledTextWidget(
-                text,
-                textDirection: TextUtils.getTextDirection(text),
-                style: TextStyle(
-                  fontSize: isEmojiBubble
-                      ? AppTheme.emojiBubbleSizeOf(context)
-                      : resolveMessageFontSize(context, text),
-                  height: 1,
-                  color: colors.primaryColor,
-                ),
+                : TextUtils.getTextPlacement(text),
+            child: ScaledTextWidget(
+              text,
+              textDirection: TextUtils.getTextDirection(text),
+              style: TextStyle(
+                fontSize: isEmojiBubble
+                    ? AppTheme.emojiBubbleSizeOf(context)
+                    : resolveMessageFontSize(context, text),
+                height: 1,
+                color: colors.primaryColor,
               ),
             ),
           ),

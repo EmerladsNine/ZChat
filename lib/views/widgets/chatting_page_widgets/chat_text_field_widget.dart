@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/widgets/chatting_page_widgets/camera_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_button_widget.dart';
 
 import '../../controllers/custom_text_controller.dart';
@@ -20,19 +19,18 @@ class ChatTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
-
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isMessageActionsMenuVisible,
       builder: (context, isMessageActionsMenuVisible, child) {
         return Flexible(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 3.0),
+            padding: const EdgeInsets.only(bottom: 2.0),
             child: Container(
               decoration: BoxDecoration(
                 color: colors.chatTextFieldColor,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsetsGeometry.only(right: 3),
+              padding: EdgeInsetsGeometry.only(left: 10,right: 4),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -45,7 +43,7 @@ class ChatTextFieldWidget extends StatelessWidget {
                       focusNode: focusNode,
                       showCursor: !isMessageActionsMenuVisible,
                       textDirection: TextUtils.getTextDirection(
-                        controller.text,
+                        controller.text.trim(),
                       ),
                       textCapitalization: TextCapitalization.sentences,
                       keyboardType: TextInputType.multiline,
@@ -58,17 +56,18 @@ class ChatTextFieldWidget extends StatelessWidget {
                         height: 1.2,
                         color: colors.primaryColor,
                       ),
-                      strutStyle: StrutStyle(fontSize: 20, height: 1.2),
+                      strutStyle: StrutStyle(fontSize: 20),
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 10, top: 4),
+                        contentPadding: EdgeInsets.only(left: 10,bottom: 4),
                         isDense: true,
                         border: OutlineInputBorder(borderSide: BorderSide.none),
                       ),
                     ),
                   ),
-
-                  EmojiPanelButtonWidget(focusNode: focusNode),
-                  CameraButtonWidget(),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 2.5),
+                    child: EmojiPanelButtonWidget(focusNode: focusNode),
+                  )
                 ],
               ),
             ),
