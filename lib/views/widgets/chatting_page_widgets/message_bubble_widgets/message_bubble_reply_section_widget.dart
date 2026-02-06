@@ -26,11 +26,12 @@ class MessageBubbleReplySectionWidget extends StatelessWidget {
     final String replyTextSender = replyData.replyTextSender != ""
         ? replyData.replyTextSender
         : "You";
-    return Container(
+    return Padding(
       padding: isSeparate ? EdgeInsetsGeometry.all(4) : EdgeInsetsGeometry.zero,
       child: Container(
         padding: EdgeInsets.all(5),
         constraints: BoxConstraints(minWidth: 100),
+        width: double.infinity,
         decoration: BoxDecoration(
           color: colors.primaryBackgroundColor.withAlpha(60),
           borderRadius: BorderRadius.circular(5),
