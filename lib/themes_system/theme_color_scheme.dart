@@ -29,6 +29,8 @@ class ThemeColorScheme {
   final Color goDownButtonColor;
   final Color chatTextFieldColor;
 
+  final Color defaultProfilePicColor;
+
   const ThemeColorScheme({
     required this.primaryBackgroundColor,
     required this.cardsColor,
@@ -49,6 +51,7 @@ class ThemeColorScheme {
     required this.selectedMessageBubbleColor,
     required this.goDownButtonColor,
     required this.chatTextFieldColor,
+    required this.defaultProfilePicColor,
   });
 
   /// Creates a copy of this color scheme with the given fields replaced with the new values.
@@ -74,6 +77,7 @@ class ThemeColorScheme {
     Color? selectedMessageBubbleColor,
     Color? goDownButtonColor,
     Color? chatTextFieldColor,
+    Color? defaultProfilePicColor,
   }) {
     return ThemeColorScheme(
       primaryBackgroundColor:
@@ -101,6 +105,8 @@ class ThemeColorScheme {
           selectedMessageBubbleColor ?? this.selectedMessageBubbleColor,
       goDownButtonColor: goDownButtonColor ?? this.goDownButtonColor,
       chatTextFieldColor: chatTextFieldColor ?? this.chatTextFieldColor,
+      defaultProfilePicColor:
+          defaultProfilePicColor ?? this.defaultProfilePicColor,
     );
   }
 
@@ -126,7 +132,8 @@ class ThemeColorScheme {
           emojiPanelColor == other.emojiPanelColor &&
           selectedMessageBubbleColor == other.selectedMessageBubbleColor &&
           goDownButtonColor == other.goDownButtonColor &&
-          chatTextFieldColor == other.chatTextFieldColor;
+          chatTextFieldColor == other.chatTextFieldColor &&
+          defaultProfilePicColor == other.defaultProfilePicColor;
 
   @override
   int get hashCode => Object.hash(
@@ -149,5 +156,6 @@ class ThemeColorScheme {
     selectedMessageBubbleColor,
     goDownButtonColor,
     chatTextFieldColor,
+    defaultProfilePicColor,
   );
 }

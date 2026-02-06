@@ -85,7 +85,8 @@ class ChatsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 3),
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: SearchBarWidget(
               hintText: 'Search',

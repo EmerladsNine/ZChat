@@ -22,6 +22,7 @@ abstract final class AppThemes {
     selectedMessageBubbleColor: Color(0xFFFFC107),
     goDownButtonColor: Color(0xFF2d2d2d),
     chatTextFieldColor: Color(0xff222222),
+    defaultProfilePicColor: Color(0xFF464748),
   );
 
   static ThemeColorScheme lightThemeColors = ThemeColorScheme(
@@ -36,13 +37,14 @@ abstract final class AppThemes {
     hintColor: Color(0xFF757575),
     overlayColor: Color(0xFF646464),
     textSecondaryColor: Color(0xFF5F6368),
-    iconDefaultColor: Color(0xFF2C2C2C),
+    iconDefaultColor: Color(0xFF1B1B1B),
     selectedPageIconColor: Color(0xFFFFFFFF),
-    dividerColor: Color(0xFFE0E0E0),
+    dividerColor: Color(0xFFA4A4A4),
     messageBubbleShadowColor: Colors.black,
     emojiPanelColor: Color(0xFFF1F3F4),
     selectedMessageBubbleColor: Color(0xFF1E88E5),
     goDownButtonColor: Color(0xFFF2F2F2),
     chatTextFieldColor: Color(0xFFF2F2F2),
+    defaultProfilePicColor: Color(0xFFE0E0E0),
   );
 }
