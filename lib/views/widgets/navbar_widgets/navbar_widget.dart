@@ -21,7 +21,7 @@ class NavbarWidget extends StatelessWidget {
           padding: EdgeInsetsGeometry.only(bottom: 15),
           child: Container(
             decoration: BoxDecoration(
-              color: colors.primaryBackgroundColor,
+              color: colors.navBarColor,
               border: BoxBorder.fromLTRB(
                 top: BorderSide(color: colors.dividerColor, width: 0.1),
               ),
