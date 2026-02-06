@@ -19,21 +19,20 @@ class ChatTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
-
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isMessageActionsMenuVisible,
       builder: (context, isMessageActionsMenuVisible, child) {
         return Flexible(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 1.0),
+            padding: const EdgeInsets.only(bottom: 2.0),
             child: Container(
               decoration: BoxDecoration(
                 color: colors.chatTextFieldColor,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsetsGeometry.only(right: 4),
+              padding: EdgeInsetsGeometry.only(left: 10,right: 4),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
                     child: TextField(
@@ -44,7 +43,7 @@ class ChatTextFieldWidget extends StatelessWidget {
                       focusNode: focusNode,
                       showCursor: !isMessageActionsMenuVisible,
                       textDirection: TextUtils.getTextDirection(
-                        controller.text,
+                        controller.text.trim(),
                       ),
                       textCapitalization: TextCapitalization.sentences,
                       keyboardType: TextInputType.multiline,
@@ -57,15 +56,18 @@ class ChatTextFieldWidget extends StatelessWidget {
                         height: 1.2,
                         color: colors.primaryColor,
                       ),
-                      strutStyle: StrutStyle(fontSize: 20, height: 1.2),
+                      strutStyle: StrutStyle(fontSize: 20),
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 10, top: 4),
+                        contentPadding: EdgeInsets.only(left: 10,bottom: 4),
                         isDense: true,
                         border: OutlineInputBorder(borderSide: BorderSide.none),
                       ),
                     ),
                   ),
-                  EmojiPanelButtonWidget(focusNode: focusNode)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 2.5),
+                    child: EmojiPanelButtonWidget(focusNode: focusNode),
+                  )
                 ],
               ),
             ),
