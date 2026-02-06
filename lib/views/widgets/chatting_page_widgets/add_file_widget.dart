@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
 import '../../../themes_system/app_theme.dart';
@@ -20,18 +19,10 @@ class AddFileWidget extends StatelessWidget {
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: SvgPicture.asset(
-            'assets/icons/add_file.svg',
-            colorFilter: ColorFilter.mode(
-              AppTheme.controllerOf(context).isDarkMode
-                  ? Colors.white
-                  : Colors.black,
-              BlendMode.srcIn,
-            ),
-            width: 18,
-            height: 18,
-          ),
+          padding: const EdgeInsets.all(2.0),
+          child: Icon(Icons.add,size: 26,color: AppTheme.controllerOf(context).isDarkMode
+              ? Colors.white
+              : Colors.black,)
         ),
       ),
     );

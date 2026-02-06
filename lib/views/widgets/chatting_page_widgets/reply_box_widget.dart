@@ -80,6 +80,7 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
               ),
               RippleEffectButtonWidget(
                 overlayBorderRadius: BorderRadius.circular(20),
+                animationDuration: Duration(milliseconds: 20),
                 padding: EdgeInsetsGeometry.all(5),
                 onTap: () {
                   AppNotifiers.replyData.value = null;

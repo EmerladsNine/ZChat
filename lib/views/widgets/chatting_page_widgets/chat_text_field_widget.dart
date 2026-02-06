@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/widgets/chatting_page_widgets/camera_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_button_widget.dart';
 
 import '../../controllers/custom_text_controller.dart';
@@ -32,9 +31,9 @@ class ChatTextFieldWidget extends StatelessWidget {
                 color: colors.chatTextFieldColor,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsetsGeometry.only(right: 3),
+              padding: EdgeInsetsGeometry.only(right: 4),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: TextField(
@@ -66,8 +65,7 @@ class ChatTextFieldWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  EmojiPanelButtonWidget(focusNode: focusNode),
-                  CameraButtonWidget(),
+                  EmojiPanelButtonWidget(focusNode: focusNode)
                 ],
               ),
             ),

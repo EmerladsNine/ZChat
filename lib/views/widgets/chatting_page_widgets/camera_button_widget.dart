@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zchat/themes_system/app_theme.dart';
 
-import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../buttons/ripple_effect_button_widget.dart';
 import '../miscellaneous/custom_tool_tip.dart';
@@ -20,18 +19,10 @@ class CameraButtonWidget extends StatelessWidget {
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.only(right: 8, left: 8, bottom: 6),
-          child: SvgPicture.asset(
-            'assets/icons/Lineicon_camera.svg',
-            colorFilter: ColorFilter.mode(
-              AppTheme.controllerOf(context).isDarkMode
-                  ? Colors.white
-                  : Colors.black,
-              BlendMode.srcIn,
-            ),
-            width: 18,
-            height: 18,
-          ),
+          padding: const EdgeInsets.all(4),
+          child: Icon(Icons.camera,color: AppTheme.controllerOf(context).isDarkMode
+              ? Colors.white
+              : Colors.black,)
         ),
       ),
     );
