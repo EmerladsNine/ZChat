@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/keyboard/keyboard.dart';
@@ -38,7 +39,7 @@ class EmojiPanelButtonWidget extends StatelessWidget {
         child: ValueListenableBuilder(
           valueListenable: AppNotifiers.isEmojiPickerVisible,
           builder: (context, isEmojiPickerVisible, child) {
-            return Icon(Icons.emoji_emotions_outlined,color: AppTheme.controllerOf(context).isDarkMode
+            return Icon(CupertinoIcons.smiley,color: AppTheme.controllerOf(context).isDarkMode
                 ? Colors.white
                 : Colors.black,);
           },

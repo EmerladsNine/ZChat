@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
@@ -20,7 +21,7 @@ class CameraButtonWidget extends StatelessWidget {
         onTap: () {},
         child: Padding(
           padding: const EdgeInsets.all(4),
-          child: Icon(Icons.camera,color: AppTheme.controllerOf(context).isDarkMode
+          child: Icon(CupertinoIcons.camera,color: AppTheme.controllerOf(context).isDarkMode
               ? Colors.white
               : Colors.black,)
         ),
