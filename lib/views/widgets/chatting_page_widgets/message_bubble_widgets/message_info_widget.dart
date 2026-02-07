@@ -31,10 +31,13 @@ class MessageInfoWidget extends StatelessWidget {
     final int alpha = (themeController.opacity * 255).round();
 
     return Row(
-      mainAxisAlignment: hasBackground ?
-                  received ? MainAxisAlignment.start : MainAxisAlignment.end :
-                  received ? MainAxisAlignment.end : MainAxisAlignment.end
-      ,
+      mainAxisAlignment: hasBackground
+          ? received
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.end
+          : received
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.end,
       children: [
         Container(
           padding: hasBackground
@@ -62,10 +65,14 @@ class MessageInfoWidget extends StatelessWidget {
             children: [
               ScaledTextWidget(
                 time,
-                style: TextStyle(color: colors.primaryColor.withAlpha(200), fontSize: 8),
+                style: TextStyle(
+                  color: colors.primaryColor.withAlpha(200),
+                  fontSize: 8,
+                ),
               ),
 
-              buildMessageStatusIndicator(context, messageStatus, 15),
+              if (!received)
+                buildMessageStatusIndicator(context, messageStatus, 15),
             ],
           ),
         ),
