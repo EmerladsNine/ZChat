@@ -65,6 +65,7 @@ class MessageInfoWidget extends StatelessWidget {
             children: [
               ScaledTextWidget(
                 time,
+                padding: EdgeInsets.only(top: 1.75),
                 style: TextStyle(
                   color: colors.primaryColor.withAlpha(200),
                   fontSize: 8,
