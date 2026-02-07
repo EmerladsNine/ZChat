@@ -17,36 +17,34 @@ class NavbarWidget extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.selectedPageNotifier,
       builder: (context, selectedPage, child) {
-        return Padding(
+        return Container(
           padding: EdgeInsetsGeometry.only(bottom: 15),
-          child: Container(
-            decoration: BoxDecoration(
-              color: colors.navBarColor,
-              border: BoxBorder.fromLTRB(
-                top: BorderSide(color: colors.dividerColor, width: 0.1),
-              ),
+          decoration: BoxDecoration(
+            color: colors.navBarColor,
+            border: BoxBorder.fromLTRB(
+              top: BorderSide(color: colors.dividerColor, width: 0.1),
             ),
-            child: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsGeometry.only(top: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: List.generate(navItems.length, (index) {
-                        return NavbarItemWidget(
-                          selectedIcon: navItems[index]['selectedIcon'],
-                          unselectedIcon: navItems[index]['unselectedIcon'],
-                          label: navItems[index]['label'],
-                          pageNumber: index,
-                          pageController: pageController,
-                        );
-                      }),
-                    ),
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsetsGeometry.only(top: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: List.generate(navItems.length, (index) {
+                      return NavbarItemWidget(
+                        selectedIcon: navItems[index]['selectedIcon'],
+                        unselectedIcon: navItems[index]['unselectedIcon'],
+                        label: navItems[index]['label'],
+                        pageNumber: index,
+                        pageController: pageController,
+                      );
+                    }),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
