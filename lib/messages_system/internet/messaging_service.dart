@@ -3,14 +3,14 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:zchat/MessageSystem/Internet/listener_service.dart';
-import 'package:zchat/MessageSystem/Internet/message_type.dart';
-import 'package:zchat/MessageSystem/chat.dart';
-import 'package:zchat/MessageSystem/message.dart';
-import 'package:zchat/storage_managment/chats_storage_manager.dart';
-import 'package:zchat/utils/print_on_debug.dart';
+import 'package:zchat/messages_system/internet/listener_service.dart';
+import 'package:zchat/messages_system/internet/message_type.dart';
+import 'package:zchat/messages_system/chat.dart';
+import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/storage_management_system/chats_storage_manager.dart';
+import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/data_classes/message_reply_data.dart';
+import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 
 List<int> intToBigEndian(int num, int bytes) {
   List<int> list = [];
@@ -63,7 +63,7 @@ class MessagingService {
     message = message.trim();
     MessageReplyData? replyData = AppNotifiers.replyData.value;
     try {
-      Uint8List replyTextSender= utf8.encode(replyData?.replyTextSender ?? "");
+      Uint8List replyTextSender = utf8.encode(replyData?.replyTextSender ?? "");
       Uint8List replyText = utf8.encode(replyData?.replyText ?? "");
       sendProtocolUnit(MessageType.normalMessage, [
         ...intToBigEndian(replyTextSender.length, 4),
@@ -119,6 +119,7 @@ class MessagingService {
   }
 
   bool isReconnecting = false;
+
   Future<void> reconnectServer(String caller) async {
     if (isReconnecting) return;
     isReconnecting = true;

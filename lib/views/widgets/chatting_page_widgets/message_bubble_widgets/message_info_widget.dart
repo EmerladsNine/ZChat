@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
-import '../../../../enums/message_bubble_color.dart';
-import '../../../../themes_system/theme_color_scheme.dart';
+import '../../../../themes_system/enums/message_bubble_color.dart';
+import '../../../../themes_system/data_classes/theme_color_scheme.dart';
 import '../../../../themes_system/theme_controller.dart';
 import '../../../data/app_message_bubble_colors.dart';
 import '../../miscellaneous/scaled_text_widget.dart';

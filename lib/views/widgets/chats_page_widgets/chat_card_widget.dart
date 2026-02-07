@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/MessageSystem/chat.dart';
-import 'package:zchat/storage_managment/chats_storage_manager.dart';
+import 'package:zchat/messages_system/chat.dart';
+import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
 import '../../data/app_constants.dart';

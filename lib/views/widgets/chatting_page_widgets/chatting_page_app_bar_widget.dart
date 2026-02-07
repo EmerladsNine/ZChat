@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
-import 'package:zchat/themes_system/theme_color_scheme.dart';
+import 'package:zchat/themes_system/data_classes/theme_color_scheme.dart';
 import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
 
 import '../../data/app_notifiers.dart';

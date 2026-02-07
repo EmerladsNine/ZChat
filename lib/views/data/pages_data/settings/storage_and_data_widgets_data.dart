@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:zchat/views/data_classes/pages/settings/dialog_option_data.dart';
 import 'package:zchat/views/data_classes/pages/settings/settings_checkbox_list_dialog_button_data.dart';
 import 'package:zchat/views/data_classes/pages/settings/settings_navigation_button_data.dart';
-import 'package:zchat/enums/auto_download.dart';
+import 'package:zchat/storage_management_system/enums/auto_download.dart';
 import 'package:zchat/views/pages/temp.dart';
 
 final List<SettingsCheckboxListDialogButtonData<AutoDownload>>

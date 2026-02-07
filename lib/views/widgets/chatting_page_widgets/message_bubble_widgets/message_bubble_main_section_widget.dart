@@ -1,10 +1,10 @@
 import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/material.dart';
-import 'package:zchat/utils/text_utils.dart';
+import 'package:zchat/views/utils/text_utils.dart';
 
-import '../../../../enums/message_status.dart';
+import '../../../../messages_system/enums/message_status.dart';
 import '../../../../themes_system/app_theme.dart';
-import '../../../../themes_system/theme_color_scheme.dart';
+import '../../../../themes_system/data_classes/theme_color_scheme.dart';
 import '../../../../themes_system/theme_controller.dart';
 import '../../miscellaneous/scaled_text_widget.dart';
 import 'message_info_widget.dart';

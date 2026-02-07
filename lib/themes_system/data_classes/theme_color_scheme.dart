@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/enums/message_bubble_color.dart';
+import 'package:zchat/themes_system/enums/message_bubble_color.dart';
 
 /// Data class holding the color scheme for the application theme.
 class ThemeColorScheme {

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zchat/keyboard/keyboard.dart';
+import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
@@ -50,7 +50,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   }
 
   void onKeyboardAnimationStart() {
-    if (Keyboard.nextKeyboardHeight > 0) {
+    if (KeyboardController.nextKeyboardHeight > 0) {
       if (_scrollController.offset <= 100.0) {
         _scrollController.jumpTo(0.0);
       }
@@ -59,8 +59,8 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   @override
   void initState() {
-    Keyboard.onChangeState.add(onKeyboardStateChange);
-    Keyboard.onAnimatingStart.add(onKeyboardAnimationStart);
+    KeyboardController.addStateListener(onKeyboardStateChange);
+    KeyboardController.addAnimationListener(onKeyboardAnimationStart);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.addListener(() {
         if (!isDownButtonShown && _scrollController.offset > 100) {
@@ -79,8 +79,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
 
   @override
   void dispose() {
-    Keyboard.onChangeState.clear();
-    Keyboard.onAnimatingStart.clear();
+    KeyboardController.dispose();
     super.dispose();
   }
 
@@ -89,7 +88,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     final colors = AppTheme.themeColorsOf(context);
 
     double bottomPadding =
-        Keyboard.nextKeyboardHeight /
+        KeyboardController.nextKeyboardHeight /
         (Platform.isAndroid ? MediaQuery.devicePixelRatioOf(context) : 1.0);
 
     double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;

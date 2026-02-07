@@ -1,9 +1,9 @@
-import 'package:zchat/MessageSystem/Internet/handlers/handler.dart';
-import 'package:zchat/MessageSystem/Internet/handlers/normal_message_handler.dart';
-import 'package:zchat/MessageSystem/Internet/handlers/ping_handler.dart';
-import 'package:zchat/MessageSystem/Internet/handlers/pong_handler.dart';
-import 'package:zchat/MessageSystem/Internet/message_type.dart';
-import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/handlers/handler.dart';
+import 'package:zchat/messages_system/internet/handlers/normal_message_handler.dart';
+import 'package:zchat/messages_system/internet/handlers/ping_handler.dart';
+import 'package:zchat/messages_system/internet/handlers/pong_handler.dart';
+import 'package:zchat/messages_system/internet/message_type.dart';
+import 'package:zchat/messages_system/internet/messaging_service.dart';
 
 class ListenerService {
   ListenerService(this.messagingService);
@@ -23,7 +23,6 @@ class ListenerService {
 
   //returns if the unit was received completely.
   bool processProtocolUnit() {
-
     if (expectedLength == null) {
       if (buffer.length < 2) return false;
       expectedLength = (buffer[0] << 8) | buffer[1];
@@ -37,7 +36,10 @@ class ListenerService {
       buffer.removeAt(0);
     }
 
-    handlers[head]!.handle(buffer.sublist(0, expectedLength! - 1), messagingService);
+    handlers[head]!.handle(
+      buffer.sublist(0, expectedLength! - 1),
+      messagingService,
+    );
 
     head = null;
     expectedLength = null;

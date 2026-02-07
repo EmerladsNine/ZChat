@@ -1,8 +1,8 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:zchat/MessageSystem/chat.dart';
-import 'package:zchat/MessageSystem/message.dart';
-import 'package:zchat/storage_managment/storage_manager.dart';
-import 'package:zchat/views/data_classes/message_reply_data.dart';
+import 'package:zchat/messages_system/chat.dart';
+import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/storage_management_system/storage_manager.dart';
+import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 
 class ChatsStorageManager {
   static Chat globalChat = Chat(); // Todo : remove this when it becomes useless

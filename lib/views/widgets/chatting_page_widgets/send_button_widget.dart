@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
-import 'package:zchat/MessageSystem/chat.dart';
+import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
 import '../../../themes_system/app_theme.dart';

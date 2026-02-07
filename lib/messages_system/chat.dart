@@ -1,7 +1,7 @@
 import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:zchat/MessageSystem/message.dart';
-import 'package:zchat/utils/print_on_debug.dart';
+import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/messages_system/utils/print_on_debug.dart';
 
 class Chat extends ChangeNotifier {
   final List<Message> _messages = [];

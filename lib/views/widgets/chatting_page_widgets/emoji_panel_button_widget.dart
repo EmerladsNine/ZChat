@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
-import 'package:zchat/keyboard/keyboard.dart';
+import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../buttons/ripple_effect_button_widget.dart';
@@ -22,16 +22,16 @@ class EmojiPanelButtonWidget extends StatelessWidget {
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {
           if (!AppNotifiers.isEmojiPickerVisible.value &&
-              Keyboard.isFullyClosed()) {
+              KeyboardController.isFullyClosed) {
             AppNotifiers.isEmojiPickerVisible.value = true;
           } else if (AppNotifiers.isEmojiPickerVisible.value &&
-              Keyboard.isFullyClosed()) {
+              KeyboardController.isFullyClosed) {
             FocusScope.of(context).unfocus();
             WidgetsBinding.instance.addPostFrameCallback((_) {
               focusNode.requestFocus();
             });
           } else if (!AppNotifiers.isEmojiPickerVisible.value &&
-              Keyboard.isFullyOpened()) {
+              KeyboardController.isFullyOpened) {
             FocusScope.of(context).unfocus();
             AppNotifiers.isEmojiPickerVisible.value = true;
           }
