@@ -6,12 +6,12 @@ enum MessageType {
   normalMessage(id: 2),
   emailSignIn(id: 3),
   emailSignUp(id: 4),
-  responseCode(id: 5)
-  ;
+  responseCode(id: 5),
+  googleAuthentication(id: 6);
+
   final int id;
   const MessageType({required this.id});
-  static MessageType fromId(int id)
-  {
+  static MessageType fromId(int id) {
     return MessageType.values.firstWhere((e) => e.id == id);
   }
 }

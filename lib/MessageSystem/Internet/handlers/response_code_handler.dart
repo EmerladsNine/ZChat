@@ -34,6 +34,15 @@ class ResponseCodeHandler extends Handler {
       print("Password Incorrect");
     } else if (responseCode == ResponseCode.emailSignInDone.id) {
       print("Signed in successfully");
+    } else if (responseCode == ResponseCode.googleAuthInvalidToken.id) {
+      print("Invalid google token");
+    } else if (responseCode == ResponseCode.googleAuthSuccessful.id) {
+      print("Google Authentication successful");
+    }else if(responseCode == ResponseCode.googleAuthFailed.id) {
+      print("Failed to authenticate , please try again later.");
+    }
+    else {
+      print("Unknown response code");
     }
 
     return true;

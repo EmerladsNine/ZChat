@@ -11,7 +11,10 @@ enum ResponseCode {
   emailSignInEmailNotExistError(id: 7),
   emailSignInFailureError(id: 8),
   emailSignInPasswordIncorrectError(id: 9),
-  emailSignInDone(id: 10);
+  emailSignInDone(id: 10),
+  googleAuthInvalidToken(id: 11),
+  googleAuthSuccessful(id: 12),
+  googleAuthFailed (id: 13);
 
   final int id;
   const ResponseCode({required this.id});
