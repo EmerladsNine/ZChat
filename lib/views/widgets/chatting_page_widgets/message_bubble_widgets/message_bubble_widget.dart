@@ -225,7 +225,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                             return FlatTapButtonWidget(
                               disableSet: AppNotifiers.disableButtons,
                               appStateNotifier: AppNotifiers.isNavigating,
-                              onTapDown: (details) {
+                              onTap: () {
                                 RenderBox box =
                                     context.findRenderObject() as RenderBox;
                                 Offset globalTopLeft = box.localToGlobal(
