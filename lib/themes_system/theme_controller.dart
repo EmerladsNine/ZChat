@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/enums/font_size_level.dart';
 import 'package:zchat/enums/message_bubble_color.dart';
+import 'package:zchat/storage_managment/local_storage_service.dart';
 import 'package:zchat/themes_system/theme_color_scheme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../data_classes/message_bubbles_set_data.dart';
 import '../views/data/app_themes.dart';
 
 class ThemeController extends ChangeNotifier {
-  late final SharedPreferences sharedPreferences;
-
   late bool _isDarkMode;
   late double _emojiBubbleSize;
   late double _fontScale;
@@ -37,16 +35,15 @@ class ThemeController extends ChangeNotifier {
       : _lightMessageBubblesSetData.opacity!;
 
   Future<void> init() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-
-    _isDarkMode = sharedPreferences.getBool('isDarkMode') ?? true;
+    _isDarkMode =
+        LocalStorageService.sharedPreferences.getBool('isDarkMode') ?? true;
 
     _emojiBubbleSize =
-        sharedPreferences.getDouble('emojiBubbleSize') ??
+        LocalStorageService.sharedPreferences.getDouble('emojiBubbleSize') ??
         FontSizeLevel.medium.emojiBubbleSize;
 
     _fontScale =
-        sharedPreferences.getDouble('fontScale') ??
+        LocalStorageService.sharedPreferences.getDouble('fontScale') ??
         FontSizeLevel.medium.fontScale;
 
     final lightColors = loadMessageBubbleColors(false);
@@ -56,19 +53,28 @@ class ThemeController extends ChangeNotifier {
     _darkMessageBubblesSetData.setColors(darkColors[0], darkColors[1]);
 
     _lightMessageBubblesSetData.opacity =
-        sharedPreferences.getDouble('lightMessageBubbleOpacity') ?? 1;
+        LocalStorageService.sharedPreferences.getDouble(
+          'lightMessageBubbleOpacity',
+        ) ??
+        1;
 
     _darkMessageBubblesSetData.opacity =
-        sharedPreferences.getDouble('darkMessageBubbleOpacity') ?? 1;
+        LocalStorageService.sharedPreferences.getDouble(
+          'darkMessageBubbleOpacity',
+        ) ??
+        1;
   }
 
   List<MessageBubbleColor> loadMessageBubbleColors(bool forDarkMode) {
     final String mode = forDarkMode ? 'dark' : 'light';
 
-    MessageBubbleColor sentMessageBubbleColors = MessageBubbleColor
-        .values[sharedPreferences.getInt('${mode}SentMessageBubbleColor') ?? 0];
+    MessageBubbleColor sentMessageBubbleColors =
+        MessageBubbleColor.values[LocalStorageService.sharedPreferences.getInt(
+              '${mode}SentMessageBubbleColor',
+            ) ??
+            0];
     MessageBubbleColor receivedMessageBubbleColors =
-        MessageBubbleColor.values[sharedPreferences.getInt(
+        MessageBubbleColor.values[LocalStorageService.sharedPreferences.getInt(
               '${mode}ReceivedMessageBubbleColor',
             ) ??
             1];
@@ -81,19 +87,25 @@ class ThemeController extends ChangeNotifier {
 
   Future<void> toggleTheme(bool value) async {
     _isDarkMode = value;
-    await sharedPreferences.setBool('isDarkMode', value);
+    await LocalStorageService.sharedPreferences.setBool('isDarkMode', value);
     notifyListeners();
   }
 
   Future<void> setEmojiBubbleSize(FontSizeLevel value) async {
     _emojiBubbleSize = value.emojiBubbleSize;
-    await sharedPreferences.setDouble('emojiBubbleSize', value.emojiBubbleSize);
+    await LocalStorageService.sharedPreferences.setDouble(
+      'emojiBubbleSize',
+      value.emojiBubbleSize,
+    );
     notifyListeners();
   }
 
   Future<void> setFontScale(FontSizeLevel value) async {
     _fontScale = value.fontScale;
-    await sharedPreferences.setDouble('fontScale', value.fontScale);
+    await LocalStorageService.sharedPreferences.setDouble(
+      'fontScale',
+      value.fontScale,
+    );
     notifyListeners();
   }
 
@@ -108,7 +120,7 @@ class ThemeController extends ChangeNotifier {
         : _lightMessageBubblesSetData;
     targetMessageBubblesSetData.messageBubblesColor![isSent ? 0 : 1] = value;
 
-    await sharedPreferences.setInt(
+    await LocalStorageService.sharedPreferences.setInt(
       '$mode${isSent ? 'Sent' : 'Received'}MessageBubbleColor',
       value.index,
     );
@@ -122,7 +134,10 @@ class ThemeController extends ChangeNotifier {
         ? _darkMessageBubblesSetData
         : _lightMessageBubblesSetData;
     targetMessageBubblesSetData.opacity = value;
-    await sharedPreferences.setDouble('${mode}MessageBubbleOpacity', value);
+    await LocalStorageService.sharedPreferences.setDouble(
+      '${mode}MessageBubbleOpacity',
+      value,
+    );
     notifyListeners();
   }
 }

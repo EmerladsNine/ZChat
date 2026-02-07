@@ -6,6 +6,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
 import 'package:zchat/keyboard/keyboard.dart';
 import 'package:zchat/storage_managment/chats_storage_manager.dart';
+import 'package:zchat/storage_managment/local_storage_service.dart';
 import 'package:zchat/storage_managment/storage_manager.dart';
 import 'package:zchat/swiping/full_swipe_controller.dart';
 import 'package:zchat/themes_system/app_theme.dart';
@@ -23,6 +24,8 @@ void main() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
+
+  await LocalStorageService.init();
 
   ThemeController themeController = ThemeController();
   await themeController.init();
