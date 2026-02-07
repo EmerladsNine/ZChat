@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
@@ -20,7 +21,7 @@ class AddFileWidget extends StatelessWidget {
         onTap: () {},
         child: Padding(
           padding: const EdgeInsets.all(2.0),
-          child: Icon(Icons.add,size: 26,color: AppTheme.controllerOf(context).isDarkMode
+          child: Icon(CupertinoIcons.add,size: 26,color: AppTheme.controllerOf(context).isDarkMode
               ? Colors.white
               : Colors.black,)
         ),

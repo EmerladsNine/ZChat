@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/keyboard/keyboard.dart';
 import '../../../themes_system/app_theme.dart';
@@ -38,9 +39,20 @@ class EmojiPanelButtonWidget extends StatelessWidget {
         child: ValueListenableBuilder(
           valueListenable: AppNotifiers.isEmojiPickerVisible,
           builder: (context, isEmojiPickerVisible, child) {
-            return Icon(Icons.emoji_emotions_outlined,color: AppTheme.controllerOf(context).isDarkMode
-                ? Colors.white
-                : Colors.black,);
+            return Padding(
+              padding: EdgeInsetsGeometry.all(3),
+              child: SvgPicture.asset(
+                'assets/icons/stickers_button.svg',
+                colorFilter: ColorFilter.mode(
+                  AppTheme.controllerOf(context).isDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                  BlendMode.srcIn,
+                ),
+                width: 18,
+                height: 18,
+              ),
+            );
           },
         ),
       ),
