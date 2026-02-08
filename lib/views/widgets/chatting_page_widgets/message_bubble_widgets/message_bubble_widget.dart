@@ -45,6 +45,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets
 import '../../../../themes_system/app_theme.dart';
 import '../../../../messages_system/data_classes/message_reply_data.dart';
 import '../../../painters/message_bubble_painter.dart';
+import '../message_actions_menu_notifier.dart';
 import '../message_actions_menu_widget.dart';
 
 class MessageBubbleWidget extends StatefulWidget {
@@ -232,10 +233,16 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                                   Offset.zero,
                                 );
 
-                                MessageActionsMenuWidget.insertOverlayMenu(
+                                final MessageActionsMenuWidget menu =
+                                    MessageActionsMenuNotifier.controllerOf(
+                                      context,
+                                    );
+
+                                menu.setReceived(received);
+
+                                menu.insertOverlayMenu(
                                   globalTopLeft,
                                   box.size,
-                                  received,
                                   context,
                                 );
                               },

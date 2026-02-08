@@ -6,7 +6,7 @@ import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
-import 'package:zchat/views/widgets/chatting_page_widgets/message_actions_menu_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/message_actions_menu_notifier.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/reply_box_widget.dart';
 
@@ -105,8 +105,10 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
               return PopScope(
                 canPop: !isEmojiPickerVisible && !isMessageActionsMenuVisible,
                 onPopInvokedWithResult: (didPop, dynamic result) {
-                  if (MessageActionsMenuWidget.menuOverlayEntry != null) {
-                    MessageActionsMenuWidget.removeOverlay();
+                  if (isMessageActionsMenuVisible) {
+                    MessageActionsMenuNotifier.controllerOf(
+                      context,
+                    ).removeOverlay();
                   } else if (AppNotifiers.isEmojiPickerVisible.value) {
                     AppNotifiers.isEmojiPickerVisible.value = false;
                   }
