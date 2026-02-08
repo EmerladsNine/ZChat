@@ -6,14 +6,9 @@ import '../../data/app_text_styles.dart';
 import '../../data_classes/pages/settings/settings_switch_data.dart';
 
 class SettingsSwitchWidget extends StatefulWidget {
-  const SettingsSwitchWidget({
-    super.key,
-    required this.data,
-    this.drawBorder = true,
-  });
+  const SettingsSwitchWidget({super.key, required this.data});
 
   final SettingsSwitchData data;
-  final bool drawBorder;
 
   @override
   State<SettingsSwitchWidget> createState() {
@@ -103,9 +98,6 @@ class SettingsSwitchWidgetState extends State<SettingsSwitchWidget> {
                     ],
                   ),
                 ),
-
-                if (widget.drawBorder)
-                  Container(height: 0.5, color: colors.dividerColor),
               ],
             ),
           ),

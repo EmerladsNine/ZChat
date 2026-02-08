@@ -26,7 +26,6 @@ class ZanePersonalitySettingsPage extends StatelessWidget {
                 helpText: switchData['helpText'],
                 icon: switchData['icon'],
               ),
-              drawBorder: false,
             ),
           ),
         ],

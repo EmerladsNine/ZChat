@@ -34,7 +34,6 @@ class ThemesSettingsPage extends StatelessWidget {
               value: ValueNotifier(themeController.isDarkMode),
               onChanged: (value) => themeController.toggleTheme(value),
             ),
-            drawBorder: false,
           ),
           SettingsCardWidget<FontSizeLevel>(
             category: 'Customization',

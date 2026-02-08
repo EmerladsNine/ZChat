@@ -31,7 +31,6 @@ class AccountSettingsPage extends StatelessWidget {
                 icon: '🔑',
                 onChanged: (bool value) {},
               ),
-              drawBorder: false,
             ),
           ),
 

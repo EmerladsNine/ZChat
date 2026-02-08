@@ -21,7 +21,6 @@ class ZaneToolsSettingsPage extends StatelessWidget {
                   helpText: tool['helpText'],
                   icon: tool['icon'],
                 ),
-                drawBorder: false,
               ),
             )
             .toList(),

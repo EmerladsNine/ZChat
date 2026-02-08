@@ -32,7 +32,6 @@ class NotificationsSettingsPage extends StatelessWidget {
               helpText: 'Play sounds for incoming and outgoing messages.',
               icon: '\ud83d\udcac',
             ),
-            drawBorder: false,
           ),
         ],
       ),
