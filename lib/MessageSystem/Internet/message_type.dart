@@ -7,7 +7,7 @@ enum MessageType {
   emailSignIn(id: 3),
   emailSignUp(id: 4),
   responseCode(id: 5),
-  googleAuthentication(id: 6);
+  googleSignIn(id: 6);
 
   final int id;
   const MessageType({required this.id});

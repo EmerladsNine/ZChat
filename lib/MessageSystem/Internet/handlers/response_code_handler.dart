@@ -38,10 +38,12 @@ class ResponseCodeHandler extends Handler {
       print("Invalid google token");
     } else if (responseCode == ResponseCode.googleAuthSuccessful.id) {
       print("Google Authentication successful");
-    }else if(responseCode == ResponseCode.googleAuthFailed.id) {
+    } else if (responseCode == ResponseCode.googleAuthFailed.id) {
       print("Failed to authenticate , please try again later.");
-    }
-    else {
+    } else if (responseCode == ResponseCode.googleAuthRequireSignUp.id) {
+      // Todo go to the google sign up page.
+      print("You should sign up with google");
+    } else {
       print("Unknown response code");
     }
 

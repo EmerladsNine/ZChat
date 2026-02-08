@@ -25,7 +25,7 @@ class GoogleAuthService {
           return;
         }
 
-      service.sendProtocolUnit(MessageType.googleAuthentication, [
+      service.sendProtocolUnit(MessageType.googleSignIn, [
         ...utf8.encode(gUser.authentication.idToken!)
       ]);
     }

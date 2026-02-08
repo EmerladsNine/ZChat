@@ -90,7 +90,7 @@ class MessagingService {
   }
 
   Future<void> connectServer(String caller) async {
-    final String host = "192.168.0.111";//"92.113.26.192";
+    final String host = "192.168.85.63";//"92.113.26.192";
     final int port = 9999;
     Duration delay = Duration.zero;
     while (true) {
