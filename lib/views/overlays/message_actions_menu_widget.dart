@@ -6,7 +6,7 @@ import 'package:zchat/views/data/pages_data/messaging_page_data.dart';
 import 'package:zchat/views/overlays/base_overlay_widget.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
-import '../../data/app_notifiers.dart';
+import '../data/app_notifiers.dart';
 
 class MessageActionsMenuWidget extends BaseOverlayWidget {
   MessageActionsMenuWidget._internal();

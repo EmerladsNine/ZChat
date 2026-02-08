@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zchat/views/widgets/chatting_page_widgets/message_actions_menu_widget.dart';
+import 'package:zchat/views/overlays/message_actions_menu_widget.dart';
 
 class MessageActionsMenuNotifier
     extends InheritedNotifier<MessageActionsMenuWidget> {

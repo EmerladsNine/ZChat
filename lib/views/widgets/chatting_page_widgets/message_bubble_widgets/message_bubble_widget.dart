@@ -45,8 +45,8 @@ import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets
 import '../../../../themes_system/app_theme.dart';
 import '../../../../messages_system/data_classes/message_reply_data.dart';
 import '../../../painters/message_bubble_painter.dart';
-import '../message_actions_menu_notifier.dart';
-import '../message_actions_menu_widget.dart';
+import '../../../overlays/overlay_notifiers/message_actions_menu_notifier.dart';
+import '../../../overlays/message_actions_menu_widget.dart';
 
 class MessageBubbleWidget extends StatefulWidget {
   final String? senderName;

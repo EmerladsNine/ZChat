@@ -13,5 +13,6 @@ abstract final class AppNotifiers {
   static final ValueNotifier<bool> isMessageActionsMenuVisible = ValueNotifier(
     false,
   );
+  static final ValueNotifier<bool> isPfpOverlayVisible = ValueNotifier(false);
   static final ValueNotifier<MessageReplyData?> replyData = ValueNotifier(null);
 }

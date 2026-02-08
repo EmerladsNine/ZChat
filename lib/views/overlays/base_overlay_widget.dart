@@ -27,7 +27,7 @@ abstract class BaseOverlayWidget extends ChangeNotifier {
                 onPanDown: (_) => removeOverlay(),
                 child: ClipRect(
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 0.2, sigmaY: 0.2),
+                    filter: ImageFilter.blur(sigmaX: 0.25, sigmaY: 0.25),
                     child: Container(
                       color: colors.primaryBackgroundColor.withAlpha(50),
                     ),
