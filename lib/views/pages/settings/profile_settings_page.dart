@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_text_styles.dart';
 import 'package:zchat/views/pages/temp.dart';
-import 'package:zchat/views/widgets/settings_widgets/profile_info_card_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/profile_page_info_card_widget.dart';
 
 import '../../data/app_notifiers.dart';
 import '../../widgets/buttons/flat_tap_button_widget.dart';
 import '../../widgets/miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
+import '../../widgets/navbar_widgets/profile_widget.dart';
 import 'base_settings_page.dart';
 
 /// Page for viewing and editing profile information.
@@ -21,16 +22,7 @@ class ProfileSettingsPage extends StatelessWidget {
       title: 'Profile',
       pageContent: Column(
         children: [
-          Container(
-            padding: EdgeInsetsGeometry.all(15),
-            margin: EdgeInsetsGeometry.only(top: 20),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: colors.defaultProfilePicColor,
-            ),
-            child: Icon(Icons.person, color: colors.iconDefaultColor, size: 80),
-          ),
+          ProfileWidget(),
           Padding(
             padding: EdgeInsetsGeometry.only(top: 10),
             child: FlatTapButtonWidget(
@@ -56,7 +48,7 @@ class ProfileSettingsPage extends StatelessWidget {
 
           Padding(
             padding: EdgeInsetsGeometry.only(top: 40),
-            child: ProfileInfoCardWidget(
+            child: ProfilePageInfoCardWidget(
               icon: '\ud83d\udc64',
               label: 'Display Name',
               text: "Tesla's best friend",
@@ -65,7 +57,7 @@ class ProfileSettingsPage extends StatelessWidget {
 
           Padding(
             padding: EdgeInsetsGeometry.only(top: 15),
-            child: ProfileInfoCardWidget(
+            child: ProfilePageInfoCardWidget(
               icon: '\u270d\ufe0f',
               label: 'Bio',
               text: "I am Ahmad You are no one.",
@@ -74,7 +66,7 @@ class ProfileSettingsPage extends StatelessWidget {
 
           Padding(
             padding: EdgeInsetsGeometry.only(top: 15),
-            child: ProfileInfoCardWidget(
+            child: ProfilePageInfoCardWidget(
               icon: '\ud83d\udcde',
               label: 'Phone Number',
               text: '+961 71 527 426',

@@ -6,8 +6,8 @@ import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../../data/app_text_styles.dart';
 
-class ProfileInfoCardWidget extends StatelessWidget {
-  const ProfileInfoCardWidget({
+class ProfilePageInfoCardWidget extends StatelessWidget {
+  const ProfilePageInfoCardWidget({
     super.key,
     required this.icon,
     required this.label,

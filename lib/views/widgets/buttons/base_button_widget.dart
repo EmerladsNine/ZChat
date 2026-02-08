@@ -14,6 +14,8 @@ abstract class BaseButtonWidget extends StatefulWidget {
     ValueNotifier<bool>? disableSet,
     ValueNotifier<bool>? appStateNotifier,
     this.onPanDown,
+    this.width,
+    this.height,
   }) : disableSet = disableSet ?? ValueNotifier(false),
        appStateNotifier = appStateNotifier ?? ValueNotifier(false);
 
@@ -26,6 +28,8 @@ abstract class BaseButtonWidget extends StatefulWidget {
   final ValueNotifier<bool> disableSet;
   final ValueNotifier<bool> appStateNotifier;
   final EdgeInsetsGeometry padding;
+  final double? width;
+  final double? height;
 
   Widget buildOverlay(
     BuildContext context,
@@ -150,7 +154,12 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
           widget.onPanDown?.call(dragDownDetails),
       child: Stack(
         children: [
-          Padding(padding: widget.padding, child: widget.child),
+          Container(
+            padding: widget.padding,
+            height: widget.height,
+            width: widget.width,
+            child: widget.child,
+          ),
           widget.buildOverlay(
             context,
             _pressed,

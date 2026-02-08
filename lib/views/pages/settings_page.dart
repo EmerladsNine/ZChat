@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/settings_widgets/cards/settings_card_widget.dart';
-import 'package:zchat/views/widgets/settings_widgets/profile_widget.dart';
+import 'package:zchat/views/widgets/settings_widgets/settings_profile_card_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
 import '../widgets/miscellaneous/scaled_text_widget.dart';
@@ -42,7 +42,7 @@ class SettingsPage extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        ProfileWidget(),
+                        SettingsProfileCardWidget(),
 
                         ...settingsCardsData.map((section) {
                           return SettingsCardWidget(

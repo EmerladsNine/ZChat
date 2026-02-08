@@ -7,8 +7,8 @@ import '../../data/app_notifiers.dart';
 import '../../data/app_text_styles.dart';
 import '../buttons/ripple_effect_button_widget.dart';
 
-class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({
+class SettingsProfileCardWidget extends StatelessWidget {
+  const SettingsProfileCardWidget({
     super.key,
     this.name = 'Ahmad Msheik',
     this.description = 'I love mathematics.',

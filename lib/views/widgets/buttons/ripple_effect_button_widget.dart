@@ -15,6 +15,8 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
     super.appStateNotifier,
     this.overlayBorderRadius = const BorderRadius.all(Radius.circular(0)),
     this.animationDuration = const Duration(milliseconds: 200),
+    super.width,
+    super.height,
   });
 
   final Duration animationDuration;
