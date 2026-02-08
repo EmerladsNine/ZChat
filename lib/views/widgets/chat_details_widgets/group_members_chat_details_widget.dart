@@ -19,7 +19,7 @@ class GroupMembersChatDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeColorScheme colors = AppTheme.themeColorsOf(context);
 
-    const double buttonHeight = 72.5;
+    const double buttonHeight = 71.5;
 
     final double containerHeight =
         min(members.length + 1, AppConstants.maxVisibleMembers) * buttonHeight;

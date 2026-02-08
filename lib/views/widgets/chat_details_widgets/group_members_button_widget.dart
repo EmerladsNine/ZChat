@@ -28,7 +28,7 @@ class GroupMembersButtonWidget extends StatelessWidget {
     final ThemeColorScheme colors = AppTheme.themeColorsOf(context);
 
     return RippleEffectButtonWidget(
-      padding: EdgeInsetsGeometry.symmetric(vertical: 5),
+      padding: EdgeInsetsGeometry.symmetric(vertical: 7),
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
       overlayBorderRadius: overlayBorderRadius,
@@ -37,13 +37,13 @@ class GroupMembersButtonWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 45.0,
-            height: 45.0,
+            width: 40.0,
+            height: 40.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50.0),
               color: color ?? colors.defaultProfilePicColor,
             ),
-            child: Icon(icon, size: 35, color: colors.primaryColor),
+            child: Icon(icon, size: 30, color: colors.primaryColor),
           ),
 
           ScaledTextWidget(
