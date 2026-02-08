@@ -7,7 +7,7 @@ import 'package:zchat/themes_system/data_classes/theme_color_scheme.dart';
 import '../data/app_notifiers.dart';
 import '../widgets/buttons/flat_tap_button_widget.dart';
 
-abstract class BaseOverlayWidget extends ChangeNotifier {
+abstract class BaseOverlayWidget {
   BaseOverlayWidget();
 
   OverlayEntry? menuOverlayEntry;

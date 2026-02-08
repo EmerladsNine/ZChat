@@ -14,8 +14,6 @@ import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/views/overlays/overlay_notifiers/message_actions_menu_notifier.dart';
-import 'package:zchat/views/overlays/message_actions_menu_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,15 +38,12 @@ void main() async {
   runApp(
     AppTheme(
       controller: ThemeController.instance,
-      child: MessageActionsMenuNotifier(
-        controller: MessageActionsMenuWidget.instance,
-        child: Provider<MessagingService>(
-          create: (_) => MessagingService(),
-          dispose: (context, service) {
-            service.dispose();
-          },
-          child: MyApp(),
-        ),
+      child: Provider<MessagingService>(
+        create: (_) => MessagingService(),
+        dispose: (context, service) {
+          service.dispose();
+        },
+        child: MyApp(),
       ),
     ),
   );
