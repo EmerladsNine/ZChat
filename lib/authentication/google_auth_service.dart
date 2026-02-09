@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
@@ -8,7 +9,7 @@ import 'package:zchat/messages_system/utils/print_on_debug.dart';
 
 class GoogleAuthService {
   static final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
-  static void signIn(MessagingService service) async {
+  static Future<String> signIn(MessagingService service) async {
     await _googleSignIn.initialize(
         clientId: Platform.isIOS ? "com.googleusercontent.apps.987307069745-oqrmd1ak9fpclfhodomfq0nmuggfnc4l" : null,
         serverClientId: "987307069745-gsd1drcikr8retccfcafgf3tme882ub3.apps.googleusercontent.com");
@@ -22,16 +23,26 @@ class GoogleAuthService {
       if(gUser.authentication.idToken == null)
         {
           // Todo handle this.
-          return;
+          return "";
         }
 
       service.sendProtocolUnit(MessageType.googleSignIn, [
         ...utf8.encode(gUser.authentication.idToken!)
       ]);
+      return gUser.authentication.idToken!;
     }
-    on GoogleSignInException catch(_)
-    {
+    on GoogleSignInException catch(_) {
       printOnDebug("sign in cancelled");
     }
+    return "";
+  }
+  static void signUp(MessagingService service,String username,String googleToken) {
+      Uint8List usernameList = utf8.encode(username);
+      Uint8List googleTokenList = utf8.encode(googleToken);
+      service.sendProtocolUnit(MessageType.googleSignUp, [
+        ...intToBigEndian(usernameList.length, 1),
+        ...usernameList,
+        ...googleTokenList
+      ]);
   }
 }

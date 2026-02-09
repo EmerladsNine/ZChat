@@ -1,12 +1,17 @@
+import 'package:zchat/authentication/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/messages_system/internet/response_code.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 
 class ResponseCodeHandler extends Handler {
   @override
   bool handle(List<int> buffer, MessagingService service) {
     int responseCode = buffer[0];
     buffer.removeAt(0);
+    AppNotifiers.authResponseCode.value = AuthEvent(
+      ResponseCode.fromId(responseCode),
+    );
     if (responseCode == ResponseCode.emailAccountEmailExistError.id) {
       print("Email already exist");
     } else if (responseCode == ResponseCode.emailAccountUsernameExistError.id) {
@@ -41,8 +46,14 @@ class ResponseCodeHandler extends Handler {
     } else if (responseCode == ResponseCode.googleAuthFailed.id) {
       print("Failed to authenticate , please try again later.");
     } else if (responseCode == ResponseCode.googleAuthRequireSignUp.id) {
-      // Todo go to the google sign up page.
-      print("You should sign up with google");
+      // Handling is Done for this.
+    } else if (responseCode ==
+        ResponseCode.googleSignUpInvalidUsernameLengthError.id) {
+      print("Failed to authenticate , Invalid Username Length.");
+    } else if (responseCode == ResponseCode.googleSignUpUsernameExistError.id) {
+      print("Failed to authenticate , Username is used.");
+    } else if (responseCode == ResponseCode.googleSignUpGoogleIdExistError.id) {
+      print("your google account already exist try signing in.");
     } else {
       print("Unknown response code");
     }

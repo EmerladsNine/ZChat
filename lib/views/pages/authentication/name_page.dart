@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/authentication/google_auth_service.dart';
+import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
@@ -58,7 +61,10 @@ class _NamePageState extends State<NamePage> {
                           SizedBox(height: 10,),
                           RippleEffectButtonWidget(
                             overlayBorderRadius: BorderRadius.circular(10),
-                            onTap: (){},
+                            onTap: (){
+                              final msgService = context.read<MessagingService>();
+                              GoogleAuthService.signUp(msgService, usernameController.text, widget.googleToken);
+                            },
                             child: Container(
                               padding: EdgeInsetsGeometry.symmetric(vertical: 10,horizontal: 40),
                               decoration: BoxDecoration(
