@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
-import 'package:zchat/utils/text_utils.dart';
+import 'package:zchat/views/utils/text_utils.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/data_classes/message_reply_data.dart';
+import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
 
@@ -34,7 +34,7 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
           child: Row(
             spacing: 2,
             children: [
-              Icon(Icons.reply_rounded,color: colors.primaryColor,),
+              Icon(Icons.reply_rounded, color: colors.primaryColor),
               Expanded(
                 child: Container(
                   padding: EdgeInsetsGeometry.all(5),
@@ -66,7 +66,10 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
                         ),
                         child: ScaledTextWidget(
                           lastReplyData.replyText,
-                          style: TextStyle(fontSize: 15,color: colors.primaryColor),
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: colors.primaryColor,
+                          ),
                           textDirection: TextUtils.getTextDirection(
                             lastReplyData.replyText,
                           ),
@@ -85,7 +88,7 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
                 onTap: () {
                   AppNotifiers.replyData.value = null;
                 },
-                child: Icon(Icons.close,color: colors.primaryColor,),
+                child: Icon(Icons.close, color: colors.primaryColor),
               ),
             ],
           ),

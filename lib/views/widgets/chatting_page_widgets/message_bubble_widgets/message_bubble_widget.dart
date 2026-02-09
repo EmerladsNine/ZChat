@@ -30,9 +30,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zchat/enums/message_bubble_color.dart';
-import 'package:zchat/enums/message_status.dart';
-import 'package:zchat/keyboard/keyboard.dart';
+import 'package:zchat/themes_system/enums/message_bubble_color.dart';
+import 'package:zchat/messages_system/enums/message_status.dart';
+import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
 import 'package:zchat/views/data/app_message_bubble_colors.dart';
@@ -43,9 +43,9 @@ import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/pfp_of_sender_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/sender_name_widget.dart';
 import '../../../../themes_system/app_theme.dart';
-import '../../../data_classes/message_reply_data.dart';
+import '../../../../messages_system/data_classes/message_reply_data.dart';
 import '../../../painters/message_bubble_painter.dart';
-import '../message_actions_menu_widget.dart';
+import '../../../overlays/message_actions_menu_widget.dart';
 
 class MessageBubbleWidget extends StatefulWidget {
   final String? senderName;
@@ -121,7 +121,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
               widget.text,
               widget.senderName ?? "",
             );
-            if (Keyboard.nextKeyboardHeight == 0) {
+            if (KeyboardController.nextKeyboardHeight == 0) {
               FocusScope.of(context).unfocus();
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 widget.footerTextFieldFocusNode.requestFocus();
@@ -225,19 +225,23 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                             return FlatTapButtonWidget(
                               disableSet: AppNotifiers.disableButtons,
                               appStateNotifier: AppNotifiers.isNavigating,
-                              onTapDown: (details) {
+                              onTap: () {
                                 RenderBox box =
                                     context.findRenderObject() as RenderBox;
                                 Offset globalTopLeft = box.localToGlobal(
                                   Offset.zero,
                                 );
 
-                                MessageActionsMenuWidget.insertOverlayMenu(
-                                  globalTopLeft,
-                                  box.size,
+                                MessageActionsMenuWidget.instance.setReceived(
                                   received,
-                                  context,
                                 );
+
+                                MessageActionsMenuWidget.instance
+                                    .insertOverlayMenu(
+                                      globalTopLeft,
+                                      box.size,
+                                      context,
+                                    );
                               },
 
                               child: MessageBubbleMainSectionWidget(

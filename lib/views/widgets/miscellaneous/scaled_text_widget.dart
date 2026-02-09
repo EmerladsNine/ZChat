@@ -12,6 +12,7 @@ class ScaledTextWidget extends StatelessWidget {
     this.strutStyle,
     this.textAlign,
     this.textDirection,
+    this.padding = EdgeInsets.zero,
     this.locale,
     this.softWrap,
     this.overflow,
@@ -28,6 +29,7 @@ class ScaledTextWidget extends StatelessWidget {
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
+  final EdgeInsets padding;
   final Locale? locale;
   final bool? softWrap;
   final TextOverflow? overflow;
@@ -44,25 +46,28 @@ class ScaledTextWidget extends StatelessWidget {
       MediaQuery.textScalerOf(context).scale(AppTheme.fontScaleOf(context)),
     );
 
-    return Text(
-      data,
-      style: style?.copyWith(
-        fontFamily: customScaler.scale(style?.fontSize ?? 14.0) < 32
-            ? 'Inter'
-            : 'InterDisplay',
+    return Padding(
+      padding: padding,
+      child: Text(
+        data,
+        style: style?.copyWith(
+          fontFamily: customScaler.scale(style?.fontSize ?? 14.0) < 32
+              ? 'Inter'
+              : 'InterDisplay',
+        ),
+        textScaler: customScaler,
+        strutStyle: strutStyle,
+        textAlign: textAlign,
+        textDirection: textDirection,
+        locale: locale,
+        softWrap: softWrap,
+        overflow: overflow,
+        maxLines: maxLines,
+        semanticsLabel: semanticsLabel,
+        semanticsIdentifier: semanticsIdentifier,
+        textWidthBasis: textWidthBasis,
+        textHeightBehavior: textHeightBehavior,
       ),
-      textScaler: customScaler,
-      strutStyle: strutStyle,
-      textAlign: textAlign,
-      textDirection: textDirection,
-      locale: locale,
-      softWrap: softWrap,
-      overflow: overflow,
-      maxLines: maxLines,
-      semanticsLabel: semanticsLabel,
-      semanticsIdentifier: semanticsIdentifier,
-      textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
     );
   }
 }

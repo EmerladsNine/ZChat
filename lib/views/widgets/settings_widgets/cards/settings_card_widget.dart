@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/exceptions/invalid_data_class_usage.dart';
+import 'package:zchat/views/exceptions/invalid_widget_data_class_usage.dart';
 import 'package:zchat/views/data_classes/pages/settings/settings_base_button_data.dart';
 import 'package:zchat/views/data_classes/pages/settings/settings_dialog_button_data.dart';
 import 'package:zchat/views/data_classes/pages/settings/settings_on_tap_button_data.dart';
@@ -44,11 +44,12 @@ class SettingsCardWidget<T> extends SettingsBaseCardWidget {
             data: (data as SettingsRadioGroupDialogButtonData<T>),
             drawBorder: drawBorder,
           ),
-        SettingsCheckboxListDialogButtonData _ => throw InvalidDataClassUsage(
-          message:
-              'SettingsCheckboxListDialogButtonData must be used in its own card class.',
-        ),
-        SettingsBaseButtonData _ => throw InvalidDataClassUsage(
+        SettingsCheckboxListDialogButtonData _ =>
+          throw InvalidWidgetDataClassUsage(
+            message:
+                'SettingsCheckboxListDialogButtonData must be used in its own card class.',
+          ),
+        SettingsBaseButtonData _ => throw InvalidWidgetDataClassUsage(
           message:
               'SettingsBaseButtonData must not be used directly. Use a subclass instead.',
         ),

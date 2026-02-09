@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 
 import '../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
-import '../../../utils/text_utils.dart';
+import '../../utils/text_utils.dart';
 import '../../data/app_text_styles.dart';
 
 class SearchBarWidget extends StatefulWidget {
@@ -28,7 +26,6 @@ class SearchBarWidget extends StatefulWidget {
 class SearchBarWidgetState extends State<SearchBarWidget> {
   late FocusNode focusNode;
   late CustomTextController controller;
-  late StreamSubscription<bool> keyboardSubscription;
 
   @override
   void initState() {
@@ -36,12 +33,8 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
     focusNode = FocusNode();
     controller = CustomTextController();
     controller.addListener(onTextChanged);
-    // Listen to keyboard visibility changes
-    var keyboardVisibilityController = KeyboardVisibilityController();
-    keyboardSubscription = keyboardVisibilityController.onChange.listen((
-      visible,
-    ) {
-      if (!visible && focusNode.hasFocus) {
+    KeyboardController.addStateListener((isFullyOpen) {
+      if (!isFullyOpen && focusNode.hasFocus) {
         focusNode.unfocus();
       }
     });
@@ -50,8 +43,8 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
   @override
   void dispose() {
     controller.removeListener(onTextChanged);
-    keyboardSubscription.cancel();
     controller.dispose();
+    KeyboardController.dispose();
     focusNode.dispose();
     super.dispose();
   }

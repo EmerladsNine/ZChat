@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
-import 'package:zchat/keyboard/keyboard.dart';
-import 'package:zchat/storage_managment/chats_storage_manager.dart';
-import 'package:zchat/storage_managment/storage_manager.dart';
-import 'package:zchat/swiping/full_swipe_controller.dart';
+import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
+import 'package:zchat/storage_management_system/chats_storage_manager.dart';
+import 'package:zchat/storage_management_system/storage_manager.dart';
+import 'package:zchat/swiping_system/full_swipe_controller.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
@@ -25,19 +25,20 @@ void main() async {
     databaseFactory = databaseFactoryFfi;
   }
 
-  ThemeController themeController = ThemeController();
-  await themeController.init();
+  await StorageManager.init();
+
+  await ThemeController.instance.init();
 
   await StorageManager.openMessagesDatabase().then((_) {
     ChatsStorageManager.loadChats();
   });
 
-  Keyboard.init();
+  KeyboardController.init();
 
   //Run app
   runApp(
     AppTheme(
-      controller: themeController,
+      controller: ThemeController.instance,
       child: Provider<MessagingService>(
         create: (_) => MessagingService(),
         dispose: (context, service) {

@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:zchat/MessageSystem/Internet/message_type.dart';
-import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
-import 'package:zchat/utils/print_on_debug.dart';
+import 'package:zchat/messages_system/internet/message_type.dart';
+import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/utils/print_on_debug.dart';
 
 class GoogleAuthService {
   static final GoogleSignIn _googleSignIn = GoogleSignIn.instance;

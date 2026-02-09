@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
-import '../../../../enums/message_bubble_color.dart';
-import '../../../../themes_system/theme_color_scheme.dart';
+import '../../../../themes_system/enums/message_bubble_color.dart';
+import '../../../../themes_system/data_classes/theme_color_scheme.dart';
 import '../../../../themes_system/theme_controller.dart';
 import '../../../data/app_message_bubble_colors.dart';
 import '../../miscellaneous/scaled_text_widget.dart';
@@ -31,10 +31,13 @@ class MessageInfoWidget extends StatelessWidget {
     final int alpha = (themeController.opacity * 255).round();
 
     return Row(
-      mainAxisAlignment: hasBackground ?
-                  received ? MainAxisAlignment.start : MainAxisAlignment.end :
-                  received ? MainAxisAlignment.end : MainAxisAlignment.end
-      ,
+      mainAxisAlignment: hasBackground
+          ? received
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.end
+          : received
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.end,
       children: [
         Container(
           padding: hasBackground
@@ -62,10 +65,15 @@ class MessageInfoWidget extends StatelessWidget {
             children: [
               ScaledTextWidget(
                 time,
-                style: TextStyle(color: colors.primaryColor.withAlpha(200), fontSize: 8),
+                padding: EdgeInsets.only(top: 1.75),
+                style: TextStyle(
+                  color: colors.primaryColor.withAlpha(200),
+                  fontSize: 8,
+                ),
               ),
 
-              buildMessageStatusIndicator(context, messageStatus, 15),
+              if (!received)
+                buildMessageStatusIndicator(context, messageStatus, 15),
             ],
           ),
         ),

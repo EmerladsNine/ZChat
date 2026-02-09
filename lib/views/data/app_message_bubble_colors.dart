@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../enums/message_bubble_color.dart';
-import '../../data_classes/mode_color.dart';
+import '../../themes_system/enums/message_bubble_color.dart';
+import '../../themes_system/data_classes/mode_color.dart';
 
 abstract final class AppMessageBubbleColors {
   static const Map<MessageBubbleColor, ModeColor> palette = {

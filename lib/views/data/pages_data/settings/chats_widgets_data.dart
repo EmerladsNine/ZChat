@@ -1,4 +1,4 @@
-import 'package:zchat/storage_managment/chats_storage_manager.dart';
+import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/views/data_classes/pages/settings/settings_dialog_button_data.dart';
 
 final List<SettingsDialogButtonData> chatManagementWidgetsData = [

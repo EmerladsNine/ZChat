@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zchat/enums/message_bubble_color.dart';
+import 'package:zchat/themes_system/enums/message_bubble_color.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 
-import 'theme_color_scheme.dart';
+import 'data_classes/theme_color_scheme.dart';
 
 class AppTheme extends InheritedNotifier<ThemeController> {
   const AppTheme({

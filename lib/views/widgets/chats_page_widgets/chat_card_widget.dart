@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/MessageSystem/chat.dart';
-import 'package:zchat/storage_managment/chats_storage_manager.dart';
+import 'package:zchat/messages_system/chat.dart';
+import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
 import '../../data/app_constants.dart';
+import '../../overlays/profile_picture_overlay.dart';
 import '../miscellaneous/scaled_text_widget.dart';
 import '../../data/app_text_styles.dart';
 import '../../pages/chat_messages_page.dart';
@@ -64,14 +65,26 @@ class ChatCardWidget extends StatelessWidget {
         child: Row(
           spacing: 10,
           children: [
-            Container(
-              width: 50.0,
-              height: 50.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50.0),
-                color: colors.cardsColor,
+            RippleEffectButtonWidget(
+              disableSet: AppNotifiers.disableButtons,
+              appStateNotifier: AppNotifiers.isNavigating,
+              overlayBorderRadius: BorderRadius.circular(100),
+              onTap: () {
+                ProfilePictureOverlay.instance.insertOverlayMenu(
+                  Offset.zero,
+                  Size.zero,
+                  context,
+                );
+              },
+              child: Container(
+                width: 50.0,
+                height: 50.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50.0),
+                  color: colors.cardsColor,
+                ),
+                child: Icon(cardIcon, size: 30, color: colors.primaryColor),
               ),
-              child: Icon(cardIcon, size: 30, color: colors.primaryColor),
             ),
             Expanded(
               child: IntrinsicHeight(

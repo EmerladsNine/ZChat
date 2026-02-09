@@ -4,7 +4,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_button_wid
 
 import '../../controllers/custom_text_controller.dart';
 import '../../../themes_system/app_theme.dart';
-import '../../../utils/text_utils.dart';
+import '../../utils/text_utils.dart';
 
 class ChatTextFieldWidget extends StatelessWidget {
   const ChatTextFieldWidget({
@@ -30,7 +30,7 @@ class ChatTextFieldWidget extends StatelessWidget {
                 color: colors.chatTextFieldColor,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsetsGeometry.only(left: 10,right: 4),
+              padding: EdgeInsetsGeometry.only(left: 10, right: 4),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -58,7 +58,7 @@ class ChatTextFieldWidget extends StatelessWidget {
                       ),
                       strutStyle: StrutStyle(fontSize: 20),
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 10,bottom: 4),
+                        contentPadding: EdgeInsets.only(left: 10, bottom: 4),
                         isDense: true,
                         border: OutlineInputBorder(borderSide: BorderSide.none),
                       ),
@@ -67,7 +67,7 @@ class ChatTextFieldWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 2.5),
                     child: EmojiPanelButtonWidget(focusNode: focusNode),
-                  )
+                  ),
                 ],
               ),
             ),

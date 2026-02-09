@@ -34,7 +34,6 @@ class StorageAndDataSettingsPage extends StatelessWidget {
                   'Enable to always send and receive media in high quality.',
               icon: '\ud83d\udcf7',
             ),
-            drawBorder: false,
           ),
         ],
       ),

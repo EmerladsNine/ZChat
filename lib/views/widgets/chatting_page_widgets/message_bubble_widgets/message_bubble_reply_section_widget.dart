@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
-import 'package:zchat/utils/text_utils.dart';
+import 'package:zchat/views/utils/text_utils.dart';
 
 import '../../../../themes_system/app_theme.dart';
-import '../../../../themes_system/theme_color_scheme.dart';
-import '../../../data_classes/message_reply_data.dart';
+import '../../../../themes_system/data_classes/theme_color_scheme.dart';
+import '../../../../messages_system/data_classes/message_reply_data.dart';
 import '../../miscellaneous/scaled_text_widget.dart';
 
 class MessageBubbleReplySectionWidget extends StatelessWidget {

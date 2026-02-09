@@ -28,7 +28,6 @@ class PrivacySettingsPage extends StatelessWidget {
                   'If disabled, messages won’t be marked as read and you won’t see if others have read yours.',
               icon: '📖',
             ),
-            drawBorder: false,
           ),
           SettingsCardWidget(
             category: 'Interactions',
@@ -41,7 +40,6 @@ class PrivacySettingsPage extends StatelessWidget {
                   "Calls from people not in your contacts won’t ring but will show up in your Calls tab.",
               icon: '📞',
             ),
-            drawBorder: false,
           ),
         ],
       ),

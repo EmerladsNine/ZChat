@@ -22,7 +22,6 @@ class ZaneMemorySettingsPage extends StatelessWidget {
               helpText: 'Allow AI to refer to previous conversations.',
               icon: '\ud83d\udd70\ufe0f',
             ),
-            drawBorder: false,
           ),
         ],
       ),

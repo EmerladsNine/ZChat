@@ -1,0 +1,32 @@
+import 'package:emoji_regex/emoji_regex.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/messages_system/utils/print_on_debug.dart';
+
+class Chat extends ChangeNotifier {
+  final List<Message> _messages = [];
+
+  List<Message> get messages => List.unmodifiable(_messages);
+
+  void addMessage(Message message) {
+    message.isChildMessage =
+        _messages.isNotEmpty &&
+        _messages.first.senderName == message.senderName;
+    message.isEmoji =
+        message.text.characters.length == 1 &&
+        emojiRegex().hasMatch(message.text);
+    _messages.insert(0, message);
+    notifyListeners();
+  }
+
+  void clearAllChats() {
+    _messages.clear();
+    notifyListeners();
+  }
+
+  void debugPrintMessages() {
+    for (Message msg in _messages) {
+      printOnDebug(msg.text);
+    }
+  }
+}

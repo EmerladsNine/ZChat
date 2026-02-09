@@ -18,6 +18,9 @@ abstract final class AppConstants {
   static const double maxStretchFactor = 1.01;
   static const double pageSnapThreshold = 0.5;
 
+  // Group Chat Details Page
+  static const int maxVisibleMembers = 3;
+
   // Colors
   static const int secondaryColorHex = 0xFF1E2A33;
   static const int surfaceColorHex = 0xFF141A20;

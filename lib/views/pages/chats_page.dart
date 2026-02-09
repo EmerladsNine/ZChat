@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/enums/message_status.dart';
+import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
+
+import '../overlays/profile_picture_overlay.dart';
 
 /// Page displaying a list of active chat conversations.
 class ChatsPage extends StatelessWidget {
@@ -80,49 +82,60 @@ class ChatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
-    return Padding(
-      padding: const EdgeInsets.only(left: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 3),
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: SearchBarWidget(
-              hintText: 'Search',
-              disableSet: AppNotifiers.disableButtons,
-              sideWidget: CustomToolTip(
-                message: 'Add Chat',
-                preferBelow: true,
-                child: RippleEffectButtonWidget(
-                  padding: EdgeInsetsGeometry.all(4.0),
-                  overlayBorderRadius: BorderRadius.circular(8),
-                  disableSet: AppNotifiers.disableButtons,
-                  appStateNotifier: AppNotifiers.isNavigating,
-                  child: SvgPicture.asset(
-                    'assets/icons/add_file.svg',
-                    colorFilter: ColorFilter.mode(
-                      colors.hintColor,
-                      BlendMode.srcIn,
+    return ValueListenableBuilder(
+      valueListenable: AppNotifiers.isPfpOverlayVisible,
+      builder: (context, isPfpOverlayVisible, child) {
+        return PopScope(
+          canPop: !isPfpOverlayVisible,
+          onPopInvokedWithResult: (didPop, dynamic result) {
+            ProfilePictureOverlay.instance.removeOverlay();
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: SearchBarWidget(
+                    hintText: 'Search',
+                    disableSet: AppNotifiers.disableButtons,
+                    sideWidget: CustomToolTip(
+                      message: 'Add Chat',
+                      preferBelow: true,
+                      child: RippleEffectButtonWidget(
+                        padding: EdgeInsetsGeometry.all(4.0),
+                        overlayBorderRadius: BorderRadius.circular(8),
+                        disableSet: AppNotifiers.disableButtons,
+                        appStateNotifier: AppNotifiers.isNavigating,
+                        child: SvgPicture.asset(
+                          'assets/icons/add_file.svg',
+                          colorFilter: ColorFilter.mode(
+                            colors.hintColor,
+                            BlendMode.srcIn,
+                          ),
+                          width: 18,
+                          height: 18,
+                        ),
+                      ),
                     ),
-                    width: 18,
-                    height: 18,
                   ),
                 ),
-              ),
+                SizedBox(height: 10),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: chatCards.length,
+                    itemBuilder: (context, index) {
+                      return chatCards[index];
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
-          SizedBox(height: 10),
-          Expanded(
-            child: ListView.builder(
-              itemCount: chatCards.length,
-              itemBuilder: (context, index) {
-                return chatCards[index];
-              },
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

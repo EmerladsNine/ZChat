@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/MessageSystem/Internet/message_type.dart';
-import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/message_type.dart';
+import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../themes_system/app_theme.dart';
-import '../../../themes_system/theme_color_scheme.dart';
+import '../../../themes_system/data_classes/theme_color_scheme.dart';
 import '../../../themes_system/theme_controller.dart';
 import '../../data/app_text_styles.dart';
 import '../../data_classes/pages/settings/settings_slider_data.dart';

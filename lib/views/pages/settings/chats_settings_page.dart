@@ -27,7 +27,6 @@ class ChatsSettingsPage extends StatelessWidget {
               helpText: 'Show newly downloaded media in your gallery.',
               icon: '🖼️',
             ),
-            drawBorder: false,
           ),
           SettingsSwitchWidget(
             data: SettingsSwitchData(
@@ -36,7 +35,6 @@ class ChatsSettingsPage extends StatelessWidget {
                   'Archived chats will stay archived when new messages arrive.',
               icon: '📂',
             ),
-            drawBorder: false,
           ),
           SettingsSwitchWidget(
             data: SettingsSwitchData(
@@ -44,7 +42,6 @@ class ChatsSettingsPage extends StatelessWidget {
               helpText: 'Automatically back up your chats to cloud storage.',
               icon: '💾',
             ),
-            drawBorder: false,
           ),
           SettingsSwitchWidget(
             data: SettingsSwitchData(
@@ -53,7 +50,6 @@ class ChatsSettingsPage extends StatelessWidget {
                   'Prevent the screen from turning off when viewing images or videos.',
               icon: '🔆',
             ),
-            drawBorder: false,
           ),
         ],
       ),

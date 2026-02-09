@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/MessageSystem/chat.dart';
+import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/go_down_button_widget.dart';
 
 class MessagesPanelWidget extends StatelessWidget {
@@ -9,7 +9,7 @@ class MessagesPanelWidget extends StatelessWidget {
     required this.scrollController,
     required this.isDownButtonShown,
     required this.scrollToBottom,
-    required this.footerTextFieldFocusNode
+    required this.footerTextFieldFocusNode,
   });
 
   final ScrollController scrollController;
@@ -29,13 +29,20 @@ class MessagesPanelWidget extends StatelessWidget {
               return Consumer<Chat>(
                 builder: (context, chat, child) {
                   return ListView.builder(
-                    padding: EdgeInsetsGeometry.only(left: 5,right: 5, bottom: 10),
+                    padding: EdgeInsetsGeometry.only(
+                      left: 5,
+                      right: 5,
+                      bottom: 10,
+                    ),
                     shrinkWrap: chat.messages.length < 20 ? true : false,
                     reverse: true,
                     controller: scrollController,
                     itemCount: chat.messages.length,
                     itemBuilder: (context, index) {
-                      return chat.messages[index].getMessageBubble(maxWidth,footerTextFieldFocusNode);
+                      return chat.messages[index].getMessageBubble(
+                        maxWidth,
+                        footerTextFieldFocusNode,
+                      );
                     },
                   );
                 },

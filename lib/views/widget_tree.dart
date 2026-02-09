@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/swiping/full_swipe_controller.dart';
+import 'package:zchat/swiping_system/full_swipe_controller.dart';
 import 'package:zchat/views/data/appbar_data.dart';
 import 'package:zchat/views/data/pages_data/navbar_data.dart';
 import 'package:zchat/views/data/app_notifiers.dart';

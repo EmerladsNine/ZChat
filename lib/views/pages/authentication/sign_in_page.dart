@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/MessageSystem/Internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/authentication/google_auth_service.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/pages/authentication/email_auth_page.dart';
