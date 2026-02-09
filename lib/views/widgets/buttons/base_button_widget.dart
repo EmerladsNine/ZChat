@@ -128,7 +128,6 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     }
 
     //reset
-    _pressed = false;
     widget.appStateNotifier.value = false;
     widget.disableSet.value = false;
 
