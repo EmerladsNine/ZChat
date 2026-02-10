@@ -30,10 +30,6 @@ class StorageManager {
     );
   }
 
-  static Future<void> closeMessagesDatabase() async {
-    db.close();
-  }
-
   static Future<void> init() async {
     sharedPreferences = await SharedPreferences.getInstance();
   }
