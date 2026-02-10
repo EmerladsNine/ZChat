@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  final bool _isSignedIn = false;
+  final bool _isSignedIn = true;
   @override
   Widget build(BuildContext context) {
     if(_isSignedIn)
