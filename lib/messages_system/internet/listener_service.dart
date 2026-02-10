@@ -2,6 +2,7 @@ import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/handlers/normal_message_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/ping_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/pong_handler.dart';
+import 'package:zchat/messages_system/internet/handlers/response_code_handler.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/messaging_service.dart';
 
@@ -14,6 +15,7 @@ class ListenerService {
     MessageType.ping: PingHandler(),
     MessageType.pong: PongHandler(),
     MessageType.normalMessage: NormalMessageHandler(),
+    MessageType.responseCode: ResponseCodeHandler()
   };
 
   MessageType? head;

@@ -4,11 +4,15 @@ enum MessageType {
   ping(id: 0),
   pong(id: 1),
   normalMessage(id: 2),
-  ;
+  emailSignIn(id: 3),
+  emailSignUp(id: 4),
+  responseCode(id: 5),
+  googleSignIn(id: 6),
+  googleSignUp(id: 7);
+
   final int id;
   const MessageType({required this.id});
-  static MessageType fromId(int id)
-  {
+  static MessageType fromId(int id) {
     return MessageType.values.firstWhere((e) => e.id == id);
   }
 }
