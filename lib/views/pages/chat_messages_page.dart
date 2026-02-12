@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
@@ -128,7 +127,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                               overlayBorderRadius: BorderRadius.circular(50),
                               padding: EdgeInsetsGeometry.all(10),
                               onTap: () {
-                                Navigator.pop(context);
+                                    Navigator.pop(context);
                               },
                               child: Icon(Icons.arrow_back,color: colors.primaryColor,),
                             ),

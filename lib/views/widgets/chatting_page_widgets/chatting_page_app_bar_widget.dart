@@ -29,28 +29,29 @@ class ChattingPageAppBarWidget extends StatelessWidget {
         animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return ChatDetailsPage(
-                  chatData: GroupChatData(
-                    id: Id(id: 0, name: 'Max', isChatId: false),
-                    description: 'I love mathematics.',
-                    members: [
-                      Id(id: 0, name: 'You', isChatId: false),
-                      Id(id: 1, name: 'Jawad', isChatId: false),
-                      Id(id: 2, name: 'Awali', isChatId: false),
-                      Id(id: 3, name: 'Ali', isChatId: false),
-                      Id(id: 4, name: 'Mhmd', isChatId: false),
-                      Id(id: 5, name: 'Zane', isChatId: false),
-                    ],
-                    // email: 'uzmonEmeralds@linux.windowsHater',
-                  ),
-                );
-              },
-            ),
-          );
+          FocusManager.instance.primaryFocus?.unfocus();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ChatDetailsPage(
+                      chatData: GroupChatData(
+                        id: Id(id: 0, name: 'Max', isChatId: false),
+                        description: 'I love mathematics.',
+                        members: [
+                          Id(id: 0, name: 'You', isChatId: false),
+                          Id(id: 1, name: 'Jawad', isChatId: false),
+                          Id(id: 2, name: 'Awali', isChatId: false),
+                          Id(id: 3, name: 'Ali', isChatId: false),
+                          Id(id: 4, name: 'Mhmd', isChatId: false),
+                          Id(id: 5, name: 'Zane', isChatId: false),
+                        ],
+                        // email: 'uzmonEmeralds@linux.windowsHater',
+                      ),
+                    );
+                  },
+                ),
+              );
         },
         child: Row(
           spacing: 10,
