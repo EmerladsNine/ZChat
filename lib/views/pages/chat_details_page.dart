@@ -10,7 +10,7 @@ import '../../themes_system/app_theme.dart';
 import '../data/pages_data/chat_details_page_data.dart';
 import '../widgets/chat_details_widgets/group_members_chat_details_widget.dart';
 import '../widgets/chat_details_widgets/main_chat_details_widget.dart';
-import '../widgets/navbar_widgets/profile_widget.dart';
+import '../widgets/miscellaneous/profile_widget.dart';
 import '../widgets/settings_widgets/cards/settings_card_widget.dart';
 
 class ChatDetailsPage extends StatelessWidget {

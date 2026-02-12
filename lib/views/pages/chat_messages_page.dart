@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/overlays/message_actions_menu_widget.dart';
+import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
@@ -113,10 +115,28 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                 },
                 child: Scaffold(
                   resizeToAvoidBottomInset: false,
-                  appBar: AppBar(
-                    backgroundColor: colors.cardsColor,
-                    title: ChattingPageAppBarWidget(),
-                    elevation: 0,
+                  appBar: PreferredSize(
+                    preferredSize: Size.fromHeight(60),
+                    child: Container(
+                      height: double.infinity,
+                      color: colors.cardsColor,
+                      child: SafeArea(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            RippleEffectButtonWidget(
+                              overlayBorderRadius: BorderRadius.circular(50),
+                              padding: EdgeInsetsGeometry.all(10),
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Icon(Icons.arrow_back,color: colors.primaryColor,),
+                            ),
+                            Expanded(child: ChattingPageAppBarWidget()),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   body: Stack(
                     fit: StackFit.expand,

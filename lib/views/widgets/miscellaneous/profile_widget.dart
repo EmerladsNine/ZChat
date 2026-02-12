@@ -22,6 +22,7 @@ class ProfileWidget extends StatelessWidget {
             ProfilePictureOverlay.instance.removeOverlay();
           },
           child: FlatTapButtonWidget(
+            transparentIsTappable: false,
             disableSet: AppNotifiers.disableButtons,
             appStateNotifier: AppNotifiers.isNavigating,
             onTap: () {

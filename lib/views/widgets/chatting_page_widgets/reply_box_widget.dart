@@ -39,7 +39,7 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
                 child: Container(
                   padding: EdgeInsetsGeometry.all(5),
                   decoration: BoxDecoration(
-                    color: colors.dividerColor,
+                    color: colors.primaryColor.withAlpha(30),
                     borderRadius: BorderRadius.circular(8),
                     border: Border(
                       left: BorderSide(color: colors.primaryColor, width: 3),

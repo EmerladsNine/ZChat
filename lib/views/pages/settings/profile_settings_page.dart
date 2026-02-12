@@ -7,7 +7,7 @@ import '../../data/app_notifiers.dart';
 import '../../widgets/buttons/flat_tap_button_widget.dart';
 import '../../widgets/miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
-import '../../widgets/navbar_widgets/profile_widget.dart';
+import '../../widgets/miscellaneous/profile_widget.dart';
 import 'base_settings_page.dart';
 
 /// Page for viewing and editing profile information.

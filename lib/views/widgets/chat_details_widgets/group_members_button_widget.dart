@@ -28,7 +28,7 @@ class GroupMembersButtonWidget extends StatelessWidget {
     final ThemeColorScheme colors = AppTheme.themeColorsOf(context);
 
     return RippleEffectButtonWidget(
-      padding: EdgeInsetsGeometry.symmetric(vertical: 7),
+      padding: EdgeInsetsGeometry.symmetric(horizontal: 7,vertical: 7),
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
       overlayBorderRadius: overlayBorderRadius,

@@ -36,24 +36,19 @@ class GroupMembersChatDetailsWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsGeometry.symmetric(
-                  horizontal: 4,
-                  vertical: 3,
-                ),
+                padding: EdgeInsetsGeometry.symmetric(vertical: 3,),
                 child: Container(
                   height: containerHeight,
                   decoration: BoxDecoration(
                     color: colors.cardsColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  clipBehavior: Clip.hardEdge,
                   child: Column(
                     children: [
                       GroupMembersButtonWidget(
                         id: Id(id: 0, name: 'Add member', isChatId: false),
-                        overlayBorderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          topRight: Radius.circular(8),
-                        ),
+                        overlayBorderRadius: BorderRadius.zero,
                         icon: Icons.add,
                         color: colors.brandPrimaryColor,
                       ),
@@ -64,12 +59,7 @@ class GroupMembersChatDetailsWidget extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GroupMembersButtonWidget(
                               id: members[index],
-                              overlayBorderRadius: (index != members.length - 1)
-                                  ? BorderRadius.zero
-                                  : BorderRadius.only(
-                                      bottomLeft: Radius.circular(8),
-                                      bottomRight: Radius.circular(8),
-                                    ),
+                              overlayBorderRadius: BorderRadius.zero,
                               icon: Icons.person,
                             );
                           },

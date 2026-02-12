@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/messages_system/data_classes/group_chat_data.dart';
 import 'package:zchat/messages_system/data_classes/id.dart';
-import 'package:zchat/messages_system/data_classes/private_chat_data.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/themes_system/data_classes/theme_color_scheme.dart';
 import 'package:zchat/views/pages/chat_details_page.dart';
@@ -21,7 +20,11 @@ class ChattingPageAppBarWidget extends StatelessWidget {
 
     return CustomToolTip(
       message: 'Profile Details',
+      preferBelow: true,
       child: RippleEffectButtonWidget(
+        height: double.infinity,
+        padding: EdgeInsetsGeometry.only(left: 17),
+        overlayBorderRadius: BorderRadius.circular(3),
         disableSet: AppNotifiers.disableButtons,
         animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
@@ -54,8 +57,8 @@ class ChattingPageAppBarWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width: 28.0,
-              height: 28.0,
+              width: 38.0,
+              height: 38.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.0),
                 color: colors.defaultProfilePicColor,
@@ -66,11 +69,18 @@ class ChattingPageAppBarWidget extends StatelessWidget {
                 color: colors.iconDefaultColor,
               ),
             ),
-            ScaledTextWidget(
-              'Max',
-              style: AppTextStyles.appBarPrimaryTextStyle(
-                colors,
-              ).copyWith(fontSize: 15),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ScaledTextWidget(
+                  'Max',
+                  style: AppTextStyles.appBarPrimaryTextStyle(
+                    colors,
+                  ).copyWith(fontSize: 15),
+                ),
+                ScaledTextWidget("idk something here is talking",style: AppTextStyles.chatCardMessageDetailsTextStyle(colors).copyWith(fontSize: 11),)
+              ],
             ),
           ],
         ),

@@ -14,6 +14,7 @@ class FlatTapButtonWidget extends BaseButtonWidget {
     super.appStateNotifier,
     super.width,
     super.height,
+    super.transparentIsTappable
   });
 
   @override
