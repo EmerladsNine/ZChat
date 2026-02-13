@@ -62,11 +62,11 @@ class _NamePageState extends State<NamePage> {
                             padding: EdgeInsetsGeometry.symmetric(horizontal: 60,vertical: 10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: colors.primaryColor),
+                              border: Border.all(color: colors.brandPrimaryColor),
                             ),
                             child: Text(
                               "okay!",
-                              style: TextStyle(color: colors.primaryColor),
+                              style: TextStyle(color: colors.primaryColor,fontSize: 15),
                             ),
                           ),
                         ),
