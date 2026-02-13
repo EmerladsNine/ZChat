@@ -65,9 +65,9 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                             Navigator.of(context).pop();
                           },
                           child: Container(
-                            padding: EdgeInsetsGeometry.all(10),
+                            padding: EdgeInsetsGeometry.symmetric(horizontal: 60,vertical: 10),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius: BorderRadius.circular(10),
                                 border: Border.all(color: colors.primaryColor)
                             ),
                             child: Text(
