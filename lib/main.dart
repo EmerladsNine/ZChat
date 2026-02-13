@@ -153,16 +153,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  final bool _isSignedIn = true;
   @override
   Widget build(BuildContext context) {
-    if(_isSignedIn)
+
+    return ValueListenableBuilder(valueListenable: AppNotifiers.isSignedIn, builder: (context, value, child) {
+      if(value)
       {
         return WidgetTree(
           pageController: pageController,
           fullSwipeController: fullSwipeController,
         );
       }
-    return SignInPage();
+      return SignInPage();
+    },);
   }
 }

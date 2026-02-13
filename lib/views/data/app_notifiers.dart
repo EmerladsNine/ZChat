@@ -17,4 +17,5 @@ abstract final class AppNotifiers {
   static final ValueNotifier<bool> isPfpOverlayVisible = ValueNotifier(false);
   static final ValueNotifier<MessageReplyData?> replyData = ValueNotifier(null);
   static final ValueNotifier<AuthEvent?> authResponseCode = ValueNotifier(null);
+  static final ValueNotifier<bool> isSignedIn = ValueNotifier(false);
 }

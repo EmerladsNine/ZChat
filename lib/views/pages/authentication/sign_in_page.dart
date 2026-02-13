@@ -10,6 +10,7 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/email_auth_page.dart';
 import 'package:zchat/views/pages/authentication/name_page.dart';
+import 'package:zchat/views/widgets/buttons/flat_tap_button_widget.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
 class SignInPage extends StatefulWidget {
@@ -32,13 +33,49 @@ class _SignInPageState extends State<SignInPage> {
       body: ValueListenableBuilder(
         valueListenable: AppNotifiers.authResponseCode,
         builder: (context, value, child) {
-          if(value?.code == ResponseCode.googleAuthRequireSignUp)
-          {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return NamePage(googleToken: googleToken);
-              },));
-            });
+          if(ModalRoute.of(context)?.isCurrent ?? false) {
+            if (value?.code == ResponseCode.googleAuthRequireSignUp) {
+              AppNotifiers.authResponseCode.value = null;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return NamePage(googleToken: googleToken);
+                    },));
+              });
+            }
+            else if (value != null) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                AppNotifiers.authResponseCode.value = null;
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Failed"),
+                      content: Text(value.msg!),
+                      actionsAlignment: MainAxisAlignment.center,
+                      backgroundColor: colors.cardsColor,
+                      actions: [
+                        FlatTapButtonWidget(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            padding: EdgeInsetsGeometry.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: colors.primaryColor)
+                            ),
+                            child: Text(
+                                "okay!",
+                                style: TextStyle(color: colors.primaryColor)),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              });
+            }
           }
           return SafeArea(
             child: Padding(
