@@ -33,15 +33,13 @@ class _SignInPageState extends State<SignInPage> {
       body: ValueListenableBuilder(
         valueListenable: AppNotifiers.authResponseCode,
         builder: (context, value, child) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            setState(() {
-              isLoading = false;
-            });
-          });
           if(ModalRoute.of(context)?.isCurrent ?? false) {
             if (value?.code == ResponseCode.googleAuthRequireSignUp) {
               AppNotifiers.authResponseCode.value = null;
               WidgetsBinding.instance.addPostFrameCallback((_) {
+                setState(() {
+                  isLoading = false;
+                });
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) {
                       return NamePage(googleToken: googleToken);
@@ -94,6 +92,13 @@ class _SignInPageState extends State<SignInPage> {
                                   isLoading = true;
                                 });
                                 googleToken = await GoogleAuthService.signIn(msgService);
+                                if(googleToken == "")
+                                {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+
                               },
                             ),
 
