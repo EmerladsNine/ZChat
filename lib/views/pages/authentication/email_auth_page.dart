@@ -6,7 +6,9 @@ import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
+import 'package:zchat/views/widgets/email_page_widgets/auth_button.dart';
+import 'package:zchat/views/widgets/email_page_widgets/email_auth_input.dart';
+import 'package:zchat/views/widgets/email_page_widgets/password_field.dart';
 import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
 
 class EmailAuthPage extends StatefulWidget {
@@ -18,20 +20,49 @@ class EmailAuthPage extends StatefulWidget {
 }
 
 class _EmailAuthPageState extends State<EmailAuthPage> {
-  late bool _signIn;
+  late bool _isSignIn;
   TextEditingController emailController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode usernameFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
+  FocusNode confirmPasswordFocusNode = FocusNode();
 
   @override
   void initState() {
-    _signIn = widget.isSignIn;
+    _isSignIn = widget.isSignIn;
     super.initState();
   }
 
   bool _navLocked = false;
   bool isLoading = false;
+
+  void signUp() {
+    final msgService = context.read<MessagingService>();
+    msgService.sendProtocolUnit(MessageType.emailSignUp, [
+      ...intToBigEndian(emailController.text.length, 1),
+      ...utf8.encode(emailController.text),
+      ...intToBigEndian(passwordController.text.length, 1),
+      ...utf8.encode(passwordController.text),
+      ...utf8.encode(usernameController.text),
+    ]);
+  }
+
+  void signIn() {
+    final msgService = context.read<MessagingService>();
+
+    msgService.sendProtocolUnit(MessageType.emailSignIn, [
+      ...intToBigEndian(emailController.text.length, 1),
+      ...utf8.encode(emailController.text),
+      ...utf8.encode(passwordController.text),
+    ]);
+    setState(() {
+      isLoading = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -50,7 +81,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
           valueListenable: AppNotifiers.authResponseCode,
           builder: (context, value, child) {
             if (value != null) {
-              WidgetsBinding.instance.addPostFrameCallback((_){
+              WidgetsBinding.instance.addPostFrameCallback((_) {
                 AppNotifiers.authResponseCode.value = null;
                 setState(() {
                   isLoading = false;
@@ -66,259 +97,151 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
             return Scaffold(
               appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
               backgroundColor: colors.primaryBackgroundColor,
-              body:
-              isLoading ? Center(child: CircularProgressIndicator(color: colors.brandPrimaryColor,),) :
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 0,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          spacing: 20,
-                          children: [
-                            Text(
-                              _signIn
-                                  ? "Sign in with Email"
-                                  : "Sign up with Email",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: colors.cardsColor.withAlpha(200),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              padding: EdgeInsetsGeometry.all(20),
-                              child: Column(
-                                spacing: 10,
+              body: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: colors.brandPrimaryColor,
+                      ),
+                    )
+                  : SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 0,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                spacing: 20,
                                 children: [
-                                  if (!_signIn)
-                                    TextField(
-                                      controller: usernameController,
-                                      decoration: InputDecoration(
-                                        labelText: "Username",
-                                        labelStyle: TextStyle(
-                                          color: colors.primaryColor,
-                                        ),
-                                        constraints: BoxConstraints(
-                                          maxWidth: 300,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: colors.dividerColor,
-                                          ),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                      ),
-                                    ),
-                                  TextField(
-                                    controller: emailController,
-                                    decoration: InputDecoration(
-                                      labelText: "Email",
-                                      labelStyle: TextStyle(
-                                        color: colors.primaryColor,
-                                      ),
-                                      hintText: "example@example.com",
-                                      hintStyle: TextStyle(
-                                        color: colors.textSecondaryColor,
-                                      ),
-                                      constraints: BoxConstraints(
-                                        maxWidth: 300,
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: colors.dividerColor,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(),
+                                  Text(
+                                    _isSignIn
+                                        ? "Sign in with Email"
+                                        : "Sign up with Email",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900,
                                     ),
                                   ),
-                                  TextField(
-                                    controller: passwordController,
-                                    decoration: InputDecoration(
-                                      labelText: "Password",
-                                      labelStyle: TextStyle(
-                                        color: colors.primaryColor,
-                                      ),
-                                      constraints: BoxConstraints(
-                                        maxWidth: 300,
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: colors.dividerColor,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: colors.cardsColor.withAlpha(200),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    padding: EdgeInsetsGeometry.all(20),
+                                    child: Column(
+                                      children: [
+                                        Column(
+                                          spacing: 10,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (!_isSignIn)
+                                              EmailAuthInput(
+                                                controller: usernameController,
+                                                focusNode: usernameFocusNode,
+                                                nextFocusNode: emailFocusNode,
+                                                label: "Username",
+                                              ),
+                                            EmailAuthInput(
+                                              controller: emailController,
+                                              focusNode: emailFocusNode,
+                                              nextFocusNode: passwordFocusNode,
+                                              label: "Email",
+                                              hint: "example@example.com",
+                                            ),
+                                            PasswordField(
+                                              passwordController: passwordController,
+                                              focusNode: passwordFocusNode,
+                                              nextFocusNode: confirmPasswordFocusNode,
+                                              onSubmitted: _isSignIn ? (_) {
+                                                _isSignIn ? signIn() : signUp();
+                                              } : null,
+                                            ),
+                                            if (!_isSignIn)
+                                              EmailAuthInput(
+                                                controller: confirmPasswordController,
+                                                focusNode: confirmPasswordFocusNode,
+                                                onSubmitted: (_){
+                                                  _isSignIn ? signIn() : signUp();
+                                                },
+                                                label: "Confirm Password",
+                                                obscureText: true,
+                                              ),
+                                            SizedBox(height: 10),
+                                          ],
                                         ),
-                                      ),
-                                      border: OutlineInputBorder(),
+                                        AuthButton(
+                                          isSignIn: _isSignIn,
+                                          signIn: signIn,
+                                          signUp: signUp,
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  if (!_signIn)
-                                    TextField(
-                                      controller: confirmPasswordController,
-                                      decoration: InputDecoration(
-                                        labelText: "Confirm Password",
-                                        labelStyle: TextStyle(
-                                          color: colors.primaryColor,
-                                        ),
-                                        constraints: BoxConstraints(
-                                          maxWidth: 300,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: colors.dividerColor,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        _isSignIn
+                                            ? "Don't have an account ? "
+                                            : "Already have an account ? ",
+                                      ),
+                                      GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () {
+                                          FocusScope.of(context).unfocus();
+                                          setState(() {
+                                            _isSignIn = !_isSignIn;
+                                          });
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Text(
+                                            _isSignIn ? "Sign up" : "Sign in",
+                                            style: TextStyle(
+                                              color: colors.brandPrimaryColor,
+                                            ),
                                           ),
                                         ),
-                                        border: OutlineInputBorder(),
                                       ),
-                                    ),
-                                  SizedBox(height: 10),
-                                  RippleEffectButtonWidget(
-                                    overlayBorderRadius: BorderRadius.circular(
-                                      10,
-                                    ),
-                                    onTap: _signIn
-                                        ? () {
-                                            final msgService = context
-                                                .read<MessagingService>();
-
-                                            msgService.sendProtocolUnit(
-                                              MessageType.emailSignIn,
-                                              [
-                                                ...intToBigEndian(
-                                                  emailController.text.length,
-                                                  1,
-                                                ),
-                                                ...utf8.encode(
-                                                  emailController.text,
-                                                ),
-                                                ...utf8.encode(
-                                                  passwordController.text,
-                                                ),
-                                              ],
-                                            );
-                                            setState(() {
-                                              isLoading = true;
-                                            });
-                                          }
-                                        : () {
-                                            final msgService = context
-                                                .read<MessagingService>();
-                                            msgService.sendProtocolUnit(
-                                              MessageType.emailSignUp,
-                                              [
-                                                ...intToBigEndian(
-                                                  emailController.text.length,
-                                                  1,
-                                                ),
-                                                ...utf8.encode(
-                                                  emailController.text,
-                                                ),
-                                                ...intToBigEndian(
-                                                  passwordController
-                                                      .text
-                                                      .length,
-                                                  1,
-                                                ),
-                                                ...utf8.encode(
-                                                  passwordController.text,
-                                                ),
-                                                ...utf8.encode(
-                                                  usernameController.text,
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                    child: Container(
-                                      padding: EdgeInsetsGeometry.symmetric(
-                                        vertical: 10,
-                                        horizontal: 40,
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "by creating or logging into an account you are agreeing with our",
+                                        style: TextStyle(fontSize: 12),
                                       ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                          color: colors.primaryColor,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Terms and Conditions",
+                                            style: TextStyle(
+                                              color: colors.brandPrimaryColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(" and "),
+                                          Text(
+                                            "Privacy Statement",
+                                            style: TextStyle(
+                                              color: colors.brandPrimaryColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      child: Text(
-                                        _signIn ? "Sign in" : "Sign up",
-                                        style: TextStyle(
-                                          color: colors.primaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  _signIn
-                                      ? "Don't have an account ? "
-                                      : "Already have an account ? ",
-                                ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    FocusScope.of(context).unfocus();
-                                    setState(() {
-                                      _signIn = !_signIn;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text(
-                                      _signIn ? "Sign up" : "Sign in",
-                                      style: TextStyle(
-                                        color: colors.brandPrimaryColor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "by creating or logging into an account you are agreeing with our",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Terms and Conditions",
-                                      style: TextStyle(
-                                        color: colors.brandPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(" and "),
-                                    Text(
-                                      "Privacy Statement",
-                                      style: TextStyle(
-                                        color: colors.brandPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
             );
           },
         );

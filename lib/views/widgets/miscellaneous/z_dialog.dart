@@ -24,12 +24,12 @@ class ZDialog extends StatelessWidget {
           child: Container(
             padding: EdgeInsetsGeometry.symmetric(horizontal: 100, vertical: 2),
             decoration: BoxDecoration(
-              color: Colors.white,
               borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.white)
             ),
             child: Text(
                 "Okay",
-                style: TextStyle(color: colors.primaryBackgroundColor,fontSize: 18,fontWeight: FontWeight.w900)),
+                style: TextStyle(color: colors.primaryColor,fontSize: 18,fontWeight: FontWeight.w900)),
           ),
         ),
       ],
