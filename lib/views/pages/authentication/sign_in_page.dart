@@ -22,7 +22,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   bool _signIn = true;
-
+  bool isLoading = false;
   String googleToken = "";
 
   @override
@@ -33,6 +33,11 @@ class _SignInPageState extends State<SignInPage> {
       body: ValueListenableBuilder(
         valueListenable: AppNotifiers.authResponseCode,
         builder: (context, value, child) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            setState(() {
+              isLoading = false;
+            });
+          });
           if(ModalRoute.of(context)?.isCurrent ?? false) {
             if (value?.code == ResponseCode.googleAuthRequireSignUp) {
               AppNotifiers.authResponseCode.value = null;
@@ -55,7 +60,7 @@ class _SignInPageState extends State<SignInPage> {
               });
             }
           }
-          return SafeArea(
+          return isLoading ? Center(child: CircularProgressIndicator(color: colors.brandPrimaryColor,),) : SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
               child: Column(
@@ -85,6 +90,9 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                               onTap: () async {
                                 final msgService = context.read<MessagingService>();
+                                setState(() {
+                                  isLoading = true;
+                                });
                                 googleToken = await GoogleAuthService.signIn(msgService);
                               },
                             ),

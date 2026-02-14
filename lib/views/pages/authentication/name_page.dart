@@ -21,6 +21,7 @@ class _NamePageState extends State<NamePage> {
   TextEditingController usernameController = TextEditingController();
 
   bool _navLocked = false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -45,6 +46,9 @@ class _NamePageState extends State<NamePage> {
             } else if (value != null) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 AppNotifiers.authResponseCode.value = null;
+                setState(() {
+                  isLoading = false;
+                });
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -56,7 +60,8 @@ class _NamePageState extends State<NamePage> {
             return Scaffold(
               appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
               backgroundColor: colors.primaryBackgroundColor,
-              body: SafeArea(
+              body: isLoading ? Center(child: CircularProgressIndicator(color: colors.brandPrimaryColor,),) :
+              SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8.0,
@@ -104,6 +109,9 @@ class _NamePageState extends State<NamePage> {
                                     onTap: () {
                                       final msgService = context
                                           .read<MessagingService>();
+                                      setState(() {
+                                        isLoading = true;
+                                      });
                                       GoogleAuthService.signUp(
                                         msgService,
                                         usernameController.text,

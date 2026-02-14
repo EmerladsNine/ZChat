@@ -31,6 +31,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   }
 
   bool _navLocked = false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -51,6 +52,9 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
             if (value != null) {
               WidgetsBinding.instance.addPostFrameCallback((_){
                 AppNotifiers.authResponseCode.value = null;
+                setState(() {
+                  isLoading = false;
+                });
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -62,7 +66,9 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
             return Scaffold(
               appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
               backgroundColor: colors.primaryBackgroundColor,
-              body: SafeArea(
+              body:
+              isLoading ? Center(child: CircularProgressIndicator(color: colors.brandPrimaryColor,),) :
+              SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8.0,
@@ -196,6 +202,9 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                                 ),
                                               ],
                                             );
+                                            setState(() {
+                                              isLoading = true;
+                                            });
                                           }
                                         : () {
                                             final msgService = context
