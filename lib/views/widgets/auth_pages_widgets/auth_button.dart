@@ -3,11 +3,10 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
 class AuthButton extends StatelessWidget {
-  const AuthButton({super.key,required this.isSignIn,required this.signIn,required this.signUp});
+  const AuthButton({super.key,required this.text,required this.onTap});
 
-  final bool isSignIn;
-  final void Function() signIn;
-  final void Function() signUp;
+  final String text;
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -16,9 +15,7 @@ class AuthButton extends StatelessWidget {
       overlayBorderRadius: BorderRadius.circular(
         10,
       ),
-      onTap: isSignIn
-          ? signIn
-          : signUp ,
+      onTap:  onTap,
       child: Container(
         padding: EdgeInsetsGeometry.symmetric(
           vertical: 10,
@@ -31,7 +28,7 @@ class AuthButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          isSignIn ? "Sign in" : "Sign up",
+          text,
           style: TextStyle(
             color: colors.primaryColor,
             fontWeight: FontWeight.bold,

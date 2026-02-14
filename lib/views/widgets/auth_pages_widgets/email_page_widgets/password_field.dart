@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
-import 'package:zchat/views/widgets/email_page_widgets/email_auth_input.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/auth_text_field.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField({
@@ -25,7 +25,7 @@ class _PasswordFieldState extends State<PasswordField> {
     return Row(
       spacing: 2,
       children: [
-        EmailAuthInput(
+        AuthTextField(
           controller: widget.passwordController,
           label: "Password",
           obscureText: isPasswordHidden,

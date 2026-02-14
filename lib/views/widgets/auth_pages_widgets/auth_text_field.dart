@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
-class EmailAuthInput extends StatefulWidget {
-  const EmailAuthInput({super.key,required this.controller,required this.label, this.hint , this.obscureText = false,required this.focusNode,this.nextFocusNode,this.onSubmitted});
+class AuthTextField extends StatefulWidget {
+  const AuthTextField({super.key,required this.controller,required this.label, this.hint , this.obscureText = false,required this.focusNode,this.nextFocusNode,this.onSubmitted});
   final TextEditingController controller;
   final FocusNode focusNode;
   final FocusNode? nextFocusNode;
@@ -13,10 +13,10 @@ class EmailAuthInput extends StatefulWidget {
 
 
   @override
-  State<EmailAuthInput> createState() => _EmailAuthInputState();
+  State<AuthTextField> createState() => _AuthTextFieldState();
 }
 
-class _EmailAuthInputState extends State<EmailAuthInput> {
+class _AuthTextFieldState extends State<AuthTextField> {
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);

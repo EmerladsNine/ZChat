@@ -6,9 +6,9 @@ import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/widgets/email_page_widgets/auth_button.dart';
-import 'package:zchat/views/widgets/email_page_widgets/email_auth_input.dart';
-import 'package:zchat/views/widgets/email_page_widgets/password_field.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/auth_button.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/auth_text_field.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/email_page_widgets/password_field.dart';
 import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
 
 class EmailAuthPage extends StatefulWidget {
@@ -139,13 +139,13 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             if (!_isSignIn)
-                                              EmailAuthInput(
+                                              AuthTextField(
                                                 controller: usernameController,
                                                 focusNode: usernameFocusNode,
                                                 nextFocusNode: emailFocusNode,
                                                 label: "Username",
                                               ),
-                                            EmailAuthInput(
+                                            AuthTextField(
                                               controller: emailController,
                                               focusNode: emailFocusNode,
                                               nextFocusNode: passwordFocusNode,
@@ -161,7 +161,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                               } : null,
                                             ),
                                             if (!_isSignIn)
-                                              EmailAuthInput(
+                                              AuthTextField(
                                                 controller: confirmPasswordController,
                                                 focusNode: confirmPasswordFocusNode,
                                                 onSubmitted: (_){
@@ -174,9 +174,8 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                           ],
                                         ),
                                         AuthButton(
-                                          isSignIn: _isSignIn,
-                                          signIn: signIn,
-                                          signUp: signUp,
+                                          text: _isSignIn ? "Sign in" : "Sign up",
+                                          onTap: _isSignIn ? signIn : signUp,
                                         ),
                                       ],
                                     ),
