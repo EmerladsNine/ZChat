@@ -10,8 +10,8 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/email_auth_page.dart';
 import 'package:zchat/views/pages/authentication/name_page.dart';
-import 'package:zchat/views/widgets/buttons/flat_tap_button_widget.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -49,29 +49,7 @@ class _SignInPageState extends State<SignInPage> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(
-                      title: Text("Failed"),
-                      content: Text(value.msg!),
-                      actionsAlignment: MainAxisAlignment.center,
-                      backgroundColor: colors.cardsColor,
-                      actions: [
-                        FlatTapButtonWidget(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Container(
-                            padding: EdgeInsetsGeometry.symmetric(horizontal: 60,vertical: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: colors.primaryColor)
-                            ),
-                            child: Text(
-                                "okay!",
-                                style: TextStyle(color: colors.primaryColor)),
-                          ),
-                        ),
-                      ],
-                    );
+                    return ZDialog(content: value.msg!);
                   },
                 );
               });
