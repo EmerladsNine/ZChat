@@ -6,6 +6,7 @@ import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/pages/authentication/sign_in_page.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/auth_button.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/auth_text_field.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/email_page_widgets/password_field.dart';
@@ -53,7 +54,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
       showDialog(
         context: context,
         builder: (context) {
-          return ZDialog(content: "Failed to connect to the server");
+          return ZDialog(content: internetFailureMessage);
         },
       );
       return;
@@ -75,7 +76,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
       showDialog(
         context: context,
         builder: (context) {
-          return ZDialog(content: "Failed to connect to the server");
+          return ZDialog(content: internetFailureMessage);
         },
       );
       return;

@@ -21,10 +21,10 @@ class GoogleAuthService {
 
 
       if(gUser.authentication.idToken == null)
-        {
-          // Todo handle this.
-          return ("",true);
-        }
+      {
+        printOnDebug("Hmm Idk what caused this... but you have a problem , welcome."); // Todo find out what the issue might be
+        return ("",false);
+      }
 
       bool res = service.sendProtocolUnit(MessageType.googleSignIn, [
         ...utf8.encode(gUser.authentication.idToken!)
@@ -32,9 +32,9 @@ class GoogleAuthService {
       return (gUser.authentication.idToken!,res);
     }
     on GoogleSignInException catch(_) {
-      printOnDebug("sign in cancelled");
+      printOnDebug("sign in with google failed(might be cancelled by the user)");
     }
-    return ("",false);
+    return ("",true);
   }
   static bool signUp(MessagingService service,String username,String googleToken) {
       Uint8List usernameList = utf8.encode(username);
