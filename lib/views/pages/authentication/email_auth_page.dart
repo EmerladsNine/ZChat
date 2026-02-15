@@ -41,23 +41,45 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
 
   void signUp() {
     final msgService = context.read<MessagingService>();
-    msgService.sendProtocolUnit(MessageType.emailSignUp, [
+    bool res = msgService.sendProtocolUnit(MessageType.emailSignUp, [
       ...intToBigEndian(emailController.text.length, 1),
       ...utf8.encode(emailController.text),
       ...intToBigEndian(passwordController.text.length, 1),
       ...utf8.encode(passwordController.text),
       ...utf8.encode(usernameController.text),
     ]);
+    if(!res)
+    {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ZDialog(content: "Failed to connect to the server");
+        },
+      );
+      return;
+    }
+    setState(() {
+      isLoading = true;
+    });
   }
 
   void signIn() {
     final msgService = context.read<MessagingService>();
-
-    msgService.sendProtocolUnit(MessageType.emailSignIn, [
+    bool res = msgService.sendProtocolUnit(MessageType.emailSignIn, [
       ...intToBigEndian(emailController.text.length, 1),
       ...utf8.encode(emailController.text),
       ...utf8.encode(passwordController.text),
     ]);
+    if(!res)
+    {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ZDialog(content: "Failed to connect to the server");
+        },
+      );
+      return;
+    }
     setState(() {
       isLoading = true;
     });

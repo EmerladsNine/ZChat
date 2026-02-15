@@ -22,18 +22,25 @@ class _NamePageState extends State<NamePage> {
   TextEditingController usernameController = TextEditingController();
   FocusNode usernameFocusNode = FocusNode();
 
-  void _signUp()
-  {
-    final msgService = context
-        .read<MessagingService>();
-    setState(() {
-      isLoading = true;
-    });
-    GoogleAuthService.signUp(
+  void _signUp() {
+    final msgService = context.read<MessagingService>();
+    bool res = GoogleAuthService.signUp(
       msgService,
       usernameController.text,
       widget.googleToken,
     );
+    if (!res) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ZDialog(content: "Failed to connect to the server");
+        },
+      );
+      return;
+    }
+    setState(() {
+      isLoading = true;
+    });
   }
 
   bool _navLocked = false;
@@ -112,7 +119,10 @@ class _NamePageState extends State<NamePage> {
                                             _signUp();
                                           },
                                         ),
-                                        AuthButton(text: "Continue", onTap: _signUp)
+                                        AuthButton(
+                                          text: "Continue",
+                                          onTap: _signUp,
+                                        ),
                                       ],
                                     ),
                                   ),

@@ -25,6 +25,30 @@ class _SignInPageState extends State<SignInPage> {
   bool isLoading = false;
   String googleToken = "";
 
+  void continueWithGoogle(BuildContext context) async {
+      final msgService = context.read<MessagingService>();
+      setState(() {
+        isLoading = true;
+      });
+      (String,bool) res = await GoogleAuthService.signIn(msgService);
+      googleToken = res.$1;
+      if(!context.mounted) return;
+      if(res.$2 == false)
+      {
+        setState(() {
+          isLoading = false;
+        });
+        if(googleToken != "") {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return ZDialog(content: "Failed to connect to the server");
+            },
+          );
+        }
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -86,20 +110,7 @@ class _SignInPageState extends State<SignInPage> {
                                 "assets/icons/google_web_signIn_svg/dark/web_dark_sq_ctn.svg",
                                 height: 51,
                               ),
-                              onTap: () async {
-                                final msgService = context.read<MessagingService>();
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                googleToken = await GoogleAuthService.signIn(msgService);
-                                if(googleToken == "")
-                                {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                }
-
-                              },
+                              onTap: () { continueWithGoogle(context); },
                             ),
 
                           if (Platform.isIOS)
