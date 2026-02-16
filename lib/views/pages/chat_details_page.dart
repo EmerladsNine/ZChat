@@ -26,53 +26,45 @@ class ChatDetailsPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.primaryBackgroundColor,
+      appBar: AppBar(backgroundColor: colors.primaryBackgroundColor,),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 8,
+          child: ListView(
             children: [
               ProfileWidget(),
               MainChatDetailsWidget(
                 id: chatData.id,
                 email: (!isGrp) ? (chatData as PrivateChatData).email : null,
               ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    if (chatData.description != null)
-                      ChatDetailsDescriptionWidget(
-                        description: chatData.description!,
-                        isGrp: isGrp,
-                      ),
-
-                    SettingsCardWidget(
-                      category: 'Chat Settings',
-                      buttons: chatSettingsData,
-                    ),
-
-                    SettingsSwitchWidget(
-                      data: SettingsSwitchData(
-                        label: 'Media Visibility',
-                        helpText:
-                            'Show newly downloaded media in your device gallery.',
-                        icon: '🖼️',
-                      ),
-                    ),
-
-                    if (isGrp)
-                      GroupMembersChatDetailsWidget(
-                        members: (chatData as GroupChatData).members,
-                      ),
-
-                    SettingsCardWidget(
-                      category: 'Actions',
-                      buttons: chatData.chatActionsData(),
-                    ),
-                  ],
+              if (chatData.description != null)
+                ChatDetailsDescriptionWidget(
+                  description: chatData.description!,
+                  isGrp: isGrp,
                 ),
+
+              SettingsCardWidget(
+                category: 'Chat Settings',
+                buttons: chatSettingsData,
+              ),
+
+              SettingsSwitchWidget(
+                data: SettingsSwitchData(
+                  label: 'Media Visibility',
+                  helpText:
+                      'Show newly downloaded media in your device gallery.',
+                  icon: '🖼️',
+                ),
+              ),
+
+              if (isGrp)
+                GroupMembersChatDetailsWidget(
+                  members: (chatData as GroupChatData).members,
+                ),
+
+              SettingsCardWidget(
+                category: 'Actions',
+                buttons: chatData.chatActionsData(),
               ),
             ],
           ),

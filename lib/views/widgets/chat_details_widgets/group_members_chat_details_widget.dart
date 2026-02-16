@@ -1,12 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:zchat/messages_system/data_classes/id.dart';
 import 'package:zchat/themes_system/data_classes/theme_color_scheme.dart';
 import 'package:zchat/views/widgets/chat_details_widgets/group_members_button_widget.dart';
 
 import '../../../themes_system/app_theme.dart';
-import '../../data/app_constants.dart';
 import '../../data/app_text_styles.dart';
 import '../miscellaneous/scaled_text_widget.dart';
 
@@ -21,8 +18,8 @@ class GroupMembersChatDetailsWidget extends StatelessWidget {
 
     const double buttonHeight = 71.5;
 
-    final double containerHeight =
-        min(members.length + 1, AppConstants.maxVisibleMembers) * buttonHeight;
+    final double containerHeight = 1.5 * buttonHeight;
+        //min(members.length + 1, AppConstants.maxVisibleMembers) * buttonHeight;
 
     return (members.isNotEmpty)
         ? Column(
@@ -52,9 +49,9 @@ class GroupMembersChatDetailsWidget extends StatelessWidget {
                         icon: Icons.add,
                         color: colors.brandPrimaryColor,
                       ),
-
                       Expanded(
                         child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
                           itemCount: members.length,
                           itemBuilder: (context, index) {
                             return GroupMembersButtonWidget(
