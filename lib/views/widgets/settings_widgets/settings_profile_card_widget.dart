@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/pages/settings/profile_settings_page.dart';
+import 'package:zchat/views/widgets/miscellaneous/sliding_animation_page_route.dart';
 
 import '../miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
@@ -27,11 +28,7 @@ class SettingsProfileCardWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ProfileSettingsPage();
-            },
-          ),
+          SlidingAnimationPageRoute(page: ProfileSettingsPage())
         );
       },
       child: Container(

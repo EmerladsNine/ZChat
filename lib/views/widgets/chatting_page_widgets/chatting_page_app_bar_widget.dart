@@ -5,6 +5,7 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/themes_system/data_classes/theme_color_scheme.dart';
 import 'package:zchat/views/pages/chat_details_page.dart';
 import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/sliding_animation_page_route.dart';
 
 import '../../data/app_notifiers.dart';
 import '../../data/app_text_styles.dart';
@@ -32,25 +33,21 @@ class ChattingPageAppBarWidget extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
             Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ChatDetailsPage(
-                      chatData: GroupChatData(
-                        id: Id(id: 0, name: 'Max', isChatId: false),
-                        description: 'I love mathematics.',
-                        members: [
-                          Id(id: 0, name: 'You', isChatId: false),
-                          Id(id: 1, name: 'Jawad', isChatId: false),
-                          Id(id: 2, name: 'Awali', isChatId: false),
-                          Id(id: 3, name: 'Ali', isChatId: false),
-                          Id(id: 4, name: 'Mhmd', isChatId: false),
-                          Id(id: 5, name: 'Zane', isChatId: false),
-                        ],
-                        // email: 'uzmonEmeralds@linux.windowsHater',
-                      ),
-                    );
-                  },
-                ),
+                SlidingAnimationPageRoute(page: ChatDetailsPage(
+                  chatData: GroupChatData(
+                    id: Id(id: 0, name: 'Max', isChatId: false),
+                    description: 'I love mathematics.',
+                    members: [
+                      Id(id: 0, name: 'You', isChatId: false),
+                      Id(id: 1, name: 'Jawad', isChatId: false),
+                      Id(id: 2, name: 'Awali', isChatId: false),
+                      Id(id: 3, name: 'Ali', isChatId: false),
+                      Id(id: 4, name: 'Mhmd', isChatId: false),
+                      Id(id: 5, name: 'Zane', isChatId: false),
+                    ],
+                    // email: 'uzmonEmeralds@linux.windowsHater',
+                  ),
+                ))
               );
         },
         child: Row(

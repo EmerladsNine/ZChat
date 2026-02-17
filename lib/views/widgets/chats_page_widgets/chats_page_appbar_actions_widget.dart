@@ -3,6 +3,7 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/settings_page.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
+import 'package:zchat/views/widgets/miscellaneous/sliding_animation_page_route.dart';
 
 import '../../../themes_system/app_theme.dart';
 
@@ -27,8 +28,7 @@ class ChatsPageAppbarActionsWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SettingsPage()),
-            );
+              SlidingAnimationPageRoute(page: const SettingsPage()));
           },
           child: Icon(Icons.settings, color: colors.primaryColor, size: 25),
         ),

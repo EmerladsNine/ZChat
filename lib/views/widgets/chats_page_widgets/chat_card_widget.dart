@@ -6,6 +6,7 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/sliding_animation_page_route.dart';
 
 import '../../data/app_constants.dart';
 import '../../overlays/profile_picture_overlay.dart';
@@ -46,17 +47,14 @@ class ChatCardWidget extends StatelessWidget {
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
       onTap: () {
+        Chat chat = ChatsStorageManager.globalChat;
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) {
-              Chat chat = ChatsStorageManager.globalChat;
-              return ChangeNotifierProvider.value(
+          SlidingAnimationPageRoute(
+              page: ChangeNotifierProvider.value(
                 value: chat,
                 child: ChatMessagesPage(),
-              );
-            },
-          ),
+          ))
         );
       },
       child: Container(

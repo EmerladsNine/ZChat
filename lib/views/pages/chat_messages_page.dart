@@ -133,54 +133,47 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       ),
                     ),
                   ),
-                  body: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      //BackgroundImageFallBack
-                      Positioned.fill(
-                        child: Container(color: colors.primaryBackgroundColor),
-                      ),
-
-                      Image(
-                        image: Image.asset('assets/images/bg5.jpeg').image,
-                        fit: BoxFit.cover,
-                        color: colors.primaryBackgroundColor.withAlpha(220),
-                        colorBlendMode: BlendMode.overlay,
-                      ),
-
-                      Column(
-                        children: [
-                          Expanded(
-                            child: MessagesPanelWidget(
-                              scrollController: _scrollController,
-                              isDownButtonShown: isDownButtonShown,
-                              scrollToBottom: _scrollToBottom,
-                              footerTextFieldFocusNode: focusNode,
+                   body: Container(
+                        decoration: BoxDecoration(
+                          color: colors.primaryBackgroundColor,
+                          image:  DecorationImage(
+                            image: AssetImage('assets/images/bg5.jpeg'),
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(colors.primaryBackgroundColor.withAlpha(200),BlendMode.overlay )
+                          )
+                        ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: MessagesPanelWidget(
+                                scrollController: _scrollController,
+                                isDownButtonShown: isDownButtonShown,
+                                scrollToBottom: _scrollToBottom,
+                                footerTextFieldFocusNode: focusNode,
+                              ),
                             ),
-                          ),
 
-                          ReplyBoxWidget(),
+                            ReplyBoxWidget(),
 
-                          Padding(
-                            padding: isEmojiPickerVisible
-                                ? EdgeInsetsGeometry.zero
-                                : EdgeInsetsGeometry.only(
-                                    bottom: bottomPadding,
-                                  ),
-                            child: ChatMessagesFooterWidget(
-                              scrollToBottom: _scrollToBottom,
-                              bottomSafeArea: bottomSafeArea,
-                              isInSafeArea:
-                                  bottomPadding != 0 || isEmojiPickerVisible,
-                              focusNode: focusNode,
+                            Padding(
+                              padding: isEmojiPickerVisible
+                                  ? EdgeInsetsGeometry.zero
+                                  : EdgeInsetsGeometry.only(
+                                bottom: bottomPadding,
+                              ),
+                              child: ChatMessagesFooterWidget(
+                                scrollToBottom: _scrollToBottom,
+                                bottomSafeArea: bottomSafeArea,
+                                isInSafeArea:
+                                bottomPadding != 0 || isEmojiPickerVisible,
+                                focusNode: focusNode,
+                              ),
                             ),
-                          ),
 
-                          EmojiPanelWidget(),
-                        ],
+                            EmojiPanelWidget(),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
                 ),
               );
             },
