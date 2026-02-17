@@ -6,12 +6,14 @@ import 'package:zchat/views/widgets/chatting_page_widgets/go_down_button_widget.
 class MessagesPanelWidget extends StatelessWidget {
   const MessagesPanelWidget({
     super.key,
+    required this.listKey,
     required this.scrollController,
     required this.isDownButtonShown,
     required this.scrollToBottom,
     required this.footerTextFieldFocusNode,
   });
 
+  final ValueKey listKey;
   final ScrollController scrollController;
   final bool isDownButtonShown;
   final void Function() scrollToBottom;
@@ -29,6 +31,7 @@ class MessagesPanelWidget extends StatelessWidget {
               return Consumer<Chat>(
                 builder: (context, chat, child) {
                   return ListView.builder(
+                    key: listKey,
                     padding: EdgeInsetsGeometry.only(
                       left: 5,
                       right: 5,

@@ -1,11 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/overlays/message_actions_menu_widget.dart';
-import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
+import 'package:zchat/views/widgets/buttons/flat_tap_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
@@ -26,16 +25,16 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final ScrollController _scrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
 
-  bool _isScrolling = false;
-
+  ValueKey listKey = ValueKey(DateTime.now());
   void _scrollToBottom() async {
-    if (_isScrolling) return;
-    _isScrolling = true;
-    while (_scrollController.offset != 0.0) {
-      _scrollController.jumpTo(0.0);
-      await SchedulerBinding.instance.endOfFrame;
-    }
-    _isScrolling = false;
+    setState(() {
+      listKey = ValueKey(DateTime.now());
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      setState(() {
+        isDownButtonShown = false;
+      });
+    });
   }
 
   bool isDownButtonShown = false;
@@ -119,8 +118,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            RippleEffectButtonWidget(
-                              overlayBorderRadius: BorderRadius.circular(50),
+                            FlatTapButtonWidget(
                               padding: EdgeInsetsGeometry.all(10),
                               onTap: () {
                                     Navigator.pop(context);
@@ -146,6 +144,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                           children: [
                             Expanded(
                               child: MessagesPanelWidget(
+                                listKey: listKey,
                                 scrollController: _scrollController,
                                 isDownButtonShown: isDownButtonShown,
                                 scrollToBottom: _scrollToBottom,
