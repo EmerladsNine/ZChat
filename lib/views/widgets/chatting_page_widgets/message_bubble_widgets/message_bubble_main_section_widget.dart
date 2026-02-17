@@ -1,4 +1,3 @@
-import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/material.dart';
 import 'package:zchat/messages_system/enums/emoji_message_types.dart';
 import 'package:zchat/views/utils/text_utils.dart';
@@ -80,14 +79,6 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
 
   double resolveMessageFontSize(BuildContext context) {
     final double baseEmojiSize = AppTheme.emojiBubbleSizeOf(context);
-
-    final String trimmed = text.replaceAll(RegExp(r'\s'), '');
-
-    final List<RegExpMatch> matches = emojiRegex().allMatches(trimmed).toList();
-
-    if (matches.isEmpty || trimmed.replaceAll(emojiRegex(), '').isNotEmpty) {
-      return 17;
-    }
 
     return switch (emojiMessageType) {
       EmojiMessageType.notEmoji => 17,
