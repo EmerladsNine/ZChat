@@ -11,6 +11,7 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/email_auth_page.dart';
 import 'package:zchat/views/pages/authentication/name_page.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/sliding_animation_page_route.dart';
 import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
 
 const String internetFailureMessage =
@@ -80,10 +81,8 @@ class _SignInPageState extends State<SignInPage> {
                   isLoading = false;
                 });
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return NamePage(googleToken: googleToken);
-                    },
+                  SlidingAnimationPageRoute(
+                    page: NamePage(googleToken: googleToken),
                   ),
                 );
               });
@@ -172,12 +171,8 @@ class _SignInPageState extends State<SignInPage> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return EmailAuthPage(
-                                            isSignIn: _signIn,
-                                          );
-                                        },
+                                      SlidingAnimationPageRoute(
+                                        page: EmailAuthPage(isSignIn: _signIn),
                                       ),
                                     );
                                   },

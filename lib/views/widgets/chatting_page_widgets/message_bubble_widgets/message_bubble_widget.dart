@@ -220,9 +220,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                             replyData: widget.replyData!,
                           ),
 
-                        Builder(
-                          builder: (context) {
-                            return FlatTapButtonWidget(
+                            FlatTapButtonWidget(
                               disableSet: AppNotifiers.disableButtons,
                               appStateNotifier: AppNotifiers.isNavigating,
                               onTap: () {
@@ -252,9 +250,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                                 messageStatus: widget.messageStatus,
                                 senderName: widget.senderName,
                               ),
-                            );
-                          },
-                        ),
+                            )
                       ],
                     ),
                   ),
