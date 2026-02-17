@@ -177,28 +177,28 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                       !widget.isEmojiBubble ||
                       (widget.isEmojiBubble && widget.replyData != null),
                 ),
-                child: IntrinsicWidth(
-                  child: Container(
-                    constraints: BoxConstraints(
-                      minWidth: 50,
-                      maxWidth: widget.maxBubbleWidth,
-                    ),
-                    padding: EdgeInsets.only(
-                      top: 5,
-                      bottom: 3,
-                      right: received
-                          ? 5
-                          : widget.isEmojiBubble && widget.replyData == null
-                          ? AppConstants.messageTailSize
-                          : 7 + AppConstants.messageTailSize,
-                      left: received
-                          ? widget.isEmojiBubble && widget.replyData == null
-                                ? 0
-                                : 7 + AppConstants.messageTailSize
-                          : widget.isEmojiBubble && widget.replyData == null
-                          ? 0
-                          : 5,
-                    ),
+                child: Container(
+                  constraints: BoxConstraints(
+                    minWidth: 50,
+                    maxWidth: widget.maxBubbleWidth,
+                  ),
+                  padding: EdgeInsets.only(
+                    top: 5,
+                    bottom: 3,
+                    right: received
+                        ? 5
+                        : widget.isEmojiBubble && widget.replyData == null
+                        ? AppConstants.messageTailSize
+                        : 7 + AppConstants.messageTailSize,
+                    left: received
+                        ? widget.isEmojiBubble && widget.replyData == null
+                              ? 0
+                              : 7 + AppConstants.messageTailSize
+                        : widget.isEmojiBubble && widget.replyData == null
+                        ? 0
+                        : 5,
+                  ),
+                  child: IntrinsicWidth(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: widget.isEmojiBubble && widget.replyData == null
@@ -223,38 +223,38 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                             replyData: widget.replyData!,
                           ),
 
-                            FlatTapButtonWidget(
-                              disableSet: AppNotifiers.disableButtons,
-                              appStateNotifier: AppNotifiers.isNavigating,
-                              onTap: () {
-                                RenderBox box =
-                                    context.findRenderObject() as RenderBox;
-                                Offset globalTopLeft = box.localToGlobal(
-                                  Offset.zero,
+                        FlatTapButtonWidget(
+                          disableSet: AppNotifiers.disableButtons,
+                          appStateNotifier: AppNotifiers.isNavigating,
+                          onTap: () {
+                            RenderBox box =
+                                context.findRenderObject() as RenderBox;
+                            Offset globalTopLeft = box.localToGlobal(
+                              Offset.zero,
+                            );
+
+                            MessageActionsMenuWidget.instance.setReceived(
+                              received,
+                            );
+
+                            MessageActionsMenuWidget.instance
+                                .insertOverlayMenu(
+                                  globalTopLeft,
+                                  box.size,
+                                  context,
                                 );
+                          },
 
-                                MessageActionsMenuWidget.instance.setReceived(
-                                  received,
-                                );
-
-                                MessageActionsMenuWidget.instance
-                                    .insertOverlayMenu(
-                                      globalTopLeft,
-                                      box.size,
-                                      context,
-                                    );
-                              },
-
-                              child: MessageBubbleMainSectionWidget(
-                                text: widget.text,
-                                time: widget.time,
-                                isEmojiBubble: widget.isEmojiBubble,
-                                emojiMessageType: widget.emojiMessageType,
-                                isReplyBubble: widget.replyData != null,
-                                messageStatus: widget.messageStatus,
-                                senderName: widget.senderName,
-                              ),
-                            )
+                          child: MessageBubbleMainSectionWidget(
+                            text: widget.text,
+                            time: widget.time,
+                            isEmojiBubble: widget.isEmojiBubble,
+                            emojiMessageType: widget.emojiMessageType,
+                            isReplyBubble: widget.replyData != null,
+                            messageStatus: widget.messageStatus,
+                            senderName: widget.senderName,
+                          ),
+                        ),
                       ],
                     ),
                   ),

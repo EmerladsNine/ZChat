@@ -35,9 +35,7 @@ class MessageInfoWidget extends StatelessWidget {
           ? received
                 ? MainAxisAlignment.start
                 : MainAxisAlignment.end
-          : received
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.end,
+          :  MainAxisAlignment.end,
       children: [
         Container(
           padding: hasBackground

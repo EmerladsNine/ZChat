@@ -9,6 +9,11 @@ import '../../../themes_system/app_theme.dart';
 import '../../data/app_notifiers.dart';
 import '../buttons/ripple_effect_button_widget.dart';
 
+final RegExp _visibleTextRegExp = RegExp(
+    r'[^\s\p{M}\p{Z}\p{C}\u200B-\u200D\uFEFF]',
+    unicode: true
+);
+
 class SendButtonWidget extends StatelessWidget {
   const SendButtonWidget({
     super.key,
@@ -21,12 +26,8 @@ class SendButtonWidget extends StatelessWidget {
 
   //TODO Ensure messages contain visible characters at send time, not only when toggling the send button, so this can’t be bypassed via an API.
   bool hasVisibleText(String input) {
-    String cleaned = input
-        .replaceAll(RegExp(r'[\u200B-\u200D\uFEFF]'), '')
-        .replaceAll(RegExp(r'\s+'), '')
-        .trim();
-
-    return RegExp(r'[^\p{M}\p{Z}\p{C}]', unicode: true).hasMatch(cleaned);
+    if (input.isEmpty) return false;
+    return _visibleTextRegExp.hasMatch(input);
   }
 
   @override
