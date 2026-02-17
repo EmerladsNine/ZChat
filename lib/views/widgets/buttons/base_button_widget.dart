@@ -149,8 +149,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
       onTap: () {
         tap(context);
       },
-      onPanDown: (DragDownDetails dragDownDetails) =>
-          widget.onPanDown?.call(dragDownDetails),
+      onPanDown: widget.onPanDown,
       child: Stack(
         children: [
           Container(
