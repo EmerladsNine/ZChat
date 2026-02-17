@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:zchat/messages_system/enums/emoji_message_types.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_bubble_widget.dart';
@@ -7,7 +8,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets
 class Message {
   Message({
     required this.text,
-    this.isEmoji = false,
+    this.emojiMessageType = EmojiMessageType.notEmoji,
     this.isChildMessage = false,
     this.timestamp = 0,
     this.senderName,
@@ -20,7 +21,7 @@ class Message {
   String? senderName;
   int? senderId;
   bool isChildMessage;
-  bool isEmoji;
+  EmojiMessageType emojiMessageType;
   MessageReplyData? replyData;
 
   MessageBubbleWidget getMessageBubble(
@@ -41,7 +42,8 @@ class Message {
       time: time,
       senderName: senderName,
       maxBubbleWidth: maxBubbleWidth,
-      isEmojiBubble: isEmoji,
+      isEmojiBubble: emojiMessageType == EmojiMessageType.oneEmoji,
+      emojiMessageType: emojiMessageType,
       isChildBubble: isChildMessage,
       messageStatus: MessageStatus.delivered,
       // Placeholder

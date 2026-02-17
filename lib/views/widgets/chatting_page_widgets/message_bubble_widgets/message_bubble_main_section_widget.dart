@@ -1,5 +1,6 @@
 import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/material.dart';
+import 'package:zchat/messages_system/enums/emoji_message_types.dart';
 import 'package:zchat/views/utils/text_utils.dart';
 
 import '../../../../messages_system/enums/message_status.dart';
@@ -16,6 +17,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
     required this.text,
     required this.time,
     required this.isEmojiBubble,
+    required this.emojiMessageType,
     required this.messageStatus,
     required this.isReplyBubble,
   });
@@ -24,6 +26,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
   final String text;
   final String time;
   final bool isEmojiBubble;
+  final EmojiMessageType emojiMessageType;
   final bool isReplyBubble;
   final MessageStatus messageStatus;
 
@@ -57,7 +60,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: isEmojiBubble
                     ? AppTheme.emojiBubbleSizeOf(context)
-                    : resolveMessageFontSize(context, text),
+                    : resolveMessageFontSize(context),
                 height: 1,
                 color: colors.primaryColor,
               ),
@@ -75,7 +78,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
     );
   }
 
-  double resolveMessageFontSize(BuildContext context, String text) {
+  double resolveMessageFontSize(BuildContext context) {
     final double baseEmojiSize = AppTheme.emojiBubbleSizeOf(context);
 
     final String trimmed = text.replaceAll(RegExp(r'\s'), '');
@@ -86,13 +89,11 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
       return 17;
     }
 
-    switch (matches.length) {
-      case 2:
-        return baseEmojiSize * 0.7;
-      case 3:
-        return baseEmojiSize * 0.6;
-      default:
-        return 17;
-    }
+    return switch (emojiMessageType) {
+      EmojiMessageType.notEmoji => 17,
+      EmojiMessageType.oneEmoji => baseEmojiSize,
+      EmojiMessageType.twoEmoji => baseEmojiSize * 0.7,
+      EmojiMessageType.threeEmoji => baseEmojiSize * 0.6,
+    };
   }
 }

@@ -30,6 +30,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zchat/messages_system/enums/emoji_message_types.dart';
 import 'package:zchat/themes_system/enums/message_bubble_color.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
@@ -52,6 +53,7 @@ class MessageBubbleWidget extends StatefulWidget {
   final String text;
   final String time;
   final bool isEmojiBubble;
+  final EmojiMessageType emojiMessageType;
   final bool isChildBubble;
   final MessageReplyData? replyData;
   final double maxBubbleWidth;
@@ -64,6 +66,7 @@ class MessageBubbleWidget extends StatefulWidget {
     this.senderName,
     required this.time,
     required this.isEmojiBubble,
+    required this.emojiMessageType,
     required this.isChildBubble,
     this.replyData,
     required this.maxBubbleWidth,
@@ -246,6 +249,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                                 text: widget.text,
                                 time: widget.time,
                                 isEmojiBubble: widget.isEmojiBubble,
+                                emojiMessageType: widget.emojiMessageType,
                                 isReplyBubble: widget.replyData != null,
                                 messageStatus: widget.messageStatus,
                                 senderName: widget.senderName,
