@@ -32,11 +32,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     if (_isScrolling) return;
     _isScrolling = true;
     while (_scrollController.offset != 0.0) {
-      await _scrollController.animateTo(
-        0.0,
-        duration: Duration(milliseconds: 200),
-        curve: Curves.linear,
-      );
+      _scrollController.jumpTo(0.0);
       await SchedulerBinding.instance.endOfFrame;
     }
     _isScrolling = false;
