@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zchat/authentication/auth_event.dart';
 import 'package:zchat/authentication/google_auth_service.dart';
 import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/messages_system/internet/response_code.dart';
@@ -24,6 +25,10 @@ class _NamePageState extends State<NamePage> {
   FocusNode usernameFocusNode = FocusNode();
 
   void _signUp() {
+    if(usernameErrorActive){
+      usernameFocusNode.requestFocus();
+      return;
+    }
     final msgService = context.read<MessagingService>();
     bool res = GoogleAuthService.signUp(
       msgService,
@@ -44,6 +49,53 @@ class _NamePageState extends State<NamePage> {
     });
   }
 
+  void onAuthResponse(BuildContext context, AuthEvent? value) {
+    if (value == null) return;
+    if (value.code == ResponseCode.googleAuthInvalidToken) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pop(context);
+      });
+    } else if (value.code == ResponseCode.googleSignUpUsernameExistError ||
+        value.code == ResponseCode.googleSignUpInvalidUsernameLengthError) {
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        AppNotifiers.authResponseCode.value = null;
+        usernameFocusNode.requestFocus();
+        setState(() {
+          usernameError = value.msg;
+          usernameErroredValue = usernameController.text;
+          usernameErrorActive = true;
+          isLoading = false;
+        });
+      });
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        AppNotifiers.authResponseCode.value = null;
+        setState(() {
+          isLoading = false;
+        });
+        showDialog(
+          context: context,
+          builder: (context) {
+            return ZDialog(content: value.msg!);
+          },
+        );
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    usernameController.addListener((){
+      setState(() {
+        usernameErrorActive = usernameErroredValue == usernameController.text;
+      });
+    });
+    super.initState();
+  }
+  String? usernameErroredValue;
+  String? usernameError;
+  bool usernameErrorActive = false;
+
   bool _navLocked = false;
   bool isLoading = false;
   @override
@@ -63,24 +115,7 @@ class _NamePageState extends State<NamePage> {
         return ValueListenableBuilder(
           valueListenable: AppNotifiers.authResponseCode,
           builder: (context, value, child) {
-            if (value?.code == ResponseCode.googleAuthInvalidToken) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                Navigator.pop(context);
-              });
-            } else if (value != null) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                AppNotifiers.authResponseCode.value = null;
-                setState(() {
-                  isLoading = false;
-                });
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ZDialog(content: value.msg!);
-                  },
-                );
-              });
-            }
+            onAuthResponse(context, value);
             return Scaffold(
               appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
               backgroundColor: colors.primaryBackgroundColor,
@@ -115,6 +150,7 @@ class _NamePageState extends State<NamePage> {
                                         AuthTextField(
                                           controller: usernameController,
                                           label: "Username",
+                                          error: usernameErrorActive ? usernameError : null,
                                           focusNode: usernameFocusNode,
                                           onSubmitted: (_) {
                                             _signUp();

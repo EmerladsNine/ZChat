@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zchat/authentication/auth_event.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/response_code.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/sign_in_page.dart';
@@ -34,13 +36,96 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   @override
   void initState() {
     _isSignIn = widget.isSignIn;
+    passwordController.addListener((){
+      setState(() {
+        passwordErrorActive = passwordErroredValue == passwordController.text;
+      });
+    });
+    emailController.addListener((){
+      setState(() {
+        emailErrorActive = emailErroredValue == emailController.text;
+      });
+    });
+    usernameController.addListener((){
+      setState(() {
+        usernameErrorActive = usernameErroredValue == usernameController.text;
+      });
+    });
     super.initState();
   }
 
   bool _navLocked = false;
   bool isLoading = false;
 
+  void onAuthResponse(BuildContext context, AuthEvent? value)
+  {
+    if(value == null) return;
+    if(value.code == ResponseCode.emailSignInPasswordIncorrectError || value.code == ResponseCode.emailAccountInvalidPasswordLengthError)
+    {
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        AppNotifiers.authResponseCode.value = null;
+        passwordFocusNode.requestFocus();
+        setState(() {
+          passwordError = value.msg;
+          passwordErroredValue = passwordController.text;
+          passwordErrorActive = true;
+          isLoading = false;
+        });
+      });
+    }
+    else if(value.code == ResponseCode.emailSignInEmailNotExistError || value.code == ResponseCode.emailAccountEmailExistError || value.code == ResponseCode.emailAccountInvalidEmailLengthError)
+    {
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        AppNotifiers.authResponseCode.value = null;
+        emailFocusNode.requestFocus();
+        setState(() {
+          emailError = value.msg;
+          emailErroredValue = emailController.text;
+          emailErrorActive = true;
+          isLoading = false;
+        });
+      });
+    }
+    else if(value.code == ResponseCode.emailAccountInvalidUsernameLengthError || value.code == ResponseCode.emailAccountUsernameExistError)
+    {
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        AppNotifiers.authResponseCode.value = null;
+        usernameFocusNode.requestFocus();
+        setState(() {
+          usernameError = value.msg;
+          usernameErroredValue = usernameController.text;
+          usernameErrorActive = true;
+          isLoading = false;
+        });
+      });
+    }
+    else {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        AppNotifiers.authResponseCode.value = null;
+        showDialog(
+          context: context,
+          builder: (context) {
+            return ZDialog(content: value.msg!);
+          },
+        );
+      });
+    }
+  }
+
   void signUp() {
+    if(passwordErrorActive)
+    {
+      passwordFocusNode.requestFocus();
+      return;
+    }
+    if(emailErrorActive){
+      emailFocusNode.requestFocus();
+      return;
+    }
+    if(usernameErrorActive){
+      usernameFocusNode.requestFocus();
+      return;
+    }
     final msgService = context.read<MessagingService>();
     bool res = msgService.sendProtocolUnit(MessageType.emailSignUp, [
       ...intToBigEndian(emailController.text.length, 1),
@@ -65,6 +150,16 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   }
 
   void signIn() {
+    if(passwordErrorActive)
+    {
+      passwordFocusNode.requestFocus();
+      return;
+    }
+    if(emailErrorActive){
+      emailFocusNode.requestFocus();
+      return;
+    }
+
     final msgService = context.read<MessagingService>();
     bool res = msgService.sendProtocolUnit(MessageType.emailSignIn, [
       ...intToBigEndian(emailController.text.length, 1),
@@ -86,6 +181,18 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     });
   }
 
+  String? passwordErroredValue;
+  String? passwordError;
+  bool passwordErrorActive = false;
+
+  String? emailErroredValue;
+  String? emailError;
+  bool emailErrorActive = false;
+
+  String? usernameErroredValue;
+  String? usernameError;
+  bool usernameErrorActive = false;
+
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -103,20 +210,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
         return ValueListenableBuilder(
           valueListenable: AppNotifiers.authResponseCode,
           builder: (context, value, child) {
-            if (value != null) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                AppNotifiers.authResponseCode.value = null;
-                setState(() {
-                  isLoading = false;
-                });
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ZDialog(content: value.msg!);
-                  },
-                );
-              });
-            }
+            onAuthResponse(context, value);
             return Scaffold(
               appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
               backgroundColor: colors.primaryBackgroundColor,
@@ -166,6 +260,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                                 controller: usernameController,
                                                 focusNode: usernameFocusNode,
                                                 nextFocusNode: emailFocusNode,
+                                                error: usernameErrorActive ? usernameError : null,
                                                 label: "Username",
                                               ),
                                             AuthTextField(
@@ -173,12 +268,14 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                               focusNode: emailFocusNode,
                                               nextFocusNode: passwordFocusNode,
                                               label: "Email",
+                                              error: emailErrorActive ? emailError : null,
                                               hint: "example@example.com",
                                             ),
                                             PasswordField(
                                               passwordController: passwordController,
                                               focusNode: passwordFocusNode,
                                               nextFocusNode: confirmPasswordFocusNode,
+                                              error: passwordErrorActive ? passwordError : null,
                                               onSubmitted: _isSignIn ? (_) {
                                                 _isSignIn ? signIn() : signUp();
                                               } : null,

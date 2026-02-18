@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
 class AuthButton extends StatelessWidget {
@@ -12,6 +13,8 @@ class AuthButton extends StatelessWidget {
     final colors = AppTheme.themeColorsOf(context);
 
     return RippleEffectButtonWidget(
+      appStateNotifier: AppNotifiers.isNavigating,
+      disableSet: AppNotifiers.disableButtons,
       overlayBorderRadius: BorderRadius.circular(
         10,
       ),
