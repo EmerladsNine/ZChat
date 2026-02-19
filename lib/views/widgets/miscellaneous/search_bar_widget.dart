@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 
 import '../../controllers/custom_text_controller.dart';
@@ -26,13 +26,18 @@ class SearchBarWidget extends StatefulWidget {
 class SearchBarWidgetState extends State<SearchBarWidget> {
   late FocusNode focusNode;
   late CustomTextController controller;
-
+  bool showHint = true;
   @override
   void initState() {
     super.initState();
     focusNode = FocusNode();
     controller = CustomTextController();
     controller.addListener(onTextChanged);
+    controller.addListener((){
+      setState(() {
+        showHint = controller.text.isEmpty;
+      });
+    });
     KeyboardController.addStateListener((isFullyOpen) {
       if (!isFullyOpen && focusNode.hasFocus) {
         focusNode.unfocus();
@@ -61,36 +66,39 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
         color: colors.cardsColor,
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            'assets/icons/search.svg',
-            colorFilter: ColorFilter.mode(colors.hintColor, BlendMode.srcIn),
-            width: 18,
-            height: 18,
-          ),
-          const SizedBox(width: 8),
+          Icon(CupertinoIcons.search,color: colors.hintColor,size: 23,),
+          const SizedBox(width: 4),
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: widget.disableSet,
               builder: (context, value, child) {
-                return TextField(
-                  controller: controller,
-                  enabled: !value,
-                  textDirection: TextUtils.getTextDirection(controller.text),
-                  textCapitalization: TextCapitalization.sentences,
-                  strutStyle: const StrutStyle(fontSize: 20, height: 1),
-                  focusNode: focusNode,
-                  onTapOutside: (event) {
-                    focusNode.unfocus();
-                  },
-                  style: TextStyle(color: colors.primaryColor),
-
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: widget.hintText,
-                    hintStyle: AppTextStyles.hintTextStyle(colors),
-                    border: InputBorder.none,
-                  ),
+                return Stack(
+                  children: [
+                    TextField(
+                      controller: controller,
+                      enabled: !value,
+                      textDirection: TextUtils.getTextDirection(controller.text),
+                      textCapitalization: TextCapitalization.sentences,
+                      strutStyle: const StrutStyle(fontSize: 20, height: 1),
+                      focusNode: focusNode,
+                      onTapOutside: (event) {
+                        focusNode.unfocus();
+                      },
+                      style: TextStyle(color: colors.primaryColor),
+                      decoration: InputDecoration(
+                        hintText: "", //idk actually this changes where the text position is.
+                        border: InputBorder.none,
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(showHint ? widget.hintText : "",style: AppTextStyles.hintTextStyle(colors),)
+                      ],
+                    )
+                  ],
                 );
               },
             ),

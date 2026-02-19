@@ -3,10 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
+import 'package:zchat/views/pages/add_chat_page.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/sliding_animation_page_route.dart';
 
 import '../overlays/profile_picture_overlay.dart';
 
@@ -109,6 +111,9 @@ class ChatsPage extends StatelessWidget {
                         overlayBorderRadius: BorderRadius.circular(8),
                         disableSet: AppNotifiers.disableButtons,
                         appStateNotifier: AppNotifiers.isNavigating,
+                        onTap: () {
+                          Navigator.push(context, SlidingAnimationPageRoute(page: AddChatPage()));
+                        },
                         child: SvgPicture.asset(
                           'assets/icons/add_file.svg',
                           colorFilter: ColorFilter.mode(

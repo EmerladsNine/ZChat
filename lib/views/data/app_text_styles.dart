@@ -17,7 +17,7 @@ abstract final class AppTextStyles {
       );
 
   static TextStyle hintTextStyle(ThemeColorScheme colors) =>
-      TextStyle(color: colors.hintColor, fontFamily: 'Inter');
+      TextStyle(color: colors.hintColor,fontSize: AppConstants.chatCardNameFontSize, fontFamily: 'Inter',fontStyle: FontStyle.italic);
 
   static TextStyle settingsProfileNameTextStyle(ThemeColorScheme colors) =>
       TextStyle(
