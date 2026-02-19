@@ -92,11 +92,13 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
                         border: InputBorder.none,
                       ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(showHint ? widget.hintText : "",style: AppTextStyles.hintTextStyle(colors),)
-                      ],
+                    IgnorePointer(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(showHint ? widget.hintText : "",style: AppTextStyles.hintTextStyle(colors),)
+                        ],
+                      ),
                     )
                   ],
                 );
