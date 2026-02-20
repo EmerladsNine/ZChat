@@ -17,7 +17,6 @@ class EmojiPanelButtonWidget extends StatelessWidget {
       message: 'Emoji Panel',
       child: RippleEffectButtonWidget(
         disableSet: AppNotifiers.disableButtons,
-        animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: () {

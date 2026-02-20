@@ -27,7 +27,6 @@ class ChattingPageAppBarWidget extends StatelessWidget {
         padding: EdgeInsetsGeometry.only(left: 17),
         overlayBorderRadius: BorderRadius.circular(3),
         disableSet: AppNotifiers.disableButtons,
-        animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();

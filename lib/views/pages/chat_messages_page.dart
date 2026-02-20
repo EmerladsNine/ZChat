@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/overlays/message_actions_menu_widget.dart';
-import 'package:zchat/views/widgets/buttons/flat_tap_button_widget.dart';
+import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
@@ -30,7 +30,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     setState(() {
       listKey = ValueKey(DateTime.now());
     });
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         isDownButtonShown = false;
       });
@@ -118,61 +118,79 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            FlatTapButtonWidget(
+                            RippleEffectButtonWidget(
                               padding: EdgeInsetsGeometry.all(10),
+                              disableSet: AppNotifiers.disableButtons,
+                              appStateNotifier: AppNotifiers.isNavigating,
+                              overlayBorderRadius: BorderRadius.circular(50),
                               onTap: () {
-                                    Navigator.pop(context);
+                                Navigator.pop(context);
                               },
-                              child: Icon(Icons.arrow_back,color: colors.primaryColor,),
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: colors.primaryColor,
+                              ),
                             ),
                             Expanded(child: ChattingPageAppBarWidget()),
+                            RippleEffectButtonWidget(
+                              padding: EdgeInsetsGeometry.all(5),
+                              disableSet: AppNotifiers.disableButtons,
+                              appStateNotifier: AppNotifiers.isNavigating,
+                              overlayBorderRadius: BorderRadius.circular(50),
+                              child: Icon(
+                                Icons.more_vert_outlined,
+                                color: colors.primaryColor,
+                              ),
+                            ),
+                            SizedBox(width: 4,)
                           ],
                         ),
                       ),
                     ),
                   ),
-                   body: Container(
-                        decoration: BoxDecoration(
-                          color: colors.primaryBackgroundColor,
-                          image:  DecorationImage(
-                            image: AssetImage('assets/images/bg5.jpeg'),
-                            fit: BoxFit.cover,
-                            colorFilter: ColorFilter.mode(colors.primaryBackgroundColor.withAlpha(200),BlendMode.overlay )
-                          )
-                        ),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: MessagesPanelWidget(
-                                listKey: listKey,
-                                scrollController: _scrollController,
-                                isDownButtonShown: isDownButtonShown,
-                                scrollToBottom: _scrollToBottom,
-                                footerTextFieldFocusNode: focusNode,
-                              ),
-                            ),
-
-                            ReplyBoxWidget(),
-
-                            Padding(
-                              padding: isEmojiPickerVisible
-                                  ? EdgeInsetsGeometry.zero
-                                  : EdgeInsetsGeometry.only(
-                                bottom: bottomPadding,
-                              ),
-                              child: ChatMessagesFooterWidget(
-                                scrollToBottom: _scrollToBottom,
-                                bottomSafeArea: bottomSafeArea,
-                                isInSafeArea:
-                                bottomPadding != 0 || isEmojiPickerVisible,
-                                focusNode: focusNode,
-                              ),
-                            ),
-
-                            EmojiPanelWidget(),
-                          ],
+                  body: Container(
+                    decoration: BoxDecoration(
+                      color: colors.primaryBackgroundColor,
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/bg5.jpeg'),
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(
+                          colors.primaryBackgroundColor.withAlpha(200),
+                          BlendMode.overlay,
                         ),
                       ),
+                    ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: MessagesPanelWidget(
+                            listKey: listKey,
+                            scrollController: _scrollController,
+                            isDownButtonShown: isDownButtonShown,
+                            scrollToBottom: _scrollToBottom,
+                            footerTextFieldFocusNode: focusNode,
+                          ),
+                        ),
+
+                        ReplyBoxWidget(),
+
+                        Padding(
+                          padding: isEmojiPickerVisible
+                              ? EdgeInsetsGeometry.zero
+                              : EdgeInsetsGeometry.only(bottom: bottomPadding),
+                          child: ChatMessagesFooterWidget(
+                            scrollToBottom: _scrollToBottom,
+                            bottomSafeArea: bottomSafeArea,
+                            isInSafeArea:
+                                bottomPadding != 0 || isEmojiPickerVisible,
+                            focusNode: focusNode,
+                          ),
+                        ),
+
+                        EmojiPanelWidget(),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },

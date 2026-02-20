@@ -10,6 +10,9 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/email_auth_page.dart';
 import 'package:zchat/views/pages/authentication/name_page.dart';
+import 'package:zchat/views/pages/authentication/offline_mode_page.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/auth_footer.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/sign_in_page_button.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/sliding_animation_page_route.dart';
 import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
@@ -116,10 +119,11 @@ class _SignInPageState extends State<SignInPage> {
                       children: [
                         Column(
                           children: [
-                            Icon(Icons.bubble_chart_rounded, size: 50),
+                            Icon(Icons.bubble_chart_rounded,color: colors.primaryColor, size: 50),
                             Text(
                               "Register to ZChat",
                               style: TextStyle(
+                                color: colors.primaryColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w900,
                               ),
@@ -134,6 +138,8 @@ class _SignInPageState extends State<SignInPage> {
                               children: [
                                 if (Platform.isAndroid || Platform.isIOS)
                                   RippleEffectButtonWidget(
+                                    disableSet: AppNotifiers.disableButtons,
+                                    appStateNotifier: AppNotifiers.isNavigating,
                                     child: SvgPicture.asset(
                                       "assets/icons/google_web_signIn_svg/dark/web_dark_sq_ctn.svg",
                                       height: 51,
@@ -143,14 +149,17 @@ class _SignInPageState extends State<SignInPage> {
                                     },
                                   ),
 
-                                if (Platform.isIOS)
+                                if (Platform.isAndroid || Platform.isIOS)
                                   RippleEffectButtonWidget(
+                                    disableSet: AppNotifiers.disableButtons,
+                                    appStateNotifier: AppNotifiers.isNavigating,
+                                    overlayBorderRadius: BorderRadius.circular(10),
                                     child: Container(
                                       height: 54,
                                       width: 240,
                                       decoration: BoxDecoration(
-                                        color: colors.cardsColor,
-                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                           color: Color.fromARGB(
                                             0xff,
@@ -167,7 +176,7 @@ class _SignInPageState extends State<SignInPage> {
                                       ),
                                     ),
                                   ),
-                                RippleEffectButtonWidget(
+                                SignInPageButton(
                                   onTap: () {
                                     Navigator.push(
                                       context,
@@ -176,101 +185,33 @@ class _SignInPageState extends State<SignInPage> {
                                       ),
                                     );
                                   },
-                                  child: Container(
-                                    height: 54,
-                                    width: 240,
-                                    padding: EdgeInsetsGeometry.symmetric(
-                                      vertical: 13,
-                                      horizontal: 15,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                        color: Color.fromARGB(
-                                          0xff,
-                                          0x8E,
-                                          0x91,
-                                          0x8F,
-                                        ),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      spacing: 10,
-                                      children: [
-                                        Icon(Icons.email_rounded, size: 25),
-                                        Text(
-                                          _signIn
-                                              ? "Sign in with Email"
-                                              : "Sign up with Email",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 19,
-                                            color: Colors.grey.shade200,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  text: _signIn
+                                      ? "Sign in with Email"
+                                      : "Sign up with Email",
+                                  icon: Icon(Icons.email_rounded, size: 25),
+                                ),
+                                SignInPageButton(
+                                  icon: Icon(
+                                    Icons.signal_wifi_connected_no_internet_4,
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      _signIn
-                                          ? "Don't have an account ? "
-                                          : "Already have an account ? ",
-                                    ),
-                                    GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () {
-                                        setState(() {
-                                          _signIn = !_signIn;
-                                        });
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          _signIn ? "Sign up" : "Sign in",
-                                          style: TextStyle(
-                                            color: colors.brandPrimaryColor,
-                                          ),
-                                        ),
+                                  text: "Offline Mode",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      SlidingAnimationPageRoute(
+                                        page: OfflineModePage(),
                                       ),
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      "by creating or logging into an account you are agreeing with our",
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Terms and Conditions",
-                                          style: TextStyle(
-                                            color: colors.brandPrimaryColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(" and "),
-                                        Text(
-                                          "Privacy Statement",
-                                          style: TextStyle(
-                                            color: colors.brandPrimaryColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                AuthFooter(
+                                  isSignIn: _signIn,
+                                  onTap: () {
+                                    setState(() {
+                                      _signIn = !_signIn;
+                                    });
+                                  },
+                                )
                               ],
                             ),
                           ],

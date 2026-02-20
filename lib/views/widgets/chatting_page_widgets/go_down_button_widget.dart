@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
@@ -23,6 +24,8 @@ class GoDownButtonWidget extends StatelessWidget {
       child: CustomToolTip(
         message: 'Scroll To Bottom',
         child: RippleEffectButtonWidget(
+          disableSet: AppNotifiers.disableButtons,
+          appStateNotifier: AppNotifiers.isNavigating,
           animationDuration: Duration(milliseconds: 0),
           overlayBorderRadius: BorderRadius.circular(50),
           onTap: () {

@@ -8,6 +8,7 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/sign_in_page.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/auth_button.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/auth_footer.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/auth_text_field.dart';
 import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
 
@@ -163,33 +164,7 @@ class _NamePageState extends State<NamePage> {
                                       ],
                                     ),
                                   ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "by creating or logging into an account you are agreeing with our",
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Terms and Conditions",
-                                            style: TextStyle(
-                                              color: colors.brandPrimaryColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(" and "),
-                                          Text(
-                                            "Privacy Statement",
-                                            style: TextStyle(
-                                              color: colors.brandPrimaryColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                  AuthFooter()
                                 ],
                               ),
                             ],

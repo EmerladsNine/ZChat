@@ -42,7 +42,7 @@ class ProfilePictureOverlay extends BaseOverlayWidget {
             color: colors.defaultProfilePicColor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Icon(Icons.person, size: 300),
+          child: Icon(Icons.person,color: colors.primaryColor, size: 300),
         ),
       ),
     );

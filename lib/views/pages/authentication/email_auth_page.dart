@@ -10,6 +10,7 @@ import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/sign_in_page.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/auth_button.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/auth_footer.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/auth_text_field.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/email_page_widgets/password_field.dart';
 import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
@@ -193,6 +194,13 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   String? usernameError;
   bool usernameErrorActive = false;
 
+  void resetError()
+  {
+    passwordErroredValue = emailErroredValue = usernameErroredValue = null;
+    passwordError = emailError = usernameError = null;
+    passwordErrorActive = emailErrorActive = usernameErrorActive = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -238,6 +246,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                         ? "Sign in with Email"
                                         : "Sign up with Email",
                                     style: TextStyle(
+                                      color: colors.primaryColor,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w900,
                                     ),
@@ -300,60 +309,15 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                       ],
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        _isSignIn
-                                            ? "Don't have an account ? "
-                                            : "Already have an account ? ",
-                                      ),
-                                      GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () {
-                                          FocusScope.of(context).unfocus();
-                                          setState(() {
-                                            _isSignIn = !_isSignIn;
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Text(
-                                            _isSignIn ? "Sign up" : "Sign in",
-                                            style: TextStyle(
-                                              color: colors.brandPrimaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "by creating or logging into an account you are agreeing with our",
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Terms and Conditions",
-                                            style: TextStyle(
-                                              color: colors.brandPrimaryColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(" and "),
-                                          Text(
-                                            "Privacy Statement",
-                                            style: TextStyle(
-                                              color: colors.brandPrimaryColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                  AuthFooter(
+                                    isSignIn: _isSignIn,
+                                    onTap: () {
+                                      resetError();
+                                      setState(() {
+                                        _isSignIn = !_isSignIn;
+                                      });
+                                    },
+                                  )
                                 ],
                               ),
                             ],

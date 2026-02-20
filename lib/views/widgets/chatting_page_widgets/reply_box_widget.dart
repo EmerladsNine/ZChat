@@ -85,6 +85,8 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
                 overlayBorderRadius: BorderRadius.circular(20),
                 animationDuration: Duration(milliseconds: 20),
                 padding: EdgeInsetsGeometry.all(5),
+                disableSet: AppNotifiers.disableButtons,
+                appStateNotifier: AppNotifiers.isNavigating,
                 onTap: () {
                   AppNotifiers.replyData.value = null;
                 },

@@ -32,6 +32,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
           onSubmitted: widget.onSubmitted ?? (_){
             widget.nextFocusNode?.requestFocus();
           },
+          style: TextStyle(color: colors.primaryColor),
           decoration: InputDecoration(
             errorText: widget.error,
             errorMaxLines: 2,
@@ -52,7 +53,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
                 color: colors.dividerColor,
               ),
             ),
-            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: colors.dividerColor)),
+            border: OutlineInputBorder(borderSide: BorderSide(color: colors.dividerColor)),
           ),
         ),
       ],

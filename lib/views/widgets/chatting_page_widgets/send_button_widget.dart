@@ -36,7 +36,6 @@ class SendButtonWidget extends StatelessWidget {
       message: !hasVisibleText(controller.text) ? 'Send Voice' : 'Send Message',
       child: RippleEffectButtonWidget(
         disableSet: AppNotifiers.disableButtons,
-        animationDuration: Duration(milliseconds: 50),
         appStateNotifier: AppNotifiers.isNavigating,
         overlayBorderRadius: BorderRadius.circular(15),
         onTap: !hasVisibleText(controller.text)
