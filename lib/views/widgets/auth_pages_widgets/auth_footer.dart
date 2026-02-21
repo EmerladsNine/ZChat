@@ -20,7 +20,7 @@ class AuthFooter extends StatelessWidget {
                 isSignIn!
                     ? "Don't have an account ? "
                     : "Already have an account ? ",
-                style: TextStyle(color: colors.primaryColor),
+                style: TextStyle(color: colors.authFooterColor),
               ),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -39,7 +39,7 @@ class AuthFooter extends StatelessWidget {
           children: [
             Text(
               "by creating or logging into an account you are agreeing with our",
-              style: TextStyle(color: colors.primaryColor, fontSize: 12),
+              style: TextStyle(color: colors.authFooterColor, fontSize: 12),
             ),
             Row(
               children: [
@@ -52,7 +52,7 @@ class AuthFooter extends StatelessWidget {
                 ),
                 Text(
                   " and ",
-                  style: TextStyle(color: colors.primaryColor),
+                  style: TextStyle(color: colors.authFooterColor),
                 ),
                 Text(
                   "Privacy Statement",

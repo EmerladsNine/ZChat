@@ -45,10 +45,10 @@ class ThemeController extends ChangeNotifier {
 
     _emojiBubbleSize =
         StorageManager.getDouble('emojiBubbleSize') ??
-        FontSizeLevel.medium.emojiBubbleSize;
+        FontSizeLevel.large.emojiBubbleSize;
 
     _fontScale =
-        StorageManager.getDouble('fontScale') ?? FontSizeLevel.medium.fontScale;
+        StorageManager.getDouble('fontScale') ?? FontSizeLevel.small.fontScale;
 
     final lightColors = loadMessageBubbleColors(false);
     _lightMessageBubblesSetData.setColors(lightColors[0], lightColors[1]);

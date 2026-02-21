@@ -35,6 +35,8 @@ class ThemeColorScheme {
 
   final Color errorMessageColor;
 
+  final Color authFooterColor;
+
   const ThemeColorScheme({
     required this.primaryBackgroundColor,
     required this.cardsColor,
@@ -58,6 +60,7 @@ class ThemeColorScheme {
     required this.defaultProfilePicColor,
     required this.navBarColor,
     required this.errorMessageColor,
+    required this.authFooterColor
   });
 
   /// Creates a copy of this color scheme with the given fields replaced with the new values.
@@ -86,6 +89,7 @@ class ThemeColorScheme {
     Color? defaultProfilePicColor,
     Color? navBarColor,
     Color? errorMessageColor,
+    Color? authFooterColor,
   }) {
     return ThemeColorScheme(
       primaryBackgroundColor:
@@ -117,6 +121,7 @@ class ThemeColorScheme {
           defaultProfilePicColor ?? this.defaultProfilePicColor,
       navBarColor: navBarColor ?? this.navBarColor,
       errorMessageColor: errorMessageColor ?? this.errorMessageColor,
+      authFooterColor: authFooterColor ?? this.authFooterColor,
     );
   }
 
@@ -145,7 +150,8 @@ class ThemeColorScheme {
           chatTextFieldColor == other.chatTextFieldColor &&
           defaultProfilePicColor == other.defaultProfilePicColor &&
           navBarColor == other.navBarColor &&
-          errorMessageColor == other.errorMessageColor;
+          errorMessageColor == other.errorMessageColor &&
+          authFooterColor == other.authFooterColor;
 
   @override
   int get hashCode => Object.hashAll([
@@ -171,5 +177,6 @@ class ThemeColorScheme {
     defaultProfilePicColor,
     navBarColor,
     errorMessageColor,
+    authFooterColor
   ]);
 }

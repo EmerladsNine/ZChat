@@ -25,6 +25,7 @@ abstract final class AppThemes {
     defaultProfilePicColor: Color(0xFF464748),
     navBarColor: Color(0xFF0F0F12),
     errorMessageColor: Colors.redAccent,
+    authFooterColor: Colors.white
   );
 
   static ThemeColorScheme lightThemeColors = ThemeColorScheme(
@@ -49,6 +50,7 @@ abstract final class AppThemes {
     chatTextFieldColor: Color(0xFFF2F2F2),
     defaultProfilePicColor: Color(0xFFE0E0E0),
     navBarColor: Color(0xFFF2F3F5),
-    errorMessageColor: Colors.redAccent
+    errorMessageColor: Colors.redAccent,
+    authFooterColor: Colors.black
   );
 }
