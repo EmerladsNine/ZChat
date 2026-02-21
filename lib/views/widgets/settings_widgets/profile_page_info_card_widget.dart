@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
 import '../miscellaneous/scaled_text_widget.dart';
 import '../../../themes_system/app_theme.dart';
@@ -81,16 +82,19 @@ class ProfilePageInfoCardWidget extends StatelessWidget {
             ? Container(
                 width: 45,
                 alignment: Alignment.center,
-                child: RippleEffectButtonWidget(
-                  disableSet: AppNotifiers.disableButtons,
-                  appStateNotifier: AppNotifiers.isNavigating,
-                  onTap: () {},
-                  child: Padding(
-                    padding: EdgeInsetsGeometry.symmetric(
-                      horizontal: 10,
-                      vertical: 10,
+                child: CustomToolTip(
+                  message: "Edit",
+                  child: RippleEffectButtonWidget(
+                    disableSet: AppNotifiers.disableButtons,
+                    appStateNotifier: AppNotifiers.isNavigating,
+                    onTap: () {},
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      child: Icon(Icons.edit, color: colors.iconDefaultColor),
                     ),
-                    child: Icon(Icons.edit, color: colors.iconDefaultColor),
                   ),
                 ),
               )

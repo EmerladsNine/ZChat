@@ -9,6 +9,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_w
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/reply_box_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
 import '../../themes_system/app_theme.dart';
 import '../widgets/chatting_page_widgets/chatting_page_app_bar_widget.dart';
@@ -118,28 +119,36 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            RippleEffectButtonWidget(
-                              padding: EdgeInsetsGeometry.all(10),
-                              disableSet: AppNotifiers.disableButtons,
-                              appStateNotifier: AppNotifiers.isNavigating,
-                              overlayBorderRadius: BorderRadius.circular(50),
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Icon(
-                                Icons.arrow_back,
-                                color: colors.primaryColor,
+                            CustomToolTip(
+                              message: "Go back",
+                              preferBelow: true,
+                              child: RippleEffectButtonWidget(
+                                padding: EdgeInsetsGeometry.all(10),
+                                disableSet: AppNotifiers.disableButtons,
+                                appStateNotifier: AppNotifiers.isNavigating,
+                                overlayBorderRadius: BorderRadius.circular(50),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: colors.primaryColor,
+                                ),
                               ),
                             ),
                             Expanded(child: ChattingPageAppBarWidget()),
-                            RippleEffectButtonWidget(
-                              padding: EdgeInsetsGeometry.all(5),
-                              disableSet: AppNotifiers.disableButtons,
-                              appStateNotifier: AppNotifiers.isNavigating,
-                              overlayBorderRadius: BorderRadius.circular(50),
-                              child: Icon(
-                                Icons.more_vert_outlined,
-                                color: colors.primaryColor,
+                            CustomToolTip(
+                              message: "Options",
+                              preferBelow: true,
+                              child: RippleEffectButtonWidget(
+                                padding: EdgeInsetsGeometry.all(5),
+                                disableSet: AppNotifiers.disableButtons,
+                                appStateNotifier: AppNotifiers.isNavigating,
+                                overlayBorderRadius: BorderRadius.circular(50),
+                                child: Icon(
+                                  Icons.more_vert_outlined,
+                                  color: colors.primaryColor,
+                                ),
                               ),
                             ),
                             SizedBox(width: 4,)

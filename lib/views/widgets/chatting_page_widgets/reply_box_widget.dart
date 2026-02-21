@@ -4,6 +4,7 @@ import 'package:zchat/views/utils/text_utils.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
+import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
 
 class ReplyBoxWidget extends StatefulWidget {
@@ -81,16 +82,19 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
                   ),
                 ),
               ),
-              RippleEffectButtonWidget(
-                overlayBorderRadius: BorderRadius.circular(20),
-                animationDuration: Duration(milliseconds: 20),
-                padding: EdgeInsetsGeometry.all(5),
-                disableSet: AppNotifiers.disableButtons,
-                appStateNotifier: AppNotifiers.isNavigating,
-                onTap: () {
-                  AppNotifiers.replyData.value = null;
-                },
-                child: Icon(Icons.close, color: colors.primaryColor),
+              CustomToolTip(
+                message: "Cancel",
+                child: RippleEffectButtonWidget(
+                  overlayBorderRadius: BorderRadius.circular(20),
+                  animationDuration: Duration(milliseconds: 20),
+                  padding: EdgeInsetsGeometry.all(5),
+                  disableSet: AppNotifiers.disableButtons,
+                  appStateNotifier: AppNotifiers.isNavigating,
+                  onTap: () {
+                    AppNotifiers.replyData.value = null;
+                  },
+                  child: Icon(Icons.close, color: colors.primaryColor),
+                ),
               ),
             ],
           ),
