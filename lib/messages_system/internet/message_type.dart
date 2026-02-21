@@ -8,7 +8,10 @@ enum MessageType {
   emailSignUp(id: 4),
   responseCode(id: 5),
   googleSignIn(id: 6),
-  googleSignUp(id: 7);
+  googleSignUp(id: 7),
+  searchWithUsername(id: 8),
+  searchWithId(id: 9),
+  searchResponseCode(id: 10);
 
   final int id;
   const MessageType({required this.id});

@@ -13,11 +13,13 @@ class SearchBarWidget extends StatefulWidget {
     this.hintText = 'Search',
     this.sideWidget,
     required this.disableSet,
+    this.controller
   });
 
   final ValueNotifier<bool> disableSet;
   final String hintText;
   final Widget? sideWidget;
+  final CustomTextController? controller;
 
   @override
   State<SearchBarWidget> createState() => SearchBarWidgetState();
@@ -31,7 +33,7 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
   void initState() {
     super.initState();
     focusNode = FocusNode();
-    controller = CustomTextController();
+    controller = widget.controller ?? CustomTextController();
     controller.addListener(onTextChanged);
     controller.addListener((){
       setState(() {

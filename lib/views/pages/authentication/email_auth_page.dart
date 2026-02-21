@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/authentication/auth_event.dart';
+import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/messaging_service.dart';
 import 'package:zchat/messages_system/internet/response_code.dart';
