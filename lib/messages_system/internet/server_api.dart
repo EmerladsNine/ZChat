@@ -29,14 +29,14 @@ int bigEndianToInt(List<int> buffer, int bytes) {
   return res;
 }
 
-class MessagingService {
+class ServerApi {
   late Socket socket;
   Timer? pingTimeout;
   bool waitingForPong = false;
 
   late ListenerService listener;
 
-  MessagingService() {
+  ServerApi() {
     listener = ListenerService(this);
   }
 

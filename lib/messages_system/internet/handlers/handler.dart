@@ -1,5 +1,5 @@
-import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 
 abstract class Handler {
-  bool handle(List<int> buffer, MessagingService service);
+  bool handle(List<int> buffer, ServerApi service);
 }

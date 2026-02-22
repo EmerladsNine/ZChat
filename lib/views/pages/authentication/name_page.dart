@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/authentication/google_auth_service.dart';
-import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/response_code.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
@@ -30,7 +30,7 @@ class _NamePageState extends State<NamePage> {
       usernameFocusNode.requestFocus();
       return;
     }
-    final msgService = context.read<MessagingService>();
+    final msgService = context.read<ServerApi>();
     bool res = GoogleAuthService.signUp(
       msgService,
       usernameController.text,

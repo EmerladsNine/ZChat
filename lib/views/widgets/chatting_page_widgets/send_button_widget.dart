@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
@@ -43,7 +43,7 @@ class SendButtonWidget extends StatelessWidget {
                 //Record a voice
               }
             : () {
-                final msgService = context.read<MessagingService>();
+                final msgService = context.read<ServerApi>();
                 msgService.sendMessage(controller.text, context.read<Chat>());
                 controller.text = "";
                 scrollToBottom();

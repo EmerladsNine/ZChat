@@ -1,6 +1,6 @@
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
-import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/response_code.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
@@ -22,7 +22,7 @@ class ResponseCodeHandler extends Handler {
     ResponseCode.googleSignUpGoogleIdExistError.id: "Your google account already used try signing in."
   };
   @override
-  bool handle(List<int> buffer, MessagingService service) {
+  bool handle(List<int> buffer, ServerApi service) {
     int responseCode = buffer[0];
     buffer.removeAt(0);
 

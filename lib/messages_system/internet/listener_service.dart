@@ -5,12 +5,12 @@ import 'package:zchat/messages_system/internet/handlers/pong_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/response_code_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/search_response_code_handler.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
-import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 
 class ListenerService {
   ListenerService(this.messagingService);
 
-  final MessagingService messagingService;
+  final ServerApi messagingService;
 
   Map<MessageType, Handler> handlers = {
     MessageType.ping: PingHandler(),

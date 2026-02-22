@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
-import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
@@ -9,7 +9,7 @@ import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 
 class NormalMessageHandler extends Handler {
   @override
-  bool handle(List<int> buffer, MessagingService service) {
+  bool handle(List<int> buffer, ServerApi service) {
     int timeStamp = bigEndianToInt(buffer, 8);
     int replySenderNameLength = bigEndianToInt(buffer, 4);
     final String replySenderName = utf8.decode(

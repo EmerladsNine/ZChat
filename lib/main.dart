@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:zchat/messages_system/internet/messaging_service.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/storage_management_system/storage_manager.dart';
@@ -39,8 +39,8 @@ void main() async {
   runApp(
     AppTheme(
       controller: ThemeController.instance,
-      child: Provider<MessagingService>(
-        create: (_) => MessagingService(),
+      child: Provider<ServerApi>(
+        create: (_) => ServerApi(),
         dispose: (context, service) {
           service.dispose();
         },
@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<MessagingService>().connectServer("Main Call");
+    context.read<ServerApi>().connectServer("Main Call");
     pageController = PageController(
       initialPage: AppNotifiers.selectedPageNotifier.value,
     );
