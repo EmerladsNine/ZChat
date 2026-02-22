@@ -26,7 +26,7 @@ class AddChatPage extends StatefulWidget {
 class _AddChatPageState extends State<AddChatPage> {
   CustomTextController searchController = CustomTextController();
 
-  void onTextChanged() {
+  void _sendSearch() {
     ServerApi msg = context.read<ServerApi>();
     if (searchController.text.isEmpty) {
       setState(() {
@@ -34,26 +34,32 @@ class _AddChatPageState extends State<AddChatPage> {
       });
       return;
     }
-    if (_searchState == SearchState.waiting) {
-      _needsSearch = true;
+    if (_requestInFlight) {
+      _pendingSearch = true;
       return;
     }
+    _requestInFlight = true;
+    _pendingSearch = false;
     setState(() {
       _searchState = SearchState.waiting;
     });
-    _needsSearch = false;
     if (searchController.text[0] == '#') {
       if (searchController.text.length < 2) {
         setState(() {
           _searchState = SearchState.noSearch;
         });
+        _requestInFlight = false;
+        return;
       }
       String idText = searchController.text.substring(1);
       int? id = int.tryParse(idText);
       if(id == null)
       {
+        setState(() {
           _searchState = SearchState.invalidId;
-          return;
+        });
+        _requestInFlight = false;
+        return;
       }
       final result = msg.sendProtocolUnit(MessageType.searchWithId, [
         ...intToBigEndian(id, 4),
@@ -77,17 +83,17 @@ class _AddChatPageState extends State<AddChatPage> {
   }
 
   void onResponseReceived(SearchEvent? value) {
-    if (_needsSearch) {
+    if (value == null) return;
+    if(!_requestInFlight) return;
+    _requestInFlight = false;
+    AppNotifiers.searchResponseCode.value = null;
+    if (_pendingSearch ) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _needsSearch = false;
-        _searchState = SearchState.noSearch;
-        onTextChanged();
+        _pendingSearch = false;
+        _sendSearch();
       });
       return;
     }
-    if (value == null) return;
-    AppNotifiers.searchResponseCode.value = null;
-    if(searchController.text.isEmpty) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (value.code == SearchResponseCode.notFound) {
         setState(() {
@@ -111,12 +117,13 @@ class _AddChatPageState extends State<AddChatPage> {
 
   @override
   void initState() {
-    searchController.addListener(onTextChanged);
+    searchController.addListener(_sendSearch);
     super.initState();
   }
 
   SearchState _searchState = SearchState.noSearch;
-  bool _needsSearch = false;
+  bool _requestInFlight = false;
+  bool _pendingSearch = false;
   String? name;
   int? id;
 
