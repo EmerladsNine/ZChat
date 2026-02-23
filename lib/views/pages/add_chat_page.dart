@@ -10,11 +10,12 @@ import 'package:zchat/messages_system/internet/search_response_code.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/controllers/custom_text_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
+import 'package:zchat/views/utils/math_utils.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/appbar_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
-enum SearchState { noSearch, waiting,invalidId, internetFailure, error, notFound, found }
+enum SearchState { noSearch, waiting,invalidId,invalidUsername, internetFailure, error, notFound, found }
 
 class AddChatPage extends StatefulWidget {
   const AddChatPage({super.key});
@@ -52,7 +53,7 @@ class _AddChatPageState extends State<AddChatPage> {
         return;
       }
       String idText = searchController.text.substring(1);
-      int? id = int.tryParse(idText);
+      int? id = MathUtils.tryParseUint32(idText);
       if(id == null)
       {
         setState(() {
@@ -71,6 +72,14 @@ class _AddChatPageState extends State<AddChatPage> {
       }
     } else {
       final searchText = utf8.encode(searchController.text);
+      if(searchText.length > 20)
+      {
+        setState(() {
+          _searchState = SearchState.invalidUsername;
+        });
+        _requestInFlight = false;
+        return;
+      }
       final result = msg.sendProtocolUnit(MessageType.searchWithUsername, [
         ...searchText,
       ]);
@@ -258,6 +267,22 @@ class _AddChatPageState extends State<AddChatPage> {
             ],
           ),
         ),
+      SearchState.invalidUsername => Expanded(
+        child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Invalid Username.",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: colors.textSecondaryColor,
+            ),
+          ),
+        ],
+        ),
+      ),
 
       };
   }

@@ -79,13 +79,24 @@ class MessageBubbleWidget extends StatefulWidget {
 }
 
 class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
+  double maxDrag = 50;
   double dragWidth = 0.0;
   double dragStart = 0.0;
   bool didVibrate = false;
 
+  double getDragWidth(double fingerDelta)
+  {
+    double dragMax = maxDrag;
+    double t = fingerDelta / dragMax;
+    t = t.clamp(0.0, 1.0);
+    num eased = 1 - pow(1 - t, 2.5);
+    return eased * dragMax;
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = AppTheme.controllerOf(context);
+    final colors = AppTheme.themeColorsOf(context);
     final List<MessageBubbleColor> messageBubbleColors =
         themeController.messageBubbleColors;
     final int alpha = (themeController.opacity * 255).round();
@@ -100,7 +111,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
         });
       },
       onHorizontalDragUpdate: (details) {
-        if (!didVibrate && -dragWidth * 4 >= widget.maxBubbleWidth) {
+        if (!didVibrate && -dragWidth >= maxDrag) {
           HapticFeedback.selectionClick();
           didVibrate = true;
         }
@@ -115,7 +126,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
       },
       onHorizontalDragEnd: (_) {
         setState(() {
-          if (-dragWidth * 4 >= widget.maxBubbleWidth) {
+          if (-dragWidth >= maxDrag) {
             if (!didVibrate) {
               HapticFeedback.selectionClick();
               didVibrate = true;
@@ -135,10 +146,10 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
         });
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 1),
         curve: Curves.easeOutCubic,
         transform: Matrix4.translationValues(
-          sqrt(-dragWidth) * (received ? 8 : 8),
+          getDragWidth(-dragWidth),
           0,
           0,
         ),
@@ -156,8 +167,23 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 5,
             children: [
+                  Container(
+                      width: -dragWidth >= maxDrag ? null : 0,
+                      decoration: BoxDecoration(
+                        color: colors.cardsColor,
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(color: colors.dividerColor)
+                      ),
+                      padding: EdgeInsetsGeometry.all(-dragWidth >= maxDrag ? 5 : 0),
+                      child: Icon(Icons.reply_rounded,color: colors.primaryColor,size: -dragWidth >= maxDrag ? 25 : 0,)),
+
               if (received)
-                PfpOfSenderWidget(isChildBubble: widget.isChildBubble),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PfpOfSenderWidget(isChildBubble: widget.isChildBubble),
+                  ],
+                ),
 
               CustomPaint(
                 painter: MessageBubblePainter(
