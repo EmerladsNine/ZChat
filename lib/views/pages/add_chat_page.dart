@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
@@ -71,8 +72,8 @@ class _AddChatPageState extends State<AddChatPage> {
         });
       }
     } else {
-      final searchText = utf8.encode(searchController.text);
-      if(searchText.length > 20)
+      final searchUTF8 = utf8.encode(searchController.text);
+      if(!AccountConstants.isValidUsername(searchUTF8))
       {
         setState(() {
           _searchState = SearchState.invalidUsername;
@@ -81,7 +82,7 @@ class _AddChatPageState extends State<AddChatPage> {
         return;
       }
       final result = msg.sendProtocolUnit(MessageType.searchWithUsername, [
-        ...searchText,
+        ...searchUTF8,
       ]);
       if (!result) {
         setState(() {

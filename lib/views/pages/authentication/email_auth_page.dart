@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
@@ -14,6 +15,20 @@ import 'package:zchat/views/widgets/auth_pages_widgets/auth_footer.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/auth_text_field.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/email_page_widgets/password_field.dart';
 import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
+
+class Error {
+  String? erroredValue;
+  String? errorMessage;
+  bool isErrorActive;
+  Error([this.errorMessage,this.erroredValue,this.isErrorActive = false]);
+}
+
+enum Inputs {
+    usernameInput,
+    emailInput,
+    passwordInput,
+    confirmPasswordInput
+}
 
 class EmailAuthPage extends StatefulWidget {
   const EmailAuthPage({super.key, required this.isSignIn});
@@ -33,23 +48,35 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   FocusNode usernameFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
   FocusNode confirmPasswordFocusNode = FocusNode();
+  Map<Inputs,Error> errors = {
+    Inputs.usernameInput : Error(),
+    Inputs.emailInput : Error(),
+    Inputs.passwordInput : Error(),
+    Inputs.confirmPasswordInput : Error(),
+  };
 
   @override
   void initState() {
     _isSignIn = widget.isSignIn;
     passwordController.addListener((){
       setState(() {
-        passwordErrorActive = passwordErroredValue == passwordController.text;
+        errors[Inputs.passwordInput]!.isErrorActive = errors[Inputs.passwordInput]!.erroredValue == passwordController.text;
+        errors[Inputs.confirmPasswordInput]!.isErrorActive = false;
+      });
+    });
+    confirmPasswordController.addListener((){
+      setState(() {
+        errors[Inputs.confirmPasswordInput]!.isErrorActive = false;
       });
     });
     emailController.addListener((){
       setState(() {
-        emailErrorActive = emailErroredValue == emailController.text;
+        errors[Inputs.emailInput]!.isErrorActive = errors[Inputs.emailInput]!.erroredValue == emailController.text;
       });
     });
     usernameController.addListener((){
       setState(() {
-        usernameErrorActive = usernameErroredValue == usernameController.text;
+        errors[Inputs.usernameInput]!.isErrorActive = errors[Inputs.usernameInput]!.erroredValue == usernameController.text;
       });
     });
     super.initState();
@@ -67,9 +94,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
         AppNotifiers.authResponseCode.value = null;
         passwordFocusNode.requestFocus();
         setState(() {
-          passwordError = value.msg;
-          passwordErroredValue = passwordController.text;
-          passwordErrorActive = true;
+          errors[Inputs.passwordInput] = Error(value.msg,passwordController.text,true);
           isLoading = false;
         });
       });
@@ -80,9 +105,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
         AppNotifiers.authResponseCode.value = null;
         emailFocusNode.requestFocus();
         setState(() {
-          emailError = value.msg;
-          emailErroredValue = emailController.text;
-          emailErrorActive = true;
+          errors[Inputs.emailInput] = Error(value.msg,emailController.text,true);
           isLoading = false;
         });
       });
@@ -93,9 +116,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
         AppNotifiers.authResponseCode.value = null;
         usernameFocusNode.requestFocus();
         setState(() {
-          usernameError = value.msg;
-          usernameErroredValue = usernameController.text;
-          usernameErrorActive = true;
+          errors[Inputs.usernameInput] = Error(value.msg,usernameController.text,true);
           isLoading = false;
         });
       });
@@ -114,26 +135,57 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   }
 
   void signUp() {
-    if(passwordErrorActive)
+    if(errors[Inputs.passwordInput]!.isErrorActive)
     {
       passwordFocusNode.requestFocus();
       return;
     }
-    if(emailErrorActive){
+    if(errors[Inputs.emailInput]!.isErrorActive){
       emailFocusNode.requestFocus();
       return;
     }
-    if(usernameErrorActive){
+    if(errors[Inputs.usernameInput]!.isErrorActive){
       usernameFocusNode.requestFocus();
       return;
     }
     final msgService = context.read<ServerApi>();
+    final emailUTF8 = utf8.encode(emailController.text);
+    if(!AccountConstants.isValidEmail(emailUTF8))
+    {
+      setState(() {
+        errors[Inputs.emailInput] = Error(AccountConstants.emailInvalidMsg,emailController.text,true);
+      });
+      return;
+    }
+    final passwordUTF8 = utf8.encode(passwordController.text);
+    if(!AccountConstants.isValidPassword(passwordUTF8))
+    {
+      setState(() {
+        errors[Inputs.passwordInput] = Error(AccountConstants.passwordInvalidMsg,passwordController.text,true);
+      });
+      return;
+    }
+    final usernameUTF8 = utf8.encode(usernameController.text);
+    if(!AccountConstants.isValidUsername(usernameUTF8))
+    {
+      setState(() {
+        errors[Inputs.usernameInput] = Error(AccountConstants.usernameInvalidMsg,usernameController.text,true);
+      });
+      return;
+    }
+    if(passwordController.text != confirmPasswordController.text)
+    {
+      setState(() {
+        errors[Inputs.confirmPasswordInput] = Error("Password doesn't match Confirm Password.",confirmPasswordController.text,true);
+      });
+      return;
+    }
     bool res = msgService.sendProtocolUnit(MessageType.emailSignUp, [
-      ...intToBigEndian(emailController.text.length, 1),
-      ...utf8.encode(emailController.text),
-      ...intToBigEndian(passwordController.text.length, 1),
-      ...utf8.encode(passwordController.text),
-      ...utf8.encode(usernameController.text),
+      ...intToBigEndian(emailUTF8.length, 1),
+      ...emailUTF8,
+      ...intToBigEndian(passwordUTF8.length, 1),
+      ...passwordUTF8,
+      ...usernameUTF8,
     ]);
     if(!res)
     {
@@ -151,21 +203,37 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   }
 
   void signIn() {
-    if(passwordErrorActive)
+    if(errors[Inputs.passwordInput]!.isErrorActive)
     {
       passwordFocusNode.requestFocus();
       return;
     }
-    if(emailErrorActive){
+    if(errors[Inputs.emailInput]!.isErrorActive){
       emailFocusNode.requestFocus();
       return;
     }
 
     final msgService = context.read<ServerApi>();
+    final emailUTF8 = utf8.encode(emailController.text);
+    if(!AccountConstants.isValidEmail(emailUTF8))
+    {
+      setState(() {
+        errors[Inputs.emailInput] = Error(AccountConstants.emailInvalidMsg,emailController.text,true);
+      });
+      return;
+    }
+    final passwordUTF8 = utf8.encode(passwordController.text);
+    if(!AccountConstants.isValidPassword(passwordUTF8))
+    {
+      setState(() {
+        errors[Inputs.passwordInput] = Error(AccountConstants.passwordInvalidMsg,passwordController.text,true);
+      });
+      return;
+    }
     bool res = msgService.sendProtocolUnit(MessageType.emailSignIn, [
-      ...intToBigEndian(emailController.text.length, 1),
-      ...utf8.encode(emailController.text),
-      ...utf8.encode(passwordController.text),
+      ...intToBigEndian(emailUTF8.length, 1),
+      ...emailUTF8,
+      ...passwordUTF8,
     ]);
     if(!res)
     {
@@ -182,23 +250,14 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     });
   }
 
-  String? passwordErroredValue;
-  String? passwordError;
-  bool passwordErrorActive = false;
-
-  String? emailErroredValue;
-  String? emailError;
-  bool emailErrorActive = false;
-
-  String? usernameErroredValue;
-  String? usernameError;
-  bool usernameErrorActive = false;
-
   void resetError()
   {
-    passwordErroredValue = emailErroredValue = usernameErroredValue = null;
-    passwordError = emailError = usernameError = null;
-    passwordErrorActive = emailErrorActive = usernameErrorActive = false;
+    errors = {
+      Inputs.usernameInput : Error(),
+      Inputs.emailInput : Error(),
+      Inputs.passwordInput : Error(),
+      Inputs.confirmPasswordInput : Error(),
+    };
   }
 
   @override
@@ -269,7 +328,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                                 controller: usernameController,
                                                 focusNode: usernameFocusNode,
                                                 nextFocusNode: emailFocusNode,
-                                                error: usernameErrorActive ? usernameError : null,
+                                                error: errors[Inputs.usernameInput]!.isErrorActive ? errors[Inputs.usernameInput]!.errorMessage : null,
                                                 label: "Username",
                                               ),
                                             AuthTextField(
@@ -277,14 +336,14 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                               focusNode: emailFocusNode,
                                               nextFocusNode: passwordFocusNode,
                                               label: "Email",
-                                              error: emailErrorActive ? emailError : null,
+                                              error: errors[Inputs.emailInput]!.isErrorActive ? errors[Inputs.emailInput]!.errorMessage : null,
                                               hint: "example@example.com",
                                             ),
                                             PasswordField(
                                               passwordController: passwordController,
                                               focusNode: passwordFocusNode,
                                               nextFocusNode: confirmPasswordFocusNode,
-                                              error: passwordErrorActive ? passwordError : null,
+                                              error: errors[Inputs.passwordInput]!.isErrorActive ? errors[Inputs.passwordInput]!.errorMessage : null,
                                               onSubmitted: _isSignIn ? (_) {
                                                 _isSignIn ? signIn() : signUp();
                                               } : null,
@@ -293,6 +352,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                                               AuthTextField(
                                                 controller: confirmPasswordController,
                                                 focusNode: confirmPasswordFocusNode,
+                                                error: errors[Inputs.confirmPasswordInput]!.isErrorActive ? errors[Inputs.confirmPasswordInput]!.errorMessage : null,
                                                 onSubmitted: (_){
                                                   _isSignIn ? signIn() : signUp();
                                                 },

@@ -37,12 +37,12 @@ class GoogleAuthService {
     return ("",true);
   }
   static bool signUp(ServerApi service,String username,String googleToken) {
-      Uint8List usernameList = utf8.encode(username);
-      Uint8List googleTokenList = utf8.encode(googleToken);
+      Uint8List usernameUTF8 = utf8.encode(username);
+      Uint8List googleTokenUTF8 = utf8.encode(googleToken);
       return service.sendProtocolUnit(MessageType.googleSignUp, [
-        ...intToBigEndian(usernameList.length, 1),
-        ...usernameList,
-        ...googleTokenList
+        ...intToBigEndian(usernameUTF8.length, 1),
+        ...usernameUTF8,
+        ...googleTokenUTF8
       ]);
   }
 }
