@@ -25,68 +25,61 @@ class _NamePageState extends State<NamePage> {
   TextEditingController usernameController = TextEditingController();
   FocusNode usernameFocusNode = FocusNode();
 
-  void _signUp() {
-    if(usernameErrorActive){
+  void _signUp() async {
+    BuildContext buildContext = context;
+    if (usernameErrorActive) {
       usernameFocusNode.requestFocus();
       return;
     }
-    final msgService = context.read<ServerApi>();
-    bool res = GoogleAuthService.signUp(
-      msgService,
+    setState(() {
+      isLoading = true;
+    });
+    final api = context.read<ServerApi>();
+    AuthEvent? event = await GoogleAuthService.signUp(
+      api,
       usernameController.text,
       widget.googleToken,
     );
-    if (!res) {
+    if (!buildContext.mounted) return;
+    onAuthResponse(buildContext, event);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void onAuthResponse(BuildContext buildContext, AuthEvent? value) {
+    if (value == null) {
       showDialog(
-        context: context,
+        context: buildContext,
         builder: (context) {
           return ZDialog(content: internetFailureMessage);
         },
       );
       return;
     }
-    setState(() {
-      isLoading = true;
-    });
-  }
-
-  void onAuthResponse(BuildContext context, AuthEvent? value) {
-    if (value == null) return;
     if (value.code == ResponseCode.googleAuthInvalidToken) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pop(context);
-      });
+      Navigator.pop(buildContext);
     } else if (value.code == ResponseCode.googleSignUpUsernameExistError ||
         value.code == ResponseCode.googleSignUpInvalidUsernameLengthError) {
-      WidgetsBinding.instance.addPostFrameCallback((_){
-        AppNotifiers.authResponseCode.value = null;
-        usernameFocusNode.requestFocus();
-        setState(() {
-          usernameError = value.msg;
-          usernameErroredValue = usernameController.text;
-          usernameErrorActive = true;
-          isLoading = false;
-        });
+      usernameFocusNode.requestFocus();
+      setState(() {
+        usernameError = value.msg;
+        usernameErroredValue = usernameController.text;
+        usernameErrorActive = true;
       });
     } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        AppNotifiers.authResponseCode.value = null;
-        setState(() {
-          isLoading = false;
-        });
-        showDialog(
-          context: context,
-          builder: (context) {
-            return ZDialog(content: value.msg!);
-          },
-        );
-      });
+      showDialog(
+        context: buildContext,
+        builder: (context) {
+          return ZDialog(content: value.msg!);
+        },
+      );
     }
   }
 
   @override
   void initState() {
-    usernameController.addListener((){
+    usernameController.addListener(() {
       setState(() {
         usernameErrorActive = usernameErroredValue == usernameController.text;
       });
@@ -104,76 +97,73 @@ class _NamePageState extends State<NamePage> {
     final colors = AppTheme.themeColorsOf(context);
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isSignedIn,
-      builder: (context, isSignedIn, child) {
+      builder: (buildContext, isSignedIn, child) {
         if (isSignedIn == true) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
+            if(!buildContext.mounted) return;
             if (!_navLocked) {
               Navigator.pop(context);
               _navLocked = true;
             }
           });
         }
-        return ValueListenableBuilder(
-          valueListenable: AppNotifiers.authResponseCode,
-          builder: (context, value, child) {
-            onAuthResponse(context, value);
-            return Scaffold(
-              appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
-              backgroundColor: colors.primaryBackgroundColor,
-              body: isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: colors.brandPrimaryColor,
-                      ),
-                    )
-                  : SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 0,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+        return Scaffold(
+          appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
+          backgroundColor: colors.primaryBackgroundColor,
+          body: isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: colors.brandPrimaryColor,
+                  ),
+                )
+              : SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 0,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            spacing: 20,
                             children: [
-                              Column(
-                                spacing: 20,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: colors.cardsColor.withAlpha(200),
-                                      borderRadius: BorderRadius.circular(15),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: colors.cardsColor.withAlpha(200),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                padding: EdgeInsetsGeometry.all(20),
+                                child: Column(
+                                  spacing: 20,
+                                  children: [
+                                    AuthTextField(
+                                      controller: usernameController,
+                                      label: "Username",
+                                      error: usernameErrorActive
+                                          ? usernameError
+                                          : null,
+                                      focusNode: usernameFocusNode,
+                                      onSubmitted: (_) {
+                                        _signUp();
+                                      },
                                     ),
-                                    padding: EdgeInsetsGeometry.all(20),
-                                    child: Column(
-                                      spacing: 20,
-                                      children: [
-                                        AuthTextField(
-                                          controller: usernameController,
-                                          label: "Username",
-                                          error: usernameErrorActive ? usernameError : null,
-                                          focusNode: usernameFocusNode,
-                                          onSubmitted: (_) {
-                                            _signUp();
-                                          },
-                                        ),
-                                        AuthButton(
-                                          text: "Continue",
-                                          onTap: _signUp,
-                                        ),
-                                      ],
+                                    AuthButton(
+                                      text: "Continue",
+                                      onTap: _signUp,
                                     ),
-                                  ),
-                                  AuthFooter()
-                                ],
+                                  ],
+                                ),
                               ),
+                              AuthFooter(),
                             ],
                           ),
-                        ),
+                        ],
                       ),
                     ),
-            );
-          },
+                  ),
+                ),
         );
       },
     );

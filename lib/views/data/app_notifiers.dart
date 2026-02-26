@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 
 abstract final class AppNotifiers {
@@ -16,6 +15,5 @@ abstract final class AppNotifiers {
   );
   static final ValueNotifier<bool> isPfpOverlayVisible = ValueNotifier(false);
   static final ValueNotifier<MessageReplyData?> replyData = ValueNotifier(null);
-  static final ValueNotifier<AuthEvent?> authResponseCode = ValueNotifier(null);
   static final ValueNotifier<bool> isSignedIn = ValueNotifier(false);
 }

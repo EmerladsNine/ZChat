@@ -85,7 +85,6 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     focusNode.requestFocus();
     setState(() {
       errors[input] = Error(message, controller.text, true);
-      isLoading = false;
     });
   }
 
@@ -166,6 +165,9 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
       });
       return;
     }
+    setState(() {
+      isLoading = true;
+    });
     final api = buildContext.read<ServerApi>();
     AuthEvent? event = await ProtocolSenderEmailAuth.signUp(
       api,
@@ -176,7 +178,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     if (!buildContext.mounted) return;
     onAuthResponse(buildContext, event);
     setState(() {
-      isLoading = true;
+      isLoading = false;
     });
   }
 
@@ -189,10 +191,10 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     if (!_validateInput(Inputs.emailInput, emailController, emailUTF8)) return;
     final passwordUTF8 = utf8.encode(passwordController.text);
     if (!_validateInput(Inputs.passwordInput, passwordController, passwordUTF8)) return;
-    final api = context.read<ServerApi>();
     setState(() {
       isLoading = true;
     });
+    final api = context.read<ServerApi>();
     AuthEvent? event = await ProtocolSenderEmailAuth.signIn(
       api,
       emailUTF8,
@@ -200,6 +202,9 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     );
     if (!buildContext.mounted) return;
     onAuthResponse(buildContext, event);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void resetError() {

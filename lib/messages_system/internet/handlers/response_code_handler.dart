@@ -60,7 +60,7 @@ class ResponseCodeHandler extends Handler {
     }
 
     if (responseCode == ResponseCode.googleAuthRequireSignUp.id) {
-      AppNotifiers.authResponseCode.value = AuthEvent(
+      CallbackNotifiers.googleAccountAuthResponse.value = AuthEvent(
         ResponseCode.fromId(responseCode),
         null,
       );
