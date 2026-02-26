@@ -53,7 +53,7 @@ class _AddChatPageState extends State<AddChatPage> {
     return true;
   }
 
-  Future<bool> _handleIdSearch(String searchText) async {
+  Future<bool> _handleIdSearch(BuildContext buildContext,String searchText) async {
     if (searchText.isEmpty || searchText[0] != '#') return false;
     if (searchText.length < 2) {
       setState(() {
@@ -70,13 +70,14 @@ class _AddChatPageState extends State<AddChatPage> {
       return true;
     }
     _requestInFlight = true;
-    ServerApi api = context.read<ServerApi>();
+    ServerApi api = buildContext.read<ServerApi>();
     SearchEvent? event = await ProtocolSenderSearch.searchByIdAsync(api, id);
+    if(!buildContext.mounted) return true;
     onResponseReceived(event);
     return true;
   }
 
-  void _handleUsernameSearch(String searchText) async {
+  void _handleUsernameSearch(BuildContext buildContext,String searchText) async {
     final searchUTF8 = utf8.encode(searchText);
     if (!AccountConstants.isValidUsername(searchUTF8)) {
       setState(() {
@@ -85,21 +86,24 @@ class _AddChatPageState extends State<AddChatPage> {
       return;
     }
     _requestInFlight = true;
-    ServerApi api = context.read<ServerApi>();
+    ServerApi api = buildContext.read<ServerApi>();
     SearchEvent? event = await ProtocolSenderSearch.searchByUsernameAsync(
       api,
       searchUTF8,
     );
+    if(!buildContext.mounted) return;
     onResponseReceived(event);
   }
 
   void _sendSearch() async {
+    BuildContext buildContext = context;
     if (!_validateSearch()) return;
     setState(() {
       _searchState = SearchState.waiting;
     });
-    if (await _handleIdSearch(searchController.text)) return;
-    _handleUsernameSearch(searchController.text);
+    if (await _handleIdSearch(buildContext,searchController.text)) return;
+    if(!buildContext.mounted) return;
+    _handleUsernameSearch(buildContext,searchController.text);
   }
 
   bool _handlePendingSearch() {

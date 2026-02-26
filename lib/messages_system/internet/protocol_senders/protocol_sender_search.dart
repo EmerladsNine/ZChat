@@ -27,6 +27,7 @@ abstract class ProtocolSenderSearch {
       }
       return completer.future;
   }
+
   static Future<SearchEvent?> searchByUsernameAsync(ServerApi api,Uint8List usernameUTF8) {
     final completer = Completer<SearchEvent?>();
     void callback()

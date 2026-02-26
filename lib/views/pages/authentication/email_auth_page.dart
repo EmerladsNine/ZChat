@@ -1,34 +1,28 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
-import 'package:zchat/messages_system/internet/message_type.dart';
+import 'package:zchat/messages_system/internet/handlers/response_code_handler.dart';
+import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_email_auth.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
-import 'package:zchat/messages_system/internet/response_code.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/sign_in_page.dart';
-import 'package:zchat/views/widgets/auth_pages_widgets/auth_button.dart';
 import 'package:zchat/views/widgets/auth_pages_widgets/auth_footer.dart';
-import 'package:zchat/views/widgets/auth_pages_widgets/auth_text_field.dart';
-import 'package:zchat/views/widgets/auth_pages_widgets/email_page_widgets/password_field.dart';
+import 'package:zchat/views/widgets/auth_pages_widgets/email_page_widgets/email_form_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/z_dialog.dart';
 
 class Error {
   String? erroredValue;
   String? errorMessage;
   bool isErrorActive;
-  Error([this.errorMessage,this.erroredValue,this.isErrorActive = false]);
+  Error([this.errorMessage, this.erroredValue, this.isErrorActive = false]);
 }
 
-enum Inputs {
-    usernameInput,
-    emailInput,
-    passwordInput,
-    confirmPasswordInput
-}
+enum Inputs { usernameInput, emailInput, passwordInput, confirmPasswordInput }
 
 class EmailAuthPage extends StatefulWidget {
   const EmailAuthPage({super.key, required this.isSignIn});
@@ -48,218 +42,177 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   FocusNode usernameFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
   FocusNode confirmPasswordFocusNode = FocusNode();
-  Map<Inputs,Error> errors = {
-    Inputs.usernameInput : Error(),
-    Inputs.emailInput : Error(),
-    Inputs.passwordInput : Error(),
-    Inputs.confirmPasswordInput : Error(),
+  Map<Inputs, Error> errors = {
+    Inputs.usernameInput: Error(),
+    Inputs.emailInput: Error(),
+    Inputs.passwordInput: Error(),
+    Inputs.confirmPasswordInput: Error(),
   };
+
+  void _addInputListener(
+    Inputs input,
+    TextEditingController controller, [
+    bool isPassInput = false,
+  ]) {
+    controller.addListener(() {
+      setState(() {
+        errors[input]!.isErrorActive =
+            errors[input]!.erroredValue == controller.text;
+      });
+    });
+    if (!isPassInput) return;
+    controller.addListener(() {
+      errors[Inputs.confirmPasswordInput]!.isErrorActive = false;
+    });
+  }
 
   @override
   void initState() {
     _isSignIn = widget.isSignIn;
-    passwordController.addListener((){
-      setState(() {
-        errors[Inputs.passwordInput]!.isErrorActive = errors[Inputs.passwordInput]!.erroredValue == passwordController.text;
-        errors[Inputs.confirmPasswordInput]!.isErrorActive = false;
-      });
-    });
-    confirmPasswordController.addListener((){
-      setState(() {
-        errors[Inputs.confirmPasswordInput]!.isErrorActive = false;
-      });
-    });
-    emailController.addListener((){
-      setState(() {
-        errors[Inputs.emailInput]!.isErrorActive = errors[Inputs.emailInput]!.erroredValue == emailController.text;
-      });
-    });
-    usernameController.addListener((){
-      setState(() {
-        errors[Inputs.usernameInput]!.isErrorActive = errors[Inputs.usernameInput]!.erroredValue == usernameController.text;
-      });
-    });
+    _addInputListener(Inputs.passwordInput, passwordController, true);
+    _addInputListener(Inputs.confirmPasswordInput, confirmPasswordController, true,);
+    _addInputListener(Inputs.emailInput, emailController);
+    _addInputListener(Inputs.usernameInput, usernameController);
     super.initState();
+  }
+
+  void _handleFieldError(
+    FocusNode focusNode,
+    Inputs input,
+    TextEditingController controller,
+    String? message,
+  ) {
+    focusNode.requestFocus();
+    setState(() {
+      errors[input] = Error(message, controller.text, true);
+      isLoading = false;
+    });
+  }
+
+  void onAuthResponse(BuildContext buildContext, AuthEvent? value) {
+    if (value == null) {
+      showDialog(
+        context: buildContext,
+        builder: (context) {
+          return ZDialog(content: internetFailureMessage);
+        },
+      );
+      return;
+    }
+    if (ResponseCodeHandler.isPasswordError(value.code)) {
+      _handleFieldError(passwordFocusNode, Inputs.passwordInput, passwordController, value.msg,);
+    } else if (ResponseCodeHandler.isEmailError(value.code)) {
+      _handleFieldError(emailFocusNode, Inputs.emailInput, emailController, value.msg,);
+    } else if (ResponseCodeHandler.isEmailUsernameError(value.code)) {
+      _handleFieldError(usernameFocusNode, Inputs.usernameInput, usernameController, value.msg,);
+    } else {
+      if (!buildContext.mounted) return;
+      showDialog(
+        context: buildContext,
+        builder: (context) {
+          return ZDialog(content: value.msg!);
+        },
+      );
+    }
+  }
+
+  bool _checkErrorActive(Inputs input, FocusNode focusNode) {
+    if (errors[input]!.isErrorActive) {
+      focusNode.requestFocus();
+      return true;
+    }
+    return false;
+  }
+
+  bool _validateInput(
+    Inputs input,
+    TextEditingController controller,
+    Uint8List textUTF8,
+  ) {
+    final val = switch (input) {
+      Inputs.usernameInput => (AccountConstants.isValidUsername, AccountConstants.usernameInvalidMsg, ),
+      Inputs.emailInput => (AccountConstants.isValidEmail, AccountConstants.emailInvalidMsg, ),
+      Inputs.passwordInput => (AccountConstants.isValidPassword, AccountConstants.passwordInvalidMsg, ),
+      Inputs.confirmPasswordInput => (AccountConstants.isValidPassword, AccountConstants.passwordInvalidMsg, ),
+    };
+    if (!val.$1(textUTF8)) {
+      setState(() {
+        errors[input] = Error(val.$2, controller.text, true);
+      });
+      return false;
+    }
+    return true;
+  }
+
+  void signUp() async {
+    BuildContext buildContext = context;
+    if (_checkErrorActive(Inputs.passwordInput, passwordFocusNode)) return;
+    if (_checkErrorActive(Inputs.emailInput, emailFocusNode)) return;
+    if (_checkErrorActive(Inputs.usernameInput, usernameFocusNode)) return;
+
+    final emailUTF8 = utf8.encode(emailController.text);
+    if (!_validateInput(Inputs.emailInput, emailController, emailUTF8)) return;
+    final passwordUTF8 = utf8.encode(passwordController.text);
+    if (!_validateInput(Inputs.passwordInput, passwordController, passwordUTF8)) return;
+    final usernameUTF8 = utf8.encode(usernameController.text);
+    if (!_validateInput(Inputs.usernameInput, usernameController, usernameUTF8)) return;
+    if (passwordController.text != confirmPasswordController.text) {
+      setState(() {
+        errors[Inputs.confirmPasswordInput] = Error(
+          "Password doesn't match Confirm Password.",
+          confirmPasswordController.text,
+          true,
+        );
+      });
+      return;
+    }
+    final api = buildContext.read<ServerApi>();
+    AuthEvent? event = await ProtocolSenderEmailAuth.signUp(
+      api,
+      emailUTF8,
+      passwordUTF8,
+      usernameUTF8,
+    );
+    if (!buildContext.mounted) return;
+    onAuthResponse(buildContext, event);
+    setState(() {
+      isLoading = true;
+    });
+  }
+
+  void signIn() async {
+    BuildContext buildContext = context;
+    if (_checkErrorActive(Inputs.passwordInput, passwordFocusNode)) return;
+    if (_checkErrorActive(Inputs.emailInput, emailFocusNode)) return;
+
+    final emailUTF8 = utf8.encode(emailController.text);
+    if (!_validateInput(Inputs.emailInput, emailController, emailUTF8)) return;
+    final passwordUTF8 = utf8.encode(passwordController.text);
+    if (!_validateInput(Inputs.passwordInput, passwordController, passwordUTF8)) return;
+    final api = context.read<ServerApi>();
+    setState(() {
+      isLoading = true;
+    });
+    AuthEvent? event = await ProtocolSenderEmailAuth.signIn(
+      api,
+      emailUTF8,
+      passwordUTF8,
+    );
+    if (!buildContext.mounted) return;
+    onAuthResponse(buildContext, event);
+  }
+
+  void resetError() {
+    errors = {
+      Inputs.usernameInput: Error(),
+      Inputs.emailInput: Error(),
+      Inputs.passwordInput: Error(),
+      Inputs.confirmPasswordInput: Error(),
+    };
   }
 
   bool _navLocked = false;
   bool isLoading = false;
-
-  void onAuthResponse(BuildContext context, AuthEvent? value)
-  {
-    if(value == null) return;
-    if(value.code == ResponseCode.emailSignInPasswordIncorrectError || value.code == ResponseCode.emailAccountInvalidPasswordLengthError)
-    {
-      WidgetsBinding.instance.addPostFrameCallback((_){
-        AppNotifiers.authResponseCode.value = null;
-        passwordFocusNode.requestFocus();
-        setState(() {
-          errors[Inputs.passwordInput] = Error(value.msg,passwordController.text,true);
-          isLoading = false;
-        });
-      });
-    }
-    else if(value.code == ResponseCode.emailSignInEmailNotExistError || value.code == ResponseCode.emailAccountEmailExistError || value.code == ResponseCode.emailAccountInvalidEmailLengthError)
-    {
-      WidgetsBinding.instance.addPostFrameCallback((_){
-        AppNotifiers.authResponseCode.value = null;
-        emailFocusNode.requestFocus();
-        setState(() {
-          errors[Inputs.emailInput] = Error(value.msg,emailController.text,true);
-          isLoading = false;
-        });
-      });
-    }
-    else if(value.code == ResponseCode.emailAccountInvalidUsernameLengthError || value.code == ResponseCode.emailAccountUsernameExistError)
-    {
-      WidgetsBinding.instance.addPostFrameCallback((_){
-        AppNotifiers.authResponseCode.value = null;
-        usernameFocusNode.requestFocus();
-        setState(() {
-          errors[Inputs.usernameInput] = Error(value.msg,usernameController.text,true);
-          isLoading = false;
-        });
-      });
-    }
-    else {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        AppNotifiers.authResponseCode.value = null;
-        showDialog(
-          context: context,
-          builder: (context) {
-            return ZDialog(content: value.msg!);
-          },
-        );
-      });
-    }
-  }
-
-  void signUp() {
-    if(errors[Inputs.passwordInput]!.isErrorActive)
-    {
-      passwordFocusNode.requestFocus();
-      return;
-    }
-    if(errors[Inputs.emailInput]!.isErrorActive){
-      emailFocusNode.requestFocus();
-      return;
-    }
-    if(errors[Inputs.usernameInput]!.isErrorActive){
-      usernameFocusNode.requestFocus();
-      return;
-    }
-    final msgService = context.read<ServerApi>();
-    final emailUTF8 = utf8.encode(emailController.text);
-    if(!AccountConstants.isValidEmail(emailUTF8))
-    {
-      setState(() {
-        errors[Inputs.emailInput] = Error(AccountConstants.emailInvalidMsg,emailController.text,true);
-      });
-      return;
-    }
-    final passwordUTF8 = utf8.encode(passwordController.text);
-    if(!AccountConstants.isValidPassword(passwordUTF8))
-    {
-      setState(() {
-        errors[Inputs.passwordInput] = Error(AccountConstants.passwordInvalidMsg,passwordController.text,true);
-      });
-      return;
-    }
-    final usernameUTF8 = utf8.encode(usernameController.text);
-    if(!AccountConstants.isValidUsername(usernameUTF8))
-    {
-      setState(() {
-        errors[Inputs.usernameInput] = Error(AccountConstants.usernameInvalidMsg,usernameController.text,true);
-      });
-      return;
-    }
-    if(passwordController.text != confirmPasswordController.text)
-    {
-      setState(() {
-        errors[Inputs.confirmPasswordInput] = Error("Password doesn't match Confirm Password.",confirmPasswordController.text,true);
-      });
-      return;
-    }
-    bool res = msgService.sendProtocolUnit(MessageType.emailSignUp, [
-      ...intToBigEndian(emailUTF8.length, 1),
-      ...emailUTF8,
-      ...intToBigEndian(passwordUTF8.length, 1),
-      ...passwordUTF8,
-      ...usernameUTF8,
-    ]);
-    if(!res)
-    {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return ZDialog(content: internetFailureMessage);
-        },
-      );
-      return;
-    }
-    setState(() {
-      isLoading = true;
-    });
-  }
-
-  void signIn() {
-    if(errors[Inputs.passwordInput]!.isErrorActive)
-    {
-      passwordFocusNode.requestFocus();
-      return;
-    }
-    if(errors[Inputs.emailInput]!.isErrorActive){
-      emailFocusNode.requestFocus();
-      return;
-    }
-
-    final msgService = context.read<ServerApi>();
-    final emailUTF8 = utf8.encode(emailController.text);
-    if(!AccountConstants.isValidEmail(emailUTF8))
-    {
-      setState(() {
-        errors[Inputs.emailInput] = Error(AccountConstants.emailInvalidMsg,emailController.text,true);
-      });
-      return;
-    }
-    final passwordUTF8 = utf8.encode(passwordController.text);
-    if(!AccountConstants.isValidPassword(passwordUTF8))
-    {
-      setState(() {
-        errors[Inputs.passwordInput] = Error(AccountConstants.passwordInvalidMsg,passwordController.text,true);
-      });
-      return;
-    }
-    bool res = msgService.sendProtocolUnit(MessageType.emailSignIn, [
-      ...intToBigEndian(emailUTF8.length, 1),
-      ...emailUTF8,
-      ...passwordUTF8,
-    ]);
-    if(!res)
-    {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return ZDialog(content: internetFailureMessage);
-        },
-      );
-      return;
-    }
-    setState(() {
-      isLoading = true;
-    });
-  }
-
-  void resetError()
-  {
-    errors = {
-      Inputs.usernameInput : Error(),
-      Inputs.emailInput : Error(),
-      Inputs.passwordInput : Error(),
-      Inputs.confirmPasswordInput : Error(),
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -274,119 +227,70 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
             }
           });
         }
-        return ValueListenableBuilder(
-          valueListenable: AppNotifiers.authResponseCode,
-          builder: (context, value, child) {
-            onAuthResponse(context, value);
-            return Scaffold(
-              appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
-              backgroundColor: colors.primaryBackgroundColor,
-              body: isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: colors.brandPrimaryColor,
-                      ),
-                    )
-                  : SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 0,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+        return Scaffold(
+          appBar: AppBar(backgroundColor: colors.primaryBackgroundColor),
+          backgroundColor: colors.primaryBackgroundColor,
+          body: isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: colors.brandPrimaryColor,
+                  ),
+                )
+              : SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 0,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            spacing: 20,
                             children: [
-                              Column(
-                                spacing: 20,
-                                children: [
-                                  Text(
-                                    _isSignIn
-                                        ? "Sign in with Email"
-                                        : "Sign up with Email",
-                                    style: TextStyle(
-                                      color: colors.primaryColor,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: colors.cardsColor.withAlpha(200),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    padding: EdgeInsetsGeometry.all(20),
-                                    child: Column(
-                                      children: [
-                                        Column(
-                                          spacing: 10,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            if (!_isSignIn)
-                                              AuthTextField(
-                                                controller: usernameController,
-                                                focusNode: usernameFocusNode,
-                                                nextFocusNode: emailFocusNode,
-                                                error: errors[Inputs.usernameInput]!.isErrorActive ? errors[Inputs.usernameInput]!.errorMessage : null,
-                                                label: "Username",
-                                              ),
-                                            AuthTextField(
-                                              controller: emailController,
-                                              focusNode: emailFocusNode,
-                                              nextFocusNode: passwordFocusNode,
-                                              label: "Email",
-                                              error: errors[Inputs.emailInput]!.isErrorActive ? errors[Inputs.emailInput]!.errorMessage : null,
-                                              hint: "example@example.com",
-                                            ),
-                                            PasswordField(
-                                              passwordController: passwordController,
-                                              focusNode: passwordFocusNode,
-                                              nextFocusNode: confirmPasswordFocusNode,
-                                              error: errors[Inputs.passwordInput]!.isErrorActive ? errors[Inputs.passwordInput]!.errorMessage : null,
-                                              onSubmitted: _isSignIn ? (_) {
-                                                _isSignIn ? signIn() : signUp();
-                                              } : null,
-                                            ),
-                                            if (!_isSignIn)
-                                              AuthTextField(
-                                                controller: confirmPasswordController,
-                                                focusNode: confirmPasswordFocusNode,
-                                                error: errors[Inputs.confirmPasswordInput]!.isErrorActive ? errors[Inputs.confirmPasswordInput]!.errorMessage : null,
-                                                onSubmitted: (_){
-                                                  _isSignIn ? signIn() : signUp();
-                                                },
-                                                label: "Confirm Password",
-                                                obscureText: true,
-                                              ),
-                                            SizedBox(height: 10),
-                                          ],
-                                        ),
-                                        AuthButton(
-                                          text: _isSignIn ? "Sign in" : "Sign up",
-                                          onTap: _isSignIn ? signIn : signUp,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  AuthFooter(
-                                    isSignIn: _isSignIn,
-                                    onTap: () {
-                                      resetError();
-                                      setState(() {
-                                        _isSignIn = !_isSignIn;
-                                      });
-                                    },
-                                  )
-                                ],
+                              Text(
+                                _isSignIn
+                                    ? "Sign in with Email"
+                                    : "Sign up with Email",
+                                style: TextStyle(
+                                  color: colors.primaryColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              EmailFormWidget(
+                                isSignIn: _isSignIn,
+                                emailController: emailController,
+                                passwordController: passwordController,
+                                usernameController: usernameController,
+                                confirmPasswordController:
+                                    confirmPasswordController,
+                                emailFocusNode: emailFocusNode,
+                                passwordFocusNode: passwordFocusNode,
+                                confirmPasswordFocusNode:
+                                    confirmPasswordFocusNode,
+                                usernameFocusNode: usernameFocusNode,
+                                errors: errors,
+                                signIn: signIn,
+                                signUp: signUp,
+                              ),
+                              AuthFooter(
+                                isSignIn: _isSignIn,
+                                onTap: () {
+                                  resetError();
+                                  setState(() {
+                                    _isSignIn = !_isSignIn;
+                                  });
+                                },
                               ),
                             ],
                           ),
-                        ),
+                        ],
                       ),
                     ),
-            );
-          },
+                  ),
+                ),
         );
       },
     );
