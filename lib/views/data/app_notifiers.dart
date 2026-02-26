@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
-import 'package:zchat/messages_system/internet/events/search_event.dart';
 
 abstract final class AppNotifiers {
   static final ValueNotifier<int> selectedPageNotifier = ValueNotifier(0);
@@ -18,6 +17,5 @@ abstract final class AppNotifiers {
   static final ValueNotifier<bool> isPfpOverlayVisible = ValueNotifier(false);
   static final ValueNotifier<MessageReplyData?> replyData = ValueNotifier(null);
   static final ValueNotifier<AuthEvent?> authResponseCode = ValueNotifier(null);
-  static final ValueNotifier<SearchEvent?> searchResponseCode = ValueNotifier(null);
   static final ValueNotifier<bool> isSignedIn = ValueNotifier(false);
 }

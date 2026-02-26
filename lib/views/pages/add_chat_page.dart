@@ -5,18 +5,28 @@ import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
-import 'package:zchat/messages_system/internet/message_type.dart';
+import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_search.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/search_response_code.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/controllers/custom_text_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/utils/math_utils.dart';
+import 'package:zchat/views/widgets/add_chat_page_widgets/centered_text.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/appbar_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
-enum SearchState { noSearch, waiting,invalidId,invalidUsername, internetFailure, error, notFound, found }
+enum SearchState {
+  noSearch,
+  waiting,
+  invalidId,
+  invalidUsername,
+  internetFailure,
+  error,
+  notFound,
+  found,
+}
 
 class AddChatPage extends StatefulWidget {
   const AddChatPage({super.key});
@@ -28,101 +38,112 @@ class AddChatPage extends StatefulWidget {
 class _AddChatPageState extends State<AddChatPage> {
   CustomTextController searchController = CustomTextController();
 
-  void _sendSearch() {
-    ServerApi msg = context.read<ServerApi>();
+  bool _validateSearch() {
     if (searchController.text.isEmpty) {
       setState(() {
         _searchState = SearchState.noSearch;
       });
-      return;
+      return false;
     }
     if (_requestInFlight) {
       _pendingSearch = true;
+      return false;
+    }
+    _pendingSearch = false;
+    return true;
+  }
+
+  Future<bool> _handleIdSearch(String searchText) async {
+    if (searchText.isEmpty || searchText[0] != '#') return false;
+    if (searchText.length < 2) {
+      setState(() {
+        _searchState = SearchState.noSearch;
+      });
+      return true;
+    }
+    String idText = searchText.substring(1);
+    int? id = MathUtils.tryParseUint32(idText);
+    if (id == null) {
+      setState(() {
+        _searchState = SearchState.invalidId;
+      });
+      return true;
+    }
+    _requestInFlight = true;
+    ServerApi api = context.read<ServerApi>();
+    SearchEvent? event = await ProtocolSenderSearch.searchByIdAsync(api, id);
+    onResponseReceived(event);
+    return true;
+  }
+
+  void _handleUsernameSearch(String searchText) async {
+    final searchUTF8 = utf8.encode(searchText);
+    if (!AccountConstants.isValidUsername(searchUTF8)) {
+      setState(() {
+        _searchState = SearchState.invalidUsername;
+      });
       return;
     }
     _requestInFlight = true;
-    _pendingSearch = false;
+    ServerApi api = context.read<ServerApi>();
+    SearchEvent? event = await ProtocolSenderSearch.searchByUsernameAsync(
+      api,
+      searchUTF8,
+    );
+    onResponseReceived(event);
+  }
+
+  void _sendSearch() async {
+    if (!_validateSearch()) return;
     setState(() {
       _searchState = SearchState.waiting;
     });
-    if (searchController.text[0] == '#') {
-      if (searchController.text.length < 2) {
-        setState(() {
-          _searchState = SearchState.noSearch;
-        });
-        _requestInFlight = false;
-        return;
-      }
-      String idText = searchController.text.substring(1);
-      int? id = MathUtils.tryParseUint32(idText);
-      if(id == null)
-      {
-        setState(() {
-          _searchState = SearchState.invalidId;
-        });
-        _requestInFlight = false;
-        return;
-      }
-      final result = msg.sendProtocolUnit(MessageType.searchWithId, [
-        ...intToBigEndian(id, 4),
-      ]);
-      if (!result) {
-        setState(() {
-          _searchState = SearchState.internetFailure;
-        });
-      }
-    } else {
-      final searchUTF8 = utf8.encode(searchController.text);
-      if(!AccountConstants.isValidUsername(searchUTF8))
-      {
-        setState(() {
-          _searchState = SearchState.invalidUsername;
-        });
-        _requestInFlight = false;
-        return;
-      }
-      final result = msg.sendProtocolUnit(MessageType.searchWithUsername, [
-        ...searchUTF8,
-      ]);
-      if (!result) {
-        setState(() {
-          _searchState = SearchState.internetFailure;
-        });
-      }
-    }
+    if (await _handleIdSearch(searchController.text)) return;
+    _handleUsernameSearch(searchController.text);
   }
 
-  void onResponseReceived(SearchEvent? value) {
-    if (value == null) return;
-    if(!_requestInFlight) return;
-    _requestInFlight = false;
-    AppNotifiers.searchResponseCode.value = null;
-    if (_pendingSearch ) {
+  bool _handlePendingSearch() {
+    if (_pendingSearch) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _pendingSearch = false;
         _sendSearch();
       });
+      return true;
+    }
+    return false;
+  }
+
+  void _scheduleStateUpdate(SearchEvent value) {
+    if (value.code == SearchResponseCode.notFound) {
+      setState(() {
+        _searchState = SearchState.notFound;
+        name = id = null;
+      });
+    } else if (value.code == SearchResponseCode.error) {
+      setState(() {
+        _searchState = SearchState.error;
+        name = id = null;
+      });
+    } else if (value.code == SearchResponseCode.found) {
+      setState(() {
+        _searchState = SearchState.found;
+        name = value.name!;
+        id = value.id!;
+      });
+    }
+  }
+
+  void onResponseReceived(SearchEvent? value) {
+    if (value == null) {
+      setState(() {
+        _searchState = SearchState.internetFailure;
+      });
       return;
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (value.code == SearchResponseCode.notFound) {
-        setState(() {
-          _searchState = SearchState.notFound;
-          name = id = null;
-        });
-      } else if (value.code == SearchResponseCode.error) {
-        setState(() {
-          _searchState = SearchState.error;
-          name = id = null;
-        });
-      } else if (value.code == SearchResponseCode.found) {
-        setState(() {
-          _searchState = SearchState.found;
-          name = value.name!;
-          id = value.id!;
-        });
-      }
-    });
+    if (!_requestInFlight) return;
+    _requestInFlight = false;
+    if (_handlePendingSearch()) return;
+    _scheduleStateUpdate(value);
   }
 
   @override
@@ -140,151 +161,56 @@ class _AddChatPageState extends State<AddChatPage> {
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
-    return ValueListenableBuilder(
-      valueListenable: AppNotifiers.searchResponseCode,
-      builder: (context, value, child) {
-        onResponseReceived(value);
-        return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: AppBarWidget(title: "Add Chat"),
-          ),
-          backgroundColor: colors.primaryBackgroundColor,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              children: [
-                SearchBarWidget(
-                  disableSet: AppNotifiers.disableButtons,
-                  hintText: "Search username or id",
-                  controller: searchController,
-                ),
-                getFromState()
-              ],
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: AppBarWidget(title: "Add Chat"),
+      ),
+      backgroundColor: colors.primaryBackgroundColor,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          children: [
+            SearchBarWidget(
+              disableSet: AppNotifiers.disableButtons,
+              hintText: "Search username or id",
+              controller: searchController,
             ),
-          ),
-        );
-      },
+            getFromState(),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget getFromState()
-  {
-      final colors = AppTheme.themeColorsOf(context);
-      return switch(_searchState)
-      {
-          SearchState.found => ChatCardWidget(
-            chatName: name!,
-            message: "#${id!}",
-            userLastMessageStatus: MessageStatus.notLast,
-            timeStamp: "",
-          ),
-          SearchState.notFound => Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Not Found",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    color: colors.textSecondaryColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SearchState.error => Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Error , please try again later.",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    color: colors.textSecondaryColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        SearchState.noSearch => Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Search for a user.",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: colors.textSecondaryColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SearchState.waiting => Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(color: colors.brandPrimaryColor,),
-            ],
-          ),
-        ),
-        SearchState.internetFailure => Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Internet Failure, check your internet connection.",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: colors.textSecondaryColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SearchState.invalidId => Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Invalid Id.",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: colors.textSecondaryColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-      SearchState.invalidUsername => Expanded(
+  Widget getFromState() {
+    final colors = AppTheme.themeColorsOf(context);
+    return switch (_searchState) {
+      SearchState.found => ChatCardWidget(
+        chatName: name!,
+        message: "#${id!}",
+        userLastMessageStatus: MessageStatus.notLast,
+        timeStamp: "",
+      ),
+      SearchState.notFound => CenteredText(text: "Not Found"),
+      SearchState.error => CenteredText(
+        text: "Error , please try again later.",
+      ),
+      SearchState.noSearch => CenteredText(text: "Search for a user."),
+      SearchState.waiting => Expanded(
         child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "Invalid Username.",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: colors.textSecondaryColor,
-            ),
-          ),
-        ],
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(color: colors.brandPrimaryColor),
+          ],
         ),
       ),
-
-      };
+      SearchState.internetFailure => CenteredText(
+        text: "Internet Failure, check your internet connection.",
+      ),
+      SearchState.invalidId => CenteredText(text: "Invalid Id."),
+      SearchState.invalidUsername => CenteredText(text: "Invalid Username."),
+    };
   }
 }

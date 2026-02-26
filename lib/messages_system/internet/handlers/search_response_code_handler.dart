@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:zchat/messages_system/internet/callback_notifiers.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/search_response_code.dart';
-import 'package:zchat/views/data/app_notifiers.dart';
 
 class SearchResponseCodeHandler extends Handler {
   @override
@@ -13,7 +13,7 @@ class SearchResponseCodeHandler extends Handler {
     buffer.removeAt(0);
     if (responseCode == SearchResponseCode.notFound.id ||
         responseCode == SearchResponseCode.error.id) {
-      AppNotifiers.searchResponseCode.value = SearchEvent(
+      CallbackNotifiers.searchResponse.value = SearchEvent(
         SearchResponseCode.fromId(responseCode),
         null,
         null,
@@ -22,7 +22,7 @@ class SearchResponseCodeHandler extends Handler {
     }
     final int id = bigEndianToInt(buffer, 4);
     final String username = utf8.decode(buffer);
-    AppNotifiers.searchResponseCode.value = SearchEvent(
+    CallbackNotifiers.searchResponse.value = SearchEvent(
       SearchResponseCode.found,
       id,
       username,
