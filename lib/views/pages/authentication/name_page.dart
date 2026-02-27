@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/authentication/google_auth_service.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
@@ -26,20 +29,25 @@ class _NamePageState extends State<NamePage> {
   FocusNode usernameFocusNode = FocusNode();
 
   void _signUp() async {
-    BuildContext buildContext = context;
     if (usernameErrorActive) {
       usernameFocusNode.requestFocus();
+      return;
+    }
+    final usernameUTF8 = utf8.encode(usernameController.text);
+    if (!AccountConstants.isValidUsername(usernameUTF8)) {
+      setState(() {
+        usernameErroredValue = usernameController.text;
+        usernameError = AccountConstants.usernameInvalidMsg;
+        usernameErrorActive = true;
+      });
       return;
     }
     setState(() {
       isLoading = true;
     });
-    final api = context.read<ServerApi>();
-    AuthEvent? event = await GoogleAuthService.signUp(
-      api,
-      usernameController.text,
-      widget.googleToken,
-    );
+    BuildContext buildContext = context;
+    final api = buildContext.read<ServerApi>();
+    AuthEvent? event = await GoogleAuthService.signUp(api, usernameController.text, widget.googleToken,);
     if (!buildContext.mounted) return;
     onAuthResponse(buildContext, event);
     setState(() {
@@ -102,7 +110,7 @@ class _NamePageState extends State<NamePage> {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if(!buildContext.mounted) return;
             if (!_navLocked) {
-              Navigator.pop(context);
+              Navigator.pop(buildContext);
               _navLocked = true;
             }
           });

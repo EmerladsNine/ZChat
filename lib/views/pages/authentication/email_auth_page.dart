@@ -8,6 +8,7 @@ import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/response_code_handler.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_email_auth.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
+import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/sign_in_page.dart';
@@ -70,7 +71,11 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   void initState() {
     _isSignIn = widget.isSignIn;
     _addInputListener(Inputs.passwordInput, passwordController, true);
-    _addInputListener(Inputs.confirmPasswordInput, confirmPasswordController, true,);
+    _addInputListener(
+      Inputs.confirmPasswordInput,
+      confirmPasswordController,
+      true,
+    );
     _addInputListener(Inputs.emailInput, emailController);
     _addInputListener(Inputs.usernameInput, usernameController);
     super.initState();
@@ -99,13 +104,27 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
       return;
     }
     if (ResponseCodeHandler.isPasswordError(value.code)) {
-      _handleFieldError(passwordFocusNode, Inputs.passwordInput, passwordController, value.msg,);
+      _handleFieldError(
+        passwordFocusNode,
+        Inputs.passwordInput,
+        passwordController,
+        value.msg,
+      );
     } else if (ResponseCodeHandler.isEmailError(value.code)) {
-      _handleFieldError(emailFocusNode, Inputs.emailInput, emailController, value.msg,);
+      _handleFieldError(
+        emailFocusNode,
+        Inputs.emailInput,
+        emailController,
+        value.msg,
+      );
     } else if (ResponseCodeHandler.isEmailUsernameError(value.code)) {
-      _handleFieldError(usernameFocusNode, Inputs.usernameInput, usernameController, value.msg,);
+      _handleFieldError(
+        usernameFocusNode,
+        Inputs.usernameInput,
+        usernameController,
+        value.msg,
+      );
     } else {
-      if (!buildContext.mounted) return;
       showDialog(
         context: buildContext,
         builder: (context) {
@@ -116,7 +135,12 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   }
 
   bool _checkErrorActive(Inputs input, FocusNode focusNode) {
-    if (errors[input]!.isErrorActive) {
+    final error = errors[input];
+    if (error == null) {
+      printOnDebug("Unexpected value in _checkErrorActive");
+      return false;
+    }
+    if (error.isErrorActive) {
       focusNode.requestFocus();
       return true;
     }
@@ -129,14 +153,20 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     Uint8List textUTF8,
   ) {
     final val = switch (input) {
-      Inputs.usernameInput => (AccountConstants.isValidUsername, AccountConstants.usernameInvalidMsg, ),
+      Inputs.usernameInput => (AccountConstants.isValidUsername, AccountConstants.usernameInvalidMsg,),
       Inputs.emailInput => (AccountConstants.isValidEmail, AccountConstants.emailInvalidMsg, ),
       Inputs.passwordInput => (AccountConstants.isValidPassword, AccountConstants.passwordInvalidMsg, ),
-      Inputs.confirmPasswordInput => (AccountConstants.isValidPassword, AccountConstants.passwordInvalidMsg, ),
+      _ => (null, null),
     };
-    if (!val.$1(textUTF8)) {
+    final validateFunc = val.$1;
+    final errorMessage = val.$2;
+    if (validateFunc == null || errorMessage == null) {
+      printOnDebug("Unexpected value for _validateInput");
+      return false;
+    }
+    if (!validateFunc(textUTF8)) {
       setState(() {
-        errors[input] = Error(val.$2, controller.text, true);
+        errors[input] = Error(errorMessage, controller.text, true);
       });
       return false;
     }
@@ -144,7 +174,6 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   }
 
   void signUp() async {
-    BuildContext buildContext = context;
     if (_checkErrorActive(Inputs.passwordInput, passwordFocusNode)) return;
     if (_checkErrorActive(Inputs.emailInput, emailFocusNode)) return;
     if (_checkErrorActive(Inputs.usernameInput, usernameFocusNode)) return;
@@ -168,13 +197,9 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     setState(() {
       isLoading = true;
     });
+    BuildContext buildContext = context;
     final api = buildContext.read<ServerApi>();
-    AuthEvent? event = await ProtocolSenderEmailAuth.signUp(
-      api,
-      emailUTF8,
-      passwordUTF8,
-      usernameUTF8,
-    );
+    AuthEvent? event = await ProtocolSenderEmailAuth.signUp(api, emailUTF8, passwordUTF8, usernameUTF8,);
     if (!buildContext.mounted) return;
     onAuthResponse(buildContext, event);
     setState(() {
@@ -183,7 +208,6 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
   }
 
   void signIn() async {
-    BuildContext buildContext = context;
     if (_checkErrorActive(Inputs.passwordInput, passwordFocusNode)) return;
     if (_checkErrorActive(Inputs.emailInput, emailFocusNode)) return;
 
@@ -194,12 +218,9 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     setState(() {
       isLoading = true;
     });
-    final api = context.read<ServerApi>();
-    AuthEvent? event = await ProtocolSenderEmailAuth.signIn(
-      api,
-      emailUTF8,
-      passwordUTF8,
-    );
+    BuildContext buildContext = context;
+    final api = buildContext.read<ServerApi>();
+    AuthEvent? event = await ProtocolSenderEmailAuth.signIn(api, emailUTF8, passwordUTF8,);
     if (!buildContext.mounted) return;
     onAuthResponse(buildContext, event);
     setState(() {
@@ -223,11 +244,11 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     final colors = AppTheme.themeColorsOf(context);
     return ValueListenableBuilder(
       valueListenable: AppNotifiers.isSignedIn,
-      builder: (context, isSignedIn, child) {
+      builder: (buildContext, isSignedIn, child) {
         if (isSignedIn == true) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (!_navLocked) {
-              Navigator.pop(context);
+            if (!_navLocked && buildContext.mounted) {
+              Navigator.pop(buildContext);
               _navLocked = true;
             }
           });
