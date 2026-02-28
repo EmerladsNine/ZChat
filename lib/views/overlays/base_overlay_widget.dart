@@ -14,7 +14,7 @@ abstract class BaseOverlayWidget {
 
   void insertOverlayMenu(Offset position, Size size, BuildContext context) {
     final ThemeColorScheme colors = AppTheme.themeColorsOf(context);
-
+    if(menuOverlayEntry != null) return;
     menuOverlayEntry = OverlayEntry(
       builder: (context) {
         return Stack(

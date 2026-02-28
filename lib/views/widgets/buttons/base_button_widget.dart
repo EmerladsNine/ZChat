@@ -85,7 +85,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     _emptyAnimationDone = null;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //Next Frame , animation will start.
-      if (context.mounted) {
+      if (context.mounted && _pressed) {
         _emptyAnimationDone = Completer<void>();
       }
     });
