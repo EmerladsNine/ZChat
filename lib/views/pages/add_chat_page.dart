@@ -79,7 +79,7 @@ class _AddChatPageState extends State<AddChatPage> {
     return true;
   }
 
-  void _handleUsernameSearch(BuildContext buildContext,String searchText) async {
+  Future<void> _handleUsernameSearch(BuildContext buildContext,String searchText) async {
     final searchUTF8 = utf8.encode(searchText);
     if (!AccountConstants.isValidUsername(searchUTF8)) {
       setState(() {
@@ -103,7 +103,7 @@ class _AddChatPageState extends State<AddChatPage> {
     BuildContext buildContext = context;
     if (await _handleIdSearch(buildContext,searchController.text)) return _resetRequestInFlight();
     if(!buildContext.mounted) return _resetRequestInFlight();
-    _handleUsernameSearch(buildContext,searchController.text);
+    await _handleUsernameSearch(buildContext,searchController.text);
     return _resetRequestInFlight();
   }
 
