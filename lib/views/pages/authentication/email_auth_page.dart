@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
-import 'package:zchat/messages_system/internet/handlers/response_code_handler.dart';
+import 'package:zchat/messages_system/internet/handlers/auth_response_code_handler.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_email_auth.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
@@ -103,21 +103,21 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
       );
       return;
     }
-    if (ResponseCodeHandler.isPasswordError(value.code)) {
+    if (AuthResponseCodeHandler.isPasswordError(value.code)) {
       _handleFieldError(
         passwordFocusNode,
         Inputs.passwordInput,
         passwordController,
         value.msg,
       );
-    } else if (ResponseCodeHandler.isEmailError(value.code)) {
+    } else if (AuthResponseCodeHandler.isEmailError(value.code)) {
       _handleFieldError(
         emailFocusNode,
         Inputs.emailInput,
         emailController,
         value.msg,
       );
-    } else if (ResponseCodeHandler.isEmailUsernameError(value.code)) {
+    } else if (AuthResponseCodeHandler.isEmailUsernameError(value.code)) {
       _handleFieldError(
         usernameFocusNode,
         Inputs.usernameInput,

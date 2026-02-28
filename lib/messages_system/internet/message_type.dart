@@ -6,12 +6,13 @@ enum MessageType {
   normalMessage(id: 2),
   emailSignIn(id: 3),
   emailSignUp(id: 4),
-  responseCode(id: 5),
+  authResponseCode(id: 5),
   googleSignIn(id: 6),
   googleSignUp(id: 7),
   searchWithUsername(id: 8),
   searchWithId(id: 9),
-  searchResponseCode(id: 10);
+  searchResponseCode(id: 10),
+  normalMessageResponseCode(id: 11);
 
   final int id;
   const MessageType({required this.id});

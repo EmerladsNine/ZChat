@@ -48,6 +48,11 @@ class Chat extends ChangeNotifier {
     notifyListeners();
   }
 
+  void notifyChange()
+  {
+    notifyListeners();
+  }
+
   void clearAllChats() {
     _messages.clear();
     notifyListeners();

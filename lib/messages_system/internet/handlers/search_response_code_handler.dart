@@ -4,7 +4,7 @@ import 'package:zchat/messages_system/internet/callback_notifiers.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
-import 'package:zchat/messages_system/internet/search_response_code.dart';
+import 'package:zchat/messages_system/internet/response_codes/search_response_code.dart';
 
 class SearchResponseCodeHandler extends Handler {
   @override

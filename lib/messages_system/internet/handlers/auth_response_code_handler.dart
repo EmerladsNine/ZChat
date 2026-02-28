@@ -2,10 +2,10 @@ import 'package:zchat/messages_system/internet/callback_notifiers.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
-import 'package:zchat/messages_system/internet/response_code.dart';
+import 'package:zchat/messages_system/internet/response_codes/auth_response_code.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
-class ResponseCodeHandler extends Handler {
+class AuthResponseCodeHandler extends Handler {
   static final Map<int, String> emailFailures = {
     ResponseCode.emailAccountEmailExistError.id:
         "Email is already used in an existing account.",

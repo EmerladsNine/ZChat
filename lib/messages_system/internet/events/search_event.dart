@@ -1,4 +1,4 @@
-import 'package:zchat/messages_system/internet/search_response_code.dart';
+import 'package:zchat/messages_system/internet/response_codes/search_response_code.dart';
 
 class SearchEvent {
   final SearchResponseCode code;

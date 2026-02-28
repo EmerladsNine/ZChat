@@ -8,6 +8,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets
 class Message {
   Message({
     required this.text,
+    this.messageStatus = MessageStatus.undelivered,
     this.emojiMessageType = EmojiMessageType.notEmoji,
     this.isChildMessage = false,
     this.timestamp = 0,
@@ -15,7 +16,7 @@ class Message {
     this.senderId,
     this.replyData,
   });
-
+  MessageStatus messageStatus;
   String text;
   int timestamp;
   String? senderName;
@@ -45,7 +46,7 @@ class Message {
       isEmojiBubble: emojiMessageType == EmojiMessageType.oneEmoji,
       emojiMessageType: emojiMessageType,
       isChildBubble: isChildMessage,
-      messageStatus: MessageStatus.delivered,
+      messageStatus: messageStatus,
       // Placeholder
       replyData: replyData,
       footerTextFieldFocusNode: footerTextFieldFocusNode,

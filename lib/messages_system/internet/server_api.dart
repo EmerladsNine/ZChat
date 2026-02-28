@@ -3,10 +3,13 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:zchat/messages_system/enums/message_status.dart';
+import 'package:zchat/messages_system/internet/events/ok_event.dart';
 import 'package:zchat/messages_system/internet/listener_service.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_normal_message.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
@@ -72,25 +75,24 @@ class ServerApi {
     message = message.trim();
     MessageReplyData? replyData = AppNotifiers.replyData.value;
     try {
-      Uint8List replyTextSender = utf8.encode(replyData?.replyTextSender ?? "");
-      Uint8List replyText = utf8.encode(replyData?.replyText ?? "");
-      sendProtocolUnit(MessageType.normalMessage, [
-        ...intToBigEndian(replyTextSender.length, 4),
-        ...replyTextSender,
-        ...intToBigEndian(replyText.length, 4),
-        ...replyText,
-        ...utf8.encode(message),
-      ]);
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
 
       Message msg = Message(
         text: message,
+        messageStatus: MessageStatus.unsent,
         timestamp: timestamp,
         replyData: replyData,
       );
       ChatsStorageManager.insertMessage(message: msg);
-      AppNotifiers.replyData.value = null;
       chat.addMessage(msg);
+      Uint8List replyTextSenderUTF8 = utf8.encode(replyData?.replyTextSender ?? "");
+      Uint8List replyTextUTF8 = utf8.encode(replyData?.replyText ?? "");
+      Uint8List messageUTF8 = utf8.encode(message);
+      OkEvent? result = await ProtocolSenderNormalMessage.send(this, replyTextSenderUTF8, replyTextUTF8, messageUTF8);
+      if(result == null) return;
+      msg.messageStatus = MessageStatus.undelivered;
+      chat.notifyChange();
+      AppNotifiers.replyData.value = null;
 
       printOnDebug('sent: $message');
     } catch (e) {

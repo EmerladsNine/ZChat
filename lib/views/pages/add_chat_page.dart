@@ -7,7 +7,7 @@ import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_search.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
-import 'package:zchat/messages_system/internet/search_response_code.dart';
+import 'package:zchat/messages_system/internet/response_codes/search_response_code.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/controllers/custom_text_controller.dart';

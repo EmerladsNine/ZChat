@@ -1,8 +1,9 @@
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/handlers/normal_message_handler.dart';
+import 'package:zchat/messages_system/internet/handlers/normal_message_response_code_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/ping_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/pong_handler.dart';
-import 'package:zchat/messages_system/internet/handlers/response_code_handler.dart';
+import 'package:zchat/messages_system/internet/handlers/auth_response_code_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/search_response_code_handler.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
@@ -16,8 +17,9 @@ class ListenerService {
     MessageType.ping: PingHandler(),
     MessageType.pong: PongHandler(),
     MessageType.normalMessage: NormalMessageHandler(),
-    MessageType.responseCode: ResponseCodeHandler(),
-    MessageType.searchResponseCode: SearchResponseCodeHandler()
+    MessageType.authResponseCode: AuthResponseCodeHandler(),
+    MessageType.searchResponseCode: SearchResponseCodeHandler(),
+    MessageType.normalMessageResponseCode: NormalMessageResponseCodeHandler()
   };
 
   MessageType? head;

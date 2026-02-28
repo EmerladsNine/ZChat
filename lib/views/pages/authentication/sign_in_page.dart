@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/authentication/google_auth_service.dart';
-import 'package:zchat/messages_system/internet/response_code.dart';
+import 'package:zchat/messages_system/internet/response_codes/auth_response_code.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/authentication/email_auth_page.dart';
