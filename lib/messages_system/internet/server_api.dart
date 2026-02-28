@@ -1,15 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:convert';
-import 'dart:typed_data';
 
+import 'package:zchat/messages_system/data_classes/messages_queue.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
-import 'package:zchat/messages_system/internet/events/ok_event.dart';
 import 'package:zchat/messages_system/internet/listener_service.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
-import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_normal_message.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
@@ -38,6 +35,8 @@ class ServerApi {
   bool waitingForPong = false;
 
   late ListenerService listener;
+
+  MessagesQueue messagesQueue = MessagesQueue();
 
   ServerApi() {
     listener = ListenerService(this);
@@ -85,16 +84,8 @@ class ServerApi {
       );
       ChatsStorageManager.insertMessage(message: msg);
       chat.addMessage(msg);
-      Uint8List replyTextSenderUTF8 = utf8.encode(replyData?.replyTextSender ?? "");
-      Uint8List replyTextUTF8 = utf8.encode(replyData?.replyText ?? "");
-      Uint8List messageUTF8 = utf8.encode(message);
-      OkEvent? result = await ProtocolSenderNormalMessage.send(this, replyTextSenderUTF8, replyTextUTF8, messageUTF8);
-      if(result == null) return;
-      msg.messageStatus = MessageStatus.undelivered;
-      chat.notifyChange();
       AppNotifiers.replyData.value = null;
-
-      printOnDebug('sent: $message');
+      messagesQueue.addMessage(this, msg, chat);
     } catch (e) {
       printOnDebug(e);
     }
@@ -108,6 +99,7 @@ class ServerApi {
       try {
         socket = await Socket.connect(host, port);
         printOnDebug('$caller Connected to $host:$port');
+        messagesQueue.sendMessages(this);
         socket.listen(
           listener.onData,
           onDone: () => reconnectServer("onDone socket.listen"),
