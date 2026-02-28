@@ -75,7 +75,7 @@ class _AddChatPageState extends State<AddChatPage> {
     ServerApi api = buildContext.read<ServerApi>();
     SearchEvent? event = await ProtocolSenderSearch.searchByIdAsync(api, id);
     if(!buildContext.mounted) return true;
-    _onResponseReceived(event);
+    await _onResponseReceived(event);
     return true;
   }
 
@@ -90,11 +90,11 @@ class _AddChatPageState extends State<AddChatPage> {
     ServerApi api = buildContext.read<ServerApi>();
     SearchEvent? event = await ProtocolSenderSearch.searchByUsernameAsync(api, searchUTF8,);
     if(!buildContext.mounted) return;
-    _onResponseReceived(event);
+    await _onResponseReceived(event);
   }
 
   void _resetRequestInFlight() => _requestInFlight = false;
-  void _sendSearch() async {
+  Future<void> _sendSearch() async {
     if (!_validateSearch()) return;
     _requestInFlight = true;
     setState(() {
@@ -107,10 +107,10 @@ class _AddChatPageState extends State<AddChatPage> {
     return _resetRequestInFlight();
   }
 
-  bool _handlePendingSearch() {
+  Future<bool> _handlePendingSearch() async {
     if (_pendingSearch) {
         _pendingSearch = false;
-        _sendSearch();
+        await _sendSearch();
       return true;
     }
     return false;
@@ -139,16 +139,16 @@ class _AddChatPageState extends State<AddChatPage> {
     }
   }
 
-  void _onResponseReceived(SearchEvent? value) {
+  Future<void> _onResponseReceived(SearchEvent? value) async {
     if (!_requestInFlight) return;
     _requestInFlight = false;
+    if (await _handlePendingSearch()) return;
     if (value == null) {
       setState(() {
         _searchState = SearchState.internetFailure;
       });
       return;
     }
-    if (_handlePendingSearch()) return;
     _stateUpdate(value);
   }
 
