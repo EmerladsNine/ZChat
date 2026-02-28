@@ -8,6 +8,7 @@ import 'package:zchat/messages_system/internet/events/search_event.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_search.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/search_response_code.dart';
+import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/controllers/custom_text_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
@@ -39,16 +40,18 @@ class _AddChatPageState extends State<AddChatPage> {
   CustomTextController searchController = CustomTextController();
 
   bool _validateSearch() {
+    if (_requestInFlight) {
+      _pendingSearch = true;
+      return false;
+    }
+
     if (searchController.text.isEmpty) {
       setState(() {
         _searchState = SearchState.noSearch;
       });
       return false;
     }
-    if (_requestInFlight) {
-      _pendingSearch = true;
-      return false;
-    }
+
     _pendingSearch = false;
     return true;
   }
@@ -69,11 +72,10 @@ class _AddChatPageState extends State<AddChatPage> {
       });
       return true;
     }
-    _requestInFlight = true;
     ServerApi api = buildContext.read<ServerApi>();
     SearchEvent? event = await ProtocolSenderSearch.searchByIdAsync(api, id);
     if(!buildContext.mounted) return true;
-    onResponseReceived(event);
+    _onResponseReceived(event);
     return true;
   }
 
@@ -85,39 +87,36 @@ class _AddChatPageState extends State<AddChatPage> {
       });
       return;
     }
-    _requestInFlight = true;
     ServerApi api = buildContext.read<ServerApi>();
-    SearchEvent? event = await ProtocolSenderSearch.searchByUsernameAsync(
-      api,
-      searchUTF8,
-    );
+    SearchEvent? event = await ProtocolSenderSearch.searchByUsernameAsync(api, searchUTF8,);
     if(!buildContext.mounted) return;
-    onResponseReceived(event);
+    _onResponseReceived(event);
   }
 
+  void _resetRequestInFlight() => _requestInFlight = false;
   void _sendSearch() async {
-    BuildContext buildContext = context;
     if (!_validateSearch()) return;
+    _requestInFlight = true;
     setState(() {
       _searchState = SearchState.waiting;
     });
-    if (await _handleIdSearch(buildContext,searchController.text)) return;
-    if(!buildContext.mounted) return;
+    BuildContext buildContext = context;
+    if (await _handleIdSearch(buildContext,searchController.text)) return _resetRequestInFlight();
+    if(!buildContext.mounted) return _resetRequestInFlight();
     _handleUsernameSearch(buildContext,searchController.text);
+    return _resetRequestInFlight();
   }
 
   bool _handlePendingSearch() {
     if (_pendingSearch) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
         _pendingSearch = false;
         _sendSearch();
-      });
       return true;
     }
     return false;
   }
 
-  void _scheduleStateUpdate(SearchEvent value) {
+  void _stateUpdate(SearchEvent value) {
     if (value.code == SearchResponseCode.notFound) {
       setState(() {
         _searchState = SearchState.notFound;
@@ -135,19 +134,22 @@ class _AddChatPageState extends State<AddChatPage> {
         id = value.id!;
       });
     }
+    else {
+      printOnDebug("Not Implemented SearchResponseCode on _stateUpdate");
+    }
   }
 
-  void onResponseReceived(SearchEvent? value) {
+  void _onResponseReceived(SearchEvent? value) {
+    if (!_requestInFlight) return;
+    _requestInFlight = false;
     if (value == null) {
       setState(() {
         _searchState = SearchState.internetFailure;
       });
       return;
     }
-    if (!_requestInFlight) return;
-    _requestInFlight = false;
     if (_handlePendingSearch()) return;
-    _scheduleStateUpdate(value);
+    _stateUpdate(value);
   }
 
   @override
