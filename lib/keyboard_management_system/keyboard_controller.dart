@@ -41,11 +41,11 @@ class KeyboardController {
   }
 
   static void changeHeight(double newHeight) async {
-    if (newHeight != 0 && actualKeyboardHeight != newHeight) {
-      await StorageManager.setDouble('keyboardHeight', newHeight);
-      actualKeyboardHeight = newHeight;
-    }
     nextKeyboardHeight = newHeight;
+    if (newHeight != 0 && actualKeyboardHeight != newHeight) {
+      actualKeyboardHeight = newHeight;
+      await StorageManager.setDouble('keyboardHeight', newHeight);
+    }
   }
 
   static void changeState(bool isFullyOpen, bool isFullyClosed) {
