@@ -6,9 +6,9 @@ import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 
 class ChatsStorageManager {
   static Chat globalChat = Chat(); // Todo : remove this when it becomes useless
-  static Future<void> insertMessage({required Message message}) async {
+  static Future<int> insertMessage({required Message message}) async {
     //Todo idk just make sure this is safe and doesnt need to have checks on the input or something.
-    StorageManager.db.insert('messages', {
+    return StorageManager.db.insert('messages', {
       'senderId': message.senderId,
       'timestamp': message.timestamp,
       'message': message.text,
@@ -38,6 +38,7 @@ class ChatsStorageManager {
   static void loadChats() async {
     List<Map<String, dynamic>> messages = await getMessages(StorageManager.db);
     for (Map<String, dynamic> messageData in messages) {
+      int id = messageData['id'];
       String? replySenderName = messageData['replySenderName'];
       String? replyText = messageData['replyText'];
       MessageReplyData? replyData;
@@ -45,6 +46,7 @@ class ChatsStorageManager {
         replyData = MessageReplyData(replyText, replySenderName);
       }
       Message message = Message(
+        messageId: id,
         text: messageData['message'],
         timestamp: messageData['timestamp'],
         senderName: messageData['senderId'] == 1 ? 'Max' : null,

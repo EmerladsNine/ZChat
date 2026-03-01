@@ -7,6 +7,7 @@ import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets
 
 class Message {
   Message({
+    required this.messageId,
     required this.text,
     this.messageStatus = MessageStatus.undelivered,
     this.emojiMessageType = EmojiMessageType.notEmoji,
@@ -16,6 +17,7 @@ class Message {
     this.senderId,
     this.replyData,
   });
+  int messageId;
   MessageStatus messageStatus;
   String text;
   int timestamp;
@@ -39,6 +41,7 @@ class Message {
       maxBubbleWidth = maxBubbleWidth - 40; // remove the width used by pfp
     }
     return MessageBubbleWidget(
+      key: ValueKey(messageId),
       text: text,
       time: time,
       senderName: senderName,

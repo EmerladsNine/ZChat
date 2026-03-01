@@ -77,12 +77,13 @@ class ServerApi {
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
 
       Message msg = Message(
+        messageId: 0,
         text: message,
         messageStatus: MessageStatus.unsent,
         timestamp: timestamp,
         replyData: replyData,
       );
-      ChatsStorageManager.insertMessage(message: msg);
+      msg.messageId = await ChatsStorageManager.insertMessage(message: msg);
       chat.addMessage(msg);
       AppNotifiers.replyData.value = null;
       messagesQueue.addMessage(this, msg, chat);
