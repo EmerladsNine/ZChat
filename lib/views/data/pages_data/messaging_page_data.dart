@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:zchat/views/data/app_constants.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/data_classes/pages/ripple_effect_button_data.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_action_item_widget.dart';
 
@@ -12,7 +14,10 @@ final List<RippleEffectButtonData> commonMessageActionsData = [
     child: MessageActionItemWidget(label: 'Reply', icon: '↩️'),
   ),
   RippleEffectButtonData(
-    onTap: () {},
+    onTap: () {
+      if(AppNotifiers.selectedMessage.value == null) return;
+      Clipboard.setData(ClipboardData(text: AppNotifiers.selectedMessage.value!.text));
+    },
     child: MessageActionItemWidget(label: 'Copy', icon: '📄'),
   ),
   RippleEffectButtonData(

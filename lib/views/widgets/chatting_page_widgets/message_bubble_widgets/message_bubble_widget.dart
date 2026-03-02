@@ -259,6 +259,8 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                               Offset.zero,
                             );
 
+                            AppNotifiers.selectedMessage.value = widget;
+
                             MessageActionsMenuWidget.instance.setReceived(
                               received,
                             );
