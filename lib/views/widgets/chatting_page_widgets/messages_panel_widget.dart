@@ -42,7 +42,6 @@ class MessagesPanelWidget extends StatelessWidget {
                     child: Scrollbar(
                       controller: scrollController,
                       thumbVisibility: true,
-
                       thickness: Platform.isWindows || Platform.isLinux || Platform.isMacOS ? 0 : 3,
                       child: ListView.builder(
                         key: listKey,

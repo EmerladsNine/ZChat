@@ -106,6 +106,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onHorizontalDragCancel: () {
+        AppNotifiers.disableMenu.value -= 1;
         setState(() {
           dragWidth = 0;
         });
@@ -121,10 +122,12 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
         });
       },
       onHorizontalDragDown: (details) {
+        AppNotifiers.disableMenu.value += 1;
         dragStart = details.localPosition.dx;
         didVibrate = false;
       },
       onHorizontalDragEnd: (_) {
+        AppNotifiers.disableMenu.value -= 1;
         setState(() {
           if (-dragWidth >= maxDrag) {
             if (!didVibrate) {
@@ -253,6 +256,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                           disableSet: AppNotifiers.disableButtons,
                           appStateNotifier: AppNotifiers.isNavigating,
                           onTap: () {
+                            if(AppNotifiers.disableMenu.value != 0) return;
                             RenderBox box =
                                 context.findRenderObject() as RenderBox;
                             Offset globalTopLeft = box.localToGlobal(

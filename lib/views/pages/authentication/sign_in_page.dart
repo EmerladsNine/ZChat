@@ -93,114 +93,118 @@ class _SignInPageState extends State<SignInPage> {
                   horizontal: 8.0,
                   vertical: 0,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 50,
-                  children: [
-                    Column(
-                      children: [
-                        Icon(
-                          Icons.bubble_chart_rounded,
-                          color: colors.primaryColor,
-                          size: 50,
-                        ),
-                        Text(
-                          "Register to ZChat",
-                          style: TextStyle(
-                            color: colors.primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 30,
                       children: [
                         Column(
-                          spacing: 20,
                           children: [
-                            if (Platform.isAndroid || Platform.isIOS)
-                              RippleEffectButtonWidget(
-                                disableSet: AppNotifiers.disableButtons,
-                                appStateNotifier: AppNotifiers.isNavigating,
-                                child: SvgPicture.asset(
-                                  "assets/icons/google_web_signIn_svg/dark/web_dark_sq_ctn.svg",
-                                  height: 51,
-                                ),
-                                onTap: () {
-                                  continueWithGoogle(context);
-                                },
+                            Icon(
+                              Icons.bubble_chart_rounded,
+                              color: colors.primaryColor,
+                              size: 50,
+                            ),
+                            Text(
+                              "Register to ZChat",
+                              style: TextStyle(
+                                color: colors.primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900,
                               ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              spacing: 20,
+                              children: [
+                                if (Platform.isAndroid || Platform.isIOS)
+                                  RippleEffectButtonWidget(
+                                    disableSet: AppNotifiers.disableButtons,
+                                    appStateNotifier: AppNotifiers.isNavigating,
+                                    child: SvgPicture.asset(
+                                      "assets/icons/google_web_signIn_svg/dark/web_dark_sq_ctn.svg",
+                                      height: 51,
+                                    ),
+                                    onTap: () {
+                                      continueWithGoogle(context);
+                                    },
+                                  ),
 
-                            if (Platform.isAndroid || Platform.isIOS)
-                              RippleEffectButtonWidget(
-                                disableSet: AppNotifiers.disableButtons,
-                                appStateNotifier: AppNotifiers.isNavigating,
-                                overlayBorderRadius: BorderRadius.circular(10),
-                                child: Container(
-                                  height: 54,
-                                  width: 240,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: Color.fromARGB(
-                                        0xff,
-                                        0x8E,
-                                        0x91,
-                                        0x8F,
+                                if (Platform.isAndroid || Platform.isIOS)
+                                  RippleEffectButtonWidget(
+                                    disableSet: AppNotifiers.disableButtons,
+                                    appStateNotifier: AppNotifiers.isNavigating,
+                                    overlayBorderRadius: BorderRadius.circular(10),
+                                    child: Container(
+                                      height: 54,
+                                      width: 240,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: Color.fromARGB(
+                                            0xff,
+                                            0x8E,
+                                            0x91,
+                                            0x8F,
+                                          ),
+                                          width: 1,
+                                        ),
                                       ),
-                                      width: 1,
+                                      child: Image.asset(
+                                        "assets/icons/apple_buttons/appleid_button@4xDark.png",
+                                        height: 51,
+                                      ),
                                     ),
                                   ),
-                                  child: Image.asset(
-                                    "assets/icons/apple_buttons/appleid_button@4xDark.png",
-                                    height: 51,
-                                  ),
+                                SignInPageButton(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      SlidingAnimationPageRoute(
+                                        page: EmailAuthPage(isSignIn: _signIn),
+                                      ),
+                                    );
+                                  },
+                                  text: _signIn
+                                      ? "Sign in with Email"
+                                      : "Sign up with Email",
+                                  icon: Icon(Icons.email_rounded, size: 25),
                                 ),
-                              ),
-                            SignInPageButton(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  SlidingAnimationPageRoute(
-                                    page: EmailAuthPage(isSignIn: _signIn),
+                                SignInPageButton(
+                                  icon: Icon(
+                                    Icons.signal_wifi_connected_no_internet_4,
                                   ),
-                                );
-                              },
-                              text: _signIn
-                                  ? "Sign in with Email"
-                                  : "Sign up with Email",
-                              icon: Icon(Icons.email_rounded, size: 25),
-                            ),
-                            SignInPageButton(
-                              icon: Icon(
-                                Icons.signal_wifi_connected_no_internet_4,
-                              ),
-                              text: "Offline Mode",
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  SlidingAnimationPageRoute(
-                                    page: OfflineModePage(),
-                                  ),
-                                );
-                              },
-                            ),
-                            AuthFooter(
-                              isSignIn: _signIn,
-                              onTap: () {
-                                setState(() {
-                                  _signIn = !_signIn;
-                                });
-                              },
+                                  text: "Offline Mode",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      SlidingAnimationPageRoute(
+                                        page: OfflineModePage(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                AuthFooter(
+                                  isSignIn: _signIn,
+                                  onTap: () {
+                                    setState(() {
+                                      _signIn = !_signIn;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
