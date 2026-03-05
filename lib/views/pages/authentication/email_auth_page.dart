@@ -268,51 +268,53 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
                       horizontal: 8.0,
                       vertical: 0,
                     ),
-                    child: SingleChildScrollView(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            spacing: 20,
-                            children: [
-                              Text(
-                                _isSignIn
-                                    ? "Sign in with Email"
-                                    : "Sign up with Email",
-                                style: TextStyle(
-                                  color: colors.primaryColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w900,
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              spacing: 20,
+                              children: [
+                                Text(
+                                  _isSignIn
+                                      ? "Sign in with Email"
+                                      : "Sign up with Email",
+                                  style: TextStyle(
+                                    color: colors.primaryColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w900,
+                                  ),
                                 ),
-                              ),
-                              EmailFormWidget(
-                                isSignIn: _isSignIn,
-                                emailController: emailController,
-                                passwordController: passwordController,
-                                usernameController: usernameController,
-                                confirmPasswordController:
-                                    confirmPasswordController,
-                                emailFocusNode: emailFocusNode,
-                                passwordFocusNode: passwordFocusNode,
-                                confirmPasswordFocusNode:
-                                    confirmPasswordFocusNode,
-                                usernameFocusNode: usernameFocusNode,
-                                errors: errors,
-                                signIn: signIn,
-                                signUp: signUp,
-                              ),
-                              AuthFooter(
-                                isSignIn: _isSignIn,
-                                onTap: () {
-                                  resetError();
-                                  setState(() {
-                                    _isSignIn = !_isSignIn;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
+                                EmailFormWidget(
+                                  isSignIn: _isSignIn,
+                                  emailController: emailController,
+                                  passwordController: passwordController,
+                                  usernameController: usernameController,
+                                  confirmPasswordController:
+                                      confirmPasswordController,
+                                  emailFocusNode: emailFocusNode,
+                                  passwordFocusNode: passwordFocusNode,
+                                  confirmPasswordFocusNode:
+                                      confirmPasswordFocusNode,
+                                  usernameFocusNode: usernameFocusNode,
+                                  errors: errors,
+                                  signIn: signIn,
+                                  signUp: signUp,
+                                ),
+                                AuthFooter(
+                                  isSignIn: _isSignIn,
+                                  onTap: () {
+                                    resetError();
+                                    setState(() {
+                                      _isSignIn = !_isSignIn;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

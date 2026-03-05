@@ -112,10 +112,10 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
         });
       },
       onHorizontalDragUpdate: (details) {
-        if (!didVibrate && -dragWidth >= maxDrag) {
-          HapticFeedback.selectionClick();
-          didVibrate = true;
-        }
+        // if (!didVibrate && -dragWidth >= maxDrag) {
+        //   HapticFeedback.selectionClick();
+        //   didVibrate = true;
+        // }
         setState(() {
           dragWidth = dragStart - details.localPosition.dx;
           if (dragWidth > 0) dragWidth = 0;
@@ -124,16 +124,16 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
       onHorizontalDragDown: (details) {
         AppNotifiers.disableMenu.value += 1;
         dragStart = details.localPosition.dx;
-        didVibrate = false;
+        // didVibrate = false;
       },
       onHorizontalDragEnd: (_) {
         AppNotifiers.disableMenu.value -= 1;
         setState(() {
           if (-dragWidth >= maxDrag) {
-            if (!didVibrate) {
-              HapticFeedback.selectionClick();
-              didVibrate = true;
-            }
+            // if (!didVibrate) {
+            //   HapticFeedback.selectionClick();
+            //   didVibrate = true;
+            // }
             AppNotifiers.replyData.value = MessageReplyData(
               widget.text,
               widget.senderName ?? "",

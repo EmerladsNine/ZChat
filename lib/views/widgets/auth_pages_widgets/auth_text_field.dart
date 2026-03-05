@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 
 class AuthTextField extends StatefulWidget {
-  const AuthTextField({super.key,required this.controller,required this.label, this.hint , this.obscureText = false,required this.focusNode,this.nextFocusNode,this.onSubmitted,this.error});
+  const AuthTextField({super.key,
+    required this.controller,
+    required this.label,
+    this.hint ,
+    this.obscureText = false,
+    required this.focusNode,
+    this.nextFocusNode,
+    this.onSubmitted,
+    this.error,
+    this.suffixIcon
+  });
   final TextEditingController controller;
   final FocusNode focusNode;
   final FocusNode? nextFocusNode;
@@ -11,6 +21,7 @@ class AuthTextField extends StatefulWidget {
   final String? hint;
   final String? error;
   final bool obscureText;
+  final Widget? suffixIcon;
 
 
   @override
@@ -34,6 +45,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
           },
           style: TextStyle(color: colors.primaryColor),
           decoration: InputDecoration(
+            suffixIcon: widget.suffixIcon,
             errorText: widget.error,
             errorMaxLines: 2,
             errorStyle: TextStyle(color: colors.errorMessageColor),

@@ -25,9 +25,7 @@ class _PasswordFieldState extends State<PasswordField> {
   bool isPasswordHidden = true;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      spacing: 2,
-      children: [
+    return
         AuthTextField(
           controller: widget.passwordController,
           label: "Password",
@@ -36,31 +34,29 @@ class _PasswordFieldState extends State<PasswordField> {
           focusNode: widget.focusNode,
           nextFocusNode: widget.nextFocusNode,
           onSubmitted: widget.onSubmitted,
-        ),
-        RippleEffectButtonWidget(
-          appStateNotifier: AppNotifiers.isNavigating,
-          disableSet: AppNotifiers.disableButtons,
-          padding: EdgeInsetsGeometry.all(10),
-          onTapDown: (_) {
-            setState(() {
-              isPasswordHidden = false;
-            });
-          },
-          onTap: () {
-            setState(() {
-              isPasswordHidden = true;
-            });
-          },
-          onTapCancel: () {
-            setState(() {
-              isPasswordHidden = true;
-            });
-          },
-          animationDuration: Duration(milliseconds: 20),
-          overlayBorderRadius: BorderRadius.circular(20),
-          child: Icon(Icons.remove_red_eye_rounded),
-        ),
-      ],
-    );
+          suffixIcon: RippleEffectButtonWidget(
+            appStateNotifier: AppNotifiers.isNavigating,
+            disableSet: AppNotifiers.disableButtons,
+            padding: EdgeInsetsGeometry.all(10),
+            onTapDown: (_) {
+              setState(() {
+                isPasswordHidden = false;
+              });
+            },
+            onTap: () {
+              setState(() {
+                isPasswordHidden = true;
+              });
+            },
+            onTapCancel: () {
+              setState(() {
+                isPasswordHidden = true;
+              });
+            },
+            animationDuration: Duration(milliseconds: 20),
+            overlayBorderRadius: BorderRadius.circular(20),
+            child: Icon(Icons.remove_red_eye_rounded),
+          ),
+        );
   }
 }

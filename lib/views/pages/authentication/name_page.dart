@@ -130,44 +130,46 @@ class _NamePageState extends State<NamePage> {
                       horizontal: 8.0,
                       vertical: 0,
                     ),
-                    child: SingleChildScrollView(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            spacing: 20,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: colors.cardsColor.withAlpha(200),
-                                  borderRadius: BorderRadius.circular(15),
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              spacing: 20,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: colors.cardsColor.withAlpha(200),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  padding: EdgeInsetsGeometry.all(20),
+                                  child: Column(
+                                    spacing: 20,
+                                    children: [
+                                      AuthTextField(
+                                        controller: usernameController,
+                                        label: "Username",
+                                        error: usernameErrorActive
+                                            ? usernameError
+                                            : null,
+                                        focusNode: usernameFocusNode,
+                                        onSubmitted: (_) {
+                                          _signUp();
+                                        },
+                                      ),
+                                      AuthButton(
+                                        text: "Continue",
+                                        onTap: _signUp,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                padding: EdgeInsetsGeometry.all(20),
-                                child: Column(
-                                  spacing: 20,
-                                  children: [
-                                    AuthTextField(
-                                      controller: usernameController,
-                                      label: "Username",
-                                      error: usernameErrorActive
-                                          ? usernameError
-                                          : null,
-                                      focusNode: usernameFocusNode,
-                                      onSubmitted: (_) {
-                                        _signUp();
-                                      },
-                                    ),
-                                    AuthButton(
-                                      text: "Continue",
-                                      onTap: _signUp,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              AuthFooter(),
-                            ],
-                          ),
-                        ],
+                                AuthFooter(),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
