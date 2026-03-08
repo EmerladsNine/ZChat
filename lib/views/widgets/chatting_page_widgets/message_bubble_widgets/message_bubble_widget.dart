@@ -29,7 +29,6 @@ SOFTWARE.
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:zchat/messages_system/enums/emoji_message_types.dart';
 import 'package:zchat/themes_system/enums/message_bubble_color.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
