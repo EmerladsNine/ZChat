@@ -1,9 +1,11 @@
+import 'dart:convert';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zchat/messages_system/internet/callback_notifiers.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/response_codes/auth_response_code.dart';
-import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
 class AuthResponseCodeHandler extends Handler {
@@ -58,14 +60,17 @@ class AuthResponseCodeHandler extends Handler {
         responseCode == ResponseCode.googleAuthSuccessful.id) {
       int id = bigEndianToInt(buffer, 4);
       List<int> accessToken = buffer.getRange(0, 32).toList();
+      String accessTokenEncoded = base64Encode(accessToken);
       buffer.removeRange(0, 32);
       List<int> refreshToken = buffer.getRange(0, 64).toList();
+      String refreshTokenEncoded = base64Encode(refreshToken);
       buffer.removeRange(0, 64);
-      printOnDebug("id received : $id");
-      printOnDebug("accessTok received : $accessToken");
-      printOnDebug("refreshTok received : $refreshToken");
-
-      AppNotifiers.isSignedIn.value = true;
+      const storage = FlutterSecureStorage();
+      storage.write(key: "access_token", value: accessTokenEncoded).then((_){
+        storage.write(key: "refresh_token", value: refreshTokenEncoded).then((_){
+          AppNotifiers.isSignedIn.value = true;
+        });
+      });
       return true;
     }
 
