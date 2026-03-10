@@ -170,14 +170,14 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
             spacing: 5,
             children: [
                   Container(
-                      width: -dragWidth >= maxDrag ? null : 0,
+                      width: -dragWidth >= maxDrag ? null : min(-dragWidth,25),
                       decoration: BoxDecoration(
                         color: colors.cardsColor,
                         borderRadius: BorderRadius.circular(50),
                         border: Border.all(color: colors.dividerColor)
                       ),
                       padding: EdgeInsetsGeometry.all(-dragWidth >= maxDrag ? 5 : 0),
-                      child: Icon(Icons.reply_rounded,color: colors.primaryColor,size: -dragWidth >= maxDrag ? 25 : 0,)),
+                      child: Icon(Icons.reply_rounded,color: colors.primaryColor,size: -dragWidth >= maxDrag ? 25 : min(-dragWidth,25),)),
 
               if (received)
                 Row(

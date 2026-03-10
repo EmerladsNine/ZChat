@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/data_classes/group_chat_data.dart';
 import 'package:zchat/messages_system/data_classes/id.dart';
 import 'package:zchat/themes_system/app_theme.dart';
@@ -18,7 +20,7 @@ class ChattingPageAppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeColorScheme colors = AppTheme.themeColorsOf(context);
-
+    final chat = context.watch<Chat>();
     return CustomToolTip(
       message: 'Profile Details',
       preferBelow: true,
@@ -34,7 +36,7 @@ class ChattingPageAppBarWidget extends StatelessWidget {
                 context,
                 SlidingAnimationPageRoute(page: ChatDetailsPage(
                   chatData: GroupChatData(
-                    id: Id(id: 0, name: 'Max', isChatId: false),
+                    id: Id(id: 0, name: chat.name, isChatId: false),
                     description: 'I love mathematics.',
                     members: [
                       Id(id: 0, name: 'You', isChatId: false),
@@ -71,7 +73,7 @@ class ChattingPageAppBarWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ScaledTextWidget(
-                  'Max',
+                  chat.name,
                   style: AppTextStyles.appBarPrimaryTextStyle(
                     colors,
                   ).copyWith(fontSize: 15),

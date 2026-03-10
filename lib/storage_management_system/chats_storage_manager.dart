@@ -5,9 +5,8 @@ import 'package:zchat/storage_management_system/storage_manager.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 
 class ChatsStorageManager {
-  static Chat globalChat = Chat(); // Todo : remove this when it becomes useless
+  static Chat globalChat = Chat("Max"); // Todo : remove this when it becomes useless
   static Future<int> insertMessage({required Message message}) async {
-    //Todo idk just make sure this is safe and doesnt need to have checks on the input or something.
     return StorageManager.db.insert('messages', {
       'senderId': message.senderId,
       'timestamp': message.timestamp,

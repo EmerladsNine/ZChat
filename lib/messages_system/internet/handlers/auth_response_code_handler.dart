@@ -68,7 +68,9 @@ class AuthResponseCodeHandler extends Handler {
       const storage = FlutterSecureStorage();
       storage.write(key: "access_token", value: accessTokenEncoded).then((_){
         storage.write(key: "refresh_token", value: refreshTokenEncoded).then((_){
-          AppNotifiers.isSignedIn.value = true;
+          storage.write(key: "userid", value: id.toString()).then((_){
+            AppNotifiers.isSignedIn.value = true;
+          });
         });
       });
       return true;

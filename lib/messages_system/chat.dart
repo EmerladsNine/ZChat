@@ -36,6 +36,9 @@ EmojiMessageType resolveMessageEmojiType(String text) {
 
 class Chat extends ChangeNotifier {
   final List<Message> _messages = [];
+  final String name;
+
+  Chat(this.name);
 
   List<Message> get messages => List.unmodifiable(_messages);
 

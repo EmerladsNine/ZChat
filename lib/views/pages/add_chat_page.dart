@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
@@ -193,6 +194,7 @@ class _AddChatPageState extends State<AddChatPage> {
     final colors = AppTheme.themeColorsOf(context);
     return switch (_searchState) {
       SearchState.found => ChatCardWidget(
+        chat: Chat(name!),
         chatName: name!,
         message: "#${id!}",
         userLastMessageStatus: MessageStatus.notLast,

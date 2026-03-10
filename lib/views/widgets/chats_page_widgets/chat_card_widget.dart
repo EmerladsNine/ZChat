@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/chat.dart';
-import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
@@ -17,6 +16,7 @@ import '../../pages/chat_messages_page.dart';
 class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({
     super.key,
+    required this.chat,
     this.chatName = "Chat Name",
     this.cardIcon = Icons.person,
     this.timeStamp = '12:00 pm',
@@ -31,6 +31,7 @@ class ChatCardWidget extends StatelessWidget {
   final String timeStamp;
   final int unreadMessagesNumber;
   final MessageStatus userLastMessageStatus;
+  final Chat chat;
 
   String clampUnreadMessagesNumber() {
     return (unreadMessagesNumber > 99)
@@ -47,7 +48,6 @@ class ChatCardWidget extends StatelessWidget {
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
       onTap: () {
-        Chat chat = ChatsStorageManager.globalChat;
         Navigator.push(
           context,
           SlidingAnimationPageRoute(
