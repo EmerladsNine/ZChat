@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/themes_system/app_theme.dart';
@@ -17,18 +18,12 @@ class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({
     super.key,
     required this.chat,
-    this.chatName = "Chat Name",
     this.cardIcon = Icons.person,
-    this.timeStamp = '12:00 pm',
-    this.message = 'Sorry friendo this is the endo',
     this.unreadMessagesNumber = 0,
-    this.userLastMessageStatus = MessageStatus.read,
+    this.userLastMessageStatus = MessageStatus.notLast,
   });
 
   final IconData cardIcon;
-  final String chatName;
-  final String message;
-  final String timeStamp;
   final int unreadMessagesNumber;
   final MessageStatus userLastMessageStatus;
   final Chat chat;
@@ -98,14 +93,19 @@ class ChatCardWidget extends StatelessWidget {
                         children: [
                           Expanded(
                             child: ScaledTextWidget(
-                              chatName,
+                              chat.name,
                               style: AppTextStyles.chatCardNameTextStyle(
                                 colors,
                               ),
                             ),
                           ),
                           ScaledTextWidget(
-                            timeStamp,
+                            DateFormat('hh:mm a').format(
+                              DateTime.fromMicrosecondsSinceEpoch(
+                                chat.timestamp,
+                                isUtc: true,
+                              ).add(DateTime.now().timeZoneOffset),
+                            ),
                             style:
                                 AppTextStyles.chatCardMessageDetailsTextStyle(
                                   colors,
@@ -117,7 +117,7 @@ class ChatCardWidget extends StatelessWidget {
                         children: [
                           Expanded(
                             child: ScaledTextWidget(
-                              message,
+                              chat.lastMessage,
                               overflow: TextOverflow.ellipsis,
                               style:
                                   AppTextStyles.chatCardMessageDetailsTextStyle(

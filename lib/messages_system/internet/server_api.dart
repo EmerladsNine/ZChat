@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/messages_queue.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/internet/listener_service.dart';
@@ -33,13 +34,12 @@ class ServerApi {
   late Socket socket;
   Timer? pingTimeout;
   bool waitingForPong = false;
-
   late ListenerService listener;
-
+  final ChatsManager chatsManager;
   MessagesQueue messagesQueue = MessagesQueue();
 
-  ServerApi() {
-    listener = ListenerService(this);
+  ServerApi(this.chatsManager) {
+    listener = ListenerService(this,chatsManager);
   }
 
   bool sendProtocolUnit(MessageType type, List<int> data) {
@@ -74,17 +74,24 @@ class ServerApi {
     message = message.trim();
     MessageReplyData? replyData = AppNotifiers.replyData.value;
     try {
+      if (!chatsManager.openedChats.contains(chat)) {
+        int chatId = await ChatsStorageManager.insertChat(chat: chat);
+        chat.chatId = chatId;
+        chatsManager.openChat(chat.userId);
+      }
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
-
       Message msg = Message(
         messageId: 0,
+        senderId: 0,
         text: message,
         messageStatus: MessageStatus.unsent,
         timestamp: timestamp,
         replyData: replyData,
       );
-      msg.messageId = await ChatsStorageManager.insertMessage(message: msg);
+      msg.messageId = await ChatsStorageManager.insertMessage(message: msg,chat: chat);
       chat.addMessage(msg);
+      ChatsStorageManager.updateChat(chat: chat);
+      chatsManager.notify();
       AppNotifiers.replyData.value = null;
       messagesQueue.addMessage(this, msg, chat);
     } catch (e) {
@@ -93,7 +100,7 @@ class ServerApi {
   }
 
   Future<void> connectServer(String caller) async {
-    final String host = "92.113.26.192";
+    final String host = "192.168.133.63";
     final int port = 9999;
     Duration delay = Duration.zero;
     while (true) {

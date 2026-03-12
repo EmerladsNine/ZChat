@@ -1,6 +1,8 @@
+import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/handlers/normal_message_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/normal_message_response_code_handler.dart';
+import 'package:zchat/messages_system/internet/handlers/not_authenticated_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/ping_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/pong_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/auth_response_code_handler.dart';
@@ -9,9 +11,10 @@ import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 
 class ListenerService {
-  ListenerService(this.messagingService);
+  ListenerService(this.messagingService,this.chatsManager);
 
   final ServerApi messagingService;
+  final ChatsManager chatsManager;
 
   Map<MessageType, Handler> handlers = {
     MessageType.ping: PingHandler(),
@@ -19,12 +22,12 @@ class ListenerService {
     MessageType.normalMessage: NormalMessageHandler(),
     MessageType.authResponseCode: AuthResponseCodeHandler(),
     MessageType.searchResponseCode: SearchResponseCodeHandler(),
-    MessageType.normalMessageResponseCode: NormalMessageResponseCodeHandler()
+    MessageType.normalMessageResponseCode: NormalMessageResponseCodeHandler(),
+    MessageType.notAuthenticated: NotAuthenticatedHandler()
   };
 
   MessageType? head;
   int? expectedLength;
-  int timeStamp = 0;
   List<int> buffer = [];
 
   //returns if the unit was received completely.
@@ -45,11 +48,12 @@ class ListenerService {
     handlers[head]!.handle(
       buffer.sublist(0, expectedLength! - 1),
       messagingService,
+      chatsManager
     );
 
+    buffer.removeRange(0, expectedLength! - 1);
     head = null;
     expectedLength = null;
-    buffer = [];
     return true;
   }
 

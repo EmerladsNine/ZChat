@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/callback_notifiers.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
@@ -51,7 +52,7 @@ class AuthResponseCodeHandler extends Handler {
       code == ResponseCode.emailAccountInvalidUsernameLengthError ||
       code == ResponseCode.emailAccountUsernameExistError;
   @override
-  bool handle(List<int> buffer, ServerApi service) {
+  bool handle(List<int> buffer, ServerApi service,ChatsManager chatsManager) {
     int responseCode = buffer[0];
     buffer.removeAt(0);
 

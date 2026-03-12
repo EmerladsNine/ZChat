@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -19,13 +21,23 @@ class StorageManager {
         await db.execute('''
             CREATE TABLE messages (
             id INTEGER PRIMARY KEY,
-            senderId INTEGER,
-            timestamp INTEGER,
+            chatId INTEGER NOT NULL,
+            senderId INTEGER NOT NULL,
+            timestamp INTEGER NOT NULL,
             message TEXT NOT NULL,
-            replySenderName TEXT,
+            replySenderName TEXT, 
             replyText TEXT
             )
             ''');
+        await db.execute('''
+        CREATE TABLE chats (
+              id INTEGER PRIMARY KEY,
+              userid INTEGER,
+              name TEXT,
+              lastMessage TEXT NOT NULL,
+              timestamp INTEGER NOT NULL
+            )
+        ''');
       },
     );
   }

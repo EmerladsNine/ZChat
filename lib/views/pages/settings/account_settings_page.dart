@@ -38,6 +38,7 @@ class AccountSettingsPage extends StatelessWidget {
             category: 'Edit Account Details',
             buttons: editAccountWidgetsData,
           ),
+
         ],
       ),
     );

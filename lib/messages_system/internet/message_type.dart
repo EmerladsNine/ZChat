@@ -12,7 +12,8 @@ enum MessageType {
   searchWithUsername(id: 8),
   searchWithId(id: 9),
   searchResponseCode(id: 10),
-  normalMessageResponseCode(id: 11);
+  normalMessageResponseCode(id: 11),
+  notAuthenticated(id: 12);
 
   final int id;
   const MessageType({required this.id});

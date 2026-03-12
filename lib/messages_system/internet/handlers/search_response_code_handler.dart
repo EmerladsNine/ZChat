@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/callback_notifiers.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
@@ -8,7 +9,7 @@ import 'package:zchat/messages_system/internet/response_codes/search_response_co
 
 class SearchResponseCodeHandler extends Handler {
   @override
-  bool handle(List<int> buffer, ServerApi service) {
+  bool handle(List<int> buffer, ServerApi service,ChatsManager chatsManager) {
     int responseCode = buffer[0];
     buffer.removeAt(0);
     if (responseCode == SearchResponseCode.notFound.id ||

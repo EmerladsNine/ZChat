@@ -57,7 +57,10 @@ class _AddChatPageState extends State<AddChatPage> {
     return true;
   }
 
-  Future<bool> _handleIdSearch(BuildContext buildContext,String searchText) async {
+  Future<bool> _handleIdSearch(
+    BuildContext buildContext,
+    String searchText,
+  ) async {
     if (searchText.isEmpty || searchText[0] != '#') return false;
     if (searchText.length < 2) {
       setState(() {
@@ -75,12 +78,15 @@ class _AddChatPageState extends State<AddChatPage> {
     }
     ServerApi api = buildContext.read<ServerApi>();
     SearchEvent? event = await ProtocolSenderSearch.searchByIdAsync(api, id);
-    if(!buildContext.mounted) return true;
+    if (!buildContext.mounted) return true;
     await _onResponseReceived(event);
     return true;
   }
 
-  Future<void> _handleUsernameSearch(BuildContext buildContext,String searchText) async {
+  Future<void> _handleUsernameSearch(
+    BuildContext buildContext,
+    String searchText,
+  ) async {
     final searchUTF8 = utf8.encode(searchText);
     if (!AccountConstants.isValidUsername(searchUTF8)) {
       setState(() {
@@ -89,8 +95,11 @@ class _AddChatPageState extends State<AddChatPage> {
       return;
     }
     ServerApi api = buildContext.read<ServerApi>();
-    SearchEvent? event = await ProtocolSenderSearch.searchByUsernameAsync(api, searchUTF8,);
-    if(!buildContext.mounted) return;
+    SearchEvent? event = await ProtocolSenderSearch.searchByUsernameAsync(
+      api,
+      searchUTF8,
+    );
+    if (!buildContext.mounted) return;
     await _onResponseReceived(event);
   }
 
@@ -102,16 +111,16 @@ class _AddChatPageState extends State<AddChatPage> {
       _searchState = SearchState.waiting;
     });
     BuildContext buildContext = context;
-    if (await _handleIdSearch(buildContext,searchController.text)) return _resetRequestInFlight();
-    if(!buildContext.mounted) return _resetRequestInFlight();
-    await _handleUsernameSearch(buildContext,searchController.text);
+    if (await _handleIdSearch(buildContext, searchController.text)) return _resetRequestInFlight();
+    if (!buildContext.mounted) return _resetRequestInFlight();
+    await _handleUsernameSearch(buildContext, searchController.text);
     return _resetRequestInFlight();
   }
 
   Future<bool> _handlePendingSearch() async {
     if (_pendingSearch) {
-        _pendingSearch = false;
-        await _sendSearch();
+      _pendingSearch = false;
+      await _sendSearch();
       return true;
     }
     return false;
@@ -134,8 +143,7 @@ class _AddChatPageState extends State<AddChatPage> {
         name = value.name!;
         id = value.id!;
       });
-    }
-    else {
+    } else {
       printOnDebug("Not Implemented SearchResponseCode on _stateUpdate");
     }
   }
@@ -192,14 +200,22 @@ class _AddChatPageState extends State<AddChatPage> {
 
   Widget getFromState() {
     final colors = AppTheme.themeColorsOf(context);
-    return switch (_searchState) {
-      SearchState.found => ChatCardWidget(
-        chat: Chat(name!),
-        chatName: name!,
-        message: "#${id!}",
+    if (_searchState == SearchState.found) {
+      Chat chat = Chat(name: name!, chatId: 0, userId: id!);
+      ServerApi api = context.read<ServerApi>();
+      if (!api.chatsManager.chatsMap.containsKey(id)) {
+          api.chatsManager.chatsMap[id!] = chat;
+      } else {
+        chat = api.chatsManager.chatsMap[id]!;
+      }
+
+      return ChatCardWidget(
+        chat: chat,
         userLastMessageStatus: MessageStatus.notLast,
-        timeStamp: "",
-      ),
+      );
+    }
+    return switch (_searchState) {
+      SearchState.found => Container(),
       SearchState.notFound => CenteredText(text: "Not Found"),
       SearchState.error => CenteredText(
         text: "Error , please try again later.",

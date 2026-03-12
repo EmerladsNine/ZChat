@@ -9,12 +9,12 @@ class Message {
   Message({
     required this.messageId,
     required this.text,
+    required this.senderId,
     this.messageStatus = MessageStatus.undelivered,
     this.emojiMessageType = EmojiMessageType.notEmoji,
     this.isChildMessage = false,
     this.timestamp = 0,
     this.senderName,
-    this.senderId,
     this.replyData,
   });
   int messageId;
@@ -22,7 +22,7 @@ class Message {
   String text;
   int timestamp;
   String? senderName;
-  int? senderId;
+  int senderId;
   bool isChildMessage;
   EmojiMessageType emojiMessageType;
   MessageReplyData? replyData;

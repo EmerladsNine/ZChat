@@ -16,6 +16,7 @@ class MessagesQueue {
   bool _isSending = false;
 
   void addMessage(ServerApi api,Message message,Chat chat) {
+    chat.lastMessage = message.text;
     _messagesToSend.add((message,chat));
     if(!_isSending) sendMessages(api);
   }
@@ -30,7 +31,7 @@ class MessagesQueue {
         Uint8List replyTextSenderUTF8 = utf8.encode(msg.replyData?.replyTextSender ?? "");
         Uint8List replyTextUTF8 = utf8.encode(msg.replyData?.replyText ?? "");
         Uint8List messageUTF8 = utf8.encode(msg.text);
-        OkEvent? result = await ProtocolSenderNormalMessage.send(api, replyTextSenderUTF8, replyTextUTF8, messageUTF8);
+        OkEvent? result = await ProtocolSenderNormalMessage.send(api,chat.userId, replyTextSenderUTF8, replyTextUTF8, messageUTF8);
         if(result == null) break;
         _messagesToSend.removeFirst();
         msg.messageStatus = MessageStatus.undelivered;

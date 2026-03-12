@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
@@ -29,8 +30,9 @@ void main() async {
 
   await ThemeController.instance.init();
 
+  ChatsManager chatsManager = ChatsManager();
   await StorageManager.openMessagesDatabase().then((_) {
-    ChatsStorageManager.loadChats();
+    ChatsStorageManager.loadChats(chatsManager);
   });
 
   KeyboardController.init();
@@ -40,7 +42,7 @@ void main() async {
     AppTheme(
       controller: ThemeController.instance,
       child: Provider<ServerApi>(
-        create: (_) => ServerApi(),
+        create: (_) => ServerApi(chatsManager),
         dispose: (context, service) {
           service.dispose();
         },
@@ -155,16 +157,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    return ValueListenableBuilder(valueListenable: AppNotifiers.isSignedIn, builder: (context, value, child) {
-      if(value)
-      {
-        return WidgetTree(
-          pageController: pageController,
-          fullSwipeController: fullSwipeController,
-        );
-      }
-      return SignInPage();
-    },);
+    return ValueListenableBuilder(
+      valueListenable: AppNotifiers.isSignedIn,
+      builder: (context, value, child) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.popUntil(context, (route) => route.isFirst);
+        });
+        if (value) {
+          return WidgetTree(
+            pageController: pageController,
+            fullSwipeController: fullSwipeController,
+          );
+        }
+        return SignInPage();
+      },
+    );
   }
 }

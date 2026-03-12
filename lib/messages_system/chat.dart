@@ -37,8 +37,12 @@ EmojiMessageType resolveMessageEmojiType(String text) {
 class Chat extends ChangeNotifier {
   final List<Message> _messages = [];
   final String name;
+  int chatId;
+  final int userId;
+  String lastMessage;
+  int timestamp;
 
-  Chat(this.name);
+  Chat({required this.name,required this.chatId,required this.userId,this.lastMessage = "",this.timestamp = 0});
 
   List<Message> get messages => List.unmodifiable(_messages);
 
@@ -48,6 +52,8 @@ class Chat extends ChangeNotifier {
         _messages.first.senderName == message.senderName;
     message.emojiMessageType = resolveMessageEmojiType(message.text);
     _messages.insert(0, message);
+    lastMessage = message.text;
+    timestamp = message.timestamp;
     notifyListeners();
   }
 
@@ -56,7 +62,7 @@ class Chat extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearAllChats() {
+  void clearAllMessages() {
     _messages.clear();
     notifyListeners();
   }

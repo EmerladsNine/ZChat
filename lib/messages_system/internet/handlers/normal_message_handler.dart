@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:zchat/messages_system/chat.dart';
+import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
@@ -8,29 +10,44 @@ import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 
 class NormalMessageHandler extends Handler {
-  void addMessage(int timeStamp,MessageReplyData? replyData,String response) async
-  {
+  void addMessage(
+    ChatsManager chatsManager,
+    int userId,
+    int timeStamp,
+    MessageReplyData? replyData,
+    String response,
+  ) async {
     Message msg = Message(
       messageId: 0,
-      senderId: 1,
-      timestamp: timeStamp,
       text: response,
+      senderId: userId,
+      senderName: "#$userId",
+      timestamp: timeStamp,
       replyData: replyData,
     );
-    int id = await ChatsStorageManager.insertMessage(message: msg);
-    // Todo there should be a function later like ChatsStorageManager.addMessage(int chat_id,Message message)
-    ChatsStorageManager.globalChat.addMessage(
-      Message(
-        messageId: id,
-        text: response,
-        senderName: "Max",
-        timestamp: timeStamp,
-        replyData: replyData,
-      ),
-    );
+    Chat chat;
+    if (!chatsManager.chatsMap.containsKey(userId)) {
+      // Todo get username
+      chat = Chat(name: "#$userId", chatId: 0, userId: userId);
+      chatsManager.addChat(userId, chat);
+    }
+    chat = chatsManager.chatsMap[userId]!;
+    if (!chatsManager.openedChats.contains(chat)) {
+      int chatId = await ChatsStorageManager.insertChat(chat: chat);
+      chat.chatId = chatId;
+      chatsManager.openChat(userId);
+    }
+    int id = await ChatsStorageManager.insertMessage(message: msg, chat: chat);
+    msg.messageId = id;
+    chat.addMessage(msg);
+    ChatsStorageManager.updateChat(chat: chat);
+    chatsManager.reOpenChat(chat);
+    chatsManager.notify();
   }
+
   @override
-  bool handle(List<int> buffer, ServerApi service)  {
+  bool handle(List<int> buffer, ServerApi service,ChatsManager chatsManager) {
+    int senderId = bigEndianToInt(buffer, 4);
     int timeStamp = bigEndianToInt(buffer, 8);
     int replySenderNameLength = bigEndianToInt(buffer, 4);
     final String replySenderName = utf8.decode(
@@ -45,7 +62,7 @@ class NormalMessageHandler extends Handler {
       replyData = MessageReplyData(replyText, replySenderName);
     }
     final String response = utf8.decode(buffer);
-    addMessage(timeStamp, replyData, response);
+    addMessage(chatsManager, senderId, timeStamp, replyData, response);
     printOnDebug('Server: $response');
     return true;
   }
