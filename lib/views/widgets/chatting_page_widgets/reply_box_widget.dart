@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/utils/text_utils.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
@@ -15,18 +17,18 @@ class ReplyBoxWidget extends StatefulWidget {
 }
 
 class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
-  MessageReplyData lastReplyData = MessageReplyData("", "");
+  MessageReplyData lastReplyData = MessageReplyData("", 0);
 
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
-
+    final api = context.read<ServerApi>();
     return ValueListenableBuilder(
-      valueListenable: AppNotifiers.replyData,
+      valueListenable: AppNotifiers.openedChat.value!.replyData,
       builder: (context, value, child) {
         if (value != null) lastReplyData = value;
-        final String replyTextSender = lastReplyData.replyTextSender != ""
-            ? lastReplyData.replyTextSender
+        final String replyTextSender = lastReplyData.senderId != 0
+            ? api.chatsManager.usernames[lastReplyData.senderId] ?? "#${lastReplyData.senderId}"
             : "You";
         return Container(
           height: value != null ? null : 0,
@@ -63,16 +65,16 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
                       ),
                       Align(
                         alignment: TextUtils.getTextPlacement(
-                          lastReplyData.replyText,
+                          lastReplyData.text,
                         ),
                         child: ScaledTextWidget(
-                          lastReplyData.replyText,
+                          lastReplyData.text,
                           style: TextStyle(
                             fontSize: 15,
                             color: colors.primaryColor,
                           ),
                           textDirection: TextUtils.getTextDirection(
-                            lastReplyData.replyText,
+                            lastReplyData.text,
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -91,7 +93,7 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
                   disableSet: AppNotifiers.disableButtons,
                   appStateNotifier: AppNotifiers.isNavigating,
                   onTap: () {
-                    AppNotifiers.replyData.value = null;
+                    AppNotifiers.openedChat.value!.replyData.value = null;
                   },
                   child: Icon(Icons.close, color: colors.primaryColor),
                 ),

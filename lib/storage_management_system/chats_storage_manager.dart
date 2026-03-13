@@ -12,8 +12,8 @@ class ChatsStorageManager {
       'chatId' : chat.chatId,
       'timestamp': message.timestamp,
       'message': message.text,
-      'replySenderName': message.replyData?.replyTextSender,
-      'replyText': message.replyData?.replyText,
+      'replySenderId': message.replyData?.senderId,
+      'replyText': message.replyData?.text,
     });
   }
   static Future<int> insertChat({required Chat chat}) async {
@@ -66,6 +66,10 @@ class ChatsStorageManager {
       String name = chatData['name'];
       String lastMessage = chatData['lastMessage'];
       int timestamp = chatData['timestamp'];
+      if(userId != 0)
+      {
+          chatsManager.usernames[userId] = name;
+      }
       Chat chat = Chat(name: name, chatId: chatId, userId: userId, lastMessage: lastMessage, timestamp: timestamp);
       chatsManager.addChat(userId, chat);
       chatsManager.openChat(userId);
@@ -87,17 +91,16 @@ class ChatsStorageManager {
     for (Map<String, dynamic> messageData in messages) {
       lastMessageIdLoaded = messageData['id'];
       int senderId = messageData['senderId'];
-      String? replySenderName = messageData['replySenderName'];
+      int? replySenderId = messageData['replySenderId'];
       String? replyText = messageData['replyText'];
       MessageReplyData? replyData;
-      if (replyText != null && replySenderName != null) {
-        replyData = MessageReplyData(replyText, replySenderName);
+      if (replyText != null && replySenderId != null) {
+        replyData = MessageReplyData(replyText, senderId);
       }
       Message msg = Message(messageId: lastMessageIdLoaded,
           text: messageData['message'],
           senderId: senderId,
           timestamp: messageData['timestamp'],
-          senderName:  senderId == 0 ? null : "#$senderId",
           replyData: replyData
       );
       chat.addOldMessage(msg);

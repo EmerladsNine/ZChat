@@ -29,7 +29,9 @@ SOFTWARE.
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/enums/emoji_message_types.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/themes_system/enums/message_bubble_color.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
@@ -48,7 +50,7 @@ import '../../../painters/message_bubble_painter.dart';
 import '../../../overlays/message_actions_menu_widget.dart';
 
 class MessageBubbleWidget extends StatefulWidget {
-  final String? senderName;
+  final int senderId;
   final String text;
   final String time;
   final bool isEmojiBubble;
@@ -62,7 +64,7 @@ class MessageBubbleWidget extends StatefulWidget {
   const MessageBubbleWidget({
     super.key,
     required this.text,
-    this.senderName,
+    required this.senderId,
     required this.time,
     required this.isEmojiBubble,
     required this.emojiMessageType,
@@ -99,8 +101,8 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
     final List<MessageBubbleColor> messageBubbleColors =
         themeController.messageBubbleColors;
     final int alpha = (themeController.opacity * 255).round();
-
-    bool received = widget.senderName != null;
+    final api = context.read<ServerApi>();
+    bool received = widget.senderId != 0;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -133,9 +135,9 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
             //   HapticFeedback.selectionClick();
             //   didVibrate = true;
             // }
-            AppNotifiers.replyData.value = MessageReplyData(
+            AppNotifiers.openedChat.value!.replyData.value = MessageReplyData(
               widget.text,
-              widget.senderName ?? "",
+              widget.senderId,
             );
             if (KeyboardController.nextKeyboardHeight == 0) {
               FocusScope.of(context).unfocus();
@@ -235,7 +237,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                       children: [
                         if (received && !widget.isChildBubble)
                           SenderNameWidget(
-                            senderName: widget.senderName!,
+                            senderName: api.chatsManager.usernames[widget.senderId] ?? "#${widget.senderId}",
                             isSeparate:
                                 widget.isEmojiBubble &&
                                 widget.replyData == null,
@@ -283,7 +285,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                             emojiMessageType: widget.emojiMessageType,
                             isReplyBubble: widget.replyData != null,
                             messageStatus: widget.messageStatus,
-                            senderName: widget.senderName,
+                            received: received,
                           ),
                         ),
                       ],

@@ -25,7 +25,7 @@ class StorageManager {
             senderId INTEGER NOT NULL,
             timestamp INTEGER NOT NULL,
             message TEXT NOT NULL,
-            replySenderName TEXT, 
+            replySenderId INTEGER, 
             replyText TEXT
             )
             ''');

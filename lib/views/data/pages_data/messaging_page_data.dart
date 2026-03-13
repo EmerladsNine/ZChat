@@ -14,7 +14,7 @@ final List<RippleEffectButtonData> commonMessageActionsData = [
     ),
     onTap: () {
       if(AppNotifiers.selectedMessage.value == null) return;
-      AppNotifiers.replyData.value = MessageReplyData(AppNotifiers.selectedMessage.value!.text, AppNotifiers.selectedMessage.value!.senderName ?? "You");
+      AppNotifiers.openedChat.value!.replyData.value = MessageReplyData(AppNotifiers.selectedMessage.value!.text, AppNotifiers.selectedMessage.value!.senderId);
       MessageActionsMenuWidget.instance.removeOverlay();
       },
     child: MessageActionItemWidget(label: 'Reply', icon: '↩️'),

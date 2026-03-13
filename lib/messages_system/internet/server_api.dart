@@ -10,7 +10,6 @@ import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
-import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 
 List<int> intToBigEndian(int num, int bytes) {
@@ -72,7 +71,7 @@ class ServerApi {
 
   Future<void> sendMessage(String message, Chat chat) async {
     message = message.trim();
-    MessageReplyData? replyData = AppNotifiers.replyData.value;
+    MessageReplyData? replyData = chat.replyData.value;
     try {
       if (!chatsManager.openedChats.contains(chat)) {
         int chatId = await ChatsStorageManager.insertChat(chat: chat);
@@ -92,7 +91,7 @@ class ServerApi {
       chat.addMessage(msg);
       ChatsStorageManager.updateChat(chat: chat);
       chatsManager.notify();
-      AppNotifiers.replyData.value = null;
+      chat.replyData.value = null;
       messagesQueue.addMessage(this, msg, chat);
     } catch (e) {
       printOnDebug(e);

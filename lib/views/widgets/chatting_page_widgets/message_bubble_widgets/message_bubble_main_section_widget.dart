@@ -12,7 +12,7 @@ import 'message_info_widget.dart';
 class MessageBubbleMainSectionWidget extends StatelessWidget {
   const MessageBubbleMainSectionWidget({
     super.key,
-    this.senderName,
+    required this.received,
     required this.text,
     required this.time,
     required this.isEmojiBubble,
@@ -21,7 +21,7 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
     required this.isReplyBubble,
   });
 
-  final String? senderName;
+  final bool received;
   final String text;
   final String time;
   final bool isEmojiBubble;
@@ -33,8 +33,6 @@ class MessageBubbleMainSectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeController themeController = AppTheme.controllerOf(context);
     final ThemeColorScheme colors = themeController.colors;
-
-    bool received = senderName != null;
 
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(

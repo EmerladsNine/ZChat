@@ -7,18 +7,18 @@ import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 
 abstract class ProtocolSenderNormalMessage {
-  static Future<OkEvent?> send(ServerApi api,int receiverId,Uint8List replyTextSenderUTF8,Uint8List replyTextUTF8,Uint8List messageUTF8) {
+  static Future<OkEvent?> send(ServerApi api,int receiverId,int? replyTextSenderId,Uint8List replyTextUTF8,Uint8List messageUTF8) {
     final completer = Completer<OkEvent?>();
     void callback(OkEvent value)
     {
       completer.complete(value);
     }
+    List<int> replySenderIdUTF8 = replyTextSenderId != null ? intToBigEndian(replyTextSenderId, 4) : [];
     final result = api.sendProtocolUnit(MessageType.normalMessage, [
       ...intToBigEndian(receiverId, 4),
-      ...intToBigEndian(replyTextSenderUTF8.length, 4),
-      ...replyTextSenderUTF8,
       ...intToBigEndian(replyTextUTF8.length, 4),
       ...replyTextUTF8,
+      ...replySenderIdUTF8,
       ...messageUTF8,
     ]);
     if(!result) {

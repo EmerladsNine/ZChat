@@ -1,6 +1,7 @@
 import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 import 'package:zchat/messages_system/enums/emoji_message_types.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
 
@@ -39,6 +40,7 @@ class Chat extends ChangeNotifier {
   final String name;
   int chatId;
   final int userId;
+  ValueNotifier<MessageReplyData?> replyData = ValueNotifier(null);
   String lastMessage;
   int timestamp;
   int? lastMessageIdLoaded;
@@ -49,7 +51,7 @@ class Chat extends ChangeNotifier {
     required this.userId,
     this.lastMessage = "",
     this.timestamp = 0,
-    this.lastMessageIdLoaded,
+    this.lastMessageIdLoaded
   });
 
   List<Message> get messages => List.unmodifiable(_messages);
@@ -57,7 +59,7 @@ class Chat extends ChangeNotifier {
   void addMessage(Message message) {
     message.isChildMessage =
         _messages.isNotEmpty &&
-        _messages.first.senderName == message.senderName;
+        _messages.first.senderId == message.senderId;
     message.emojiMessageType = resolveMessageEmojiType(message.text);
     _messages.insert(0, message);
     lastMessage = message.text;
@@ -69,7 +71,7 @@ class Chat extends ChangeNotifier {
     if (_messages.isNotEmpty) {
       _messages.last.isChildMessage =
           _messages.isNotEmpty &&
-          message.senderName == _messages.last.senderName;
+          message.senderId == _messages.last.senderId;
     }
     message.emojiMessageType = resolveMessageEmojiType(message.text);
     _messages.add(message);

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/utils/text_utils.dart';
 
@@ -23,8 +25,9 @@ class MessageBubbleReplySectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeController themeController = AppTheme.controllerOf(context);
     final ThemeColorScheme colors = themeController.colors;
-    final String replyTextSender = replyData.replyTextSender != ""
-        ? replyData.replyTextSender
+    final api = context.read<ServerApi>();
+    final String replyTextSender = replyData.senderId != 0
+        ? api.chatsManager.usernames[replyData.senderId] ?? "#${replyData.senderId}"
         : "You";
     return Padding(
       padding: isSeparate ? EdgeInsetsGeometry.all(4) : EdgeInsetsGeometry.zero,
@@ -50,10 +53,10 @@ class MessageBubbleReplySectionWidget extends StatelessWidget {
               ),
             ),
             ScaledTextWidget(
-              replyData.replyText,
+              replyData.text,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              textDirection: TextUtils.getTextDirection(replyData.replyText),
+              textDirection: TextUtils.getTextDirection(replyData.text),
               style: TextStyle(color: colors.primaryColor),
             ),
           ],

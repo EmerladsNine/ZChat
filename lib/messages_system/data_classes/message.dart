@@ -14,14 +14,12 @@ class Message {
     this.emojiMessageType = EmojiMessageType.notEmoji,
     this.isChildMessage = false,
     this.timestamp = 0,
-    this.senderName,
     this.replyData,
   });
   int messageId;
   MessageStatus messageStatus;
   String text;
   int timestamp;
-  String? senderName;
   int senderId;
   bool isChildMessage;
   EmojiMessageType emojiMessageType;
@@ -37,14 +35,14 @@ class Message {
         isUtc: true,
       ).add(DateTime.now().timeZoneOffset),
     );
-    if (senderName != null) {
+    if (senderId != 0) {
       maxBubbleWidth = maxBubbleWidth - 40; // remove the width used by pfp
     }
     return MessageBubbleWidget(
       key: ValueKey(messageId),
       text: text,
       time: time,
-      senderName: senderName,
+      senderId: senderId,
       maxBubbleWidth: maxBubbleWidth,
       isEmojiBubble: emojiMessageType == EmojiMessageType.oneEmoji,
       emojiMessageType: emojiMessageType,

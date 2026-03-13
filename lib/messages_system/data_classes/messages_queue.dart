@@ -28,10 +28,9 @@ class MessagesQueue {
       while (_messagesToSend.isNotEmpty) {
         Message msg = _messagesToSend.first.$1;
         Chat chat = _messagesToSend.first.$2;
-        Uint8List replyTextSenderUTF8 = utf8.encode(msg.replyData?.replyTextSender ?? "");
-        Uint8List replyTextUTF8 = utf8.encode(msg.replyData?.replyText ?? "");
+        Uint8List replyTextUTF8 = utf8.encode(msg.replyData?.text ?? "");
         Uint8List messageUTF8 = utf8.encode(msg.text);
-        OkEvent? result = await ProtocolSenderNormalMessage.send(api,chat.userId, replyTextSenderUTF8, replyTextUTF8, messageUTF8);
+        OkEvent? result = await ProtocolSenderNormalMessage.send(api,chat.userId, msg.replyData?.senderId, replyTextUTF8, messageUTF8);
         if(result == null) break;
         _messagesToSend.removeFirst();
         msg.messageStatus = MessageStatus.undelivered;

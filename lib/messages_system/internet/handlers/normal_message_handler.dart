@@ -21,7 +21,6 @@ class NormalMessageHandler extends Handler {
       messageId: 0,
       text: response,
       senderId: userId,
-      senderName: "#$userId",
       timestamp: timeStamp,
       replyData: replyData,
     );
@@ -49,17 +48,14 @@ class NormalMessageHandler extends Handler {
   bool handle(List<int> buffer, ServerApi service,ChatsManager chatsManager) {
     int senderId = bigEndianToInt(buffer, 4);
     int timeStamp = bigEndianToInt(buffer, 8);
-    int replySenderNameLength = bigEndianToInt(buffer, 4);
-    final String replySenderName = utf8.decode(
-      buffer.sublist(0, replySenderNameLength),
-    );
-    buffer.removeRange(0, replySenderNameLength);
     int replyTextLength = bigEndianToInt(buffer, 4);
     final String replyText = utf8.decode(buffer.sublist(0, replyTextLength));
     buffer.removeRange(0, replyTextLength);
     MessageReplyData? replyData;
     if (replyTextLength != 0) {
-      replyData = MessageReplyData(replyText, replySenderName);
+      int replySenderId = bigEndianToInt(buffer, 4);
+      if(replySenderId == 0) replySenderId = senderId;
+      replyData = MessageReplyData(replyText, replySenderId);
     }
     final String response = utf8.decode(buffer);
     addMessage(chatsManager, senderId, timeStamp, replyData, response);

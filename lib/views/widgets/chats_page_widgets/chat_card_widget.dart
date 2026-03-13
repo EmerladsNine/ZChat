@@ -44,6 +44,8 @@ class ChatCardWidget extends StatelessWidget {
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
       onTap: () async {
+        chat.clearAllMessages();
+        AppNotifiers.openedChat.value = chat;
         await ChatsStorageManager.loadChat(chat,chat.chatId, null, 20);
         if(!context.mounted) return;
         await Navigator.push(
@@ -55,6 +57,7 @@ class ChatCardWidget extends StatelessWidget {
           ))
         );
         chat.clearAllMessages();
+        AppNotifiers.openedChat.value = null;
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 3),

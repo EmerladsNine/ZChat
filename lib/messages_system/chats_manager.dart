@@ -3,6 +3,7 @@ import 'package:zchat/messages_system/chat.dart';
 
 class ChatsManager extends ChangeNotifier {
   Map<int, Chat> chatsMap = {0: Chat(name: "Max", chatId: 0, userId: 0)};
+  Map<int, String> usernames = {0: "You"};
   List<Chat> openedChats = [];
 
   void addChat(int id, Chat chat) {

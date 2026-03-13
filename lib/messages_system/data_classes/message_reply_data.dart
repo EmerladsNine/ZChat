@@ -1,7 +1,7 @@
 /// Data class holding information about a message reply.
 class MessageReplyData {
-  MessageReplyData(this.replyText, this.replyTextSender);
+  MessageReplyData(this.text, this.senderId);
 
-  final String replyText;
-  final String replyTextSender;
+  final String text;
+  final int senderId;
 }
