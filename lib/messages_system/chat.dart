@@ -41,8 +41,16 @@ class Chat extends ChangeNotifier {
   final int userId;
   String lastMessage;
   int timestamp;
+  int? lastMessageIdLoaded;
 
-  Chat({required this.name,required this.chatId,required this.userId,this.lastMessage = "",this.timestamp = 0});
+  Chat({
+    required this.name,
+    required this.chatId,
+    required this.userId,
+    this.lastMessage = "",
+    this.timestamp = 0,
+    this.lastMessageIdLoaded,
+  });
 
   List<Message> get messages => List.unmodifiable(_messages);
 
@@ -57,13 +65,24 @@ class Chat extends ChangeNotifier {
     notifyListeners();
   }
 
-  void notifyChange()
-  {
+  void addOldMessage(Message message) {
+    if (_messages.isNotEmpty) {
+      _messages.last.isChildMessage =
+          _messages.isNotEmpty &&
+          message.senderName == _messages.last.senderName;
+    }
+    message.emojiMessageType = resolveMessageEmojiType(message.text);
+    _messages.add(message);
+    notifyListeners();
+  }
+
+  void notifyChange() {
     notifyListeners();
   }
 
   void clearAllMessages() {
     _messages.clear();
+    lastMessageIdLoaded = null;
     notifyListeners();
   }
 

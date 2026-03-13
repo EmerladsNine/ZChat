@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 import 'package:zchat/storage_management_system/storage_manager.dart';
 
 class ChatsStorageManager {
@@ -32,8 +33,12 @@ class ChatsStorageManager {
     }, where: 'id = ?', whereArgs: [chat.chatId]);
   }
 
-  static Future<List<Map<String, dynamic>>> getMessages(Database db) {
-    return db.query('messages');
+  static Future<List<Map<String, dynamic>>> getMessages(Database db,int chatId,int lastMessageIdLoaded,int numberOfMessages) {
+    return db.query('messages',where: "id < ? AND chatId = ?",whereArgs: [lastMessageIdLoaded,chatId],limit: numberOfMessages,orderBy: "id DESC",);
+  }
+
+  static Future<List<Map<String, dynamic>>> getLastMessages(Database db,int chatId,int numberOfMessages) {
+    return db.query('messages',where: "chatId = ?",whereArgs: [chatId],limit: numberOfMessages,orderBy: "id DESC",);
   }
 
   static Future<List<Map<String, dynamic>>> getChats(Database db) {
@@ -45,7 +50,6 @@ class ChatsStorageManager {
     // Todo clear all chats from the chat manager
   }
 
-  //TODO
   static Future<void> clearChat(int chatId) async {
     await StorageManager.db.delete(
       'messages',
@@ -66,5 +70,38 @@ class ChatsStorageManager {
       chatsManager.addChat(userId, chat);
       chatsManager.openChat(userId);
     }
+  }
+
+  static Future<void> loadChat(Chat chat,int chatId,int? lastIdLoaded,int numberOfMessages) async
+  {
+    int lastMessageIdLoaded = 0;
+    List<Map<String, dynamic>> messages;
+    if(lastIdLoaded == null)
+    {
+        messages = await getLastMessages(StorageManager.db, chatId, numberOfMessages);
+    }
+    else {
+      messages = await getMessages(StorageManager.db,chatId,lastIdLoaded,numberOfMessages);
+    }
+
+    for (Map<String, dynamic> messageData in messages) {
+      lastMessageIdLoaded = messageData['id'];
+      int senderId = messageData['senderId'];
+      String? replySenderName = messageData['replySenderName'];
+      String? replyText = messageData['replyText'];
+      MessageReplyData? replyData;
+      if (replyText != null && replySenderName != null) {
+        replyData = MessageReplyData(replyText, replySenderName);
+      }
+      Message msg = Message(messageId: lastMessageIdLoaded,
+          text: messageData['message'],
+          senderId: senderId,
+          timestamp: messageData['timestamp'],
+          senderName:  senderId == 0 ? null : "#$senderId",
+          replyData: replyData
+      );
+      chat.addOldMessage(msg);
+    }
+    chat.lastMessageIdLoaded = lastMessageIdLoaded;
   }
 }

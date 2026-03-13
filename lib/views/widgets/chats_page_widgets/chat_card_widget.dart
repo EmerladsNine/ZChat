@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/chat.dart';
+import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
@@ -42,8 +43,10 @@ class ChatCardWidget extends StatelessWidget {
     return RippleEffectButtonWidget(
       disableSet: AppNotifiers.disableButtons,
       appStateNotifier: AppNotifiers.isNavigating,
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        await ChatsStorageManager.loadChat(chat,chat.chatId, null, 20);
+        if(!context.mounted) return;
+        await Navigator.push(
           context,
           SlidingAnimationPageRoute(
               page: ChangeNotifierProvider.value(
@@ -51,6 +54,7 @@ class ChatCardWidget extends StatelessWidget {
                 child: ChatMessagesPage(),
           ))
         );
+        chat.clearAllMessages();
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 3),
