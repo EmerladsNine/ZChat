@@ -201,7 +201,8 @@ class _AddChatPageState extends State<AddChatPage> {
   Widget getFromState() {
     final colors = AppTheme.themeColorsOf(context);
     if (_searchState == SearchState.found) {
-      Chat chat = Chat(name: name!, chatId: 0, userId: id!);
+      Chat chat = Chat(chatId: 0, userId: id!);
+      chat.name.value = name!;
       ServerApi api = context.read<ServerApi>();
       if (!api.chatsManager.chatsMap.containsKey(id)) {
           api.chatsManager.chatsMap[id!] = chat;

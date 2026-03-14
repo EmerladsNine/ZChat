@@ -27,7 +27,7 @@ class NormalMessageHandler extends Handler {
     Chat chat;
     if (!chatsManager.chatsMap.containsKey(userId)) {
       // Todo get username
-      chat = Chat(name: "#$userId", chatId: 0, userId: userId);
+      chat = Chat(chatId: 0, userId: userId);
       chatsManager.addChat(userId, chat);
     }
     chat = chatsManager.chatsMap[userId]!;
@@ -47,6 +47,10 @@ class NormalMessageHandler extends Handler {
   @override
   bool handle(List<int> buffer, ServerApi service,ChatsManager chatsManager) {
     int senderId = bigEndianToInt(buffer, 4);
+    if(!chatsManager.usernames.containsKey(senderId))
+    {
+      chatsManager.requestUsername(service, senderId);
+    }
     int timeStamp = bigEndianToInt(buffer, 8);
     int replyTextLength = bigEndianToInt(buffer, 4);
     final String replyText = utf8.decode(buffer.sublist(0, replyTextLength));
@@ -54,6 +58,10 @@ class NormalMessageHandler extends Handler {
     MessageReplyData? replyData;
     if (replyTextLength != 0) {
       int replySenderId = bigEndianToInt(buffer, 4);
+      if(!chatsManager.usernames.containsKey(replySenderId))
+      {
+          chatsManager.requestUsername(service, replySenderId);
+      }
       if(replySenderId == 0) replySenderId = senderId;
       replyData = MessageReplyData(replyText, replySenderId);
     }

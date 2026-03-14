@@ -19,7 +19,7 @@ class ChatsStorageManager {
   static Future<int> insertChat({required Chat chat}) async {
     return StorageManager.db.insert('chats', {
       'userid' : chat.userId,
-      'name' : chat.name,
+      'name' : chat.name.value,
       'lastMessage' : chat.lastMessage,
       'timestamp' : chat.timestamp
     });
@@ -27,7 +27,7 @@ class ChatsStorageManager {
   static void updateChat({required Chat chat}) async {
     StorageManager.db.update('chats', {
       'userid' : chat.userId,
-      'name' : chat.name,
+      'name' : chat.name.value,
       'lastMessage' : chat.lastMessage,
       'timestamp' : chat.timestamp
     }, where: 'id = ?', whereArgs: [chat.chatId]);
@@ -63,14 +63,17 @@ class ChatsStorageManager {
     for (Map<String, dynamic> chatData in chats) {
       int chatId = chatData['id'];
       int userId = chatData['userid'];
-      String name = chatData['name'];
+      String? name = chatData['name'];
       String lastMessage = chatData['lastMessage'];
       int timestamp = chatData['timestamp'];
       if(userId != 0)
       {
+        if(name != null)
+        {
           chatsManager.usernames[userId] = name;
+        }
       }
-      Chat chat = Chat(name: name, chatId: chatId, userId: userId, lastMessage: lastMessage, timestamp: timestamp);
+      Chat chat = Chat( chatId: chatId, userId: userId, lastMessage: lastMessage, timestamp: timestamp);
       chatsManager.addChat(userId, chat);
       chatsManager.openChat(userId);
     }

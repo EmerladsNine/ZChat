@@ -99,11 +99,16 @@ class ChatCardWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: ScaledTextWidget(
-                              chat.name,
-                              style: AppTextStyles.chatCardNameTextStyle(
-                                colors,
-                              ),
+                            child: ValueListenableBuilder(
+                              valueListenable: chat.name,
+                              builder: (context, chatName, child) {
+                                return ScaledTextWidget(
+                                  chatName ?? "#${chat.userId}",
+                                  style: AppTextStyles.chatCardNameTextStyle(
+                                    colors,
+                                  ),
+                                );
+                              }
                             ),
                           ),
                           ScaledTextWidget(

@@ -8,43 +8,48 @@ import 'package:zchat/messages_system/internet/server_api.dart';
 
 
 abstract class ProtocolSenderSearch {
-  static Future<SearchEvent?> searchByIdAsync(ServerApi api,int id) {
-      final completer = Completer<SearchEvent?>();
-      void callback()
-      {
-        completer.complete(CallbackNotifiers.searchResponse.value);
-        CallbackNotifiers.searchResponse.removeListener(callback);
-      }
-      CallbackNotifiers.searchResponse.addListener(callback);
+  static final List<Completer<SearchEvent?>> _queue = [];
 
-      final result = api.sendProtocolUnit(MessageType.searchWithId, [
-        ...intToBigEndian(id, 4),
-      ]);
-      if(!result) {
-        completer.complete(null);
-        CallbackNotifiers.searchResponse.removeListener(callback);
-        return completer.future;
+  static Future<SearchEvent?> searchByIdAsync(ServerApi api, int id) {
+    final completer = Completer<SearchEvent?>();
+    _queue.add(completer);
+    void listener() {
+      if (_queue.isNotEmpty && _queue.first == completer) {
+        completer.complete(CallbackNotifiers.searchResponse.value);
+        CallbackNotifiers.searchResponse.removeListener(listener);
+        _queue.removeAt(0);
       }
-      return completer.future;
+    }
+    CallbackNotifiers.searchResponse.addListener(listener);
+    final result = api.sendProtocolUnit(MessageType.searchWithId, [...intToBigEndian(id, 4)]);
+    if (!result) {
+      _queue.remove(completer);
+      CallbackNotifiers.searchResponse.removeListener(listener);
+      completer.complete(null);
+    }
+    return completer.future;
   }
 
   static Future<SearchEvent?> searchByUsernameAsync(ServerApi api,Uint8List usernameUTF8) {
     final completer = Completer<SearchEvent?>();
-    void callback()
+    _queue.add(completer);
+    void listener()
     {
-      completer.complete(CallbackNotifiers.searchResponse.value);
-      CallbackNotifiers.searchResponse.removeListener(callback);
+      if (_queue.isNotEmpty && _queue.first == completer) {
+        completer.complete(CallbackNotifiers.searchResponse.value);
+        CallbackNotifiers.searchResponse.removeListener(listener);
+        _queue.removeAt(0);
+      }
     }
-    CallbackNotifiers.searchResponse.addListener(callback);
+    CallbackNotifiers.searchResponse.addListener(listener);
 
     final result = api.sendProtocolUnit(MessageType.searchWithUsername, [
       ...usernameUTF8,
     ]);
-
     if(!result) {
+      _queue.remove(completer);
+      CallbackNotifiers.searchResponse.removeListener(listener);
       completer.complete(null);
-      CallbackNotifiers.searchResponse.removeListener(callback);
-      return completer.future;
     }
     return completer.future;
   }

@@ -37,7 +37,7 @@ EmojiMessageType resolveMessageEmojiType(String text) {
 
 class Chat extends ChangeNotifier {
   final List<Message> _messages = [];
-  final String name;
+  ValueNotifier<String?> name = ValueNotifier(null);
   int chatId;
   final int userId;
   ValueNotifier<MessageReplyData?> replyData = ValueNotifier(null);
@@ -46,7 +46,6 @@ class Chat extends ChangeNotifier {
   int? lastMessageIdLoaded;
 
   Chat({
-    required this.name,
     required this.chatId,
     required this.userId,
     this.lastMessage = "",

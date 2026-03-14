@@ -34,20 +34,25 @@ class ChattingPageAppBarWidget extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
             Navigator.push(
                 context,
-                SlidingAnimationPageRoute(page: ChatDetailsPage(
-                  chatData: GroupChatData(
-                    id: Id(id: 0, name: chat.name, isChatId: false),
-                    description: 'I love mathematics.',
-                    members: [
-                      Id(id: 0, name: 'You', isChatId: false),
-                      Id(id: 1, name: 'Jawad', isChatId: false),
-                      Id(id: 2, name: 'Awali', isChatId: false),
-                      Id(id: 3, name: 'Ali', isChatId: false),
-                      Id(id: 4, name: 'Mhmd', isChatId: false),
-                      Id(id: 5, name: 'Zane', isChatId: false),
-                    ],
-                    // email: 'uzmonEmeralds@linux.windowsHater',
-                  ),
+                SlidingAnimationPageRoute(page: ValueListenableBuilder(
+                  valueListenable: chat.name,
+                  builder: (context, chatName, child) {
+                    return ChatDetailsPage(
+                      chatData: GroupChatData(
+                        id: Id(id: 0, name: chatName ?? "#${chat.userId}", isChatId: false),
+                        description: 'I love mathematics.',
+                        members: [
+                          Id(id: 0, name: 'You', isChatId: false),
+                          Id(id: 1, name: 'Jawad', isChatId: false),
+                          Id(id: 2, name: 'Awali', isChatId: false),
+                          Id(id: 3, name: 'Ali', isChatId: false),
+                          Id(id: 4, name: 'Mhmd', isChatId: false),
+                          Id(id: 5, name: 'Zane', isChatId: false),
+                        ],
+                        // email: 'uzmonEmeralds@linux.windowsHater',
+                      ),
+                    );
+                  }
                 ))
               );
         },
@@ -72,11 +77,16 @@ class ChattingPageAppBarWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ScaledTextWidget(
-                  chat.name,
-                  style: AppTextStyles.appBarPrimaryTextStyle(
-                    colors,
-                  ).copyWith(fontSize: 15),
+                ValueListenableBuilder(
+                  valueListenable: chat.name,
+                  builder: (context, chatName, child) {
+                    return ScaledTextWidget(
+                      chatName ?? "#${chat.userId}",
+                      style: AppTextStyles.appBarPrimaryTextStyle(
+                        colors,
+                      ).copyWith(fontSize: 15),
+                    );
+                  }
                 ),
                 ScaledTextWidget("idk something here is talking",style: AppTextStyles.chatCardMessageDetailsTextStyle(colors).copyWith(fontSize: 11),)
               ],

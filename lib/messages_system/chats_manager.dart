@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/messages_system/chat.dart';
+import 'package:zchat/messages_system/internet/events/search_event.dart';
+import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_search.dart';
+import 'package:zchat/messages_system/internet/server_api.dart';
+import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 
 class ChatsManager extends ChangeNotifier {
-  Map<int, Chat> chatsMap = {0: Chat(name: "Max", chatId: 0, userId: 0)};
+  Map<int, Chat> chatsMap = {};
+  Map<int, Chat> privateChatsMap = {};
   Map<int, String> usernames = {0: "You"};
   List<Chat> openedChats = [];
 
+  void requestUsername(ServerApi api,int userId) async
+  {
+      SearchEvent? result = await ProtocolSenderSearch.searchByIdAsync(api, userId);
+      if(result != null && result.name != null)
+      {
+        usernames[userId] = result.name!;
+        Chat? chat = privateChatsMap[userId];
+        if(chat != null)
+        {
+          chat.name.value = result.name!;
+          ChatsStorageManager.updateChat(chat: chat);
+        }
+      }
+  }
+
   void addChat(int id, Chat chat) {
     chatsMap[id] = chat;
+    privateChatsMap[chat.userId] = chat;
   }
   void openChat(int id) {
     openedChats.insert(0, chatsMap[id]!);
