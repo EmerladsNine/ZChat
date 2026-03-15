@@ -90,7 +90,7 @@ class ServerApi {
       msg.messageId = await ChatsStorageManager.insertMessage(message: msg,chat: chat);
       chat.addMessage(msg);
       ChatsStorageManager.updateChat(chat: chat);
-      chatsManager.notify();
+      chatsManager.reOpenChat(chat);
       chat.replyData.value = null;
       messagesQueue.addMessage(this, msg, chat);
     } catch (e) {
