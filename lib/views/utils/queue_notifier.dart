@@ -12,6 +12,9 @@ class QueueNotifier<T> {
   void listen(void Function(T) fn) {
     _listeners.add(fn);
   }
+  void removeListener(void Function(T) fn) {
+    _listeners.remove(fn);
+  }
 
   void clearListeners()
   {

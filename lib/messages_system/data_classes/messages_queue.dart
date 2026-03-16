@@ -31,7 +31,10 @@ class MessagesQueue {
         Uint8List replyTextUTF8 = utf8.encode(msg.replyData?.text ?? "");
         Uint8List messageUTF8 = utf8.encode(msg.text);
         OkEvent? result = await ProtocolSenderNormalMessage.send(api,chat.userId, msg.replyData?.senderId, replyTextUTF8, messageUTF8);
-        if(result == null) break;
+        if(result == null) {
+          await Future.delayed(Duration(seconds: 2));
+          continue;
+        }
         _messagesToSend.removeFirst();
         msg.messageStatus = MessageStatus.undelivered;
         chat.notifyChange();

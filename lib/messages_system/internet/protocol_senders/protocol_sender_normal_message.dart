@@ -9,10 +9,17 @@ import 'package:zchat/messages_system/internet/server_api.dart';
 abstract class ProtocolSenderNormalMessage {
   static Future<OkEvent?> send(ServerApi api,int receiverId,int? replyTextSenderId,Uint8List replyTextUTF8,Uint8List messageUTF8) {
     final completer = Completer<OkEvent?>();
+
     void callback(OkEvent value)
     {
       completer.complete(value);
     }
+    Timer(Duration(seconds: 10), () {
+      if (!completer.isCompleted) {
+        CallbackNotifiers.messageResponse.removeListener(callback);
+        completer.complete(null);
+      }
+    });
     List<int> replySenderIdUTF8 = replyTextSenderId != null ? intToBigEndian(replyTextSenderId, 4) : [];
     final result = api.sendProtocolUnit(MessageType.normalMessage, [
       ...intToBigEndian(receiverId, 4),
