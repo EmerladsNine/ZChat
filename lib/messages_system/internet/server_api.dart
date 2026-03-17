@@ -8,6 +8,7 @@ import 'package:zchat/messages_system/internet/listener_service.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
@@ -36,7 +37,7 @@ class ServerApi {
   late ListenerService listener;
   final ChatsManager chatsManager;
   MessagesQueue messagesQueue = MessagesQueue();
-
+  late ProtocolSender protocolSender = ProtocolSender(this);
   ServerApi(this.chatsManager) {
     listener = ListenerService(this,chatsManager);
   }
@@ -92,7 +93,8 @@ class ServerApi {
       ChatsStorageManager.updateChat(chat: chat);
       chatsManager.reOpenChat(chat);
       chat.replyData.value = null;
-      messagesQueue.addMessage(this, msg, chat);
+      messagesQueue.addMessage(this,protocolSender.normalMessage, msg, chat);
+      messagesQueue.sendMessages(this, protocolSender.normalMessage);
     } catch (e) {
       printOnDebug(e);
     }
@@ -106,7 +108,7 @@ class ServerApi {
       try {
         socket = await Socket.connect(host, port);
         printOnDebug('$caller Connected to $host:$port');
-        messagesQueue.sendMessages(this);
+        messagesQueue.sendMessages(this,protocolSender.normalMessage);
         socket.listen(
           listener.onData,
           onDone: () => reconnectServer("onDone socket.listen"),

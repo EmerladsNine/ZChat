@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/auth_response_code_handler.dart';
-import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_email_auth.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/themes_system/app_theme.dart';
@@ -199,7 +198,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     });
     BuildContext buildContext = context;
     final api = buildContext.read<ServerApi>();
-    AuthEvent? event = await ProtocolSenderEmailAuth.signUp(api, emailUTF8, passwordUTF8, usernameUTF8,);
+    AuthEvent? event = await api.protocolSender.emailAuth.signUp(emailUTF8, passwordUTF8, usernameUTF8,);
     if (!buildContext.mounted) return;
     onAuthResponse(buildContext, event);
     setState(() {
@@ -220,7 +219,7 @@ class _EmailAuthPageState extends State<EmailAuthPage> {
     });
     BuildContext buildContext = context;
     final api = buildContext.read<ServerApi>();
-    AuthEvent? event = await ProtocolSenderEmailAuth.signIn(api, emailUTF8, passwordUTF8,);
+    AuthEvent? event = await api.protocolSender.emailAuth.signIn(emailUTF8, passwordUTF8,);
     if (!buildContext.mounted) return;
     onAuthResponse(buildContext, event);
     setState(() {

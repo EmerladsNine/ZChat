@@ -7,10 +7,13 @@ import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 
 
-abstract class ProtocolSenderSearch {
-  static final List<Completer<SearchEvent?>> _queue = [];
+class ProtocolSenderSearch {
+  final ServerApi api;
+  ProtocolSenderSearch(this.api);
 
-  static Future<SearchEvent?> searchByIdAsync(ServerApi api, int id) {
+  final List<Completer<SearchEvent?>> _queue = [];
+
+  Future<SearchEvent?> searchByIdAsync(int id) {
     final completer = Completer<SearchEvent?>();
     _queue.add(completer);
     void listener() {
@@ -30,7 +33,7 @@ abstract class ProtocolSenderSearch {
     return completer.future;
   }
 
-  static Future<SearchEvent?> searchByUsernameAsync(ServerApi api,Uint8List usernameUTF8) {
+  Future<SearchEvent?> searchByUsernameAsync(Uint8List usernameUTF8) {
     final completer = Completer<SearchEvent?>();
     _queue.add(completer);
     void listener()

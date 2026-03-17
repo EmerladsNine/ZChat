@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
-import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_google_auth.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
 
@@ -27,7 +26,7 @@ class GoogleAuthService {
         return ("",null);
       }
 
-      AuthEvent? event = await ProtocolSenderGoogleAuth.signIn(api, utf8.encode(gUser.authentication.idToken!));
+      AuthEvent? event = await api.protocolSender.googleAuth.signIn(utf8.encode(gUser.authentication.idToken!));
       return (gUser.authentication.idToken!,event);
     }
     on GoogleSignInException catch(_) {
@@ -38,6 +37,6 @@ class GoogleAuthService {
   static Future<AuthEvent?> signUp(ServerApi api,String username,String googleToken) {
       Uint8List usernameUTF8 = utf8.encode(username);
       Uint8List googleTokenUTF8 = utf8.encode(googleToken);
-      return ProtocolSenderGoogleAuth.signUp(api, usernameUTF8, googleTokenUTF8);
+      return api.protocolSender.googleAuth.signUp(usernameUTF8, googleTokenUTF8);
   }
 }

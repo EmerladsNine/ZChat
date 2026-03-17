@@ -6,8 +6,10 @@ import 'package:zchat/messages_system/internet/events/ok_event.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 
-abstract class ProtocolSenderNormalMessage {
-  static Future<OkEvent?> send(ServerApi api,int receiverId,int? replyTextSenderId,Uint8List replyTextUTF8,Uint8List messageUTF8) {
+class ProtocolSenderNormalMessage {
+  final ServerApi api;
+  ProtocolSenderNormalMessage(this.api);
+  Future<OkEvent?> send(int receiverId,int? replyTextSenderId,Uint8List replyTextUTF8,Uint8List messageUTF8) {
     final completer = Completer<OkEvent?>();
 
     void callback(OkEvent value)

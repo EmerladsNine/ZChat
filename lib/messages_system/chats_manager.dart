@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
-import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_search.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 
@@ -13,7 +12,7 @@ class ChatsManager extends ChangeNotifier {
 
   void requestUsername(ServerApi api,int userId) async
   {
-      SearchEvent? result = await ProtocolSenderSearch.searchByIdAsync(api, userId);
+      SearchEvent? result = await api.protocolSender.search.searchByIdAsync(userId);
       if(result != null && result.name != null)
       {
         usernames[userId] = result.name!;

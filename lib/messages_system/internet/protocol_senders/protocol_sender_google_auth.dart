@@ -6,8 +6,11 @@ import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 
-abstract class ProtocolSenderGoogleAuth {
-  static Future<AuthEvent?> signIn(ServerApi api,Uint8List googleTokenUTF8) {
+class ProtocolSenderGoogleAuth {
+  final ServerApi api;
+  ProtocolSenderGoogleAuth(this.api);
+
+  Future<AuthEvent?> signIn(Uint8List googleTokenUTF8) {
     final completer = Completer<AuthEvent?>();
     void callback()
     {
@@ -27,7 +30,7 @@ abstract class ProtocolSenderGoogleAuth {
     return completer.future;
   }
 
-  static Future<AuthEvent?> signUp(ServerApi api,Uint8List usernameUTF8,Uint8List googleTokenUTF8) {
+  Future<AuthEvent?> signUp(Uint8List usernameUTF8,Uint8List googleTokenUTF8) {
     final completer = Completer<AuthEvent?>();
     void callback()
     {

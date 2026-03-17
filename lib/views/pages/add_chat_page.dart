@@ -6,7 +6,6 @@ import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
-import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_search.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/response_codes/search_response_code.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
@@ -77,7 +76,7 @@ class _AddChatPageState extends State<AddChatPage> {
       return true;
     }
     ServerApi api = buildContext.read<ServerApi>();
-    SearchEvent? event = await ProtocolSenderSearch.searchByIdAsync(api, id);
+    SearchEvent? event = await api.protocolSender.search.searchByIdAsync(id);
     if (!buildContext.mounted) return true;
     await _onResponseReceived(event);
     return true;
@@ -95,10 +94,7 @@ class _AddChatPageState extends State<AddChatPage> {
       return;
     }
     ServerApi api = buildContext.read<ServerApi>();
-    SearchEvent? event = await ProtocolSenderSearch.searchByUsernameAsync(
-      api,
-      searchUTF8,
-    );
+    SearchEvent? event = await api.protocolSender.search.searchByUsernameAsync(searchUTF8);
     if (!buildContext.mounted) return;
     await _onResponseReceived(event);
   }
