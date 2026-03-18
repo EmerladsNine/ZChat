@@ -7,6 +7,7 @@ import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/response_codes/auth_response_code.dart';
+import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
 class AuthResponseCodeHandler extends Handler {
@@ -60,6 +61,8 @@ class AuthResponseCodeHandler extends Handler {
         responseCode == ResponseCode.emailAccountCreated.id ||
         responseCode == ResponseCode.googleAuthSuccessful.id) {
       int id = bigEndianToInt(buffer, 4);
+      int sessionId = bigEndianToInt(buffer, 4);
+      printOnDebug("got session id : $sessionId");
       List<int> accessToken = buffer.getRange(0, 32).toList();
       String accessTokenEncoded = base64Encode(accessToken);
       buffer.removeRange(0, 32);
@@ -67,12 +70,11 @@ class AuthResponseCodeHandler extends Handler {
       String refreshTokenEncoded = base64Encode(refreshToken);
       buffer.removeRange(0, 64);
       const storage = FlutterSecureStorage();
-      storage.write(key: "access_token", value: accessTokenEncoded).then((_){
-        storage.write(key: "refresh_token", value: refreshTokenEncoded).then((_){
-          storage.write(key: "userid", value: id.toString()).then((_){
-            AppNotifiers.isSignedIn.value = true;
-          });
-        });
+      storage.write(key: "session_id", value: sessionId.toString()).then((_) async {
+        await storage.write(key: "access_token", value: accessTokenEncoded);
+        await storage.write(key: "refresh_token", value: refreshTokenEncoded);
+        await storage.write(key: "user_id", value: id.toString());
+        AppNotifiers.isSignedIn.value = true;
       });
       return true;
     }

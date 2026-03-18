@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
@@ -19,6 +20,14 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  const storage = FlutterSecureStorage();
+  String? sessionId = await storage.read(key: "session_id");
+  String? accessToken = await storage.read(key: "access_token");
+  if(sessionId != null && accessToken != null)
+  {
+      AppNotifiers.isSignedIn.value = true;
+  }
 
   // for storage db on desktop
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
