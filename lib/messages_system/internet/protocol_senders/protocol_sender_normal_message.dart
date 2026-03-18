@@ -16,7 +16,7 @@ class ProtocolSenderNormalMessage {
     {
       completer.complete(value);
     }
-    Timer(Duration(seconds: 10), () {
+    Timer(Duration(seconds: 4), () {
       if (!completer.isCompleted) {
         CallbackNotifiers.messageResponse.removeListener(callback);
         completer.complete(null);

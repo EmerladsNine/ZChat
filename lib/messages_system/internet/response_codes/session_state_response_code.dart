@@ -5,7 +5,9 @@ enum SessionStateResponseCode {
   notAuthenticated(id: 0),
   authenticationFailure(id: 1),
   accessTokenExpired(id: 2),
-  sessionAuthenticationSuccess(id: 3);
+  sessionAuthenticationSuccess(id: 3),
+  refreshTokenExpired(id: 4),
+  refreshSuccess(id: 5);
 
   final int id;
   const SessionStateResponseCode({required this.id});

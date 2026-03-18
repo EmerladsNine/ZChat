@@ -14,7 +14,8 @@ enum MessageType {
   searchResponseCode(id: 10),
   normalMessageResponseCode(id: 11),
   sessionStateResponseCode(id: 12),
-  useAccessToken(id: 13);
+  useAccessToken(id: 13),
+  useRefreshToken(id: 14);
 
   final int id;
   const MessageType({required this.id});

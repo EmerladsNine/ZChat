@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/messages_queue.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
@@ -12,6 +15,7 @@ import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender.
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
+import 'package:zchat/views/data/app_notifiers.dart';
 
 List<int> intToBigEndian(int num, int bytes) {
   List<int> list = [];
@@ -100,6 +104,27 @@ class ServerApi {
     }
   }
 
+  void sendAccessToken()
+  {
+    const storage = FlutterSecureStorage();
+    storage.read(key: "session_id").then((sessionIdText) async{
+      if(sessionIdText == null)
+      {
+        AppNotifiers.isSignedIn.value = false;
+        return;
+      }
+      int sessionId = int.parse(sessionIdText);
+      String? accessTokenBase64 = await storage.read(key: "access_token");
+      if(accessTokenBase64 == null)
+      {
+        AppNotifiers.isSignedIn.value = false;
+        return;
+      }
+      Uint8List accessToken = base64Decode(accessTokenBase64);
+      protocolSender.useToken.sendAccessToken(sessionId, accessToken);
+    });
+  }
+
   Future<void> connectServer(String caller) async {
     final String host = "127.0.0.1";//"192.168.133.63";
     final int port = 9999;
@@ -108,6 +133,7 @@ class ServerApi {
       try {
         socket = await Socket.connect(host, port);
         printOnDebug('$caller Connected to $host:$port');
+        sendAccessToken();
         messagesQueue.sendMessages(this,protocolSender.normalMessage);
         socket.listen(
           listener.onData,

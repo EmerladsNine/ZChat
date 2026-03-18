@@ -12,5 +12,5 @@ class ProtocolSender {
   late ProtocolSenderSearch search = ProtocolSenderSearch(api);
   late ProtocolSenderGoogleAuth googleAuth = ProtocolSenderGoogleAuth(api);
   late ProtocolSenderEmailAuth emailAuth = ProtocolSenderEmailAuth(api);
-  late ProtocolSenderUseAccessToken useAccessToken = ProtocolSenderUseAccessToken(api);
+  late ProtocolSenderUseAuthTokens useToken = ProtocolSenderUseAuthTokens(api);
 }

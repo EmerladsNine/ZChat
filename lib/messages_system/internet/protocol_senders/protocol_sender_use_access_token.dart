@@ -1,13 +1,21 @@
 import 'package:zchat/messages_system/internet/message_type.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 
-class ProtocolSenderUseAccessToken {
+class ProtocolSenderUseAuthTokens {
   final ServerApi api;
-  ProtocolSenderUseAccessToken(this.api);
-  bool send(int sessionId,List<int> accessToken) {
+  ProtocolSenderUseAuthTokens(this.api);
+  bool sendAccessToken(int sessionId,List<int> accessToken) {
     return api.sendProtocolUnit(MessageType.useAccessToken, [
       ...intToBigEndian(sessionId, 4),
       ...accessToken
     ]);
   }
+
+  bool sendRefreshToken(int sessionId,List<int> refreshToken) {
+    return api.sendProtocolUnit(MessageType.useRefreshToken, [
+      ...intToBigEndian(sessionId, 4),
+      ...refreshToken
+    ]);
+  }
+
 }
