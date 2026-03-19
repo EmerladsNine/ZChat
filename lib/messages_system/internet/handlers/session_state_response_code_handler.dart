@@ -17,23 +17,7 @@ class SessionStateResponseCodeHandler extends Handler {
     if (responseCode == SessionStateResponseCode.notAuthenticated.id)
     {
         api.messagesQueue.isPaused = true;
-        const storage = FlutterSecureStorage();
-        storage.read(key: "session_id").then((sessionIdText) async{
-          if(sessionIdText == null)
-          {
-              AppNotifiers.isSignedIn.value = false;
-              return;
-          }
-          int sessionId = int.parse(sessionIdText);
-          String? accessTokenBase64 = await storage.read(key: "access_token");
-          if(accessTokenBase64 == null)
-          {
-            AppNotifiers.isSignedIn.value = false;
-            return;
-          }
-          Uint8List accessToken = base64Decode(accessTokenBase64);
-          api.protocolSender.useToken.sendAccessToken(sessionId, accessToken);
-        });
+        api.sendAccessToken();
     }
     else if(responseCode == SessionStateResponseCode.authenticationFailure.id)
     {
@@ -87,6 +71,7 @@ class SessionStateResponseCodeHandler extends Handler {
         api.messagesQueue.isPaused = false;
         api.messagesQueue.sendMessages(api,api.protocolSender.normalMessage);
       });
+      api.loadSessionData();
     }
     return true;
   }

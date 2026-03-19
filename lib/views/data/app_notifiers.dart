@@ -12,7 +12,7 @@ abstract final class AppNotifiers {
   static final ValueNotifier<bool> isMessageActionsMenuVisible = ValueNotifier(false);
   static final ValueNotifier<bool> isPfpOverlayVisible = ValueNotifier(false);
   static final ValueNotifier<int> disableMenu = ValueNotifier(0);
-  static final ValueNotifier<bool> isSignedIn = ValueNotifier(false);
+  static final ValueNotifier<bool> isSignedIn = ValueNotifier(true);
   static final ValueNotifier<MessageBubbleWidget?> selectedMessage = ValueNotifier(null);
   static final ValueNotifier<Chat?> openedChat = ValueNotifier(null);
 }

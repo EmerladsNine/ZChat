@@ -53,8 +53,9 @@ class AuthResponseCodeHandler extends Handler {
   static bool isEmailUsernameError(ResponseCode code) =>
       code == ResponseCode.emailAccountInvalidUsernameError ||
       code == ResponseCode.emailAccountUsernameExistError;
+
   @override
-  bool handle(List<int> buffer, ServerApi service,ChatsManager chatsManager) {
+  bool handle(List<int> buffer, ServerApi api,ChatsManager chatsManager) {
     int responseCode = buffer[0];
     buffer.removeAt(0);
 
@@ -77,6 +78,7 @@ class AuthResponseCodeHandler extends Handler {
         await storage.write(key: "user_id", value: id.toString());
         AppNotifiers.isSignedIn.value = true;
       });
+      api.loadSessionData();
       return true;
     }
 

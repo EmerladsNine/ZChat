@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/messages_queue.dart';
+import 'package:zchat/messages_system/data_classes/session.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/internet/listener_service.dart';
 import 'package:zchat/messages_system/internet/message_type.dart';
@@ -42,8 +43,51 @@ class ServerApi {
   final ChatsManager chatsManager;
   MessagesQueue messagesQueue = MessagesQueue();
   late ProtocolSender protocolSender = ProtocolSender(this);
+  Session? currentSession;
+
   ServerApi(this.chatsManager) {
     listener = ListenerService(this,chatsManager);
+  }
+
+  Future<bool> loadSessionIfNull() async
+  {
+      if(currentSession == null && !await loadSessionData()) return false;
+      return true;
+  }
+
+  Future<bool> loadSessionData() async
+  {
+    const storage = FlutterSecureStorage();
+    String? userIdText = await storage.read(key: "user_id");
+    if(userIdText == null)
+    {
+      AppNotifiers.isSignedIn.value = false;
+      return false;
+    }
+    int userId = int.parse(userIdText);
+    String? sessionIdText = await storage.read(key: "session_id");
+    if(sessionIdText == null)
+    {
+      AppNotifiers.isSignedIn.value = false;
+      return false;
+    }
+    int sessionId = int.parse(sessionIdText);
+    String? accessTokenBase64 = await storage.read(key: "access_token");
+    if(accessTokenBase64 == null)
+    {
+      AppNotifiers.isSignedIn.value = false;
+      return false;
+    }
+    Uint8List accessToken = base64Decode(accessTokenBase64);
+    String? refreshTokenBase64 = await storage.read(key: "refresh_token");
+    if(refreshTokenBase64 == null)
+    {
+      AppNotifiers.isSignedIn.value = false;
+      return false;
+    }
+    Uint8List refreshToken = base64Decode(refreshTokenBase64);
+    currentSession = Session(userId,sessionId, accessToken, refreshToken);
+    return true;
   }
 
   bool sendProtocolUnit(MessageType type, List<int> data) {
@@ -97,6 +141,13 @@ class ServerApi {
       ChatsStorageManager.updateChat(chat: chat);
       chatsManager.reOpenChat(chat);
       chat.replyData.value = null;
+      chatsManager.notify();
+      if(!await loadSessionIfNull()) return;
+      if(currentSession!.userId == chat.userId) {
+          msg.messageStatus = MessageStatus.undelivered;
+          chat.notifyChange();
+          return;
+      }
       messagesQueue.addMessage(this,protocolSender.normalMessage, msg, chat);
       messagesQueue.sendMessages(this, protocolSender.normalMessage);
     } catch (e) {
@@ -104,25 +155,10 @@ class ServerApi {
     }
   }
 
-  void sendAccessToken()
+  void sendAccessToken() async
   {
-    const storage = FlutterSecureStorage();
-    storage.read(key: "session_id").then((sessionIdText) async{
-      if(sessionIdText == null)
-      {
-        AppNotifiers.isSignedIn.value = false;
-        return;
-      }
-      int sessionId = int.parse(sessionIdText);
-      String? accessTokenBase64 = await storage.read(key: "access_token");
-      if(accessTokenBase64 == null)
-      {
-        AppNotifiers.isSignedIn.value = false;
-        return;
-      }
-      Uint8List accessToken = base64Decode(accessTokenBase64);
-      protocolSender.useToken.sendAccessToken(sessionId, accessToken);
-    });
+      if(!await loadSessionIfNull()) return;
+      protocolSender.useToken.sendAccessToken(currentSession!.sessionId, currentSession!.accessToken);
   }
 
   Future<void> connectServer(String caller) async {
@@ -133,6 +169,7 @@ class ServerApi {
       try {
         socket = await Socket.connect(host, port);
         printOnDebug('$caller Connected to $host:$port');
+        messagesQueue.isPaused = true;
         sendAccessToken();
         socket.listen(
           listener.onData,

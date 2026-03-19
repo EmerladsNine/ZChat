@@ -38,7 +38,6 @@ class MessagesQueue {
       _messagesToSend.removeFirst();
       msg.messageStatus = MessageStatus.undelivered;
       chat.notifyChange();
-      api.chatsManager.notify();
       printOnDebug('sent: ${msg.text}');
     }
     _isSending = false;
