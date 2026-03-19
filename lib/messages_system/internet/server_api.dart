@@ -134,7 +134,6 @@ class ServerApi {
         socket = await Socket.connect(host, port);
         printOnDebug('$caller Connected to $host:$port');
         sendAccessToken();
-        messagesQueue.sendMessages(this,protocolSender.normalMessage);
         socket.listen(
           listener.onData,
           onDone: () => reconnectServer("onDone socket.listen"),

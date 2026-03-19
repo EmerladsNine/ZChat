@@ -5,9 +5,9 @@ enum ResponseCode {
   emailAccountCreated(id: 0),
   emailAccountEmailExistError(id: 1),
   emailAccountUsernameExistError(id: 2),
-  emailAccountInvalidEmailLengthError(id: 3),
+  emailAccountInvalidEmailError(id: 3),
   emailAccountInvalidPasswordLengthError(id: 4),
-  emailAccountInvalidUsernameLengthError(id: 5),
+  emailAccountInvalidUsernameError(id: 5),
   emailAccountCreationFailureError(id: 6),
   emailSignInEmailNotExistError(id: 7),
   emailSignInFailureError(id: 8),
@@ -17,7 +17,7 @@ enum ResponseCode {
   googleAuthSuccessful(id: 12),
   googleAuthFailed(id: 13),
   googleAuthRequireSignUp(id: 14),
-  googleSignUpInvalidUsernameLengthError(id: 15),
+  googleSignUpInvalidUsernameError(id: 15),
   googleSignUpUsernameExistError(id: 16),
   googleSignUpGoogleIdExistError(id: 17);
 

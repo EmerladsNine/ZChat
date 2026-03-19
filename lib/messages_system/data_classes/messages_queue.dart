@@ -14,6 +14,7 @@ class MessagesQueue {
   final Queue<(Message message, Chat chat)> _messagesToSend = Queue();
   Queue<(Message,Chat)> getMessagesQueue() => _messagesToSend;
   bool _isSending = false;
+  bool isPaused = false;
   bool isRetrying = false;
 
   void addMessage(ServerApi api,ProtocolSenderNormalMessage protocolMessageSender, Message message, Chat chat) {
@@ -24,7 +25,7 @@ class MessagesQueue {
   Future<void> sendMessages(ServerApi api,ProtocolSenderNormalMessage protocolMessageSender) async {
     if (_isSending) return;
     _isSending = true;
-    while (_messagesToSend.isNotEmpty) {
+    while (_messagesToSend.isNotEmpty && !isPaused) {
       Message msg = _messagesToSend.first.$1;
       Chat chat = _messagesToSend.first.$2;
       Uint8List replyTextUTF8 = utf8.encode(msg.replyData?.text ?? "");
@@ -37,6 +38,7 @@ class MessagesQueue {
       _messagesToSend.removeFirst();
       msg.messageStatus = MessageStatus.undelivered;
       chat.notifyChange();
+      api.chatsManager.notify();
       printOnDebug('sent: ${msg.text}');
     }
     _isSending = false;

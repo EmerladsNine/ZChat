@@ -16,6 +16,7 @@ class SessionStateResponseCodeHandler extends Handler {
     buffer.removeAt(0);
     if (responseCode == SessionStateResponseCode.notAuthenticated.id)
     {
+        api.messagesQueue.isPaused = true;
         const storage = FlutterSecureStorage();
         storage.read(key: "session_id").then((sessionIdText) async{
           if(sessionIdText == null)
@@ -36,10 +37,12 @@ class SessionStateResponseCodeHandler extends Handler {
     }
     else if(responseCode == SessionStateResponseCode.authenticationFailure.id)
     {
+        api.messagesQueue.isPaused = true;
         AppNotifiers.isSignedIn.value = false;
     }
     else if(responseCode == SessionStateResponseCode.accessTokenExpired.id)
     {
+      api.messagesQueue.isPaused = true;
       if(!AppNotifiers.isSignedIn.value) return true;
       const storage = FlutterSecureStorage();
       storage.read(key: "session_id").then((sessionIdText) async{
@@ -61,10 +64,12 @@ class SessionStateResponseCodeHandler extends Handler {
     }
     else if(responseCode == SessionStateResponseCode.sessionAuthenticationSuccess.id)
     {
-        // Todo
+        api.messagesQueue.isPaused = false;
+        api.messagesQueue.sendMessages(api,api.protocolSender.normalMessage);
     }
     else if(responseCode == SessionStateResponseCode.refreshTokenExpired.id)
     {
+        api.messagesQueue.isPaused = true;
         AppNotifiers.isSignedIn.value = false;
     }
     else if(responseCode == SessionStateResponseCode.refreshSuccess.id)
@@ -79,6 +84,8 @@ class SessionStateResponseCodeHandler extends Handler {
       storage.write(key: "access_token", value: accessTokenEncoded).then((_) async {
         await storage.write(key: "refresh_token", value: refreshTokenEncoded);
         AppNotifiers.isSignedIn.value = true;
+        api.messagesQueue.isPaused = false;
+        api.messagesQueue.sendMessages(api,api.protocolSender.normalMessage);
       });
     }
     return true;

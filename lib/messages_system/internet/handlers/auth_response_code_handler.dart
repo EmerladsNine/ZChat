@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
+import 'package:zchat/messages_system/data_classes/account_constants.dart';
 import 'package:zchat/messages_system/internet/callback_notifiers.dart';
 import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
@@ -16,14 +17,14 @@ class AuthResponseCodeHandler extends Handler {
         "Email is already used in an existing account.",
     ResponseCode.emailAccountUsernameExistError.id:
         "Username is used, try another one.",
-    ResponseCode.emailAccountInvalidEmailLengthError.id: "Invalid Email Length",
+    ResponseCode.emailAccountInvalidEmailError.id: "Invalid Email.",
     ResponseCode.emailAccountInvalidPasswordLengthError.id:
-        "Invalid Password Length, must be at least 8 characters",
-    ResponseCode.emailAccountInvalidUsernameLengthError.id:
-        "Invalid Username Length",
+        "Invalid Password Length, must be between ${AccountConstants.minPasswordLength} and  ${AccountConstants.maxPasswordLength} characters.",
+    ResponseCode.emailAccountInvalidUsernameError.id:
+        "Invalid Username.",
     ResponseCode.emailAccountCreationFailureError.id:
         "Failed to create account , please try again later.",
-    ResponseCode.emailSignInEmailNotExistError.id: "Email does not exist",
+    ResponseCode.emailSignInEmailNotExistError.id: "Email does not exist.",
     ResponseCode.emailSignInFailureError.id:
         "Failed to Sign in, please try again later.",
     ResponseCode.emailSignInPasswordIncorrectError.id: "Incorrect password.",
@@ -34,8 +35,8 @@ class AuthResponseCodeHandler extends Handler {
         "Invalid google Token, please authenticate with google again.",
     ResponseCode.googleAuthFailed.id:
         "Failed to authenticate , please try again later.",
-    ResponseCode.googleSignUpInvalidUsernameLengthError.id:
-        "Invalid Username Length.",
+    ResponseCode.googleSignUpInvalidUsernameError.id:
+        "Invalid Username.",
     ResponseCode.googleSignUpUsernameExistError.id:
         "Username is used, try another one.",
     ResponseCode.googleSignUpGoogleIdExistError.id:
@@ -45,12 +46,12 @@ class AuthResponseCodeHandler extends Handler {
   static bool isEmailError(ResponseCode code) =>
       code == ResponseCode.emailSignInEmailNotExistError ||
       code == ResponseCode.emailAccountEmailExistError ||
-      code == ResponseCode.emailAccountInvalidEmailLengthError;
+      code == ResponseCode.emailAccountInvalidEmailError;
   static bool isPasswordError(ResponseCode code) =>
       code == ResponseCode.emailSignInPasswordIncorrectError ||
       code == ResponseCode.emailAccountInvalidPasswordLengthError;
   static bool isEmailUsernameError(ResponseCode code) =>
-      code == ResponseCode.emailAccountInvalidUsernameLengthError ||
+      code == ResponseCode.emailAccountInvalidUsernameError ||
       code == ResponseCode.emailAccountUsernameExistError;
   @override
   bool handle(List<int> buffer, ServerApi service,ChatsManager chatsManager) {

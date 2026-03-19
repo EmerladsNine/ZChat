@@ -68,7 +68,7 @@ class _NamePageState extends State<NamePage> {
     if (value.code == ResponseCode.googleAuthInvalidToken) {
       Navigator.pop(buildContext);
     } else if (value.code == ResponseCode.googleSignUpUsernameExistError ||
-        value.code == ResponseCode.googleSignUpInvalidUsernameLengthError) {
+        value.code == ResponseCode.googleSignUpInvalidUsernameError) {
       usernameFocusNode.requestFocus();
       setState(() {
         usernameError = value.msg;
