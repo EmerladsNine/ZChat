@@ -35,6 +35,8 @@ int bigEndianToInt(List<int> buffer, int bytes) {
   return res;
 }
 
+const expectedSizeBytes = 4;
+
 class ServerApi {
   late Socket socket;
   Timer? pingTimeout;
@@ -99,7 +101,7 @@ class ServerApi {
         return false;
       }
       // Todo : encrypt the data
-      encryptedData.insertAll(0, intToBigEndian(encryptedData.length, 2));
+      encryptedData.insertAll(0, intToBigEndian(encryptedData.length, expectedSizeBytes));
       socket.add(encryptedData);
       return true;
     } catch (e) {

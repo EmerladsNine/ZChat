@@ -8,7 +8,6 @@ import 'package:zchat/messages_system/internet/events/auth_event.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/internet/response_codes/auth_response_code.dart';
-import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
 class AuthResponseCodeHandler extends Handler {
@@ -64,7 +63,6 @@ class AuthResponseCodeHandler extends Handler {
         responseCode == ResponseCode.googleAuthSuccessful.id) {
       int id = bigEndianToInt(buffer, 4);
       int sessionId = bigEndianToInt(buffer, 4);
-      printOnDebug("got session id : $sessionId");
       List<int> accessToken = buffer.getRange(0, 32).toList();
       String accessTokenEncoded = base64Encode(accessToken);
       buffer.removeRange(0, 32);

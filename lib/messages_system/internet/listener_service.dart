@@ -33,9 +33,8 @@ class ListenerService {
   //returns if the unit was received completely.
   bool processProtocolUnit() {
     if (expectedLength == null) {
-      if (buffer.length < 2) return false;
-      expectedLength = (buffer[0] << 8) | buffer[1];
-      buffer.removeRange(0, 2);
+      if (buffer.length < expectedSizeBytes) return false;
+      expectedLength = bigEndianToInt(buffer,expectedSizeBytes);
     }
 
     if (buffer.length < expectedLength!) return false;
