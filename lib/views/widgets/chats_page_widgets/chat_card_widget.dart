@@ -145,6 +145,18 @@ class ChatCardWidget extends StatelessWidget {
                                 ),
                               ),
 
+                              if (isSelected)
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(11, 0, 10.5, 15),
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.push_pin,
+                                    size: 11,
+                                    applyTextScaling: true,
+                                    color: colors.iconDefaultColor,
+                                  ),
+                                ),
+
                               (unreadMessagesNumber > 0)
                                   ? Container(
                                       padding: EdgeInsets.fromLTRB(
