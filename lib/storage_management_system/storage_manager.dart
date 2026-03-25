@@ -35,7 +35,7 @@ class StorageManager {
               userid INTEGER,
               name TEXT,
               lastMessage TEXT NOT NULL,
-              timestamp INTEGER NOT NULL
+              timestamp INTEGER NOT NULL,
               pinTimeStamp INTEGER
             )
         ''');

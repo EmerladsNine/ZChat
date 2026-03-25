@@ -14,30 +14,34 @@ List<AppBarWidget> pagesAppBars(BuildContext context) => [
       valueListenable: ChatSelectionController.selectedChats,
       builder: (context, selectedChats, child) {
         final isSelectionMode = selectedChats.isNotEmpty;
-        return ScaledTextWidget(
-          isSelectionMode ? "${selectedChats.length}" : "Chats",
-          style: AppTextStyles.appBarPrimaryTextStyle(
-            AppTheme.themeColorsOf(context),
-          ),
-        );
-      },
-    ),
-    leading: ValueListenableBuilder<Set<int>>(
-      valueListenable: ChatSelectionController.selectedChats,
-      builder: (context, selectedChats, _) {
-        final isSelectionMode = selectedChats.isNotEmpty;
+        return Row(
+          children: [
+            ValueListenableBuilder<Set<int>>(
+              valueListenable: ChatSelectionController.selectedChats,
+              builder: (context, selectedChats, _) {
+                final isSelectionMode = selectedChats.isNotEmpty;
 
-        if (!isSelectionMode) return const SizedBox();
+                if (!isSelectionMode) return const SizedBox();
 
-        return IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: AppTheme.themeColorsOf(context).primaryColor,
-            size: 25,
-          ),
-          onPressed: () {
-            ChatSelectionController.clear();
-          },
+                return IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: AppTheme.themeColorsOf(context).primaryColor,
+                    size: 25,
+                  ),
+                  onPressed: () {
+                    ChatSelectionController.clear();
+                  },
+                );
+              },
+            ),
+            ScaledTextWidget(
+              isSelectionMode ? "${selectedChats.length}" : "Chats",
+              style: AppTextStyles.appBarPrimaryTextStyle(
+                AppTheme.themeColorsOf(context),
+              ),
+            ),
+          ],
         );
       },
     ),
