@@ -164,7 +164,7 @@ class ServerApi {
   }
 
   Future<void> connectServer(String caller) async {
-    final String host = "127.0.0.1";//"192.168.133.63";
+    final String host = "92.113.26.192";
     final int port = 9999;
     Duration delay = Duration.zero;
     while (true) {

@@ -41,6 +41,7 @@ class NormalMessageHandler extends Handler {
     chat.addMessage(msg);
     ChatsStorageManager.updateChat(chat: chat);
     chatsManager.reOpenChat(chat);
+    chatsManager.notify();
   }
 
   @override
