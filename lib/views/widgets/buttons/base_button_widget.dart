@@ -10,6 +10,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
     this.onTap,
     this.onTapDown,
     this.onTapCancel,
+    this.onLongPress,
     this.padding = EdgeInsetsGeometry.zero,
     ValueNotifier<bool>? disableSet,
     ValueNotifier<bool>? appStateNotifier,
@@ -24,6 +25,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
   final GestureTapCallback? onTap;
   final GestureTapDownCallback? onTapDown;
   final GestureTapCancelCallback? onTapCancel;
+  final GestureLongPressCallback? onLongPress;
   final GestureDragDownCallback? onPanDown;
   final ValueNotifier<bool> disableSet;
   final ValueNotifier<bool> appStateNotifier;
@@ -150,6 +152,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
         tap(context);
       },
       onPanDown: widget.onPanDown,
+      onLongPress: widget.onLongPress,
       child: Stack(
         children: [
           Container(

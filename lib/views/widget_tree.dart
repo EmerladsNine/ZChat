@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/swiping_system/full_swipe_controller.dart';
-import 'package:zchat/views/data/appbar_data.dart';
+import 'package:zchat/views/data/pages_app_bars.dart';
 import 'package:zchat/views/data/pages_data/navbar_data.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
-import 'package:zchat/views/widgets/miscellaneous/appbar_widget.dart';
 import 'package:zchat/views/widgets/navbar_widgets/navbar_widget.dart';
 import '../themes_system/app_theme.dart';
 
@@ -30,10 +29,7 @@ class WidgetTree extends StatelessWidget {
           backgroundColor: colors.primaryBackgroundColor,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: AppBarWidget(
-              title: appBarData[selectedPage].title,
-              actions: [?appBarData[selectedPage].actions],
-            ),
+            child: pagesAppBars(context)[selectedPage],
           ),
           body: GestureDetector(
             onHorizontalDragStart: fullSwipeController.onDragStart,

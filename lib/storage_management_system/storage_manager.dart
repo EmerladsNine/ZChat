@@ -36,6 +36,7 @@ class StorageManager {
               name TEXT,
               lastMessage TEXT NOT NULL,
               timestamp INTEGER NOT NULL
+              pinTimeStamp INTEGER
             )
         ''');
       },

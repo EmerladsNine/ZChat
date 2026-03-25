@@ -18,6 +18,9 @@ import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/appbar_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
+import '../data/app_text_styles.dart';
+import '../widgets/miscellaneous/scaled_text_widget.dart';
+
 enum SearchState {
   noSearch,
   waiting,
@@ -94,12 +97,15 @@ class _AddChatPageState extends State<AddChatPage> {
       return;
     }
     ServerApi api = buildContext.read<ServerApi>();
-    SearchEvent? event = await api.protocolSender.search.searchByUsernameAsync(searchUTF8);
+    SearchEvent? event = await api.protocolSender.search.searchByUsernameAsync(
+      searchUTF8,
+    );
     if (!buildContext.mounted) return;
     await _onResponseReceived(event);
   }
 
   void _resetRequestInFlight() => _requestInFlight = false;
+
   Future<void> _sendSearch() async {
     if (!_validateSearch()) return;
     _requestInFlight = true;
@@ -107,7 +113,8 @@ class _AddChatPageState extends State<AddChatPage> {
       _searchState = SearchState.waiting;
     });
     BuildContext buildContext = context;
-    if (await _handleIdSearch(buildContext, searchController.text)) return _resetRequestInFlight();
+    if (await _handleIdSearch(buildContext, searchController.text))
+      return _resetRequestInFlight();
     if (!buildContext.mounted) return _resetRequestInFlight();
     await _handleUsernameSearch(buildContext, searchController.text);
     return _resetRequestInFlight();
@@ -175,7 +182,14 @@ class _AddChatPageState extends State<AddChatPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: AppBarWidget(title: "Add Chat"),
+        child: AppBarWidget(
+          title: ScaledTextWidget(
+            'Add Chat',
+            style: AppTextStyles.appBarPrimaryTextStyle(
+              AppTheme.themeColorsOf(context),
+            ),
+          ),
+        ),
       ),
       backgroundColor: colors.primaryBackgroundColor,
       body: Padding(
@@ -201,7 +215,7 @@ class _AddChatPageState extends State<AddChatPage> {
       chat.name.value = name!;
       ServerApi api = context.read<ServerApi>();
       if (!api.chatsManager.chatsMap.containsKey(id)) {
-          api.chatsManager.chatsMap[id!] = chat;
+        api.chatsManager.chatsMap[id!] = chat;
       } else {
         chat = api.chatsManager.chatsMap[id]!;
       }

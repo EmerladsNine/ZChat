@@ -10,25 +10,29 @@ class ChatsManager extends ChangeNotifier {
   Map<int, String> usernames = {0: "You"};
   List<Chat> openedChats = [];
 
-  void requestUsername(ServerApi api,int userId) async
-  {
-      SearchEvent? result = await api.protocolSender.search.searchByIdAsync(userId);
-      if(result != null && result.name != null)
-      {
-        usernames[userId] = result.name!;
-        Chat? chat = privateChatsMap[userId];
-        if(chat != null)
-        {
-          chat.name.value = result.name!;
-          ChatsStorageManager.updateChat(chat: chat);
-        }
+  void requestUsername(ServerApi api, int userId) async {
+    SearchEvent? result = await api.protocolSender.search.searchByIdAsync(
+      userId,
+    );
+    if (result != null && result.name != null) {
+      usernames[userId] = result.name!;
+      Chat? chat = privateChatsMap[userId];
+      if (chat != null) {
+        chat.name.value = result.name!;
+        ChatsStorageManager.updateChat(chat: chat);
       }
+    }
+  }
+
+  Chat getChat(int id) {
+    return chatsMap[id]!;
   }
 
   void addChat(int id, Chat chat) {
     chatsMap[id] = chat;
     privateChatsMap[chat.userId] = chat;
   }
+
   void openChat(int id) {
     openedChats.insert(0, chatsMap[id]!);
     notifyListeners();
@@ -37,12 +41,11 @@ class ChatsManager extends ChangeNotifier {
   void reOpenChat(Chat chat) {
     if (openedChats.isNotEmpty && openedChats.first == chat) return;
     openedChats.remove(chat);
-    openedChats.insert(0,chat);
+    openedChats.insert(0, chat);
     notifyListeners();
   }
 
   void notify() {
     notifyListeners();
   }
-
 }
