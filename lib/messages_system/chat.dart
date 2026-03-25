@@ -44,21 +44,23 @@ class Chat extends ChangeNotifier {
   String lastMessage;
   int timestamp;
   int? lastMessageIdLoaded;
+  bool isPinned;
+  int? pinTimeStamp;
 
   Chat({
     required this.chatId,
     required this.userId,
     this.lastMessage = "",
     this.timestamp = 0,
-    this.lastMessageIdLoaded
-  });
+    this.lastMessageIdLoaded,
+    this.pinTimeStamp,
+  }) : isPinned = pinTimeStamp != null;
 
   List<Message> get messages => List.unmodifiable(_messages);
 
   void addMessage(Message message) {
     message.isChildMessage =
-        _messages.isNotEmpty &&
-        _messages.first.senderId == message.senderId;
+        _messages.isNotEmpty && _messages.first.senderId == message.senderId;
     message.emojiMessageType = resolveMessageEmojiType(message.text);
     _messages.insert(0, message);
     lastMessage = message.text;
@@ -69,8 +71,7 @@ class Chat extends ChangeNotifier {
   void addOldMessage(Message message) {
     if (_messages.isNotEmpty) {
       _messages.last.isChildMessage =
-          _messages.isNotEmpty &&
-          message.senderId == _messages.last.senderId;
+          _messages.isNotEmpty && message.senderId == _messages.last.senderId;
     }
     message.emojiMessageType = resolveMessageEmojiType(message.text);
     _messages.add(message);

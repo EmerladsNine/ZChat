@@ -10,11 +10,12 @@ class FlatTapButtonWidget extends BaseButtonWidget {
     super.onTapDown,
     super.onTapCancel,
     super.onPanDown,
+    super.onLongPress,
     super.disableSet,
     super.appStateNotifier,
     super.width,
     super.height,
-    super.transparentIsTappable
+    super.transparentIsTappable,
   });
 
   @override

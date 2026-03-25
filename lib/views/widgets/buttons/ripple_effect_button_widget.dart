@@ -11,6 +11,8 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
     super.onTap,
     super.onTapDown,
     super.onTapCancel,
+    super.onLongPress,
+    super.onPanDown,
     super.disableSet,
     super.appStateNotifier,
     this.overlayBorderRadius = const BorderRadius.all(Radius.circular(0)),
