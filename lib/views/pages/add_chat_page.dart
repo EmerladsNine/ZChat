@@ -223,6 +223,7 @@ class _AddChatPageState extends State<AddChatPage> {
       return ChatCardWidget(
         chat: chat,
         userLastMessageStatus: MessageStatus.notLast,
+        isSelectable: false,
       );
     }
     return switch (_searchState) {

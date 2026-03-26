@@ -50,7 +50,7 @@ class ChatCardProfileWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: colors.brandPrimaryColor,
                   ),
-                  padding: const EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(1),
                   child: Icon(
                     Icons.check,
                     size: 14,

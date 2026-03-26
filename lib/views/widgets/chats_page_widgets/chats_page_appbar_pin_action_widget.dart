@@ -5,6 +5,8 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
+import '../../../messages_system/chat.dart';
+import '../../../messages_system/internet/server_api.dart';
 import '../../../storage_management_system/chats_storage_manager.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../controllers/chat_selection_controller.dart';
@@ -50,32 +52,40 @@ class ChatsPageAppbarPinActionWidget extends StatelessWidget {
                 ? 'Unpin Chat${selectedChats.length > 1 ? 's' : ''}'
                 : 'Pin Chat${selectedChats.length > 1 ? 's' : ''}',
             preferBelow: true,
-            child: Consumer<ChatsManager>(
-              builder: (context, value, child) {
-                return RippleEffectButtonWidget(
-                  disableSet: AppNotifiers.disableButtons,
-                  padding: const EdgeInsets.all(8.0),
-                  animationDuration: Duration(milliseconds: 30),
-                  appStateNotifier: AppNotifiers.isNavigating,
-                  overlayBorderRadius: BorderRadius.circular(10),
-                  onTap: () {
-                    for (final chatId in selectedChats) {
-                      ChatSelectionController.toggleSelection(
-                        chatId,
-                        !ChatSelectionController.pinnedStatus[chatId]!,
-                      );
-                      ChatsStorageManager.updateChat(
-                        chat: value.getChat(chatId),
-                      );
-                    }
-                    ChatSelectionController.clear();
-                  },
-                  child: Transform.rotate(
-                    angle: -0.5,
-                    child: Icon(pinIcon, color: colors.primaryColor, size: 25),
-                  ),
-                );
-              },
+            child: ChangeNotifierProvider.value(
+              value: context.read<ServerApi>().chatsManager,
+              child: Consumer<ChatsManager>(
+                builder: (context, chatsManager, child) {
+                  return RippleEffectButtonWidget(
+                    disableSet: AppNotifiers.disableButtons,
+                    padding: const EdgeInsets.all(8.0),
+                    animationDuration: Duration(milliseconds: 30),
+                    appStateNotifier: AppNotifiers.isNavigating,
+                    overlayBorderRadius: BorderRadius.circular(10),
+                    onTap: () {
+                      for (final chatId in selectedChats) {
+                        Chat chat = chatsManager.getChat(chatId);
+                        ChatSelectionController.toggleSelection(
+                          chatId,
+                          !ChatSelectionController.pinnedStatus[chatId]!,
+                        );
+                        chat.togglePinState();
+                        ChatsStorageManager.updateChat(chat: chat);
+                        chatsManager.reOpenChat(chat);
+                      }
+                      ChatSelectionController.clear();
+                    },
+                    child: Transform.rotate(
+                      angle: 0.5,
+                      child: Icon(
+                        pinIcon,
+                        color: colors.primaryColor,
+                        size: 25,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         );

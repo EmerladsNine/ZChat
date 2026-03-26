@@ -58,6 +58,12 @@ class Chat extends ChangeNotifier {
 
   List<Message> get messages => List.unmodifiable(_messages);
 
+  void togglePinState() {
+    isPinned = !isPinned;
+    pinTimeStamp = (isPinned) ? DateTime.now().microsecondsSinceEpoch : null;
+    notifyListeners();
+  }
+
   void addMessage(Message message) {
     message.isChildMessage =
         _messages.isNotEmpty && _messages.first.senderId == message.senderId;

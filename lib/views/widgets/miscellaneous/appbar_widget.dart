@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../themes_system/app_theme.dart';
+import '../../data_classes/leading_widget_data.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({
@@ -10,7 +11,7 @@ class AppBarWidget extends StatelessWidget {
   });
 
   final Widget title;
-  final Widget? leading;
+  final LeadingWidgetData? leading;
   final List<Widget>? actions;
 
   @override
@@ -22,7 +23,10 @@ class AppBarWidget extends StatelessWidget {
       backgroundColor: colors.primaryBackgroundColor,
       actionsPadding: EdgeInsetsGeometry.all(0),
       actions: actions,
-      leading: leading,
+      leading: (leading != null && leading!.showLeading)
+          ? leading!.widget
+          : null,
+      automaticallyImplyLeading: false,
     );
   }
 }

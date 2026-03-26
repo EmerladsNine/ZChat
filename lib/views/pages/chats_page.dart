@@ -86,7 +86,8 @@ class _ChatsPageState extends State<ChatsPage> {
                           itemBuilder: (context, index) {
                             Chat chat = value.openedChats[index];
                             return ChatCardWidget(
-                              chat: chat
+                              chat: chat,
+                              isSelectable: true,
                             );
                           },
                         );
