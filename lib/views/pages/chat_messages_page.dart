@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/overlays/message_actions_menu_widget.dart';
@@ -27,6 +28,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final FocusNode focusNode = FocusNode();
 
   ValueKey listKey = ValueKey(DateTime.now());
+
   void _scrollToBottom() async {
     setState(() {
       listKey = ValueKey(DateTime.now());
@@ -151,52 +153,56 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 4,)
+                            SizedBox(width: 4),
                           ],
                         ),
                       ),
                     ),
                   ),
                   body: Container(
-                    decoration: BoxDecoration(
-                      color: colors.primaryBackgroundColor,
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/bg5.jpeg'),
-                        fit: BoxFit.cover,
-                        colorFilter: ColorFilter.mode(
-                          colors.primaryBackgroundColor.withAlpha(200),
-                          BlendMode.overlay,
-                        ),
-                      ),
-                    ),
-                    child: Column(
+                    color: colors.primaryBackgroundColor,
+                    child: Stack(
                       children: [
-                        Expanded(
-                          child: MessagesPanelWidget(
-                            listKey: listKey,
-                            scrollController: _scrollController,
-                            isDownButtonShown: isDownButtonShown,
-                            scrollToBottom: _scrollToBottom,
-                            footerTextFieldFocusNode: focusNode,
+                        Positioned.fill(
+                          child: SvgPicture.asset(
+                            'assets/images/background.svg',
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.fill,
                           ),
                         ),
+                        Column(
+                          children: [
+                            Expanded(
+                              child: MessagesPanelWidget(
+                                listKey: listKey,
+                                scrollController: _scrollController,
+                                isDownButtonShown: isDownButtonShown,
+                                scrollToBottom: _scrollToBottom,
+                                footerTextFieldFocusNode: focusNode,
+                              ),
+                            ),
 
-                        ReplyBoxWidget(),
+                            ReplyBoxWidget(),
 
-                        Padding(
-                          padding: isEmojiPickerVisible
-                              ? EdgeInsetsGeometry.zero
-                              : EdgeInsetsGeometry.only(bottom: bottomPadding),
-                          child: ChatMessagesFooterWidget(
-                            scrollToBottom: _scrollToBottom,
-                            bottomSafeArea: bottomSafeArea,
-                            isInSafeArea:
-                                bottomPadding != 0 || isEmojiPickerVisible,
-                            focusNode: focusNode,
-                          ),
+                            Padding(
+                              padding: isEmojiPickerVisible
+                                  ? EdgeInsetsGeometry.zero
+                                  : EdgeInsetsGeometry.only(
+                                      bottom: bottomPadding,
+                                    ),
+                              child: ChatMessagesFooterWidget(
+                                scrollToBottom: _scrollToBottom,
+                                bottomSafeArea: bottomSafeArea,
+                                isInSafeArea:
+                                    bottomPadding != 0 || isEmojiPickerVisible,
+                                focusNode: focusNode,
+                              ),
+                            ),
+
+                            EmojiPanelWidget(),
+                          ],
                         ),
-
-                        EmojiPanelWidget(),
                       ],
                     ),
                   ),
