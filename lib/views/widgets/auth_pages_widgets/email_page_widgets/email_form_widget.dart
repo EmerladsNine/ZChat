@@ -19,8 +19,9 @@ class EmailFormWidget extends StatefulWidget {
     required this.confirmPasswordFocusNode,
     required this.errors,
     required this.signIn,
-    required this.signUp
+    required this.signUp,
   });
+
   final TextEditingController emailController;
   final TextEditingController usernameController;
   final TextEditingController passwordController;
@@ -33,6 +34,7 @@ class EmailFormWidget extends StatefulWidget {
   final bool isSignIn;
   final void Function() signIn;
   final void Function() signUp;
+
   @override
   State<EmailFormWidget> createState() => _EmailFormWidgetState();
 }
@@ -64,6 +66,7 @@ class _EmailFormWidgetState extends State<EmailFormWidget> {
                   label: "Username",
                 ),
               AuthTextField(
+                keyboardType: TextInputType.emailAddress,
                 controller: widget.emailController,
                 focusNode: widget.emailFocusNode,
                 nextFocusNode: widget.passwordFocusNode,
@@ -90,7 +93,8 @@ class _EmailFormWidgetState extends State<EmailFormWidget> {
                 AuthTextField(
                   controller: widget.confirmPasswordController,
                   focusNode: widget.confirmPasswordFocusNode,
-                  error: widget.errors[Inputs.confirmPasswordInput]!.isErrorActive
+                  error:
+                      widget.errors[Inputs.confirmPasswordInput]!.isErrorActive
                       ? widget.errors[Inputs.confirmPasswordInput]!.errorMessage
                       : null,
                   onSubmitted: (_) {
