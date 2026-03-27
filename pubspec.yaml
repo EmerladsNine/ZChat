@@ -48,6 +48,7 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   mocktail: ^1.0.4
   fake_async: ^1.3.3
+  audioplayers: ^6.6.0
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,7 @@ flutter:
     - assets/icons/google_web_signIn_svg/dark/
     - assets/icons/apple_buttons/
     - assets/icons/
+    - assets/sounds/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

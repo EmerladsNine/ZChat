@@ -18,6 +18,9 @@ import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
+import '../../services/sound/sound_path_constants.dart';
+import '../../services/sound/sound_service.dart';
+
 List<int> intToBigEndian(int num, int bytes) {
   List<int> list = [];
   for (int i = bytes - 1; i != -1; i--) {
@@ -48,60 +51,57 @@ class ServerApi {
   Session? currentSession;
 
   ServerApi(this.chatsManager) {
-    listener = ListenerService(this,chatsManager);
+    listener = ListenerService(this, chatsManager);
   }
 
-  Future<bool> loadSessionIfNull() async
-  {
-      if(currentSession == null && !await loadSessionData()) return false;
-      return true;
+  Future<bool> loadSessionIfNull() async {
+    if (currentSession == null && !await loadSessionData()) return false;
+    return true;
   }
 
-  Future<bool> loadSessionData() async
-  {
+  Future<bool> loadSessionData() async {
     const storage = FlutterSecureStorage();
     String? userIdText = await storage.read(key: "user_id");
-    if(userIdText == null)
-    {
+    if (userIdText == null) {
       AppNotifiers.isSignedIn.value = false;
       return false;
     }
     int userId = int.parse(userIdText);
     String? sessionIdText = await storage.read(key: "session_id");
-    if(sessionIdText == null)
-    {
+    if (sessionIdText == null) {
       AppNotifiers.isSignedIn.value = false;
       return false;
     }
     int sessionId = int.parse(sessionIdText);
     String? accessTokenBase64 = await storage.read(key: "access_token");
-    if(accessTokenBase64 == null)
-    {
+    if (accessTokenBase64 == null) {
       AppNotifiers.isSignedIn.value = false;
       return false;
     }
     Uint8List accessToken = base64Decode(accessTokenBase64);
     String? refreshTokenBase64 = await storage.read(key: "refresh_token");
-    if(refreshTokenBase64 == null)
-    {
+    if (refreshTokenBase64 == null) {
       AppNotifiers.isSignedIn.value = false;
       return false;
     }
     Uint8List refreshToken = base64Decode(refreshTokenBase64);
-    currentSession = Session(userId,sessionId, accessToken, refreshToken);
+    currentSession = Session(userId, sessionId, accessToken, refreshToken);
     return true;
   }
 
   bool sendProtocolUnit(MessageType type, List<int> data) {
     try {
       List<int> encryptedData = [type.id, ...data];
-      if(encryptedData.length >= 65535){
+      if (encryptedData.length >= 65535) {
         // Todo ui handling for this.
         printOnDebug("Invalid large message length");
         return false;
       }
       // Todo : encrypt the data
-      encryptedData.insertAll(0, intToBigEndian(encryptedData.length, expectedSizeBytes));
+      encryptedData.insertAll(
+        0,
+        intToBigEndian(encryptedData.length, expectedSizeBytes),
+      );
       socket.add(encryptedData);
       return true;
     } catch (e) {
@@ -138,29 +138,35 @@ class ServerApi {
         timestamp: timestamp,
         replyData: replyData,
       );
-      msg.messageId = await ChatsStorageManager.insertMessage(message: msg,chat: chat);
+      msg.messageId = await ChatsStorageManager.insertMessage(
+        message: msg,
+        chat: chat,
+      );
       chat.addMessage(msg);
       ChatsStorageManager.updateChat(chat: chat);
       chatsManager.reOpenChat(chat);
       chat.replyData.value = null;
       chatsManager.notify();
-      if(!await loadSessionIfNull()) return;
-      if(currentSession!.userId == chat.userId) {
-          msg.messageStatus = MessageStatus.undelivered;
-          chat.notifyChange();
-          return;
+      if (!await loadSessionIfNull()) return;
+      if (currentSession!.userId == chat.userId) {
+        msg.messageStatus = MessageStatus.undelivered;
+        SoundService.instance.playSound(SoundPathConstants.sendMessageSound);
+        chat.notifyChange();
+        return;
       }
-      messagesQueue.addMessage(this,protocolSender.normalMessage, msg, chat);
+      messagesQueue.addMessage(this, protocolSender.normalMessage, msg, chat);
       messagesQueue.sendMessages(this, protocolSender.normalMessage);
     } catch (e) {
       printOnDebug(e);
     }
   }
 
-  void sendAccessToken() async
-  {
-      if(!await loadSessionIfNull()) return;
-      protocolSender.useToken.sendAccessToken(currentSession!.sessionId, currentSession!.accessToken);
+  void sendAccessToken() async {
+    if (!await loadSessionIfNull()) return;
+    protocolSender.useToken.sendAccessToken(
+      currentSession!.sessionId,
+      currentSession!.accessToken,
+    );
   }
 
   Future<void> connectServer(String caller) async {

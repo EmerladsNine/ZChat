@@ -6,6 +6,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
+import 'package:zchat/services/sound/sound_service.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/storage_management_system/storage_manager.dart';
 import 'package:zchat/swiping_system/full_swipe_controller.dart';
@@ -27,8 +28,8 @@ void main() async {
   }
 
   await StorageManager.init();
-
   await ThemeController.instance.init();
+  await SoundService.instance.init();
 
   ChatsManager chatsManager = ChatsManager();
   await StorageManager.openMessagesDatabase().then((_) {

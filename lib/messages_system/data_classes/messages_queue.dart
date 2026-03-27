@@ -9,20 +9,31 @@ import 'package:zchat/messages_system/internet/events/ok_event.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_normal_message.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
+import 'package:zchat/services/sound/sound_path_constants.dart';
+import 'package:zchat/services/sound/sound_service.dart';
 
 class MessagesQueue {
   final Queue<(Message message, Chat chat)> _messagesToSend = Queue();
-  Queue<(Message,Chat)> getMessagesQueue() => _messagesToSend;
+
+  Queue<(Message, Chat)> getMessagesQueue() => _messagesToSend;
   bool _isSending = false;
   bool isPaused = false;
   bool isRetrying = false;
 
-  void addMessage(ServerApi api,ProtocolSenderNormalMessage protocolMessageSender, Message message, Chat chat) {
+  void addMessage(
+    ServerApi api,
+    ProtocolSenderNormalMessage protocolMessageSender,
+    Message message,
+    Chat chat,
+  ) {
     chat.lastMessage = message.text;
     _messagesToSend.add((message, chat));
   }
 
-  Future<void> sendMessages(ServerApi api,ProtocolSenderNormalMessage protocolMessageSender) async {
+  Future<void> sendMessages(
+    ServerApi api,
+    ProtocolSenderNormalMessage protocolMessageSender,
+  ) async {
     if (_isSending) return;
     _isSending = true;
     while (_messagesToSend.isNotEmpty && !isPaused) {
@@ -30,13 +41,19 @@ class MessagesQueue {
       Chat chat = _messagesToSend.first.$2;
       Uint8List replyTextUTF8 = utf8.encode(msg.replyData?.text ?? "");
       Uint8List messageUTF8 = utf8.encode(msg.text);
-      OkEvent? result = await protocolMessageSender.send(chat.userId, msg.replyData?.senderId, replyTextUTF8, messageUTF8,);
+      OkEvent? result = await protocolMessageSender.send(
+        chat.userId,
+        msg.replyData?.senderId,
+        replyTextUTF8,
+        messageUTF8,
+      );
       if (result == null) {
         await Future.delayed(Duration(seconds: 2));
         continue;
       }
       _messagesToSend.removeFirst();
       msg.messageStatus = MessageStatus.undelivered;
+      SoundService.instance.playSound(SoundPathConstants.sendMessageSound);
       chat.notifyChange();
       printOnDebug('sent: ${msg.text}');
     }
