@@ -9,6 +9,7 @@ import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/messages_panel_widget.dart';
+import 'package:zchat/views/widgets/chatting_page_widgets/pinned_message_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/reply_box_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 
@@ -26,6 +27,8 @@ class ChatMessagesPage extends StatefulWidget {
 class _ChatMessagesPageState extends State<ChatMessagesPage> {
   final ScrollController _scrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
+
+  static const double pinnedMessagePlaceholderHeight = 50;
 
   ValueKey listKey = ValueKey(DateTime.now());
 
@@ -159,52 +162,77 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       ),
                     ),
                   ),
-                  body: Container(
-                    color: colors.primaryBackgroundColor,
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: SvgPicture.asset(
-                            'assets/images/background.svg',
-                            width: double.infinity,
-                            height: double.infinity,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Column(
+                  body: ValueListenableBuilder(
+                    valueListenable: AppNotifiers.openedChat,
+                    builder: (context, chat, child) {
+                      if (chat == null) return Container();
+
+                      return Container(
+                        color: colors.primaryBackgroundColor,
+                        child: Stack(
                           children: [
-                            Expanded(
-                              child: MessagesPanelWidget(
-                                listKey: listKey,
-                                scrollController: _scrollController,
-                                isDownButtonShown: isDownButtonShown,
-                                scrollToBottom: _scrollToBottom,
-                                footerTextFieldFocusNode: focusNode,
+                            Positioned.fill(
+                              child: SvgPicture.asset(
+                                'assets/images/background.svg',
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.fill,
                               ),
                             ),
 
-                            ReplyBoxWidget(),
+                            Column(
+                              children: [
+                                if (chat.hasPinnedMessage)
+                                  SizedBox(
+                                    height: pinnedMessagePlaceholderHeight,
+                                    width: double.infinity,
+                                  ),
+                                Expanded(
+                                  child: MessagesPanelWidget(
+                                    listKey: listKey,
+                                    scrollController: _scrollController,
+                                    isDownButtonShown: isDownButtonShown,
+                                    scrollToBottom: _scrollToBottom,
+                                    footerTextFieldFocusNode: focusNode,
+                                  ),
+                                ),
 
-                            Padding(
-                              padding: isEmojiPickerVisible
-                                  ? EdgeInsetsGeometry.zero
-                                  : EdgeInsetsGeometry.only(
-                                      bottom: bottomPadding,
-                                    ),
-                              child: ChatMessagesFooterWidget(
-                                scrollToBottom: _scrollToBottom,
-                                bottomSafeArea: bottomSafeArea,
-                                isInSafeArea:
-                                    bottomPadding != 0 || isEmojiPickerVisible,
-                                focusNode: focusNode,
-                              ),
+                                ReplyBoxWidget(),
+
+                                Padding(
+                                  padding: isEmojiPickerVisible
+                                      ? EdgeInsetsGeometry.zero
+                                      : EdgeInsetsGeometry.only(
+                                          bottom: bottomPadding,
+                                        ),
+                                  child: ChatMessagesFooterWidget(
+                                    scrollToBottom: _scrollToBottom,
+                                    bottomSafeArea: bottomSafeArea,
+                                    isInSafeArea:
+                                        bottomPadding != 0 ||
+                                        isEmojiPickerVisible,
+                                    focusNode: focusNode,
+                                  ),
+                                ),
+
+                                EmojiPanelWidget(),
+                              ],
                             ),
-
-                            EmojiPanelWidget(),
+                            if (chat.hasPinnedMessage)
+                              PinnedMessageWidget(
+                                message: chat.messages
+                                    .firstWhere(
+                                      (m) =>
+                                          m.messageData.messageId ==
+                                          chat.pinnedMessageId,
+                                    )
+                                    .messageData
+                                    .text,
+                              ),
                           ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ),
               );

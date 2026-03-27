@@ -44,8 +44,9 @@ class Chat extends ChangeNotifier {
   String lastMessage;
   int timestamp;
   int? lastMessageIdLoaded;
-  bool isPinned;
   int? pinTimeStamp;
+  int? pinnedMessageId;
+  late bool _isPinned;
 
   Chat({
     required this.chatId,
@@ -54,32 +55,55 @@ class Chat extends ChangeNotifier {
     this.timestamp = 0,
     this.lastMessageIdLoaded,
     this.pinTimeStamp,
-  }) : isPinned = pinTimeStamp != null;
+    this.pinnedMessageId,
+  }) {
+    _isPinned = pinTimeStamp != null;
+  }
 
   List<Message> get messages => List.unmodifiable(_messages);
 
+  bool get isPinned => pinTimeStamp != null;
+
+  bool get hasPinnedMessage => pinnedMessageId != null;
+
   void togglePinState() {
-    isPinned = !isPinned;
+    _isPinned = !_isPinned;
     pinTimeStamp = (isPinned) ? DateTime.now().microsecondsSinceEpoch : null;
     notifyListeners();
   }
 
+  void pinMessage(int messageId) {
+    pinnedMessageId = messageId;
+    notifyListeners();
+  }
+
+  void unpinMessage() {
+    pinnedMessageId = null;
+    notifyListeners();
+  }
+
   void addMessage(Message message) {
-    message.isChildMessage =
-        _messages.isNotEmpty && _messages.first.senderId == message.senderId;
-    message.emojiMessageType = resolveMessageEmojiType(message.text);
+    message.messageData.isChildMessage =
+        _messages.isNotEmpty &&
+        _messages.first.messageData.senderId == message.messageData.senderId;
+    message.messageData.emojiMessageType = resolveMessageEmojiType(
+      message.messageData.text,
+    );
     _messages.insert(0, message);
-    lastMessage = message.text;
-    timestamp = message.timestamp;
+    lastMessage = message.messageData.text;
+    timestamp = message.messageData.timestamp;
     notifyListeners();
   }
 
   void addOldMessage(Message message) {
     if (_messages.isNotEmpty) {
-      _messages.last.isChildMessage =
-          _messages.isNotEmpty && message.senderId == _messages.last.senderId;
+      _messages.last.messageData.isChildMessage =
+          _messages.isNotEmpty &&
+          message.messageData.senderId == _messages.last.messageData.senderId;
     }
-    message.emojiMessageType = resolveMessageEmojiType(message.text);
+    message.messageData.emojiMessageType = resolveMessageEmojiType(
+      message.messageData.text,
+    );
     _messages.add(message);
     notifyListeners();
   }
@@ -96,7 +120,7 @@ class Chat extends ChangeNotifier {
 
   void debugPrintMessages() {
     for (Message msg in _messages) {
-      printOnDebug(msg.text);
+      printOnDebug(msg.messageData.text);
     }
   }
 }

@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
+import 'package:zchat/messages_system/data_classes/message_data.dart';
 import 'package:zchat/messages_system/data_classes/messages_queue.dart';
 import 'package:zchat/messages_system/data_classes/session.dart';
 import 'package:zchat/messages_system/enums/message_status.dart';
@@ -131,14 +132,16 @@ class ServerApi {
       }
       int timestamp = DateTime.now().toUtc().microsecondsSinceEpoch;
       Message msg = Message(
-        messageId: 0,
-        senderId: 0,
-        text: message,
-        messageStatus: MessageStatus.unsent,
-        timestamp: timestamp,
-        replyData: replyData,
+        messageData: MessageData(
+          messageId: 0,
+          senderId: 0,
+          text: message,
+          messageStatus: MessageStatus.unsent,
+          timestamp: timestamp,
+          replyData: replyData,
+        ),
       );
-      msg.messageId = await ChatsStorageManager.insertMessage(
+      msg.messageData.messageId = await ChatsStorageManager.insertMessage(
         message: msg,
         chat: chat,
       );
@@ -149,7 +152,7 @@ class ServerApi {
       chatsManager.notify();
       if (!await loadSessionIfNull()) return;
       if (currentSession!.userId == chat.userId) {
-        msg.messageStatus = MessageStatus.undelivered;
+        msg.messageData.messageStatus = MessageStatus.undelivered;
         SoundService.instance.playSound(SoundPathConstants.sendMessageSound);
         chat.notifyChange();
         return;

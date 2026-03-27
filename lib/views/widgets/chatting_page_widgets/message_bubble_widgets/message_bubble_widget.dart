@@ -30,10 +30,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zchat/messages_system/enums/emoji_message_types.dart';
+import 'package:zchat/messages_system/data_classes/message_data.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/themes_system/enums/message_bubble_color.dart';
-import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/themes_system/theme_controller.dart';
 import 'package:zchat/views/data/app_constants.dart';
@@ -50,28 +49,16 @@ import '../../../painters/message_bubble_painter.dart';
 import '../../../overlays/message_actions_menu_widget.dart';
 
 class MessageBubbleWidget extends StatefulWidget {
-  final int senderId;
-  final String text;
+  final MessageData messageData;
   final String time;
-  final bool isEmojiBubble;
-  final EmojiMessageType emojiMessageType;
-  final bool isChildBubble;
-  final MessageReplyData? replyData;
   final double maxBubbleWidth;
-  final MessageStatus messageStatus;
   final FocusNode footerTextFieldFocusNode;
 
   const MessageBubbleWidget({
     super.key,
-    required this.text,
-    required this.senderId,
+    required this.messageData,
     required this.time,
-    required this.isEmojiBubble,
-    required this.emojiMessageType,
-    required this.isChildBubble,
-    this.replyData,
     required this.maxBubbleWidth,
-    required this.messageStatus,
     required this.footerTextFieldFocusNode,
   });
 
@@ -85,8 +72,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
   double dragStart = 0.0;
   bool didVibrate = false;
 
-  double getDragWidth(double fingerDelta)
-  {
+  double getDragWidth(double fingerDelta) {
     double dragMax = maxDrag;
     double t = fingerDelta / dragMax;
     t = t.clamp(0.0, 1.0);
@@ -102,7 +88,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
         themeController.messageBubbleColors;
     final int alpha = (themeController.opacity * 255).round();
     final api = context.read<ServerApi>();
-    bool received = widget.senderId != 0;
+    bool received = widget.messageData.senderId != 0;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -136,8 +122,8 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
             //   didVibrate = true;
             // }
             AppNotifiers.openedChat.value!.replyData.value = MessageReplyData(
-              widget.text,
-              widget.senderId,
+              widget.messageData.text,
+              widget.messageData.senderId,
             );
             if (KeyboardController.nextKeyboardHeight == 0) {
               FocusScope.of(context).unfocus();
@@ -152,14 +138,10 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 1),
         curve: Curves.easeOutCubic,
-        transform: Matrix4.translationValues(
-          getDragWidth(-dragWidth),
-          0,
-          0,
-        ),
+        transform: Matrix4.translationValues(getDragWidth(-dragWidth), 0, 0),
         child: Padding(
           padding: EdgeInsets.only(
-            top: widget.isChildBubble ? 2 : 10,
+            top: widget.messageData.isChildMessage ? 2 : 10,
             left: 6,
             right: 6,
             bottom: 2,
@@ -171,21 +153,28 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 5,
             children: [
-                  Container(
-                      width: -dragWidth >= maxDrag ? null : min(-dragWidth,25),
-                      decoration: BoxDecoration(
-                        color: colors.cardsColor,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(color: colors.dividerColor)
-                      ),
-                      padding: EdgeInsetsGeometry.all(-dragWidth >= maxDrag ? 5 : 0),
-                      child: Icon(Icons.reply_rounded,color: colors.primaryColor,size: -dragWidth >= maxDrag ? 25 : min(-dragWidth,25),)),
+              Container(
+                width: -dragWidth >= maxDrag ? null : min(-dragWidth, 25),
+                decoration: BoxDecoration(
+                  color: colors.cardsColor,
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(color: colors.dividerColor),
+                ),
+                padding: EdgeInsetsGeometry.all(-dragWidth >= maxDrag ? 5 : 0),
+                child: Icon(
+                  Icons.reply_rounded,
+                  color: colors.primaryColor,
+                  size: -dragWidth >= maxDrag ? 25 : min(-dragWidth, 25),
+                ),
+              ),
 
               if (received)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PfpOfSenderWidget(isChildBubble: widget.isChildBubble),
+                    PfpOfSenderWidget(
+                      isChildMessage: widget.messageData.isChildMessage,
+                    ),
                   ],
                 ),
 
@@ -202,10 +191,11 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                         ).withAlpha(alpha),
                   shadowColor: Colors.transparent,
                   alignment: received ? Alignment.topLeft : Alignment.topRight,
-                  tail: !widget.isChildBubble,
+                  tail: !widget.messageData.isChildMessage,
                   draw:
-                      !widget.isEmojiBubble ||
-                      (widget.isEmojiBubble && widget.replyData != null),
+                      !widget.messageData.isEmojiBubble ||
+                      (widget.messageData.isEmojiBubble &&
+                          widget.messageData.replyData != null),
                 ),
                 child: Container(
                   constraints: BoxConstraints(
@@ -217,47 +207,56 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                     bottom: 3,
                     right: received
                         ? 5
-                        : widget.isEmojiBubble && widget.replyData == null
+                        : widget.messageData.isEmojiBubble &&
+                              widget.messageData.replyData == null
                         ? AppConstants.messageTailSize
                         : 7 + AppConstants.messageTailSize,
                     left: received
-                        ? widget.isEmojiBubble && widget.replyData == null
+                        ? widget.messageData.isEmojiBubble &&
+                                  widget.messageData.replyData == null
                               ? 0
                               : 7 + AppConstants.messageTailSize
-                        : widget.isEmojiBubble && widget.replyData == null
+                        : widget.messageData.isEmojiBubble &&
+                              widget.messageData.replyData == null
                         ? 0
                         : 5,
                   ),
                   child: IntrinsicWidth(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: widget.isEmojiBubble && widget.replyData == null
+                      spacing:
+                          widget.messageData.isEmojiBubble &&
+                              widget.messageData.replyData == null
                           ? 5
                           : 3,
                       children: [
-                        if (received && !widget.isChildBubble)
+                        if (received && !widget.messageData.isChildMessage)
                           SenderNameWidget(
-                            senderName: api.chatsManager.usernames[widget.senderId] ?? "#${widget.senderId}",
+                            senderName:
+                                api.chatsManager.usernames[widget
+                                    .messageData
+                                    .senderId] ??
+                                "#${widget.messageData.senderId}",
                             isSeparate:
-                                widget.isEmojiBubble &&
-                                widget.replyData == null,
+                                widget.messageData.isEmojiBubble &&
+                                widget.messageData.replyData == null,
                             maxBubbleWidth: widget.maxBubbleWidth,
                           ),
 
-                        if (widget.replyData != null)
+                        if (widget.messageData.replyData != null)
                           MessageBubbleReplySectionWidget(
                             isSeparate:
-                                widget.isEmojiBubble &&
-                                widget.replyData == null,
+                                widget.messageData.isEmojiBubble &&
+                                widget.messageData.replyData == null,
                             received: received,
-                            replyData: widget.replyData!,
+                            replyData: widget.messageData.replyData!,
                           ),
 
                         FlatTapButtonWidget(
                           disableSet: AppNotifiers.disableButtons,
                           appStateNotifier: AppNotifiers.isNavigating,
                           onTap: () {
-                            if(AppNotifiers.disableMenu.value != 0) return;
+                            if (AppNotifiers.disableMenu.value != 0) return;
                             RenderBox box =
                                 context.findRenderObject() as RenderBox;
                             Offset globalTopLeft = box.localToGlobal(
@@ -266,25 +265,26 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
 
                             AppNotifiers.selectedMessage.value = widget;
 
-                            MessageActionsMenuWidget.instance.setReceived(
+                            MessageActionsMenuWidget.instance.setData(
                               received,
+                              widget.messageData,
                             );
 
-                            MessageActionsMenuWidget.instance
-                                .insertOverlayMenu(
-                                  globalTopLeft,
-                                  box.size,
-                                  context,
-                                );
+                            MessageActionsMenuWidget.instance.insertOverlayMenu(
+                              globalTopLeft,
+                              box.size,
+                              context,
+                            );
                           },
 
                           child: MessageBubbleMainSectionWidget(
-                            text: widget.text,
+                            text: widget.messageData.text,
                             time: widget.time,
-                            isEmojiBubble: widget.isEmojiBubble,
-                            emojiMessageType: widget.emojiMessageType,
-                            isReplyBubble: widget.replyData != null,
-                            messageStatus: widget.messageStatus,
+                            isEmojiBubble: widget.messageData.isEmojiBubble,
+                            emojiMessageType:
+                                widget.messageData.emojiMessageType,
+                            isReplyBubble: widget.messageData.replyData != null,
+                            messageStatus: widget.messageData.messageStatus,
                             received: received,
                           ),
                         ),

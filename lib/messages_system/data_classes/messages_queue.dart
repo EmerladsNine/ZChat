@@ -26,7 +26,7 @@ class MessagesQueue {
     Message message,
     Chat chat,
   ) {
-    chat.lastMessage = message.text;
+    chat.lastMessage = message.messageData.text;
     _messagesToSend.add((message, chat));
   }
 
@@ -39,11 +39,13 @@ class MessagesQueue {
     while (_messagesToSend.isNotEmpty && !isPaused) {
       Message msg = _messagesToSend.first.$1;
       Chat chat = _messagesToSend.first.$2;
-      Uint8List replyTextUTF8 = utf8.encode(msg.replyData?.text ?? "");
-      Uint8List messageUTF8 = utf8.encode(msg.text);
+      Uint8List replyTextUTF8 = utf8.encode(
+        msg.messageData.replyData?.text ?? "",
+      );
+      Uint8List messageUTF8 = utf8.encode(msg.messageData.text);
       OkEvent? result = await protocolMessageSender.send(
         chat.userId,
-        msg.replyData?.senderId,
+        msg.messageData.replyData?.senderId,
         replyTextUTF8,
         messageUTF8,
       );
@@ -52,10 +54,10 @@ class MessagesQueue {
         continue;
       }
       _messagesToSend.removeFirst();
-      msg.messageStatus = MessageStatus.undelivered;
+      msg.messageData.messageStatus = MessageStatus.undelivered;
       SoundService.instance.playSound(SoundPathConstants.sendMessageSound);
       chat.notifyChange();
-      printOnDebug('sent: ${msg.text}');
+      printOnDebug('sent: ${msg.messageData.text}');
     }
     _isSending = false;
   }

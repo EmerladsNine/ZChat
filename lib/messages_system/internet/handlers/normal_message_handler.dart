@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
+import 'package:zchat/messages_system/data_classes/message_data.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
@@ -18,11 +19,13 @@ class NormalMessageHandler extends Handler {
     String response,
   ) async {
     Message msg = Message(
-      messageId: 0,
-      text: response,
-      senderId: userId,
-      timestamp: timeStamp,
-      replyData: replyData,
+      messageData: MessageData(
+        messageId: 0,
+        text: response,
+        senderId: userId,
+        timestamp: timeStamp,
+        replyData: replyData,
+      ),
     );
     Chat chat;
     if (!chatsManager.chatsMap.containsKey(userId)) {
@@ -37,7 +40,7 @@ class NormalMessageHandler extends Handler {
       chatsManager.openChat(userId);
     }
     int id = await ChatsStorageManager.insertMessage(message: msg, chat: chat);
-    msg.messageId = id;
+    msg.messageData.messageId = id;
     chat.addMessage(msg);
     ChatsStorageManager.updateChat(chat: chat);
     chatsManager.reOpenChat(chat);
@@ -45,10 +48,9 @@ class NormalMessageHandler extends Handler {
   }
 
   @override
-  bool handle(List<int> buffer, ServerApi service,ChatsManager chatsManager) {
+  bool handle(List<int> buffer, ServerApi service, ChatsManager chatsManager) {
     int senderId = bigEndianToInt(buffer, 4);
-    if(!chatsManager.usernames.containsKey(senderId))
-    {
+    if (!chatsManager.usernames.containsKey(senderId)) {
       chatsManager.requestUsername(service, senderId);
     }
     int timeStamp = bigEndianToInt(buffer, 8);
@@ -58,11 +60,10 @@ class NormalMessageHandler extends Handler {
     MessageReplyData? replyData;
     if (replyTextLength != 0) {
       int replySenderId = bigEndianToInt(buffer, 4);
-      if(!chatsManager.usernames.containsKey(replySenderId))
-      {
-          chatsManager.requestUsername(service, replySenderId);
+      if (!chatsManager.usernames.containsKey(replySenderId)) {
+        chatsManager.requestUsername(service, replySenderId);
       }
-      if(replySenderId == 0) replySenderId = senderId;
+      if (replySenderId == 0) replySenderId = senderId;
       replyData = MessageReplyData(replyText, replySenderId);
     }
     final String response = utf8.decode(buffer);

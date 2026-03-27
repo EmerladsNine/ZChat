@@ -6,6 +6,7 @@ import 'package:zchat/views/data/pages_data/messaging_page_data.dart';
 import 'package:zchat/views/overlays/base_overlay_widget.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 
+import '../../messages_system/data_classes/message_data.dart';
 import '../data/app_notifiers.dart';
 
 class MessageActionsMenuWidget extends BaseOverlayWidget {
@@ -17,6 +18,7 @@ class MessageActionsMenuWidget extends BaseOverlayWidget {
   factory MessageActionsMenuWidget() => instance;
 
   late bool _received;
+  late MessageData _messageData;
 
   @override
   void insertOverlayMenu(Offset position, Size size, BuildContext context) {
@@ -58,44 +60,52 @@ class MessageActionsMenuWidget extends BaseOverlayWidget {
     );
   }
 
-  void setReceived(bool received) {
+  void setData(bool received, MessageData messageData) {
     _received = received;
+    _messageData = messageData;
   }
 
   Widget buildMessageActionsMenuWidget(bool received, BuildContext context) {
-    final ThemeColorScheme colors = AppTheme.themeColorsOf(context);
-    final actionsData = received
-        ? receivedMessageActionsData
-        : sentMessageActionsData;
+    return ValueListenableBuilder(
+      valueListenable: AppNotifiers.openedChat,
+      builder: (context, chat, child) {
+        if (chat == null) return Container();
 
-    return Container(
-      width: AppConstants.messageActionsMenuSize,
-      decoration: BoxDecoration(
-        color: colors.cardsColor,
-        borderRadius: BorderRadius.circular(
-          AppConstants.messageActionsMenuBorderRadius,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...actionsData.asMap().entries.map((entry) {
-            final index = entry.key;
-            final data = entry.value;
+        final ThemeColorScheme colors = AppTheme.themeColorsOf(context);
+        final actionsData = received
+            ? receivedMessageActionsData(_messageData, chat)
+            : sentMessageActionsData(_messageData, chat);
 
-            return RippleEffectButtonWidget(
-              disableSet: AppNotifiers.disableButtons,
-              appStateNotifier: AppNotifiers.isNavigating,
-              overlayBorderRadius: index == actionsData.length - 1
-                  ? AppConstants.lastMessageActionMeuItemBorderRadius
-                  : data.overlayBorderRadius,
-              padding: EdgeInsetsGeometry.all(8),
-              onTap: data.onTap,
-              child: data.child,
-            );
-          }),
-        ],
-      ),
+        return Container(
+          width: AppConstants.messageActionsMenuSize,
+          decoration: BoxDecoration(
+            color: colors.cardsColor,
+            borderRadius: BorderRadius.circular(
+              AppConstants.messageActionsMenuBorderRadius,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...actionsData.asMap().entries.map((entry) {
+                final index = entry.key;
+                final data = entry.value;
+
+                return RippleEffectButtonWidget(
+                  disableSet: AppNotifiers.disableButtons,
+                  appStateNotifier: AppNotifiers.isNavigating,
+                  overlayBorderRadius: index == actionsData.length - 1
+                      ? AppConstants.lastMessageActionMeuItemBorderRadius
+                      : data.overlayBorderRadius,
+                  padding: EdgeInsetsGeometry.all(8),
+                  onTap: data.onTap,
+                  child: data.child,
+                );
+              }),
+            ],
+          ),
+        );
+      },
     );
   }
 }

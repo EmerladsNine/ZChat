@@ -1,29 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:zchat/messages_system/enums/emoji_message_types.dart';
-import 'package:zchat/messages_system/enums/message_status.dart';
-import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
+import 'package:zchat/messages_system/data_classes/message_data.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/message_bubble_widgets/message_bubble_widget.dart';
 
 class Message {
-  Message({
-    required this.messageId,
-    required this.text,
-    required this.senderId,
-    this.messageStatus = MessageStatus.undelivered,
-    this.emojiMessageType = EmojiMessageType.notEmoji,
-    this.isChildMessage = false,
-    this.timestamp = 0,
-    this.replyData,
-  });
-  int messageId;
-  MessageStatus messageStatus;
-  String text;
-  int timestamp;
-  int senderId;
-  bool isChildMessage;
-  EmojiMessageType emojiMessageType;
-  MessageReplyData? replyData;
+  Message({required this.messageData});
+
+  MessageData messageData;
 
   MessageBubbleWidget getMessageBubble(
     double maxBubbleWidth,
@@ -31,25 +14,18 @@ class Message {
   ) {
     String time = DateFormat('hh:mm a').format(
       DateTime.fromMicrosecondsSinceEpoch(
-        timestamp,
+        messageData.timestamp,
         isUtc: true,
       ).add(DateTime.now().timeZoneOffset),
     );
-    if (senderId != 0) {
+    if (messageData.senderId != 0) {
       maxBubbleWidth = maxBubbleWidth - 40; // remove the width used by pfp
     }
     return MessageBubbleWidget(
-      key: ValueKey(messageId),
-      text: text,
+      key: ValueKey(messageData.messageId),
+      messageData: messageData,
       time: time,
-      senderId: senderId,
       maxBubbleWidth: maxBubbleWidth,
-      isEmojiBubble: emojiMessageType == EmojiMessageType.oneEmoji,
-      emojiMessageType: emojiMessageType,
-      isChildBubble: isChildMessage,
-      messageStatus: messageStatus,
-      // Placeholder
-      replyData: replyData,
       footerTextFieldFocusNode: footerTextFieldFocusNode,
     );
   }

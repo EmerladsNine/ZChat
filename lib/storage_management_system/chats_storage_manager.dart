@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
+import 'package:zchat/messages_system/data_classes/message_data.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 import 'package:zchat/storage_management_system/storage_manager.dart';
 
@@ -11,12 +12,12 @@ class ChatsStorageManager {
     required Chat chat,
   }) async {
     return StorageManager.db.insert('messages', {
-      'senderId': message.senderId,
+      'senderId': message.messageData.senderId,
       'chatId': chat.chatId,
-      'timestamp': message.timestamp,
-      'message': message.text,
-      'replySenderId': message.replyData?.senderId,
-      'replyText': message.replyData?.text,
+      'timestamp': message.messageData.timestamp,
+      'message': message.messageData.text,
+      'replySenderId': message.messageData.replyData?.senderId,
+      'replyText': message.messageData.replyData?.text,
     });
   }
 
@@ -27,6 +28,7 @@ class ChatsStorageManager {
       'lastMessage': chat.lastMessage,
       'timestamp': chat.timestamp,
       'pinTimeStamp': chat.pinTimeStamp,
+      'pinnedMessageId': chat.pinnedMessageId,
     });
   }
 
@@ -39,6 +41,7 @@ class ChatsStorageManager {
         'lastMessage': chat.lastMessage,
         'timestamp': chat.timestamp,
         'pinTimeStamp': chat.pinTimeStamp,
+        'pinnedMessageId': chat.pinnedMessageId,
       },
       where: 'id = ?',
       whereArgs: [chat.chatId],
@@ -99,6 +102,8 @@ class ChatsStorageManager {
       String? name = chatData['name'];
       String lastMessage = chatData['lastMessage'];
       int timestamp = chatData['timestamp'];
+      int? pinnedTimestamp = chatData['pinTimeStamp'];
+      int? pinnedMessageId = chatData['pinnedMessageId'];
       if (userId != 0) {
         if (name != null) {
           chatsManager.usernames[userId] = name;
@@ -109,6 +114,8 @@ class ChatsStorageManager {
         userId: userId,
         lastMessage: lastMessage,
         timestamp: timestamp,
+        pinTimeStamp: pinnedTimestamp,
+        pinnedMessageId: pinnedMessageId,
       );
       chat.name.value = name;
       chatsManager.addChat(userId, chat);
@@ -149,11 +156,13 @@ class ChatsStorageManager {
         replyData = MessageReplyData(replyText, senderId);
       }
       Message msg = Message(
-        messageId: lastMessageIdLoaded,
-        text: messageData['message'],
-        senderId: senderId,
-        timestamp: messageData['timestamp'],
-        replyData: replyData,
+        messageData: MessageData(
+          messageId: lastMessageIdLoaded,
+          text: messageData['message'],
+          senderId: senderId,
+          timestamp: messageData['timestamp'],
+          replyData: replyData,
+        ),
       );
       chat.addOldMessage(msg);
     }
