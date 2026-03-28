@@ -81,7 +81,19 @@ class ChatsStorageManager {
     return db.query('chats', orderBy: "pinTimestamp DESC, timestamp DESC");
   }
 
-  static Future<void> clearAllChats() async {
+  static Future<void> clearAllChats({
+    required ChatsManager chatsManager,
+  }) async {
+    final Set<Chat> allChats = {
+      ...chatsManager.chatsMap.values,
+      ...chatsManager.privateChatsMap.values,
+      ...chatsManager.openedChats,
+    };
+
+    for (final chat in allChats) {
+      chat.clearAllMessages();
+    }
+    chatsManager.notify();
     await StorageManager.db.delete('messages');
     // Todo clear all chats from the chat manager
   }

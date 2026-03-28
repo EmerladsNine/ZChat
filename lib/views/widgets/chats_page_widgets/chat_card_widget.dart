@@ -96,6 +96,8 @@ class ChatCardWidget extends StatelessWidget {
                   ChatCardProfileWidget(
                     cardIcon: cardIcon,
                     isSelected: isSelected,
+                    chatId: chat.chatId,
+                    isPinned: chat.isPinned,
                   ),
                   Expanded(
                     child: IntrinsicHeight(
@@ -126,18 +128,19 @@ class ChatCardWidget extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                                ScaledTextWidget(
-                                  DateFormat('hh:mm a').format(
-                                    DateTime.fromMicrosecondsSinceEpoch(
-                                      chat.timestamp,
-                                      isUtc: true,
-                                    ).add(DateTime.now().timeZoneOffset),
+                                if (chat.timestamp != 0)
+                                  ScaledTextWidget(
+                                    DateFormat('hh:mm a').format(
+                                      DateTime.fromMicrosecondsSinceEpoch(
+                                        chat.timestamp,
+                                        isUtc: true,
+                                      ).add(DateTime.now().timeZoneOffset),
+                                    ),
+                                    style:
+                                        AppTextStyles.chatCardMessageDetailsTextStyle(
+                                          colors,
+                                        ),
                                   ),
-                                  style:
-                                      AppTextStyles.chatCardMessageDetailsTextStyle(
-                                        colors,
-                                      ),
-                                ),
                               ],
                             ),
                             Row(

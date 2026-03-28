@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../themes_system/app_theme.dart';
+import '../../controllers/chat_selection_controller.dart';
 import '../../data/app_notifiers.dart';
 import '../../overlays/profile_picture_overlay.dart';
 import '../buttons/ripple_effect_button_widget.dart';
@@ -10,10 +11,14 @@ class ChatCardProfileWidget extends StatelessWidget {
     super.key,
     required this.cardIcon,
     required this.isSelected,
+    required this.isPinned,
+    required this.chatId,
   });
 
   final IconData cardIcon;
   final bool isSelected;
+  final bool isPinned;
+  final int chatId;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +29,15 @@ class ChatCardProfileWidget extends StatelessWidget {
       appStateNotifier: AppNotifiers.isNavigating,
       overlayBorderRadius: BorderRadius.circular(100),
       onTap: () {
-        ProfilePictureOverlay.instance.insertOverlayMenu(
-          Offset.zero,
-          Size.zero,
-          context,
-        );
+        if (!ChatSelectionController.isSelectionMode) {
+          ProfilePictureOverlay.instance.insertOverlayMenu(
+            Offset.zero,
+            Size.zero,
+            context,
+          );
+        } else {
+          ChatSelectionController.toggleSelection(chatId, isPinned);
+        }
       },
       child: Container(
         width: 50.0,

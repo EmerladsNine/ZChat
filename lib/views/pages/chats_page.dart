@@ -27,7 +27,7 @@ class _ChatsPageState extends State<ChatsPage> {
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
-    final api = context.read<ServerApi>();
+    final api = context.watch<ServerApi>();
     return ChangeNotifierProvider.value(
       value: api.chatsManager,
       child: ValueListenableBuilder(

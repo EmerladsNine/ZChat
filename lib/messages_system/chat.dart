@@ -115,6 +115,9 @@ class Chat extends ChangeNotifier {
   void clearAllMessages() {
     _messages.clear();
     lastMessageIdLoaded = null;
+    pinnedMessageId = null;
+    lastMessage = "";
+    timestamp = 0;
     notifyListeners();
   }
 

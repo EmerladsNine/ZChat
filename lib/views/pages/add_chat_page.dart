@@ -18,6 +18,7 @@ import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/appbar_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
+import '../../messages_system/chats_manager.dart';
 import '../data/app_text_styles.dart';
 import '../widgets/miscellaneous/scaled_text_widget.dart';
 
@@ -201,7 +202,14 @@ class _AddChatPageState extends State<AddChatPage> {
               hintText: "Search username or id",
               controller: searchController,
             ),
-            getFromState(),
+            ChangeNotifierProvider.value(
+              value: context.watch<ServerApi>().chatsManager,
+              child: Consumer<ChatsManager>(
+                builder: (context, value, child) {
+                  return getFromState();
+                },
+              ),
+            ),
           ],
         ),
       ),
