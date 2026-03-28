@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../data/app_text_styles.dart';
-import 'base_settings_page.dart';
 import '../../../themes_system/app_theme.dart';
 import '../../widgets/miscellaneous/scaled_text_widget.dart';
 
