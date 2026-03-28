@@ -205,8 +205,8 @@ class _AddChatPageState extends State<AddChatPage> {
             ChangeNotifierProvider.value(
               value: context.watch<ServerApi>().chatsManager,
               child: Consumer<ChatsManager>(
-                builder: (context, value, child) {
-                  return getFromState();
+                builder: (context, chatsManager, child) {
+                  return getFromState(chatsManager);
                 },
               ),
             ),
@@ -216,16 +216,15 @@ class _AddChatPageState extends State<AddChatPage> {
     );
   }
 
-  Widget getFromState() {
+  Widget getFromState(ChatsManager chatsManager) {
     final colors = AppTheme.themeColorsOf(context);
     if (_searchState == SearchState.found) {
       Chat chat = Chat(chatId: 0, userId: id!);
       chat.name.value = name!;
-      ServerApi api = context.read<ServerApi>();
-      if (!api.chatsManager.chatsMap.containsKey(id)) {
-        api.chatsManager.chatsMap[id!] = chat;
+      if (!chatsManager.chatsMap.containsKey(id)) {
+        chatsManager.chatsMap[id!] = chat;
       } else {
-        chat = api.chatsManager.chatsMap[id]!;
+        chat = chatsManager.chatsMap[id]!;
       }
 
       return ChatCardWidget(

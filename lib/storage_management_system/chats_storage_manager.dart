@@ -84,14 +84,9 @@ class ChatsStorageManager {
   static Future<void> clearAllChats({
     required ChatsManager chatsManager,
   }) async {
-    final Set<Chat> allChats = {
-      ...chatsManager.chatsMap.values,
-      ...chatsManager.privateChatsMap.values,
-      ...chatsManager.openedChats,
-    };
-
-    for (final chat in allChats) {
+    for (final chat in chatsManager.chatsMap.values) {
       chat.clearAllMessages();
+      ChatsStorageManager.updateChat(chat: chat);
     }
     chatsManager.notify();
     await StorageManager.db.delete('messages');

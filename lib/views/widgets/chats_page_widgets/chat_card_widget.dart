@@ -76,7 +76,6 @@ class ChatCardWidget extends StatelessWidget {
                   ),
                 ),
               );
-              chat.clearAllMessages();
               AppNotifiers.openedChat.value = null;
             },
             onLongPress: () {

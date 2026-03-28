@@ -18,7 +18,7 @@ class ChatsSettingsPage extends StatelessWidget {
     return BaseSettingsPage(
       title: 'Chats',
       pageContent: ChangeNotifierProvider.value(
-        value: context.watch<ServerApi>().chatsManager,
+        value: context.read<ServerApi>().chatsManager,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
