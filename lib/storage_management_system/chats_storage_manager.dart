@@ -90,10 +90,41 @@ class ChatsStorageManager {
     }
     chatsManager.notify();
     await StorageManager.db.delete('messages');
-    // Todo clear all chats from the chat manager
   }
 
-  static Future<void> clearChat(int chatId) async {
+  static Future<void> deleteAllChats({
+    required ChatsManager chatsManager,
+  }) async {
+    chatsManager.chatsMap.clear();
+    chatsManager.notify();
+    await StorageManager.db.delete('chats');
+    await StorageManager.db.delete('messages');
+  }
+
+  static Future<void> clearChat({
+    required ChatsManager chatsManager,
+    required int chatId,
+  }) async {
+    chatsManager.getChat(chatId).clearAllMessages();
+    chatsManager.notify();
+    await StorageManager.db.delete(
+      'messages',
+      where: 'chatId = ?',
+      whereArgs: [chatId],
+    );
+  }
+
+  static Future<void> deleteChat({
+    required ChatsManager chatsManager,
+    required int chatId,
+  }) async {
+    chatsManager.chatsMap.remove(chatId);
+    chatsManager.notify();
+    await StorageManager.db.delete(
+      'chats',
+      where: 'id = ?',
+      whereArgs: [chatId],
+    );
     await StorageManager.db.delete(
       'messages',
       where: 'chatId = ?',

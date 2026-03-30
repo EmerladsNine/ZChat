@@ -27,7 +27,9 @@ List<SettingsDialogButtonData> chatManagementWidgetsData(
     SettingsDialogButtonData(
       label: 'Delete All Chats',
       icon: '❌',
-      onChange: () {},
+      onChange: () {
+        ChatsStorageManager.deleteAllChats(chatsManager: chatsManager);
+      },
       dialogTitle: 'Delete All Chats',
       dialogHelpText:
           'Permanently delete all chat threads and messages. This action is irreversible.',
