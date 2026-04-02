@@ -7,12 +7,12 @@ class MessageData {
     required this.messageId,
     required this.text,
     required this.senderId,
-    this.messageStatus = MessageStatus.undelivered,
     this.emojiMessageType = EmojiMessageType.notEmoji,
+    this.messageStatus = MessageStatus.undelivered,
     this.isChildMessage = false,
     this.timestamp = 0,
     this.replyData,
-  }) : isEmojiBubble = (emojiMessageType == EmojiMessageType.oneEmoji);
+  });
 
   int messageId;
   MessageStatus messageStatus;
@@ -22,5 +22,5 @@ class MessageData {
   bool isChildMessage;
   EmojiMessageType emojiMessageType;
   MessageReplyData? replyData;
-  bool isEmojiBubble;
+  bool isEmojiBubble() => emojiMessageType == EmojiMessageType.oneEmoji;
 }
