@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/overlays/message_actions_menu_widget.dart';
@@ -172,12 +171,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                         child: Stack(
                           children: [
                             Positioned.fill(
-                              child: SvgPicture.asset(
-                                'assets/images/background.svg',
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.fill,
-                              ),
+                              child: Image.asset("assets/images/background.webp",fit: BoxFit.cover,),
                             ),
 
                             Column(
