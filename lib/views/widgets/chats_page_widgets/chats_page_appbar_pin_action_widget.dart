@@ -69,9 +69,8 @@ class ChatsPageAppbarPinActionWidget extends StatelessWidget {
                           chatId,
                           !ChatSelectionController.pinnedStatus[chatId]!,
                         );
-                        chat.togglePinState();
+                        chat.togglePinState(chatsManager);
                         ChatsStorageManager.updateChat(chat: chat);
-                        chatsManager.reOpenChat(chat);
                       }
                       ChatSelectionController.clear();
                     },

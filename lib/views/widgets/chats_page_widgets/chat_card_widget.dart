@@ -63,7 +63,7 @@ class ChatCardWidget extends StatelessWidget {
                 return;
               }
 
-              chat.clearAllMessages();
+              chat.clearMessages();
               AppNotifiers.openedChat.value = chat;
               await ChatsStorageManager.loadChat(chat, chat.chatId, null, 20);
               if (!context.mounted) return;

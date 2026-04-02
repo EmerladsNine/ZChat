@@ -1,5 +1,6 @@
 import 'package:emoji_regex/emoji_regex.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
 import 'package:zchat/messages_system/enums/emoji_message_types.dart';
@@ -66,9 +67,17 @@ class Chat extends ChangeNotifier {
 
   bool get hasPinnedMessage => pinnedMessageId != null;
 
-  void togglePinState() {
+  void togglePinState(ChatsManager chatsManager) {
     _isPinned = !_isPinned;
-    pinTimeStamp = (isPinned) ? DateTime.now().microsecondsSinceEpoch : null;
+    if(_isPinned)
+      {
+        pinTimeStamp = DateTime.now().microsecondsSinceEpoch;
+        chatsManager.pinChat(this);
+      }
+    else {
+      pinTimeStamp = null;
+      chatsManager.unPinChat(this);
+    }
     notifyListeners();
   }
 
@@ -112,8 +121,13 @@ class Chat extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearAllMessages() {
+  void clearMessages() {
     _messages.clear();
+    notifyListeners();
+  }
+
+  void clearChat() {
+    clearMessages();
     replyData = ValueNotifier(null);
     lastMessageIdLoaded = null;
     pinnedMessageId = null;

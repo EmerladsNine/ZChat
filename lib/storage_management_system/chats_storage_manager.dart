@@ -78,14 +78,14 @@ class ChatsStorageManager {
   }
 
   static Future<List<Map<String, dynamic>>> getChats(Database db) {
-    return db.query('chats', orderBy: "pinTimestamp DESC, timestamp DESC");
+    return db.query('chats', orderBy: "timestamp ASC");
   }
 
   static Future<void> clearAllChats({
     required ChatsManager chatsManager,
   }) async {
     for (final chat in chatsManager.chatsMap.values) {
-      chat.clearAllMessages();
+      chat.clearChat();
       ChatsStorageManager.updateChat(chat: chat);
     }
     chatsManager.notify();
@@ -105,7 +105,7 @@ class ChatsStorageManager {
     required ChatsManager chatsManager,
     required int chatId,
   }) async {
-    chatsManager.getChat(chatId).clearAllMessages();
+    chatsManager.getChat(chatId).clearChat();
     chatsManager.notify();
     await StorageManager.db.delete(
       'messages',

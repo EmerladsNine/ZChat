@@ -9,6 +9,7 @@ class ChatsManager extends ChangeNotifier {
   Map<int, Chat> privateChatsMap = {};
   Map<int, String> usernames = {0: "You"};
   List<Chat> openedChats = [];
+  List<Chat> pinnedChats = [];
 
   void requestUsername(ServerApi api, int userId) async {
     SearchEvent? result = await api.protocolSender.search.searchByIdAsync(
@@ -31,6 +32,35 @@ class ChatsManager extends ChangeNotifier {
   void addChat(int id, Chat chat) {
     chatsMap[id] = chat;
     privateChatsMap[chat.userId] = chat;
+    if(chat.pinTimeStamp != null)
+    {
+      pinChat(chat);
+    }
+  }
+
+  void pinChat(Chat chat)
+  {
+    if(chat.pinTimeStamp == null) return;
+    int index = 0;
+    for(Chat c in pinnedChats) {
+      if(c.pinTimeStamp! < chat.pinTimeStamp!)
+      {
+          pinnedChats.insert(index, chat);
+          break;
+      }
+      index += 1;
+    }
+    if(pinnedChats.isEmpty)
+    {
+      pinnedChats.insert(0, chat);
+    }
+    notifyListeners();
+  }
+
+  void unPinChat(Chat chat)
+  {
+    pinnedChats.remove(chat);
+    notifyListeners();
   }
 
   void openChat(int id) {

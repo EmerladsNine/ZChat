@@ -82,12 +82,24 @@ class _ChatsPageState extends State<ChatsPage> {
                     child: Consumer<ChatsManager>(
                       builder: (context, value, child) {
                         return ListView.builder(
-                          itemCount: value.openedChats.length,
+                          itemCount: value.openedChats.length + value.pinnedChats.length,
                           itemBuilder: (context, index) {
-                            Chat chat = value.openedChats[index];
+                            if(index < value.pinnedChats.length)
+                              {
+                                Chat chat = value.pinnedChats[index];
+                                return ChatCardWidget(
+                                  chat: chat,
+                                  isSelectable: true,
+                                );
+                              }
+                            Chat chat = value.openedChats[index - value.pinnedChats.length];
+                            if(chat.isPinned)
+                            {
+                                return SizedBox();
+                            }
                             return ChatCardWidget(
-                              chat: chat,
-                              isSelectable: true,
+                            chat: chat,
+                            isSelectable: true,
                             );
                           },
                         );
