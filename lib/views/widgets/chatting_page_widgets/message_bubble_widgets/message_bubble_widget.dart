@@ -89,6 +89,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
     final int alpha = (themeController.opacity * 255).round();
     final api = context.read<ServerApi>();
     bool received = widget.messageData.senderId != 0;
+    final ratioReplyWidth = min(-dragWidth/maxDrag,1);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -145,17 +146,17 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
             spacing: 5,
             children: [
               Container(
-                width: -dragWidth >= maxDrag ? null : min(-dragWidth, 25),
+                width: ratioReplyWidth <= 0 ? 0 : null,
                 decoration: BoxDecoration(
                   color: colors.cardsColor,
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(color: colors.dividerColor),
                 ),
-                padding: EdgeInsetsGeometry.all(-dragWidth >= maxDrag ? 5 : 0),
+                padding: EdgeInsetsGeometry.all(ratioReplyWidth * 5),
                 child: Icon(
                   Icons.reply_rounded,
                   color: colors.primaryColor,
-                  size: -dragWidth >= maxDrag ? 25 : min(-dragWidth, 25),
+                  size: ratioReplyWidth * 25,
                 ),
               ),
 
