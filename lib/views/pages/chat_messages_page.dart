@@ -161,6 +161,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                       ),
                     ),
                   ),
+                  backgroundColor: colors.primaryBackgroundColor,
                   body: ValueListenableBuilder(
                     valueListenable: AppNotifiers.openedChat,
                     builder: (context, chat, child) {

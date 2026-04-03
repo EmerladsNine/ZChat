@@ -46,14 +46,12 @@ class ChatsManager extends ChangeNotifier {
       if(c.pinTimeStamp! < chat.pinTimeStamp!)
       {
           pinnedChats.insert(index, chat);
-          break;
+          notifyListeners();
+          return;
       }
       index += 1;
     }
-    if(pinnedChats.isEmpty)
-    {
-      pinnedChats.insert(0, chat);
-    }
+    pinnedChats.add(chat);
     notifyListeners();
   }
 
