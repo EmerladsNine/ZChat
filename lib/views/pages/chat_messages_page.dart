@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
+import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/overlays/message_actions_menu_widget.dart';
+import 'package:zchat/views/widgets/buttons/flat_tap_button_widget.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/chat_messages_footer_widget.dart';
 import 'package:zchat/views/widgets/chatting_page_widgets/emoji_panel_widget.dart';
@@ -17,8 +20,8 @@ import '../widgets/chatting_page_widgets/chatting_page_app_bar_widget.dart';
 
 /// Page displaying a conversation with messages.
 class ChatMessagesPage extends StatefulWidget {
-  const ChatMessagesPage({super.key});
-
+  const ChatMessagesPage({super.key, required this.chat});
+  final Chat chat;
   @override
   State<ChatMessagesPage> createState() => _ChatMessagesPageState();
 }
@@ -95,89 +98,83 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
     double bottomSafeArea = MediaQuery.of(context).viewPadding.bottom;
     bottomSafeArea = bottomSafeArea < 46 ? 46 : bottomSafeArea;
 
-    return Container(
-      color: colors.primaryBackgroundColor,
-      child: ValueListenableBuilder(
-        valueListenable: AppNotifiers.isMessageActionsMenuVisible,
-        builder: (context, isMessageActionsMenuVisible, child) {
-          return ValueListenableBuilder(
-            valueListenable: AppNotifiers.isEmojiPickerVisible,
-            builder: (context, isEmojiPickerVisible, child) {
-              return PopScope(
-                canPop: !isEmojiPickerVisible && !isMessageActionsMenuVisible,
-                onPopInvokedWithResult: (didPop, dynamic result) {
-                  if (isMessageActionsMenuVisible) {
-                    MessageActionsMenuWidget.instance.removeOverlay();
-                  } else if (AppNotifiers.isEmojiPickerVisible.value) {
-                    AppNotifiers.isEmojiPickerVisible.value = false;
-                  }
-                },
-                child: Scaffold(
-                  resizeToAvoidBottomInset: false,
-                  appBar: PreferredSize(
-                    preferredSize: Size.fromHeight(60),
-                    child: Container(
-                      height: double.infinity,
-                      color: colors.cardsColor,
-                      child: SafeArea(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomToolTip(
-                              message: "Go back",
-                              preferBelow: true,
-                              child: RippleEffectButtonWidget(
-                                padding: EdgeInsetsGeometry.all(10),
-                                disableSet: AppNotifiers.disableButtons,
-                                appStateNotifier: AppNotifiers.isNavigating,
-                                overlayBorderRadius: BorderRadius.circular(50),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: colors.primaryColor,
-                                ),
-                              ),
-                            ),
-                            Expanded(child: ChattingPageAppBarWidget()),
-                            CustomToolTip(
-                              message: "Options",
-                              preferBelow: true,
-                              child: RippleEffectButtonWidget(
-                                padding: EdgeInsetsGeometry.all(5),
-                                disableSet: AppNotifiers.disableButtons,
-                                appStateNotifier: AppNotifiers.isNavigating,
-                                overlayBorderRadius: BorderRadius.circular(50),
-                                child: Icon(
-                                  Icons.more_vert_outlined,
-                                  color: colors.primaryColor,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 4),
-                          ],
-                        ),
+    return ChangeNotifierProvider.value(
+      value: widget.chat,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: Container(
+            height: double.infinity,
+            color: colors.cardsColor,
+            child: SafeArea(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomToolTip(
+                    message: "Go back",
+                    preferBelow: true,
+                    child: FlatTapButtonWidget(
+                      padding: EdgeInsetsGeometry.all(10),
+                      disableSet: AppNotifiers.disableButtons,
+                      appStateNotifier: AppNotifiers.isNavigating,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.arrow_back, color: colors.primaryColor),
+                    ),
+                  ),
+                  Expanded(child: ChattingPageAppBarWidget()),
+                  CustomToolTip(
+                    message: "Options",
+                    preferBelow: true,
+                    child: RippleEffectButtonWidget(
+                      padding: EdgeInsetsGeometry.all(5),
+                      disableSet: AppNotifiers.disableButtons,
+                      appStateNotifier: AppNotifiers.isNavigating,
+                      overlayBorderRadius: BorderRadius.circular(50),
+                      child: Icon(
+                        Icons.more_vert_outlined,
+                        color: colors.primaryColor,
                       ),
                     ),
                   ),
-                  backgroundColor: colors.primaryBackgroundColor,
-                  body: ValueListenableBuilder(
-                    valueListenable: AppNotifiers.openedChat,
-                    builder: (context, chat, child) {
-                      if (chat == null) return Container();
-
-                      return Container(
+                  SizedBox(width: 4),
+                ],
+              ),
+            ),
+          ),
+        ),
+        backgroundColor: colors.primaryBackgroundColor,
+        body: ValueListenableBuilder(
+          valueListenable: AppNotifiers.isMessageActionsMenuVisible,
+          builder: (context, isMessageActionsMenuVisible, child) {
+            return ValueListenableBuilder(
+              valueListenable: AppNotifiers.isEmojiPickerVisible,
+              builder: (context, isEmojiPickerVisible, child) {
+                return PopScope(
+                  canPop: !isEmojiPickerVisible && !isMessageActionsMenuVisible,
+                  onPopInvokedWithResult: (didPop, dynamic result) {
+                    if (isMessageActionsMenuVisible) {
+                      MessageActionsMenuWidget.instance.removeOverlay();
+                    } else if (AppNotifiers.isEmojiPickerVisible.value) {
+                      AppNotifiers.isEmojiPickerVisible.value = false;
+                    }
+                  },
+                  child: Container(
                         color: colors.primaryBackgroundColor,
                         child: Stack(
                           children: [
                             Positioned.fill(
-                              child: Image.asset("assets/images/background.webp",fit: BoxFit.cover,),
+                              child: Image(
+                                image: widget.chat.imageProvider,
+                                fit: BoxFit.cover,
+                              ),
                             ),
 
                             Column(
                               children: [
-                                if (chat.hasPinnedMessage)
+                                if (widget.chat.hasPinnedMessage)
                                   SizedBox(
                                     height: pinnedMessagePlaceholderHeight,
                                     width: double.infinity,
@@ -192,7 +189,7 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                                   ),
                                 ),
 
-                                ReplyBoxWidget(),
+                                ReplyBoxWidget(chat: widget.chat,),
 
                                 Padding(
                                   padding: isEmojiPickerVisible
@@ -213,27 +210,25 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                                 EmojiPanelWidget(),
                               ],
                             ),
-                            if (chat.hasPinnedMessage)
+                            if (widget.chat.hasPinnedMessage)
                               PinnedMessageWidget(
-                                message: chat.messages
+                                message: widget.chat.messages
                                     .firstWhere(
                                       (m) =>
                                           m.messageData.messageId ==
-                                          chat.pinnedMessageId,
+                                              widget.chat.pinnedMessageId,
                                     )
                                     .messageData
                                     .text,
                               ),
                           ],
                         ),
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
-          );
-        },
+                      )
+                  );
+              },
+            );
+          },
+        ),
       ),
     );
   }

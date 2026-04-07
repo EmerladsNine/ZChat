@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/themes_system/app_theme.dart';
@@ -54,6 +53,14 @@ class ChatCardWidget extends StatelessWidget {
           child: RippleEffectButtonWidget(
             disableSet: AppNotifiers.disableButtons,
             appStateNotifier: AppNotifiers.isNavigating,
+            animationDuration: const Duration(milliseconds: 200),
+            onPreTap: () async {
+              chat.clearMessages();
+              AppNotifiers.openedChat.value = chat;
+              await ChatsStorageManager.loadChat(chat, chat.chatId, null, 20);
+              if (!context.mounted) return;
+              await precacheImage(chat.imageProvider, context);
+            },
             onTap: () async {
               if (ChatSelectionController.isSelectionMode) {
                 ChatSelectionController.toggleSelection(
@@ -63,17 +70,10 @@ class ChatCardWidget extends StatelessWidget {
                 return;
               }
 
-              chat.clearMessages();
-              AppNotifiers.openedChat.value = chat;
-              await ChatsStorageManager.loadChat(chat, chat.chatId, null, 20);
-              if (!context.mounted) return;
               await Navigator.push(
                 context,
                 SlidingAnimationPageRoute(
-                  page: ChangeNotifierProvider.value(
-                    value: chat,
-                    child: ChatMessagesPage(),
-                  ),
+                  page: ChatMessagesPage(chat: chat,),
                 ),
               );
               AppNotifiers.openedChat.value = null;

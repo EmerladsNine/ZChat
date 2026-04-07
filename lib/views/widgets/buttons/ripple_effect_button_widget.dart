@@ -9,6 +9,7 @@ class RippleEffectButtonWidget extends BaseButtonWidget {
     required super.child,
     super.padding,
     super.onTap,
+    super.onPreTap,
     super.onTapDown,
     super.onTapCancel,
     super.onLongPress,

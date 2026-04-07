@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/themes_system/app_theme.dart';
 import 'package:zchat/views/utils/text_utils.dart';
@@ -10,7 +11,8 @@ import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/views/widgets/miscellaneous/scaled_text_widget.dart';
 
 class ReplyBoxWidget extends StatefulWidget {
-  const ReplyBoxWidget({super.key});
+  const ReplyBoxWidget({super.key, required this.chat});
+  final Chat chat;
 
   @override
   State<ReplyBoxWidget> createState() => _ReplyBoxWidgetState();
@@ -24,7 +26,7 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
     final colors = AppTheme.themeColorsOf(context);
     final api = context.read<ServerApi>();
     return ValueListenableBuilder(
-      valueListenable: AppNotifiers.openedChat.value!.replyData,
+      valueListenable: widget.chat.replyData,
       builder: (context, value, child) {
         if (value != null) lastReplyData = value;
         final String replyTextSender = lastReplyData.senderId != 0

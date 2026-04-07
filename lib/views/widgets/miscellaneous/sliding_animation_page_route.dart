@@ -5,7 +5,7 @@ class SlidingAnimationPageRoute extends PageRouteBuilder {
 
   SlidingAnimationPageRoute({
     required this.page,
-    Duration duration = const Duration(milliseconds: 180),
+    Duration duration = const Duration(milliseconds: 200),
   }) : super(
          transitionDuration: duration,
          reverseTransitionDuration: duration,

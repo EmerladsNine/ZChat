@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:fake_async/fake_async.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:zchat/messages_system/chat.dart';
@@ -30,7 +31,7 @@ void main() {
       Message msg = Message(
         messageData: MessageData(messageId: 0, text: "Hello", senderId: 0),
       );
-      Chat chat = Chat(chatId: 0, userId: 1);
+      Chat chat = Chat(chatId: 0, userId: 1,imageProvider: AssetImage(""));
       when(
         () => mockProtocolSenderNormalMessage.send(any(), any(), any(), any()),
       ).thenAnswer((_) async => OkEvent());
@@ -56,7 +57,7 @@ void main() {
           senderId: 0,
         ),
       );
-      Chat chat = Chat(chatId: 0, userId: 1);
+      Chat chat = Chat(chatId: 0, userId: 1,imageProvider: AssetImage(""));
       when(
         () => mockProtocolSenderNormalMessage.send(any(), any(), any(), any()),
       ).thenAnswer((_) async => OkEvent());
@@ -81,7 +82,7 @@ void main() {
             senderId: 0,
           ),
         );
-        Chat chat = Chat(chatId: 0, userId: 1);
+        Chat chat = Chat(chatId: 0, userId: 1,imageProvider: AssetImage(""));
         when(
           () =>
               mockProtocolSenderNormalMessage.send(any(), any(), any(), any()),

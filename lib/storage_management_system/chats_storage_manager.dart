@@ -154,6 +154,7 @@ class ChatsStorageManager {
         timestamp: timestamp,
         pinTimeStamp: pinnedTimestamp,
         pinnedMessageId: pinnedMessageId,
+        imageProvider: chatsManager.defaultBackgroundProvider
       );
       chat.name.value = name;
       chatsManager.addChat(userId, chat);

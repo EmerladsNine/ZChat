@@ -47,11 +47,13 @@ class Chat extends ChangeNotifier {
   int? lastMessageIdLoaded;
   int? pinTimeStamp;
   int? pinnedMessageId;
+  final ImageProvider imageProvider;
   late bool _isPinned;
 
   Chat({
     required this.chatId,
     required this.userId,
+    required this.imageProvider,
     this.lastMessage = "",
     this.timestamp = 0,
     this.lastMessageIdLoaded,

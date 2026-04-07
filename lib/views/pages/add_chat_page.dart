@@ -15,7 +15,6 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/utils/math_utils.dart';
 import 'package:zchat/views/widgets/add_chat_page_widgets/centered_text.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
-import 'package:zchat/views/widgets/miscellaneous/appbar_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 
 import '../../messages_system/chats_manager.dart';
@@ -114,8 +113,7 @@ class _AddChatPageState extends State<AddChatPage> {
       _searchState = SearchState.waiting;
     });
     BuildContext buildContext = context;
-    if (await _handleIdSearch(buildContext, searchController.text))
-      return _resetRequestInFlight();
+    if (await _handleIdSearch(buildContext, searchController.text)) return _resetRequestInFlight();
     if (!buildContext.mounted) return _resetRequestInFlight();
     await _handleUsernameSearch(buildContext, searchController.text);
     return _resetRequestInFlight();
@@ -181,9 +179,8 @@ class _AddChatPageState extends State<AddChatPage> {
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: AppBarWidget(
+      appBar: AppBar(
+          backgroundColor: colors.primaryBackgroundColor,
           title: ScaledTextWidget(
             'Add Chat',
             style: AppTextStyles.appBarPrimaryTextStyle(
@@ -191,7 +188,6 @@ class _AddChatPageState extends State<AddChatPage> {
             ),
           ),
         ),
-      ),
       backgroundColor: colors.primaryBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -219,7 +215,7 @@ class _AddChatPageState extends State<AddChatPage> {
   Widget getFromState(ChatsManager chatsManager) {
     final colors = AppTheme.themeColorsOf(context);
     if (_searchState == SearchState.found) {
-      Chat chat = Chat(chatId: 0, userId: id!);
+      Chat chat = Chat(chatId: 0, userId: id!,imageProvider: chatsManager.defaultBackgroundProvider);
       chat.name.value = name!;
       if (!chatsManager.chatsMap.containsKey(id)) {
         chatsManager.chatsMap[id!] = chat;

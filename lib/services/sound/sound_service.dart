@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 
 class SoundService {
@@ -9,20 +11,23 @@ class SoundService {
   static SoundService get instance => _instance;
 
   Future<void> init() async {
-    await _player.setAudioContext(
-      AudioContext(
-        android: AudioContextAndroid(
-          isSpeakerphoneOn: false,
-          stayAwake: false,
-          contentType: AndroidContentType.sonification,
-          audioFocus: AndroidAudioFocus.none,
-        ),
-        iOS: AudioContextIOS(
-          category: AVAudioSessionCategory.ambient,
-          options: {AVAudioSessionOptions.mixWithOthers},
-        ),
-      ),
-    );
+    if(Platform.isAndroid || Platform.isIOS)
+    {
+        await _player.setAudioContext(
+          AudioContext(
+            android: AudioContextAndroid(
+              isSpeakerphoneOn: false,
+              stayAwake: false,
+              contentType: AndroidContentType.sonification,
+              audioFocus: AndroidAudioFocus.none,
+            ),
+            iOS: AudioContextIOS(
+              category: AVAudioSessionCategory.ambient,
+              options: {AVAudioSessionOptions.mixWithOthers},
+            ),
+          ),
+        );
+    }
     await _player.setVolume(0.3);
   }
 

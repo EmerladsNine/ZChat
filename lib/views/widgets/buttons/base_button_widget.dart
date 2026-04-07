@@ -8,6 +8,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
     required this.child,
     this.transparentIsTappable = true,
     this.onTap,
+    this.onPreTap,
     this.onTapDown,
     this.onTapCancel,
     this.onLongPress,
@@ -23,6 +24,7 @@ abstract class BaseButtonWidget extends StatefulWidget {
   final Widget child;
   final bool transparentIsTappable;
   final GestureTapCallback? onTap;
+  final Future<void> Function() ? onPreTap;
   final GestureTapDownCallback? onTapDown;
   final GestureTapCancelCallback? onTapCancel;
   final GestureLongPressCallback? onLongPress;
@@ -50,6 +52,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
   bool _pressed = false;
   Completer<void>? _fillAnimationDone;
   Completer<void>? _emptyAnimationDone;
+  Future<void>? _preTapFuture;
 
   @override
   void dispose() {
@@ -117,7 +120,12 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     if (!_pressed || widget.appStateNotifier.value) return;
     widget.appStateNotifier.value = true;
 
+    _preTapFuture = widget.onPreTap?.call();
     await _fillAnimationDone!.future;
+    if(_preTapFuture != null)
+    {
+      await _preTapFuture;
+    }
 
     if (context.mounted) {
       setState(() {
@@ -132,9 +140,7 @@ class BaseButtonWidgetState extends State<BaseButtonWidget> {
     //reset
     widget.appStateNotifier.value = false;
     widget.disableSet.value = false;
-
     if (!context.mounted) return;
-
     widget.onTap?.call();
   }
 

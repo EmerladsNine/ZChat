@@ -122,7 +122,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// The home page of the application, managing page navigation and swipe controls.
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -137,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    precacheImage(AssetImage('assets/images/background.webp'), context);
+    precacheImage(context.read<ServerApi>().chatsManager.defaultBackgroundProvider, context);
   }
 
   @override
