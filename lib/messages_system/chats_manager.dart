@@ -10,7 +10,7 @@ class ChatsManager extends ChangeNotifier {
   Map<int, String> usernames = {0: "You"};
   List<Chat> openedChats = [];
   List<Chat> pinnedChats = [];
-  final defaultBackgroundProvider = const AssetImage('assets/images/background.webp');
+  final defaultBackgroundProvider = const AssetImage('assets/images/background_1080X1920.webp');
   
   void requestUsername(ServerApi api, int userId) async {
     SearchEvent? result = await api.protocolSender.search.searchByIdAsync(
