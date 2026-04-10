@@ -40,6 +40,8 @@ int bigEndianToInt(List<int> buffer, int bytes) {
 }
 
 const expectedSizeBytes = 4;
+const userIdBytes = 8;
+const sessionIdBytes = 8;
 
 class ServerApi {
   late Socket socket;

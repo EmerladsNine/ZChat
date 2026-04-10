@@ -24,7 +24,7 @@ class ProtocolSenderSearch {
       }
     }
     CallbackNotifiers.searchResponse.addListener(listener);
-    final result = api.sendProtocolUnit(MessageType.searchWithId, [...intToBigEndian(id, 4)]);
+    final result = api.sendProtocolUnit(MessageType.searchWithId, [...intToBigEndian(id, userIdBytes)]);
     if (!result) {
       _queue.remove(completer);
       CallbackNotifiers.searchResponse.removeListener(listener);

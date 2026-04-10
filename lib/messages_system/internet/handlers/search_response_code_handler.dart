@@ -21,7 +21,7 @@ class SearchResponseCodeHandler extends Handler {
       );
       return true;
     }
-    final int id = bigEndianToInt(buffer, 4);
+    final int id = bigEndianToInt(buffer, userIdBytes);
     final String username = utf8.decode(buffer);
     CallbackNotifiers.searchResponse.value = SearchEvent(
       SearchResponseCode.found,

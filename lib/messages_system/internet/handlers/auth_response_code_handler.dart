@@ -61,8 +61,8 @@ class AuthResponseCodeHandler extends Handler {
     if (responseCode == ResponseCode.emailSignInDone.id ||
         responseCode == ResponseCode.emailAccountCreated.id ||
         responseCode == ResponseCode.googleAuthSuccessful.id) {
-      int id = bigEndianToInt(buffer, 4);
-      int sessionId = bigEndianToInt(buffer, 4);
+      int id = bigEndianToInt(buffer, userIdBytes);
+      int sessionId = bigEndianToInt(buffer, sessionIdBytes);
       List<int> accessToken = buffer.getRange(0, 32).toList();
       String accessTokenEncoded = base64Encode(accessToken);
       buffer.removeRange(0, 32);
