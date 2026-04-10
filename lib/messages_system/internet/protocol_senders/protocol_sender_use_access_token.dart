@@ -6,14 +6,14 @@ class ProtocolSenderUseAuthTokens {
   ProtocolSenderUseAuthTokens(this.api);
   bool sendAccessToken(int sessionId,List<int> accessToken) {
     return api.sendProtocolUnit(MessageType.useAccessToken, [
-      ...intToBigEndian(sessionId, 4),
+      ...intToBigEndian(sessionId, sessionIdBytes),
       ...accessToken
     ]);
   }
 
   bool sendRefreshToken(int sessionId,List<int> refreshToken) {
     return api.sendProtocolUnit(MessageType.useRefreshToken, [
-      ...intToBigEndian(sessionId, 4),
+      ...intToBigEndian(sessionId, sessionIdBytes),
       ...refreshToken
     ]);
   }

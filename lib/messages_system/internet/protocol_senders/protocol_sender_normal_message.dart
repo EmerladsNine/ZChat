@@ -22,9 +22,9 @@ class ProtocolSenderNormalMessage {
         completer.complete(null);
       }
     });
-    List<int> replySenderIdUTF8 = replyTextSenderId != null ? intToBigEndian(replyTextSenderId, 4) : [];
+    List<int> replySenderIdUTF8 = replyTextSenderId != null ? intToBigEndian(replyTextSenderId, userIdBytes) : [];
     final result = api.sendProtocolUnit(MessageType.normalMessage, [
-      ...intToBigEndian(receiverId, 4),
+      ...intToBigEndian(receiverId, userIdBytes),
       ...intToBigEndian(replyTextUTF8.length, 4),
       ...replyTextUTF8,
       ...replySenderIdUTF8,
