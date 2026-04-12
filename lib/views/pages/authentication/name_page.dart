@@ -65,10 +65,10 @@ class _NamePageState extends State<NamePage> {
       );
       return;
     }
-    if (value.code == ResponseCode.googleAuthInvalidToken) {
+    if (value.code == AuthResponseCode.googleAuthInvalidToken) {
       Navigator.pop(buildContext);
-    } else if (value.code == ResponseCode.googleSignUpUsernameExistError ||
-        value.code == ResponseCode.googleSignUpInvalidUsernameError) {
+    } else if (value.code == AuthResponseCode.googleSignUpUsernameExistError ||
+        value.code == AuthResponseCode.googleSignUpInvalidUsernameError) {
       usernameFocusNode.requestFocus();
       setState(() {
         usernameError = value.msg;

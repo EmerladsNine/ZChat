@@ -63,7 +63,7 @@ class _SignInPageState extends State<SignInPage> {
       return;
     }
     if (ModalRoute.of(buildContext)?.isCurrent ?? false) {
-      if (event.code == ResponseCode.googleAuthRequireSignUp) {
+      if (event.code == AuthResponseCode.googleAuthRequireSignUp) {
           Navigator.of(buildContext).push(
             SlidingAnimationPageRoute(page: NamePage(googleToken: googleToken)),
           );

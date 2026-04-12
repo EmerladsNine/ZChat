@@ -8,7 +8,7 @@ import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
 import 'package:zchat/messages_system/data_classes/message_data.dart';
 import 'package:zchat/messages_system/data_classes/messages_queue.dart';
-import 'package:zchat/messages_system/internet/events/ok_event.dart';
+import 'package:zchat/messages_system/internet/events/message_response_event.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_normal_message.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 
@@ -34,7 +34,7 @@ void main() {
       Chat chat = Chat(chatId: 0, userId: 1,imageProvider: AssetImage(""));
       when(
         () => mockProtocolSenderNormalMessage.send(any(), any(), any(), any()),
-      ).thenAnswer((_) async => OkEvent());
+      ).thenAnswer((_) async => MessageResponseEvent(result: []));
       messagesQueue.addMessage(
         FakeServerApi(),
         mockProtocolSenderNormalMessage,
@@ -60,7 +60,7 @@ void main() {
       Chat chat = Chat(chatId: 0, userId: 1,imageProvider: AssetImage(""));
       when(
         () => mockProtocolSenderNormalMessage.send(any(), any(), any(), any()),
-      ).thenAnswer((_) async => OkEvent());
+      ).thenAnswer((_) async => MessageResponseEvent(result: []));
       messagesQueue.addMessage(
         FakeServerApi(),
         mockProtocolSenderNormalMessage,
@@ -101,7 +101,7 @@ void main() {
         when(
           () =>
               mockProtocolSenderNormalMessage.send(any(), any(), any(), any()),
-        ).thenAnswer((_) async => OkEvent());
+        ).thenAnswer((_) async => MessageResponseEvent(result: []));
         async.elapse(const Duration(seconds: 1));
         expect(
           messagesQueue.getMessagesQueue().isNotEmpty,

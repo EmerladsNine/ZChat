@@ -42,6 +42,7 @@ int bigEndianToInt(List<int> buffer, int bytes) {
 const expectedSizeBytes = 4;
 const userIdBytes = 8;
 const sessionIdBytes = 8;
+const sessionListVersionBytes = 8;
 
 class ServerApi {
   late Socket socket;
@@ -95,7 +96,7 @@ class ServerApi {
   bool sendProtocolUnit(MessageType type, List<int> data) {
     try {
       List<int> encryptedData = [type.id, ...data];
-      if (encryptedData.length >= 65535) {
+      if (encryptedData.length >= 65535) { // Todo change the size
         // Todo ui handling for this.
         printOnDebug("Invalid large message length");
         return false;
@@ -175,7 +176,7 @@ class ServerApi {
   }
 
   Future<void> connectServer(String caller) async {
-    final String host = "92.113.26.192";
+    final String host = "127.0.0.1";//"92.113.26.192";
     final int port = 9999;
     Duration delay = Duration.zero;
     while (true) {
