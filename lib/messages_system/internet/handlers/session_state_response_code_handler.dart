@@ -69,9 +69,9 @@ class SessionStateResponseCodeHandler extends Handler {
         await storage.write(key: "refresh_token", value: refreshTokenEncoded);
         AppNotifiers.isSignedIn.value = true;
         api.messagesQueue.isPaused = false;
+        api.loadSessionData();
         api.messagesQueue.sendMessages(api,api.protocolSender.normalMessage);
       });
-      api.loadSessionData();
     }
     return true;
   }

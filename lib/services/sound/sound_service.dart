@@ -22,7 +22,7 @@ class SoundService {
               audioFocus: AndroidAudioFocus.none,
             ),
             iOS: AudioContextIOS(
-              category: AVAudioSessionCategory.ambient,
+              category: AVAudioSessionCategory.playAndRecord,
               options: {AVAudioSessionOptions.mixWithOthers},
             ),
           ),

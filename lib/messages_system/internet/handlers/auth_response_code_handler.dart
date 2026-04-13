@@ -77,8 +77,8 @@ class AuthResponseCodeHandler extends Handler {
         await storage.write(key: "user_id", value: id.toString());
         api.messagesQueue.isPaused = false;
         AppNotifiers.isSignedIn.value = true;
+        api.loadSessionData();
       });
-      api.loadSessionData();
       return true;
     }
 

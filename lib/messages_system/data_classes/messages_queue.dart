@@ -83,7 +83,10 @@ class MessagesQueue {
             usersNeedResend.add((user.$1,api.chatsManager.sessionListsCache[user.$1]!));
           }
         }
-        await Future.delayed(Duration(seconds: 2));
+        if(usersNeedResend.isNotEmpty)
+        {
+            await Future.delayed(Duration(seconds: 2));
+        }
       }
       _messagesToSend.removeFirst();
       msg.messageData.messageStatus = MessageStatus.undelivered;
