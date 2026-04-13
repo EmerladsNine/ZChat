@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zchat/messages_system/chat.dart';
+import 'package:zchat/messages_system/data_classes/session_list.dart';
 import 'package:zchat/messages_system/internet/events/search_event.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
@@ -8,6 +9,7 @@ class ChatsManager extends ChangeNotifier {
   Map<int, Chat> chatsMap = {};
   Map<int, Chat> privateChatsMap = {};
   Map<int, String> usernames = {0: "You"};
+  Map<int, SessionList> sessionListsCache = {};
   List<Chat> openedChats = [];
   List<Chat> pinnedChats = [];
   final defaultBackgroundProvider = const AssetImage('assets/images/background_1080X1920.webp');

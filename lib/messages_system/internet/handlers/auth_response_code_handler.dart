@@ -12,57 +12,58 @@ import 'package:zchat/views/data/app_notifiers.dart';
 
 class AuthResponseCodeHandler extends Handler {
   static final Map<int, String> emailFailures = {
-    ResponseCode.emailAccountEmailExistError.id:
+    AuthResponseCode.emailAccountEmailExistError.id:
         "Email is already used in an existing account.",
-    ResponseCode.emailAccountUsernameExistError.id:
+    AuthResponseCode.emailAccountUsernameExistError.id:
         "Username is used, try another one.",
-    ResponseCode.emailAccountInvalidEmailError.id: "Invalid Email.",
-    ResponseCode.emailAccountInvalidPasswordLengthError.id:
+    AuthResponseCode.emailAccountInvalidEmailError.id: "Invalid Email.",
+    AuthResponseCode.emailAccountInvalidPasswordLengthError.id:
         "Invalid Password Length, must be between ${AccountConstants.minPasswordLength} and  ${AccountConstants.maxPasswordLength} characters.",
-    ResponseCode.emailAccountInvalidUsernameError.id:
+    AuthResponseCode.emailAccountInvalidUsernameError.id:
         "Invalid Username.",
-    ResponseCode.emailAccountCreationFailureError.id:
+    AuthResponseCode.emailAccountCreationFailureError.id:
         "Failed to create account , please try again later.",
-    ResponseCode.emailSignInEmailNotExistError.id: "Email does not exist.",
-    ResponseCode.emailSignInFailureError.id:
+    AuthResponseCode.emailSignInEmailNotExistError.id: "Email does not exist.",
+    AuthResponseCode.emailSignInFailureError.id:
         "Failed to Sign in, please try again later.",
-    ResponseCode.emailSignInPasswordIncorrectError.id: "Incorrect password.",
+    AuthResponseCode.emailSignInPasswordIncorrectError.id: "Incorrect password.",
   };
 
   static final Map<int, String> googleAccountFailures = {
-    ResponseCode.googleAuthInvalidToken.id:
+    AuthResponseCode.googleAuthInvalidToken.id:
         "Invalid google Token, please authenticate with google again.",
-    ResponseCode.googleAuthFailed.id:
+    AuthResponseCode.googleAuthFailed.id:
         "Failed to authenticate , please try again later.",
-    ResponseCode.googleSignUpInvalidUsernameError.id:
+    AuthResponseCode.googleSignUpInvalidUsernameError.id:
         "Invalid Username.",
-    ResponseCode.googleSignUpUsernameExistError.id:
+    AuthResponseCode.googleSignUpUsernameExistError.id:
         "Username is used, try another one.",
-    ResponseCode.googleSignUpGoogleIdExistError.id:
+    AuthResponseCode.googleSignUpGoogleIdExistError.id:
         "Your google account already used try signing in.",
   };
 
-  static bool isEmailError(ResponseCode code) =>
-      code == ResponseCode.emailSignInEmailNotExistError ||
-      code == ResponseCode.emailAccountEmailExistError ||
-      code == ResponseCode.emailAccountInvalidEmailError;
-  static bool isPasswordError(ResponseCode code) =>
-      code == ResponseCode.emailSignInPasswordIncorrectError ||
-      code == ResponseCode.emailAccountInvalidPasswordLengthError;
-  static bool isEmailUsernameError(ResponseCode code) =>
-      code == ResponseCode.emailAccountInvalidUsernameError ||
-      code == ResponseCode.emailAccountUsernameExistError;
+  static bool isEmailError(AuthResponseCode code) =>
+      code == AuthResponseCode.emailSignInEmailNotExistError ||
+      code == AuthResponseCode.emailAccountEmailExistError ||
+      code == AuthResponseCode.emailAccountInvalidEmailError;
+  static bool isPasswordError(AuthResponseCode code) =>
+      code == AuthResponseCode.emailSignInPasswordIncorrectError ||
+      code == AuthResponseCode.emailAccountInvalidPasswordLengthError;
+  static bool isEmailUsernameError(AuthResponseCode code) =>
+      code == AuthResponseCode.emailAccountInvalidUsernameError ||
+      code == AuthResponseCode.emailAccountUsernameExistError;
 
   @override
   bool handle(List<int> buffer, ServerApi api,ChatsManager chatsManager) {
     int responseCode = buffer[0];
     buffer.removeAt(0);
 
-    if (responseCode == ResponseCode.emailSignInDone.id ||
-        responseCode == ResponseCode.emailAccountCreated.id ||
-        responseCode == ResponseCode.googleAuthSuccessful.id) {
-      int id = bigEndianToInt(buffer, 4);
-      int sessionId = bigEndianToInt(buffer, 4);
+    if (responseCode == AuthResponseCode.emailSignInDone.id ||
+        responseCode == AuthResponseCode.emailAccountCreated.id ||
+        responseCode == AuthResponseCode.googleAuthSuccessful.id) {
+      if(buffer.length <  userIdBytes + sessionIdBytes + 32 + 64) return true;
+      int id = bigEndianToInt(buffer, userIdBytes);
+      int sessionId = bigEndianToInt(buffer, sessionIdBytes);
       List<int> accessToken = buffer.getRange(0, 32).toList();
       String accessTokenEncoded = base64Encode(accessToken);
       buffer.removeRange(0, 32);
@@ -76,14 +77,14 @@ class AuthResponseCodeHandler extends Handler {
         await storage.write(key: "user_id", value: id.toString());
         api.messagesQueue.isPaused = false;
         AppNotifiers.isSignedIn.value = true;
+        api.loadSessionData();
       });
-      api.loadSessionData();
       return true;
     }
 
-    if (responseCode == ResponseCode.googleAuthRequireSignUp.id) {
+    if (responseCode == AuthResponseCode.googleAuthRequireSignUp.id) {
       CallbackNotifiers.googleAccountAuthResponse.value = AuthEvent(
-        ResponseCode.fromId(responseCode),
+        AuthResponseCode.fromId(responseCode),
         null,
       );
       return true;
@@ -92,13 +93,13 @@ class AuthResponseCodeHandler extends Handler {
     if (emailFailures.containsKey(responseCode)) {
       String msg = emailFailures[responseCode]!;
       CallbackNotifiers.emailAuthResponse.value = AuthEvent(
-        ResponseCode.fromId(responseCode),
+        AuthResponseCode.fromId(responseCode),
         msg,
       );
     } else if (googleAccountFailures.containsKey(responseCode)) {
       String msg = googleAccountFailures[responseCode]!;
       CallbackNotifiers.googleAccountAuthResponse.value = AuthEvent(
-        ResponseCode.fromId(responseCode),
+        AuthResponseCode.fromId(responseCode),
         msg,
       );
     }

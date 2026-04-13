@@ -40,6 +40,9 @@ int bigEndianToInt(List<int> buffer, int bytes) {
 }
 
 const expectedSizeBytes = 4;
+const userIdBytes = 8;
+const sessionIdBytes = 8;
+const sessionListVersionBytes = 8;
 
 class ServerApi {
   late Socket socket;
@@ -93,7 +96,7 @@ class ServerApi {
   bool sendProtocolUnit(MessageType type, List<int> data) {
     try {
       List<int> encryptedData = [type.id, ...data];
-      if (encryptedData.length >= 65535) {
+      if (encryptedData.length >= 65535) { // Todo change the size
         // Todo ui handling for this.
         printOnDebug("Invalid large message length");
         return false;

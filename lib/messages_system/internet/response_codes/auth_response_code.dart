@@ -1,6 +1,6 @@
 //Ids should never change after you push them to repo.
 //Two types should not have the same id.
-enum ResponseCode {
+enum AuthResponseCode {
   unknown(id: -1),
   emailAccountCreated(id: 0),
   emailAccountEmailExistError(id: 1),
@@ -22,11 +22,11 @@ enum ResponseCode {
   googleSignUpGoogleIdExistError(id: 17);
 
   final int id;
-  const ResponseCode({required this.id});
-  static ResponseCode fromId(int id) {
-    return ResponseCode.values.firstWhere(
+  const AuthResponseCode({required this.id});
+  static AuthResponseCode fromId(int id) {
+    return AuthResponseCode.values.firstWhere(
       (e) => e.id == id,
-      orElse: () => ResponseCode.unknown,
+      orElse: () => AuthResponseCode.unknown,
     );
   }
 }

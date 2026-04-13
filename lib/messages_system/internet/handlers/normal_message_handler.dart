@@ -49,7 +49,7 @@ class NormalMessageHandler extends Handler {
 
   @override
   bool handle(List<int> buffer, ServerApi service, ChatsManager chatsManager) {
-    int senderId = bigEndianToInt(buffer, 4);
+    int senderId = bigEndianToInt(buffer, userIdBytes);
     if (!chatsManager.usernames.containsKey(senderId)) {
       chatsManager.requestUsername(service, senderId);
     }
@@ -59,7 +59,7 @@ class NormalMessageHandler extends Handler {
     buffer.removeRange(0, replyTextLength);
     MessageReplyData? replyData;
     if (replyTextLength != 0) {
-      int replySenderId = bigEndianToInt(buffer, 4);
+      int replySenderId = bigEndianToInt(buffer, userIdBytes);
       if (!chatsManager.usernames.containsKey(replySenderId)) {
         chatsManager.requestUsername(service, replySenderId);
       }
