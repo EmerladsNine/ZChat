@@ -53,7 +53,7 @@ class ChatCardWidget extends StatelessWidget {
           child: RippleEffectButtonWidget(
             disableSet: AppNotifiers.disableButtons,
             appStateNotifier: AppNotifiers.isNavigating,
-            animationDuration: const Duration(milliseconds: 200),
+            animationDuration: const Duration(milliseconds: 100),
             onPreTap: () async {
               chat.clearMessages();
               AppNotifiers.openedChat.value = chat;
