@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
@@ -20,6 +21,17 @@ class ReplyBoxWidget extends StatefulWidget {
 
 class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
   MessageReplyData lastReplyData = MessageReplyData("", 0);
+  ValueNotifier<double> boxSize = ValueNotifier(0);
+
+  void animateTo(double target) async {
+    double start = boxSize.value;
+    const duration = Duration(milliseconds: 50);
+    const steps = 15;
+    for (int i = 1; i <= steps; i++) {
+      await Future.delayed(duration ~/ steps);
+      boxSize.value = start + (target - start) * (i / steps);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,76 +44,85 @@ class _ReplyBoxWidgetState extends State<ReplyBoxWidget> {
         final String replyTextSender = lastReplyData.senderId != 0
             ? api.chatsManager.usernames[lastReplyData.senderId] ?? "#${lastReplyData.senderId}"
             : "You";
-        return Container(
-          height: value != null ? null : 0,
-          color: colors.cardsColor,
-          padding: EdgeInsets.all(5),
-          child: Row(
-            spacing: 2,
-            children: [
-              Icon(Icons.reply_rounded, color: colors.primaryColor),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsetsGeometry.all(5),
-                  decoration: BoxDecoration(
-                    color: colors.primaryColor.withAlpha(30),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border(
-                      left: BorderSide(color: colors.primaryColor, width: 3),
+        animateTo(value != null ? 1 : 0);
+        return ValueListenableBuilder(
+          valueListenable: boxSize,
+          builder: (context, boxSize, child) {
+            return SizeTransition(
+              sizeFactor: AlwaysStoppedAnimation(boxSize),
+              axisAlignment: -1.0,
+              child: Container(
+                color: colors.cardsColor,
+                padding: EdgeInsets.all(5),
+                child: Row(
+                  spacing: 2,
+                  children: [
+                    Icon(Icons.reply_rounded, color: colors.primaryColor),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsetsGeometry.all(5),
+                        decoration: BoxDecoration(
+                          color: colors.primaryColor.withAlpha(30),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border(
+                            left: BorderSide(color: colors.primaryColor, width: 3),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                              ScaledTextWidget(
+                              replyTextSender,
+                              textDirection: TextUtils.getTextDirection(
+                                replyTextSender,
+                              ),
+                              style: TextStyle(
+                                color: colors.primaryColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Align(
+                              alignment: TextUtils.getTextPlacement(
+                                lastReplyData.text,
+                              ),
+                              child: ScaledTextWidget(
+                                lastReplyData.text,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: colors.primaryColor,
+                                ),
+                                textDirection: TextUtils.getTextDirection(
+                                  lastReplyData.text,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ScaledTextWidget(
-                        replyTextSender,
-                        textDirection: TextUtils.getTextDirection(
-                          replyTextSender,
-                        ),
-                        style: TextStyle(
-                          color: colors.primaryColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    CustomToolTip(
+                      message: "Cancel",
+                      child: RippleEffectButtonWidget(
+                        overlayBorderRadius: BorderRadius.circular(20),
+                        animationDuration: Duration(milliseconds: 20),
+                        padding: EdgeInsetsGeometry.all(5),
+                        disableSet: AppNotifiers.disableButtons,
+                        appStateNotifier: AppNotifiers.isNavigating,
+                        onTap: () {
+                          AppNotifiers.openedChat.value!.replyData.value = null;
+                        },
+                        child: Icon(Icons.close, color: colors.primaryColor),
                       ),
-                      Align(
-                        alignment: TextUtils.getTextPlacement(
-                          lastReplyData.text,
-                        ),
-                        child: ScaledTextWidget(
-                          lastReplyData.text,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: colors.primaryColor,
-                          ),
-                          textDirection: TextUtils.getTextDirection(
-                            lastReplyData.text,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              CustomToolTip(
-                message: "Cancel",
-                child: RippleEffectButtonWidget(
-                  overlayBorderRadius: BorderRadius.circular(20),
-                  animationDuration: Duration(milliseconds: 20),
-                  padding: EdgeInsetsGeometry.all(5),
-                  disableSet: AppNotifiers.disableButtons,
-                  appStateNotifier: AppNotifiers.isNavigating,
-                  onTap: () {
-                    AppNotifiers.openedChat.value!.replyData.value = null;
-                  },
-                  child: Icon(Icons.close, color: colors.primaryColor),
-                ),
-              ),
-            ],
-          ),
+            );
+          }
         );
       },
     );

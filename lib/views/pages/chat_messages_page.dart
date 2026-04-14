@@ -162,69 +162,66 @@ class _ChatMessagesPageState extends State<ChatMessagesPage> {
                     }
                   },
                   child: Container(
-                        color: colors.primaryBackgroundColor,
-                        child: Stack(
+                    color: colors.primaryBackgroundColor,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Image(
+                            image: widget.chat.imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+
+                        Column(
                           children: [
-                            Positioned.fill(
-                              child: Image(
-                                image: widget.chat.imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-
-                            Column(
-                              children: [
-                                if (widget.chat.hasPinnedMessage)
-                                  SizedBox(
-                                    height: pinnedMessagePlaceholderHeight,
-                                    width: double.infinity,
-                                  ),
-                                Expanded(
-                                  child: MessagesPanelWidget(
-                                    listKey: listKey,
-                                    scrollController: _scrollController,
-                                    isDownButtonShown: isDownButtonShown,
-                                    scrollToBottom: _scrollToBottom,
-                                    footerTextFieldFocusNode: focusNode,
-                                  ),
-                                ),
-
-                                ReplyBoxWidget(chat: widget.chat,),
-
-                                Padding(
-                                  padding: isEmojiPickerVisible
-                                      ? EdgeInsetsGeometry.zero
-                                      : EdgeInsetsGeometry.only(
-                                          bottom: bottomPadding,
-                                        ),
-                                  child: ChatMessagesFooterWidget(
-                                    scrollToBottom: _scrollToBottom,
-                                    bottomSafeArea: bottomSafeArea,
-                                    isInSafeArea:
-                                        bottomPadding != 0 ||
-                                        isEmojiPickerVisible,
-                                    focusNode: focusNode,
-                                  ),
-                                ),
-
-                                EmojiPanelWidget(),
-                              ],
-                            ),
                             if (widget.chat.hasPinnedMessage)
-                              PinnedMessageWidget(
-                                message: widget.chat.messages
-                                    .firstWhere(
-                                      (m) =>
-                                          m.messageData.messageId ==
-                                              widget.chat.pinnedMessageId,
-                                    )
-                                    .messageData
-                                    .text,
+                              SizedBox(
+                                height: pinnedMessagePlaceholderHeight,
+                                width: double.infinity,
                               ),
+                            Expanded(
+                              child: MessagesPanelWidget(
+                                listKey: listKey,
+                                scrollController: _scrollController,
+                                isDownButtonShown: isDownButtonShown,
+                                scrollToBottom: _scrollToBottom,
+                                footerTextFieldFocusNode: focusNode,
+                              ),
+                            ),
+                            ReplyBoxWidget(chat: widget.chat,),
+                            Padding(
+                              padding: isEmojiPickerVisible
+                                  ? EdgeInsetsGeometry.zero
+                                  : EdgeInsetsGeometry.only(
+                                      bottom: bottomPadding,
+                                    ),
+                              child: ChatMessagesFooterWidget(
+                                scrollToBottom: _scrollToBottom,
+                                bottomSafeArea: bottomSafeArea,
+                                isInSafeArea:
+                                    bottomPadding != 0 || isEmojiPickerVisible,
+                                focusNode: focusNode,
+                              ),
+                            ),
+
+                            EmojiPanelWidget(),
                           ],
                         ),
-                      )
-                  );
+                        if (widget.chat.hasPinnedMessage)
+                          PinnedMessageWidget(
+                            message: widget.chat.messages
+                                .firstWhere(
+                                  (m) =>
+                                      m.messageData.messageId ==
+                                      widget.chat.pinnedMessageId,
+                                )
+                                .messageData
+                                .text,
+                          ),
+                      ],
+                    ),
+                  ),
+                );
               },
             );
           },
