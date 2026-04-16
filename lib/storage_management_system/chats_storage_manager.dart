@@ -192,7 +192,7 @@ class ChatsStorageManager {
       String? replyText = messageData['replyText'];
       MessageReplyData? replyData;
       if (replyText != null && replySenderId != null) {
-        replyData = MessageReplyData(replyText, senderId);
+        replyData = MessageReplyData(replyText, replySenderId);
       }
       Message msg = Message(
         messageData: MessageData(
