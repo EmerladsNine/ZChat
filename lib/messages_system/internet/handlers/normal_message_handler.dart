@@ -29,7 +29,6 @@ class NormalMessageHandler extends Handler {
     );
     Chat chat;
     if (!chatsManager.chatsMap.containsKey(userId)) {
-      // Todo get username
       chat = Chat(chatId: 0, userId: userId,imageProvider: chatsManager.defaultBackgroundProvider);
       chatsManager.addChat(userId, chat);
     }
