@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:zchat/firebase_options.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
+import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/services/sound/sound_service.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/storage_management_system/storage_manager.dart';
@@ -20,6 +24,15 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if(Platform.isAndroid || Platform.isIOS)
+  {
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+      String? token = await FirebaseMessaging.instance.getToken();
+      printOnDebug("Token :$token");
+  }
+
 
   // for storage db on desktop
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
