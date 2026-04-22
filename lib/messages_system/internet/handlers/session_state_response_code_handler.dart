@@ -6,6 +6,7 @@ import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/response_codes/session_state_response_code.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
+import 'package:zchat/notifications_system/notification_manager.dart';
 import 'package:zchat/views/data/app_notifiers.dart';
 
 class SessionStateResponseCodeHandler extends Handler {
@@ -48,6 +49,7 @@ class SessionStateResponseCodeHandler extends Handler {
     }
     else if(responseCode == SessionStateResponseCode.sessionAuthenticationSuccess.id)
     {
+        NotificationManager.syncFcmWithServer(api);
         api.messagesQueue.isPaused = false;
         api.messagesQueue.sendMessages(api,api.protocolSender.normalMessage);
     }
@@ -72,6 +74,7 @@ class SessionStateResponseCodeHandler extends Handler {
         api.loadSessionData();
         api.messagesQueue.sendMessages(api,api.protocolSender.normalMessage);
       });
+      NotificationManager.syncFcmWithServer(api);
     }
     return true;
   }

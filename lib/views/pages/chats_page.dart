@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:zchat/views/data/app_notifiers.dart';
 import 'package:zchat/views/pages/add_chat_page.dart';
 import 'package:zchat/views/widgets/buttons/ripple_effect_button_widget.dart';
 import 'package:zchat/views/widgets/chats_page_widgets/chat_card_widget.dart';
+import 'package:zchat/views/widgets/chats_page_widgets/notification_permission_banner.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
 import 'package:zchat/views/widgets/miscellaneous/search_bar_widget.dart';
 import 'package:zchat/views/widgets/miscellaneous/sliding_animation_page_route.dart';
@@ -24,6 +26,28 @@ class ChatsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<ChatsPage> {
+
+  Future<bool> hasNotificationPermission() async {
+    final settings = await FirebaseMessaging.instance.getNotificationSettings();
+    return settings.authorizationStatus == AuthorizationStatus.authorized ||
+        settings.authorizationStatus == AuthorizationStatus.provisional;
+  }
+
+  final ValueNotifier<bool> _showPermissionBanner = ValueNotifier(false);
+
+  Future<void> _checkPermission() async {
+    final granted = await hasNotificationPermission();
+
+    if (!granted && mounted) {
+        _showPermissionBanner.value = true;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _checkPermission();
+  }
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
@@ -43,6 +67,16 @@ class _ChatsPageState extends State<ChatsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  ValueListenableBuilder(valueListenable: _showPermissionBanner, builder: (context, value, child) {
+                      if(value)
+                        {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: NotificationPermissionBanner(showPermissionBanner: _showPermissionBanner),
+                          );
+                        }
+                      return SizedBox();
+                  },),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 3),
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),

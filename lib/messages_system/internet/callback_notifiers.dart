@@ -11,4 +11,5 @@ abstract final class CallbackNotifiers {
   static final ValueNotifier<SearchEvent?> searchResponse = ValueNotifier(null);
   static final QueueNotifier<MessageResponseEvent> messageResponse = QueueNotifier();
   static final ValueNotifier<OkEvent> sessionListResponse = ValueNotifier(OkEvent());
+  static final ValueNotifier<OkEvent> fcmSyncResponse = ValueNotifier(OkEvent());
 }

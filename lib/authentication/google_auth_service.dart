@@ -29,8 +29,8 @@ class GoogleAuthService {
       AuthEvent? event = await api.protocolSender.googleAuth.signIn(utf8.encode(gUser.authentication.idToken!));
       return (gUser.authentication.idToken!,event);
     }
-    on GoogleSignInException catch(_) {
-      printOnDebug("sign in with google failed(might be cancelled by the user)");
+    on GoogleSignInException catch(e) {
+      printOnDebug("$e");
     }
     return ("",null);
   }

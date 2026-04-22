@@ -17,7 +17,9 @@ enum MessageType {
   useAccessToken(id: 13),
   useRefreshToken(id: 14),
   requestSessionsList(id: 15),
-  requestSessionListResponseCode(id: 16);
+  requestSessionListResponseCode(id: 16),
+  syncFcmToken(id: 17),
+  syncFcmTokenResponse(id: 18);
 
   final int id;
   const MessageType({required this.id});

@@ -1,4 +1,5 @@
 import 'package:zchat/messages_system/chats_manager.dart';
+import 'package:zchat/messages_system/internet/handlers/fcm_response_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/handlers/normal_message_handler.dart';
 import 'package:zchat/messages_system/internet/handlers/normal_message_response_code_handler.dart';
@@ -25,7 +26,8 @@ class ListenerService {
     MessageType.searchResponseCode: SearchResponseCodeHandler(),
     MessageType.normalMessageResponseCode: NormalMessageResponseCodeHandler(),
     MessageType.sessionStateResponseCode: SessionStateResponseCodeHandler(),
-    MessageType.requestSessionListResponseCode: SessionListResponseCodeHandler()
+    MessageType.requestSessionListResponseCode: SessionListResponseCodeHandler(),
+    MessageType.syncFcmTokenResponse: FcmResponseHandler()
   };
 
   MessageType? head;

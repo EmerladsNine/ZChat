@@ -1,4 +1,5 @@
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_email_auth.dart';
+import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_fcm.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_google_auth.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_normal_message.dart';
 import 'package:zchat/messages_system/internet/protocol_senders/protocol_sender_search.dart';
@@ -15,4 +16,5 @@ class ProtocolSender {
   late ProtocolSenderEmailAuth emailAuth = ProtocolSenderEmailAuth(api);
   late ProtocolSenderUseAuthTokens useToken = ProtocolSenderUseAuthTokens(api);
   late ProtocolSenderSessionsList requestSessionList = ProtocolSenderSessionsList(api);
+  late ProtocolSenderFcm fcmSync = ProtocolSenderFcm(api);
 }

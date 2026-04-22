@@ -4,12 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:zchat/firebase_options.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
 import 'package:zchat/messages_system/utils/print_on_debug.dart';
+import 'package:zchat/notifications_system/notification_manager.dart';
 import 'package:zchat/services/sound/sound_service.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/storage_management_system/storage_manager.dart';
@@ -22,17 +23,24 @@ import 'package:zchat/views/pages/authentication/sign_in_page.dart';
 import 'package:zchat/views/widget_tree.dart';
 import 'package:provider/provider.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel',
+  'High Importance Notifications',
+  description: 'Used for important notifications',
+  importance: Importance.high,
+);
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  printOnDebug("Handling background message: ${message.messageId}");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  if(Platform.isAndroid || Platform.isIOS)
-  {
-      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-      String? token = await FirebaseMessaging.instance.getToken();
-      printOnDebug("Token :$token");
-  }
-
 
   // for storage db on desktop
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
@@ -53,6 +61,8 @@ void main() async {
 
   final api = ServerApi(chatsManager);
   await api.loadSessionData();
+
+  await NotificationManager.init(api);
 
   //Run app
   runApp(
