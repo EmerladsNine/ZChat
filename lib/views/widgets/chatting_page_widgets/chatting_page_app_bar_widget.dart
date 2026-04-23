@@ -16,11 +16,10 @@ import '../miscellaneous/custom_tool_tip.dart';
 
 class ChattingPageAppBarWidget extends StatelessWidget {
   const ChattingPageAppBarWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     final ThemeColorScheme colors = AppTheme.themeColorsOf(context);
-    final chat = context.watch<Chat>();
+    final Chat chat = context.read<Chat>();
     return CustomToolTip(
       message: 'Profile Details',
       preferBelow: true,

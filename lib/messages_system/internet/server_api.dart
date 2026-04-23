@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/message_data.dart';
@@ -139,7 +140,7 @@ class ServerApi {
           messageId: 0,
           senderId: 0,
           text: message,
-          messageStatus: MessageStatus.unsent,
+          messageStatus: ValueNotifier(MessageStatus.unsent),
           timestamp: timestamp,
           replyData: replyData,
         ),
@@ -155,9 +156,8 @@ class ServerApi {
       chatsManager.notify();
       if (!await loadSessionIfNull()) return;
       if (currentSession!.userId == chat.userId) {
-        msg.messageData.messageStatus = MessageStatus.undelivered;
+        msg.messageData.messageStatus.value = MessageStatus.undelivered;
         SoundService.instance.playSound(SoundPathConstants.sendMessageSound);
-        chat.notifyChange();
         return;
       }
       messagesQueue.addMessage(this, protocolSender.normalMessage, msg, chat);

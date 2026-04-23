@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:zchat/views/widgets/miscellaneous/custom_tool_tip.dart';
@@ -25,6 +27,10 @@ class EmojiPanelButtonWidget extends StatelessWidget {
             AppNotifiers.isEmojiPickerVisible.value = true;
           } else if (AppNotifiers.isEmojiPickerVisible.value &&
               KeyboardController.isFullyClosed) {
+            if(!Platform.isIOS && !Platform.isAndroid)
+            {
+                AppNotifiers.isEmojiPickerVisible.value = false;
+            }
             FocusScope.of(context).unfocus();
             WidgetsBinding.instance.addPostFrameCallback((_) {
               focusNode.requestFocus();

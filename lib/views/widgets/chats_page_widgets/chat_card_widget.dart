@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 import 'package:zchat/themes_system/app_theme.dart';
@@ -73,7 +74,10 @@ class ChatCardWidget extends StatelessWidget {
               await Navigator.push(
                 context,
                 SlidingAnimationPageRoute(
-                  page: ChatMessagesPage(chat: chat,),
+                  page: Provider.value(
+                    value: chat,
+                    child: ChatMessagesPage(),
+                  ),
                 ),
               );
               AppNotifiers.openedChat.value = null;

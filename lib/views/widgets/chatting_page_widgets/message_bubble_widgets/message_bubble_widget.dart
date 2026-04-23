@@ -92,203 +92,208 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
     final ratioReplyWidth = min(-dragWidth/maxDrag,1);
 
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onHorizontalDragCancel: () {
-        AppNotifiers.disableMenu.value -= 1;
-        setState(() {
-          dragWidth = 0;
-        });
-      },
-      onHorizontalDragUpdate: (details) {
-        setState(() {
-          dragWidth = dragStart - details.localPosition.dx;
-          if (dragWidth > 0) dragWidth = 0;
-        });
-      },
-      onHorizontalDragDown: (details) {
-        AppNotifiers.disableMenu.value += 1;
-        dragStart = details.localPosition.dx;
-      },
-      onHorizontalDragEnd: (_) {
-        AppNotifiers.disableMenu.value -= 1;
-        setState(() {
-          if (-dragWidth >= maxDrag) {
-            AppNotifiers.openedChat.value!.replyData.value = MessageReplyData(
-              widget.messageData.text,
-              widget.messageData.senderId,
-            );
-            if (KeyboardController.nextKeyboardHeight == 0) {
-              FocusScope.of(context).unfocus();
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                widget.footerTextFieldFocusNode.requestFocus();
-              });
+        behavior: HitTestBehavior.opaque,
+        onHorizontalDragCancel: () {
+          AppNotifiers.disableMenu.value -= 1;
+          setState(() {
+            dragWidth = 0;
+          });
+        },
+        onHorizontalDragUpdate: (details) {
+          setState(() {
+            dragWidth = dragStart - details.localPosition.dx;
+            if (dragWidth > 0) dragWidth = 0;
+          });
+        },
+        onHorizontalDragDown: (details) {
+          AppNotifiers.disableMenu.value += 1;
+          dragStart = details.localPosition.dx;
+        },
+        onHorizontalDragEnd: (_) {
+          AppNotifiers.disableMenu.value -= 1;
+          setState(() {
+            if (-dragWidth >= maxDrag) {
+              AppNotifiers.openedChat.value!.replyData.value = MessageReplyData(
+                widget.messageData.text,
+                widget.messageData.senderId,
+              );
+              if (KeyboardController.nextKeyboardHeight == 0) {
+                FocusScope.of(context).unfocus();
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  widget.footerTextFieldFocusNode.requestFocus();
+                });
+              }
             }
-          }
-          dragWidth = 0;
-        });
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 1),
-        curve: Curves.easeOutCubic,
-        transform: Matrix4.translationValues(getDragWidth(-dragWidth), 0, 0),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: widget.messageData.isChildMessage ? 2 : 10,
-            left: 6,
-            right: 6,
-            bottom: 2,
-          ),
-          child: Row(
-            mainAxisAlignment: !received
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 5,
-            children: [
-              Container(
-                width: ratioReplyWidth <= 0 ? 0 : null,
-                decoration: BoxDecoration(
-                  color: colors.cardsColor,
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(color: colors.dividerColor),
+            dragWidth = 0;
+          });
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 1),
+          curve: Curves.easeOutCubic,
+          transform: Matrix4.translationValues(getDragWidth(-dragWidth), 0, 0),
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: widget.messageData.isChildMessage ? 2 : 10,
+              left: 6,
+              right: 6,
+              bottom: 2,
+            ),
+            child: Row(
+              mainAxisAlignment: !received
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 5,
+              children: [
+                Container(
+                  width: ratioReplyWidth <= 0 ? 0 : null,
+                  decoration: BoxDecoration(
+                    color: colors.cardsColor,
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(color: colors.dividerColor),
+                  ),
+                  padding: EdgeInsetsGeometry.all(ratioReplyWidth * 5),
+                  child: Icon(
+                    Icons.reply_rounded,
+                    color: colors.primaryColor,
+                    size: ratioReplyWidth * 25,
+                  ),
                 ),
-                padding: EdgeInsetsGeometry.all(ratioReplyWidth * 5),
-                child: Icon(
-                  Icons.reply_rounded,
-                  color: colors.primaryColor,
-                  size: ratioReplyWidth * 25,
-                ),
-              ),
 
-              if (received)
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    PfpOfSenderWidget(
-                      isChildMessage: widget.messageData.isChildMessage,
+                if (received)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PfpOfSenderWidget(
+                        isChildMessage: widget.messageData.isChildMessage,
+                      ),
+                    ],
+                  ),
+
+                CustomPaint(
+                  painter: MessageBubblePainter(
+                    color: received
+                        ? AppMessageBubbleColors.get(
+                            messageBubbleColors[1],
+                            themeController.isDarkMode,
+                          ).withAlpha(alpha)
+                        : AppMessageBubbleColors.get(
+                            messageBubbleColors[0],
+                            themeController.isDarkMode,
+                          ).withAlpha(alpha),
+                    shadowColor: Colors.transparent,
+                    alignment: received ? Alignment.topLeft : Alignment.topRight,
+                    tail: !widget.messageData.isChildMessage,
+                    draw:
+                        !widget.messageData.isEmojiBubble() ||
+                        (widget.messageData.isEmojiBubble() &&
+                            widget.messageData.replyData != null),
+                  ),
+                  child: Container(
+                    constraints: BoxConstraints(
+                      minWidth: 50,
+                      maxWidth: widget.maxBubbleWidth,
                     ),
-                  ],
-                ),
-
-              CustomPaint(
-                painter: MessageBubblePainter(
-                  color: received
-                      ? AppMessageBubbleColors.get(
-                          messageBubbleColors[1],
-                          themeController.isDarkMode,
-                        ).withAlpha(alpha)
-                      : AppMessageBubbleColors.get(
-                          messageBubbleColors[0],
-                          themeController.isDarkMode,
-                        ).withAlpha(alpha),
-                  shadowColor: Colors.transparent,
-                  alignment: received ? Alignment.topLeft : Alignment.topRight,
-                  tail: !widget.messageData.isChildMessage,
-                  draw:
-                      !widget.messageData.isEmojiBubble() ||
-                      (widget.messageData.isEmojiBubble() &&
-                          widget.messageData.replyData != null),
-                ),
-                child: Container(
-                  constraints: BoxConstraints(
-                    minWidth: 50,
-                    maxWidth: widget.maxBubbleWidth,
-                  ),
-                  padding: EdgeInsets.only(
-                    top: 5,
-                    bottom: 3,
-                    right: received
-                        ? 5
-                        : widget.messageData.isEmojiBubble() &&
-                              widget.messageData.replyData == null
-                        ? AppConstants.messageTailSize
-                        : 7 + AppConstants.messageTailSize,
-                    left: received
-                        ? widget.messageData.isEmojiBubble() &&
-                                  widget.messageData.replyData == null
-                              ? 0
-                              : 7 + AppConstants.messageTailSize
-                        : widget.messageData.isEmojiBubble() &&
-                              widget.messageData.replyData == null
-                        ? 0
-                        : 5,
-                  ),
-                  child: IntrinsicWidth(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing:
-                          widget.messageData.isEmojiBubble() &&
-                              widget.messageData.replyData == null
+                    padding: EdgeInsets.only(
+                      top: 5,
+                      bottom: 3,
+                      right: received
                           ? 5
-                          : 3,
-                      children: [
-                        if (received && !widget.messageData.isChildMessage)
-                          SenderNameWidget(
-                            senderName:
-                                api.chatsManager.usernames[widget
-                                    .messageData
-                                    .senderId] ??
-                                "#${widget.messageData.senderId}",
-                            isSeparate:
-                                widget.messageData.isEmojiBubble() &&
-                                widget.messageData.replyData == null,
-                            maxBubbleWidth: widget.maxBubbleWidth,
+                          : widget.messageData.isEmojiBubble() &&
+                                widget.messageData.replyData == null
+                          ? AppConstants.messageTailSize
+                          : 7 + AppConstants.messageTailSize,
+                      left: received
+                          ? widget.messageData.isEmojiBubble() &&
+                                    widget.messageData.replyData == null
+                                ? 0
+                                : 7 + AppConstants.messageTailSize
+                          : widget.messageData.isEmojiBubble() &&
+                                widget.messageData.replyData == null
+                          ? 0
+                          : 5,
+                    ),
+                    child: IntrinsicWidth(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing:
+                            widget.messageData.isEmojiBubble() &&
+                                widget.messageData.replyData == null
+                            ? 5
+                            : 3,
+                        children: [
+                          if (received && !widget.messageData.isChildMessage)
+                            SenderNameWidget(
+                              senderName:
+                                  api.chatsManager.usernames[widget
+                                      .messageData
+                                      .senderId] ??
+                                  "#${widget.messageData.senderId}",
+                              isSeparate:
+                                  widget.messageData.isEmojiBubble() &&
+                                  widget.messageData.replyData == null,
+                              maxBubbleWidth: widget.maxBubbleWidth,
+                            ),
+
+                          if (widget.messageData.replyData != null)
+                            MessageBubbleReplySectionWidget(
+                              isSeparate:
+                                  widget.messageData.isEmojiBubble() &&
+                                  widget.messageData.replyData == null,
+                              received: received,
+                              replyData: widget.messageData.replyData!,
+                            ),
+
+                          FlatTapButtonWidget(
+                            disableSet: AppNotifiers.disableButtons,
+                            appStateNotifier: AppNotifiers.isNavigating,
+                            onTap: () {
+                              if (AppNotifiers.disableMenu.value != 0) return;
+                              RenderBox box =
+                                  context.findRenderObject() as RenderBox;
+                              Offset globalTopLeft = box.localToGlobal(
+                                Offset.zero,
+                              );
+
+                              AppNotifiers.selectedMessage.value = widget;
+
+                              MessageActionsMenuWidget.instance.setData(
+                                received,
+                                widget.messageData,
+                              );
+
+                              MessageActionsMenuWidget.instance.insertOverlayMenu(
+                                globalTopLeft,
+                                box.size,
+                                context,
+                              );
+                            },
+
+                            child: ValueListenableBuilder(
+                              valueListenable: widget.messageData.messageStatus,
+                              builder: (context, messageStatus, child) {
+                                return MessageBubbleMainSectionWidget(
+                                  text: widget.messageData.text,
+                                  time: widget.time,
+                                  isEmojiBubble: widget.messageData.isEmojiBubble(),
+                                  emojiMessageType:
+                                      widget.messageData.emojiMessageType,
+                                  isReplyBubble: widget.messageData.replyData != null,
+                                  messageStatus: messageStatus,
+                                  received: received,
+                                );
+                              }
+                            ),
                           ),
-
-                        if (widget.messageData.replyData != null)
-                          MessageBubbleReplySectionWidget(
-                            isSeparate:
-                                widget.messageData.isEmojiBubble() &&
-                                widget.messageData.replyData == null,
-                            received: received,
-                            replyData: widget.messageData.replyData!,
-                          ),
-
-                        FlatTapButtonWidget(
-                          disableSet: AppNotifiers.disableButtons,
-                          appStateNotifier: AppNotifiers.isNavigating,
-                          onTap: () {
-                            if (AppNotifiers.disableMenu.value != 0) return;
-                            RenderBox box =
-                                context.findRenderObject() as RenderBox;
-                            Offset globalTopLeft = box.localToGlobal(
-                              Offset.zero,
-                            );
-
-                            AppNotifiers.selectedMessage.value = widget;
-
-                            MessageActionsMenuWidget.instance.setData(
-                              received,
-                              widget.messageData,
-                            );
-
-                            MessageActionsMenuWidget.instance.insertOverlayMenu(
-                              globalTopLeft,
-                              box.size,
-                              context,
-                            );
-                          },
-
-                          child: MessageBubbleMainSectionWidget(
-                            text: widget.messageData.text,
-                            time: widget.time,
-                            isEmojiBubble: widget.messageData.isEmojiBubble(),
-                            emojiMessageType:
-                                widget.messageData.emojiMessageType,
-                            isReplyBubble: widget.messageData.replyData != null,
-                            messageStatus: widget.messageData.messageStatus,
-                            received: received,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
     );
   }
 }

@@ -18,7 +18,7 @@ class MessagesPanelWidget extends StatelessWidget {
 
   final ValueKey listKey;
   final ScrollController scrollController;
-  final bool isDownButtonShown;
+  final ValueNotifier<bool> isDownButtonShown;
   final void Function() scrollToBottom;
   final FocusNode footerTextFieldFocusNode;
 
@@ -35,20 +35,18 @@ class MessagesPanelWidget extends StatelessWidget {
               final double maxWidth = constraints.maxWidth * 0.83;
               return Consumer<Chat>(
                 builder: (context, chat, child) {
-                  return ScrollbarTheme(
-                    data: ScrollbarThemeData(
-                      thumbColor: WidgetStatePropertyAll(colors.goDownButtonColor)
-                    ),
-                    child: Scrollbar(
+                  return RawScrollbar(
                       controller: scrollController,
                       thumbVisibility: true,
+                      padding: EdgeInsets.zero,
+                      thumbColor: colors.goDownButtonColor,
                       thickness: Platform.isWindows || Platform.isLinux || Platform.isMacOS ? 0 : 3,
                       child: ListView.builder(
                         key: listKey,
                         padding: EdgeInsetsGeometry.only(
                           left: 5,
                           right: 5,
-                          bottom: 10,
+                          bottom: 5
                         ),
                         shrinkWrap: chat.messages.length < 20 ? true : false,
                         reverse: true,
@@ -61,7 +59,6 @@ class MessagesPanelWidget extends StatelessWidget {
                           );
                         },
                       ),
-                    ),
                   );
                 },
               );

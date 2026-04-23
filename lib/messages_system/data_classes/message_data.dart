@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import '../enums/emoji_message_types.dart';
 import '../enums/message_status.dart';
 import 'message_reply_data.dart';
@@ -8,14 +10,14 @@ class MessageData {
     required this.text,
     required this.senderId,
     this.emojiMessageType = EmojiMessageType.notEmoji,
-    this.messageStatus = MessageStatus.undelivered,
+    required this.messageStatus,
     this.isChildMessage = false,
     this.timestamp = 0,
     this.replyData,
   });
 
   int messageId;
-  MessageStatus messageStatus;
+  ValueNotifier<MessageStatus> messageStatus;
   String text;
   int timestamp;
   int senderId;

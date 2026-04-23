@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/message_data.dart';
+import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/messages_system/internet/handlers/handler.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
@@ -25,18 +27,20 @@ class NormalMessageHandler extends Handler {
         senderId: userId,
         timestamp: timeStamp,
         replyData: replyData,
+        messageStatus: ValueNotifier(MessageStatus.undelivered)
       ),
     );
     Chat chat;
-    if (!chatsManager.chatsMap.containsKey(userId)) {
+    if (!chatsManager.privateChatsMap.containsKey(userId)) {
       chat = Chat(chatId: 0, userId: userId,imageProvider: chatsManager.defaultBackgroundProvider);
-      chatsManager.addChat(userId, chat);
+      chatsManager.privateChatsMap[userId] = chat;
     }
-    chat = chatsManager.chatsMap[userId]!;
+    chat = chatsManager.privateChatsMap[userId]!;
     if (!chatsManager.openedChats.contains(chat)) {
       int chatId = await ChatsStorageManager.insertChat(chat: chat);
       chat.chatId = chatId;
-      chatsManager.openChat(userId);
+      chatsManager.addChat(chat);
+      chatsManager.openChat(chatId);
     }
     int id = await ChatsStorageManager.insertMessage(message: msg, chat: chat);
     msg.messageData.messageId = id;

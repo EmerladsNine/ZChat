@@ -89,9 +89,8 @@ class MessagesQueue {
         }
       }
       _messagesToSend.removeFirst();
-      msg.messageData.messageStatus = MessageStatus.undelivered;
+      msg.messageData.messageStatus.value = MessageStatus.undelivered;
       SoundService.instance.playSound(SoundPathConstants.sendMessageSound);
-      chat.notifyChange();
       printOnDebug('sent: ${msg.messageData.text}');
     }
     _isSending = false;

@@ -6,8 +6,8 @@ import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
 
 class ChatsManager extends ChangeNotifier {
-  Map<int, Chat> chatsMap = {};
-  Map<int, Chat> privateChatsMap = {};
+  Map<int, Chat> chatsMap = {}; // localChatId -> chat
+  Map<int, Chat> privateChatsMap = {}; // userId -> chat , chats here are not necessarily opened chats
   Map<int, String> usernames = {0: "You"};
   Map<int, SessionList> sessionListsCache = {};
   List<Chat> openedChats = [];
@@ -28,12 +28,12 @@ class ChatsManager extends ChangeNotifier {
     }
   }
 
-  Chat getChat(int id) {
-    return chatsMap[id]!;
+  Chat getChat(int localChatId) {
+    return chatsMap[localChatId]!;
   }
 
-  void addChat(int id, Chat chat) {
-    chatsMap[id] = chat;
+  void addChat(Chat chat) {
+    chatsMap[chat.chatId] = chat;
     privateChatsMap[chat.userId] = chat;
     if(chat.pinTimeStamp != null)
     {
@@ -64,8 +64,8 @@ class ChatsManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void openChat(int id) {
-    openedChats.insert(0, chatsMap[id]!);
+  void openChat(int localChatId) {
+    openedChats.insert(0, chatsMap[localChatId]!);
     notifyListeners();
   }
 

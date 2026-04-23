@@ -36,7 +36,7 @@ EmojiMessageType resolveMessageEmojiType(String text) {
   };
 }
 
-class Chat extends ChangeNotifier {
+class Chat {
   final List<Message> _messages = [];
   ValueNotifier<String?> name = ValueNotifier(null);
   int chatId;
@@ -80,17 +80,14 @@ class Chat extends ChangeNotifier {
       pinTimeStamp = null;
       chatsManager.unPinChat(this);
     }
-    notifyListeners();
   }
 
   void pinMessage(int messageId) {
     pinnedMessageId = messageId;
-    notifyListeners();
   }
 
   void unpinMessage() {
     pinnedMessageId = null;
-    notifyListeners();
   }
 
   void addMessage(Message message) {
@@ -103,7 +100,6 @@ class Chat extends ChangeNotifier {
     _messages.insert(0, message);
     lastMessage = message.messageData.text;
     timestamp = message.messageData.timestamp;
-    notifyListeners();
   }
 
   void addOldMessage(Message message) {
@@ -116,16 +112,10 @@ class Chat extends ChangeNotifier {
       message.messageData.text,
     );
     _messages.add(message);
-    notifyListeners();
-  }
-
-  void notifyChange() {
-    notifyListeners();
   }
 
   void clearMessages() {
     _messages.clear();
-    notifyListeners();
   }
 
   void clearChat() {
@@ -135,7 +125,6 @@ class Chat extends ChangeNotifier {
     pinnedMessageId = null;
     lastMessage = "";
     timestamp = 0;
-    notifyListeners();
   }
 
   void debugPrintMessages() {

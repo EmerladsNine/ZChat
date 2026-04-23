@@ -132,18 +132,18 @@ class _AddChatPageState extends State<AddChatPage> {
     if (value.code == SearchResponseCode.notFound) {
       setState(() {
         _searchState = SearchState.notFound;
-        name = id = null;
+        name = userId = null;
       });
     } else if (value.code == SearchResponseCode.error) {
       setState(() {
         _searchState = SearchState.error;
-        name = id = null;
+        name = userId = null;
       });
     } else if (value.code == SearchResponseCode.found) {
       setState(() {
         _searchState = SearchState.found;
         name = value.name!;
-        id = value.id!;
+        userId = value.id!;
       });
     } else {
       printOnDebug("Not Implemented SearchResponseCode on _stateUpdate");
@@ -173,7 +173,7 @@ class _AddChatPageState extends State<AddChatPage> {
   bool _requestInFlight = false;
   bool _pendingSearch = false;
   String? name;
-  int? id;
+  int? userId;
 
   @override
   Widget build(BuildContext context) {
@@ -215,12 +215,12 @@ class _AddChatPageState extends State<AddChatPage> {
   Widget getFromState(ChatsManager chatsManager) {
     final colors = AppTheme.themeColorsOf(context);
     if (_searchState == SearchState.found) {
-      Chat chat = Chat(chatId: 0, userId: id!,imageProvider: chatsManager.defaultBackgroundProvider);
+      Chat chat = Chat(chatId: 0, userId: userId!,imageProvider: chatsManager.defaultBackgroundProvider);
       chat.name.value = name!;
-      if (!chatsManager.chatsMap.containsKey(id)) {
-        chatsManager.chatsMap[id!] = chat;
+      if (!chatsManager.privateChatsMap.containsKey(userId)) {
+        chatsManager.privateChatsMap[userId!] = chat;
       } else {
-        chat = chatsManager.chatsMap[id]!;
+        chat = chatsManager.privateChatsMap[userId]!;
       }
 
       return ChatCardWidget(

@@ -9,7 +9,6 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/internet/server_api.dart';
 import 'package:zchat/keyboard_management_system/keyboard_controller.dart';
-import 'package:zchat/messages_system/utils/print_on_debug.dart';
 import 'package:zchat/notifications_system/notification_manager.dart';
 import 'package:zchat/services/sound/sound_service.dart';
 import 'package:zchat/storage_management_system/chats_storage_manager.dart';
@@ -36,7 +35,6 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  printOnDebug("Handling background message: ${message.messageId}");
 }
 
 void main() async {

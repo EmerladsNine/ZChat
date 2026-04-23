@@ -11,42 +11,47 @@ class GoDownButtonWidget extends StatelessWidget {
     required this.scrollToBottom,
   });
 
-  final bool isDownButtonShown;
+  final ValueNotifier<bool> isDownButtonShown;
   final void Function() scrollToBottom;
 
   @override
   Widget build(BuildContext context) {
     final colors = AppTheme.themeColorsOf(context);
 
-    return AnimatedScale(
-      duration: Duration(milliseconds: 100),
-      scale: isDownButtonShown ? 1 : 0,
-      child: CustomToolTip(
-        message: 'Scroll To Bottom',
-        child: RippleEffectButtonWidget(
-          disableSet: AppNotifiers.disableButtons,
-          appStateNotifier: AppNotifiers.isNavigating,
-          animationDuration: Duration(milliseconds: 0),
-          overlayBorderRadius: BorderRadius.circular(50),
-          onTap: () {
-            scrollToBottom();
-          },
-          child: Container(
-            padding: EdgeInsetsGeometry.all(3),
-            decoration: BoxDecoration(
-              color: colors.goDownButtonColor,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: Icon(
-              Icons.keyboard_arrow_down,
-              color: AppTheme.controllerOf(context).isDarkMode
-                  ? Colors.white
-                  : Colors.black,
-              size: 27,
+    return ValueListenableBuilder(
+      valueListenable: isDownButtonShown,
+      builder: (context, isDownButtonShowValue, child) {
+        return AnimatedScale(
+          duration: Duration(milliseconds: 100),
+          scale: isDownButtonShowValue ? 1 : 0,
+          child: CustomToolTip(
+            message: 'Scroll To Bottom',
+            child: RippleEffectButtonWidget(
+              disableSet: AppNotifiers.disableButtons,
+              appStateNotifier: AppNotifiers.isNavigating,
+              animationDuration: Duration(milliseconds: 0),
+              overlayBorderRadius: BorderRadius.circular(50),
+              onTap: () {
+                scrollToBottom();
+              },
+              child: Container(
+                padding: EdgeInsetsGeometry.all(3),
+                decoration: BoxDecoration(
+                  color: colors.goDownButtonColor,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Icon(
+                  Icons.keyboard_arrow_down,
+                  color: AppTheme.controllerOf(context).isDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                  size: 27,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }

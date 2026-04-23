@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:zchat/messages_system/chat.dart';
 import 'package:zchat/messages_system/chats_manager.dart';
 import 'package:zchat/messages_system/data_classes/message.dart';
 import 'package:zchat/messages_system/data_classes/message_data.dart';
 import 'package:zchat/messages_system/data_classes/message_reply_data.dart';
+import 'package:zchat/messages_system/enums/message_status.dart';
 import 'package:zchat/storage_management_system/storage_manager.dart';
 
 class ChatsStorageManager {
@@ -157,8 +159,8 @@ class ChatsStorageManager {
         imageProvider: chatsManager.defaultBackgroundProvider
       );
       chat.name.value = name;
-      chatsManager.addChat(userId, chat);
-      chatsManager.openChat(userId);
+      chatsManager.addChat(chat);
+      chatsManager.openChat(chatId);
     }
   }
 
@@ -201,6 +203,7 @@ class ChatsStorageManager {
           senderId: senderId,
           timestamp: messageData['timestamp'],
           replyData: replyData,
+          messageStatus: ValueNotifier(MessageStatus.undelivered)
         ),
       );
       chat.addOldMessage(msg);
