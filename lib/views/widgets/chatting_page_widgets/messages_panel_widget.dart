@@ -38,6 +38,7 @@ class MessagesPanelWidget extends StatelessWidget {
                   return RawScrollbar(
                       controller: scrollController,
                       thumbVisibility: true,
+                      interactive: false,
                       padding: EdgeInsets.zero,
                       thumbColor: colors.goDownButtonColor,
                       thickness: Platform.isWindows || Platform.isLinux || Platform.isMacOS ? 0 : 3,
