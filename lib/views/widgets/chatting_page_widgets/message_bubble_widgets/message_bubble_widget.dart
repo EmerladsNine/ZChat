@@ -117,7 +117,7 @@ class _MessageBubbleWidgetState extends State<MessageBubbleWidget> {
                 widget.messageData.text,
                 widget.messageData.senderId,
               );
-              if (KeyboardController.nextKeyboardHeight == 0) {
+              if (KeyboardController.nextKeyboardHeight == 0 && !AppNotifiers.isEmojiPickerVisible.value) {
                 FocusScope.of(context).unfocus();
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   widget.footerTextFieldFocusNode.requestFocus();

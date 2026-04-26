@@ -77,6 +77,13 @@ void main() async {
   );
 }
 
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
+}
+
 /// The root widget of the application.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -102,6 +109,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'ZChat',
         debugShowCheckedModeBanner: false,
+        scrollBehavior: MyCustomScrollBehavior(),
         theme: ThemeData(
           appBarTheme: AppBarTheme(
             iconTheme: IconThemeData(color: colors.iconDefaultColor),

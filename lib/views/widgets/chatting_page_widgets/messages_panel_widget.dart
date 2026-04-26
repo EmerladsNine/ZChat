@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zchat/messages_system/chat.dart';
@@ -41,7 +39,7 @@ class MessagesPanelWidget extends StatelessWidget {
                       interactive: false,
                       padding: EdgeInsets.zero,
                       thumbColor: colors.goDownButtonColor,
-                      thickness: Platform.isWindows || Platform.isLinux || Platform.isMacOS ? 0 : 3,
+                      thickness: 3,
                       child: ListView.builder(
                         key: listKey,
                         padding: EdgeInsetsGeometry.only(
