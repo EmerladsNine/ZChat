@@ -77,31 +77,38 @@ class SearchBarWidgetState extends State<SearchBarWidget> {
               valueListenable: widget.disableSet,
               builder: (context, value, child) {
                 return Stack(
+                  alignment: Alignment.centerLeft,
                   children: [
                     TextField(
                       controller: controller,
                       enabled: !value,
                       textDirection: TextUtils.getTextDirection(controller.text),
                       textCapitalization: TextCapitalization.sentences,
-                      strutStyle: const StrutStyle(fontSize: 20, height: 1),
                       focusNode: focusNode,
                       onTapOutside: (event) {
                         focusNode.unfocus();
                       },
-                      style: TextStyle(color: colors.primaryColor),
-                      decoration: InputDecoration(
-                        hintText: "", //idk actually this changes where the text position is.
+                      style: TextStyle(
+                        color: colors.primaryColor,
+                        fontSize: 16,
+                        height: 1.2,
+                      ),
+                      decoration: const InputDecoration(
+                        isCollapsed: true,
+                        hintText: "",
                         border: InputBorder.none,
                       ),
                     ),
-                    IgnorePointer(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(showHint ? widget.hintText : "",style: AppTextStyles.hintTextStyle(colors),)
-                        ],
+                    if (showHint)
+                      IgnorePointer(
+                        child: Text(
+                          widget.hintText,
+                          style: AppTextStyles.hintTextStyle(colors).copyWith(
+                            fontSize: 16,
+                            height: 1.2,
+                          ),
+                        ),
                       ),
-                    )
                   ],
                 );
               },
